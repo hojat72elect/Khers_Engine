@@ -7,11 +7,14 @@ class PotatoGame:
     potato_image: Surface
     running: bool = True
     x: float = 0
+    y: float = 0
     clock: Clock
     delta_time: float = 0.1
     font: Font
     is_moving_right: bool = False
     is_moving_left: bool = False
+    is_moving_up: bool = False
+    is_moving_down: bool = False
     sound: Sound
     movement_speed: float = 120
 
@@ -33,7 +36,7 @@ class PotatoGame:
 
         while self.running:
             self.screen.fill((255, 255, 255))
-            self.screen.blit(self.potato_image, (self.x, 30))
+            self.screen.blit(self.potato_image, (self.x, self.y))
             hitbox = pygame.Rect(self.x, 30, self.potato_image.get_width(), self.potato_image.get_height())
             mouse_position = pygame.mouse.get_pos()
 
@@ -44,8 +47,12 @@ class PotatoGame:
 
             if self.is_moving_right:
                 self.x += self.movement_speed * self.delta_time
-            elif self.is_moving_left:
+            if self.is_moving_left:
                 self.x -= self.movement_speed * self.delta_time
+            if self.is_moving_up:
+                self.y -= self.movement_speed * self.delta_time
+            if self.is_moving_down:
+                self.y += self.movement_speed * self.delta_time
 
             text = self.font.render('Hello World!', True, (0, 0, 0))
             self.screen.blit(text, (300, 100))
@@ -60,6 +67,10 @@ class PotatoGame:
                         self.sound.play()
                     if event.key == pygame.K_a:
                         self.is_moving_left = True
+                    if event.key == pygame.K_w:
+                        self.is_moving_up = True
+                    if event.key == pygame.K_s:
+                        self.is_moving_down = True
                     if event.key == pygame.K_ESCAPE:
                         self.running = False
                 if event.type == pygame.KEYUP:
@@ -67,6 +78,10 @@ class PotatoGame:
                         self.is_moving_right = False
                     if event.key == pygame.K_a:
                         self.is_moving_left = False
+                    if event.key == pygame.K_w:
+                        self.is_moving_up = False
+                    if event.key == pygame.K_s:
+                        self.is_moving_down = False
 
             pygame.display.flip()
             self.delta_time = self.clock.tick(60) / 1_000
