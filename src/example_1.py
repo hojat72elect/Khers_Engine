@@ -15,8 +15,10 @@ clock = pygame.time.Clock()
 delta_time = 0.1
 
 font = pygame.font.Font(None, size=30)
-moving = False
+is_moving_right = False
+is_moving_left = False
 sound = pygame.mixer.Sound("clank.wav")
+movement_speed = 120
 
 while running:
     screen.fill((255, 255, 255))
@@ -30,8 +32,10 @@ while running:
     m_collision = target.collidepoint(mouse_position)
     pygame.draw.rect(screen, (255 * collision, 255 * m_collision, 0), target)
 
-    if moving:
-        x += 50 * delta_time
+    if is_moving_right:
+        x += movement_speed * delta_time
+    elif is_moving_left:
+        x -= movement_speed * delta_time
 
     text = font.render('Hello World!', True, (0, 0, 0))
     screen.blit(text, (300, 100))
@@ -41,12 +45,16 @@ while running:
             running = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_d:
-                moving = True
+                is_moving_right = True
             if event.key == pygame.K_f:
                 sound.play()
+            if event.key == pygame.K_a:
+                is_moving_left = True
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_d:
-                moving = False
+                is_moving_right = False
+            if event.key == pygame.K_a:
+                is_moving_left = False
 
     pygame.display.flip()
     delta_time = clock.tick(60) / 1_000
