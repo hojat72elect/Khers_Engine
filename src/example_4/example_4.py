@@ -52,7 +52,7 @@ def update(dt):
         if (player.x + player.width > obstacle.x and player.x < obstacle.x + obstacle.width and
                 player.y < obstacle.y + obstacle.height):
             print("Game Over!")
-            pyglet.app.exit()
+            window.close()
 
     update_obstacles(dt)
 
