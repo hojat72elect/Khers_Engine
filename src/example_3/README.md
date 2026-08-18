@@ -1,0 +1,1 @@
+Setting up a simple window in pyglet is so much easier than 
