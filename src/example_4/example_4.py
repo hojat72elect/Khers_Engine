@@ -61,7 +61,6 @@ def update(dt):
 def on_key_press(symbol, modifiers):
     global player_velocity_y, is_jumping
 
-    # Handle jump
     if symbol == pyglet.window.key.SPACE and not is_jumping:
         player_velocity_y = jump_speed
         is_jumping = True
