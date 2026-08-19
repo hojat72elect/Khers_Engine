@@ -58,6 +58,10 @@ def input(key):
 def update():
     global car_mode
     if car_mode:
+        car.y += held_keys["w"] * 12 * time.dt
+        car.y -= held_keys["s"] * 12 * time.dt
+        car.x += held_keys["d"] * 12 * time.dt
+        car.x -= held_keys["a"] * 12 * time.dt
         player.position = car.position
 
     for npc, val in npcs:
