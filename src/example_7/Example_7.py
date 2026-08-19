@@ -1,10 +1,10 @@
 import random
 
-from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite
+from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow
 
 app = Ursina()
 camera.orthographic = True
-camera.fov = 19
+camera.fov = 9
 
 npcs = []
 for i in range(12):
@@ -32,6 +32,8 @@ for i in [-2.5, 2.5]:
     for j in [-3.5, 6]:
         Sprite(model="cube", texture="assets/house", scale=0.75, collider="box", position=(i, j, 0), rotation_z=270 if j == -3.5 else 90)
 
+follow = SmoothFollow(target=player, speed=8, offset=[0,0,-4])
+camera.add_script(follow)
 
 def update():
     for npc, val in npcs:
