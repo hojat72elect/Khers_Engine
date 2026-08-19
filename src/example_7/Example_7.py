@@ -1,6 +1,6 @@
 import random
 
-from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow
+from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow, distance
 
 app = Ursina()
 camera.orthographic = True
@@ -32,10 +32,34 @@ for i in [-2.5, 2.5]:
     for j in [-3.5, 6]:
         Sprite(model="cube", texture="assets/house", scale=0.75, collider="box", position=(i, j, 0), rotation_z=270 if j == -3.5 else 90)
 
-follow = SmoothFollow(target=player, speed=8, offset=[0,0,-4])
+car = Entity(model="quad", texture="assets/car", collider="box", scale=(2, 1), y=10)
+
+follow = SmoothFollow(target=player, speed=8, offset=[0, 0, -4])
 camera.add_script(follow)
 
+car_mode = False  # player is either in car mode or in the walk mode
+
+
+def input(key):
+    global car_mode
+    if key == "b":
+        if distance(car, player) < 1.5:
+            if not car_mode:
+                car_mode = True
+                player.visible = False
+                follow.target = car
+            else:
+                car_mode = False
+                player.visible = True
+                follow.target = player
+                player.position = car.position - (0, 1, 0)
+
+
 def update():
+    global car_mode
+    if car_mode:
+        player.position = car.position
+
     for npc, val in npcs:
         npc.y += val * time.dt
         if val == 1:
