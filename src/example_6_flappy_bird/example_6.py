@@ -6,12 +6,14 @@ app = Ursina()
 Sky()
 
 bird = Animation("img", collider="box", scale=(2, 2, 2), y=5)
+bird.velocity = 0
 camera.orthographic = True
 camera.fov = 20
 
 
 def update():
-    bird.y = bird.y - 4 * time.dt
+    bird.velocity = bird.velocity - 15 * time.dt
+    bird.y = bird.y + bird.velocity * time.dt
     for p in pipes:
         p.x = p.x - 2 * time.dt
     touch = bird.intersects()
@@ -21,7 +23,7 @@ def update():
 
 def input(key):
     if key == "space":
-        bird.y = bird.y + 3
+        bird.velocity = 8
 
 
 pipes = []
