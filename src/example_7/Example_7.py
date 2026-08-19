@@ -1,8 +1,22 @@
+import random
+
 from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite
 
 app = Ursina()
 camera.orthographic = True
 camera.fov = 19
+
+npcs = []
+for i in range(12):
+    if i < 6:
+        rot = 180
+        val = -1
+    else:
+        rot = 0
+        val = 1
+    npc = Animation("assets/npc", autoplay=True, rotation=rot, scale=0.75, position=(random.randint(-22, 22), random.randint(-22, 22)), collider="box", tag="npc")
+    npcs.append((npc, val))
+
 
 Entity(model="quad", texture="assets/street", scale=60, z=1)  # background of the game
 player = Entity()
