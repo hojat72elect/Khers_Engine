@@ -17,7 +17,6 @@ for i in range(12):
     npc = Animation("assets/npc", autoplay=True, rotation=rot, scale=0.75, position=(random.randint(-22, 22), random.randint(-22, 22)), collider="box", tag="npc")
     npcs.append((npc, val))
 
-
 Entity(model="quad", texture="assets/street", scale=60, z=1)  # background of the game
 player = Entity()
 anim = Animator(animations={
@@ -35,6 +34,15 @@ for i in [-2.5, 2.5]:
 
 
 def update():
+    for npc, val in npcs:
+        npc.y += val * time.dt
+        if val == 1:
+            if npc.y > 22:
+                npc.y = -22
+        else:
+            if npc.y < -22:
+                npc.y = 22
+
     if held_keys["w"] or held_keys["a"] or held_keys["s"] or held_keys["d"]:
         anim.state = "walking"
     else:
