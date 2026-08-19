@@ -1,8 +1,8 @@
-from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time
+from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite
 
 app = Ursina()
 camera.orthographic = True
-camera.fov = 9
+camera.fov = 19
 
 Entity(model="quad", texture="assets/street", scale=60, z=1)  # background of the game
 player = Entity()
@@ -10,6 +10,14 @@ anim = Animator(animations={
     "idle": Entity(parent=player, model="cube", texture="assets/walking_0"),
     "walking": Animation("assets/walking", parent=player, autoplay=False)
 })
+
+for i in [-8, 8]:
+    for j in [-2, 4]:
+        Sprite(model="cube", texture="assets/house", scale=0.75, collider="box", position=(i, j, 0), rotation_z=0 if i == -8 else 180)
+
+for i in [-2.5, 2.5]:
+    for j in [-3.5, 6]:
+        Sprite(model="cube", texture="assets/house", scale=0.75, collider="box", position=(i, j, 0), rotation_z=270 if j == -3.5 else 90)
 
 
 def update():
