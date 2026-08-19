@@ -22,6 +22,22 @@ def update():
     player.y -= held_keys["s"] * 2 * time.dt
     player.x += held_keys["d"] * 2 * time.dt
     player.x -= held_keys["a"] * 2 * time.dt
+    if held_keys["s"]:
+        player.rotation_z = 180
+    if held_keys["w"]:
+        player.rotation_z = 0
+    if held_keys["d"]:
+        player.rotation_z = 90
+    if held_keys["a"]:
+        player.rotation_z = 270
+    if held_keys["w"] and held_keys["d"]:
+        player.rotation_z = 45
+    if held_keys["w"] and held_keys["a"]:
+        player.rotation_z = 315
+    if held_keys["a"] and held_keys["s"]:
+        player.rotation_z = 225
+    if held_keys["d"] and held_keys["s"]:
+        player.rotation_z = 135
 
 
 app.run()
