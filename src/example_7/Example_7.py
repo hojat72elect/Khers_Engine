@@ -1,7 +1,7 @@
 import math
 import random
 
-from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow, distance, mouse, color, curve, invoke, destroy, raycast, Audio
+from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow, distance, mouse, color, curve, invoke, destroy, raycast, Audio, Circle
 
 app = Ursina()
 camera.orthographic = True
@@ -42,6 +42,17 @@ car_mode = False  # player is either in car mode or in the walk mode
 
 gun = Audio("assets/gun.ogg", loop=False, autoplay=False)
 drive = Audio("assets/car_drive.ogg", loop=True, autoplay=False)
+
+
+def blink():
+    if not car_mode and distance(car, player) < 1.5:
+        light = Entity(model=Circle(), scale=.3, color=color.smoke, position=car.position)
+        light.animate_scale(3, duration=.5, curve=curve.linear)
+        light.fade_out(duration=.5)
+    invoke(blink, delay=1)
+
+
+blink()
 
 
 def input(key):
