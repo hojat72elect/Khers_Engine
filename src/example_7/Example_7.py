@@ -56,19 +56,28 @@ def input(key):
                 player.position = car.position - (0, 1, 0)
 
 
+car_speed = 2
+
+
 def update():
-    global car_mode
+    global car_mode, car_speed
     if car_mode:
         if held_keys["w"]:
+            car_speed += 0.02
+            car_speed = min(10, car_speed)
             car.rotation_z += held_keys["d"] * 100 * time.dt
             car.rotation_z -= held_keys["a"] * 100 * time.dt
-        if held_keys["s"]:
+        elif held_keys["s"]:
+            car_speed += 0.02
+            car_speed = min(10, car_speed)
             car.rotation_z -= held_keys["d"] * 100 * time.dt
             car.rotation_z += held_keys["a"] * 100 * time.dt
-        car.x += held_keys["w"] * 12 * time.dt * math.cos(math.radians(car.rotation_z))
-        car.y += held_keys["w"] * (-12) * time.dt * math.sin(math.radians(car.rotation_z))
-        car.x -= held_keys["s"] * 12 * time.dt * math.cos(math.radians(car.rotation_z))
-        car.y -= held_keys["s"] * (-12) * time.dt * math.sin(math.radians(car.rotation_z))
+        else:
+            car_speed = 2
+        car.x += held_keys["w"] * car_speed * time.dt * math.cos(math.radians(car.rotation_z))
+        car.y += held_keys["w"] * (-car_speed) * time.dt * math.sin(math.radians(car.rotation_z))
+        car.x -= held_keys["s"] * car_speed * time.dt * math.cos(math.radians(car.rotation_z))
+        car.y -= held_keys["s"] * (-car_speed) * time.dt * math.sin(math.radians(car.rotation_z))
 
         player.position = car.position
 
