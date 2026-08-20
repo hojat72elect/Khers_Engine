@@ -76,6 +76,16 @@ car_speed = 2
 def update():
     global car_mode, car_speed
     if car_mode:
+        head_ray = raycast(car.position, (math.cos(math.radians(360 - car.rotation_z)), math.sin(math.radians(360 - car.rotation_z)), 0), ignore=[car, ], distance=1.5)
+        if head_ray.hit and head_ray.entity.tag == "npc":
+            Entity(model="quad", texture="corpse", color=color.random_color(), scale=0.7, position=head_ray.entity.position)
+            head_ray.entity.disable()
+
+        back_ray = raycast(car.position, (-1 * math.cos(math.radians(360 - car.rotation_z)), -1 * math.sin(math.radians(360 - car.rotation_z)), 0), ignore=[car, ], distance=0.5)
+        if back_ray.hit and back_ray.entity.tag == "npc":
+            Entity(model="quad", texture="corpse", color=color.random_color(), scale=0.7, position=back_ray.entity.position)
+            back_ray.entity.disable()
+
         if held_keys["w"]:
             car_speed += 0.02
             car_speed = min(10, car_speed)
