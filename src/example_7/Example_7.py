@@ -1,3 +1,4 @@
+import math
 import random
 
 from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow, distance
@@ -58,10 +59,17 @@ def input(key):
 def update():
     global car_mode
     if car_mode:
-        car.y += held_keys["w"] * 12 * time.dt
-        car.y -= held_keys["s"] * 12 * time.dt
-        car.x += held_keys["d"] * 12 * time.dt
-        car.x -= held_keys["a"] * 12 * time.dt
+        if held_keys["w"]:
+            car.rotation_z += held_keys["d"] * 100 * time.dt
+            car.rotation_z -= held_keys["a"] * 100 * time.dt
+        if held_keys["s"]:
+            car.rotation_z -= held_keys["d"] * 100 * time.dt
+            car.rotation_z += held_keys["a"] * 100 * time.dt
+        car.x += held_keys["w"] * 12 * time.dt * math.cos(math.radians(car.rotation_z))
+        car.y += held_keys["w"] * (-12) * time.dt * math.sin(math.radians(car.rotation_z))
+        car.x -= held_keys["s"] * 12 * time.dt * math.cos(math.radians(car.rotation_z))
+        car.y -= held_keys["s"] * (-12) * time.dt * math.sin(math.radians(car.rotation_z))
+
         player.position = car.position
 
     for npc, val in npcs:
