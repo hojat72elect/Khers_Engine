@@ -1,7 +1,7 @@
 import math
 import random
 
-from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow, distance
+from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow, distance, mouse, color, curve, invoke, destroy
 
 app = Ursina()
 camera.orthographic = True
@@ -43,6 +43,16 @@ car_mode = False  # player is either in car mode or in the walk mode
 
 def input(key):
     global car_mode
+    if key == "left mouse down":
+        if not car_mode:
+            x, y, z = mouse.position
+            real_pos = player.position + (x * camera.fov, y * camera.fov, 0)
+            direction = [real_pos[0] - player.x, real_pos[1] - player.y, 0]
+            dot = Entity(model="sphere", color=color.black, scale=0.08, position=player.position, collider="sphere", tag="bullet")
+            dot.animate_position(player.position + [3 * p for p in direction], duration=0.5, curve=curve.linear)
+            player.rotation_z = 450 - math.degrees(math.atan2(direction[1], direction[0]))
+            invoke(destroy, dot, delay=0.5)
+
     if key == "b":
         if distance(car, player) < 1.5:
             if not car_mode:
