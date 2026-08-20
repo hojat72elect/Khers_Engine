@@ -1,7 +1,7 @@
 import math
 import random
 
-from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow, distance, mouse, color, curve, invoke, destroy, raycast
+from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow, distance, mouse, color, curve, invoke, destroy, raycast, Audio
 
 app = Ursina()
 camera.orthographic = True
@@ -40,11 +40,14 @@ camera.add_script(follow)
 
 car_mode = False  # player is either in car mode or in the walk mode
 
+gun = Audio("assets/gun.ogg", loop=False, autoplay=False)
+
 
 def input(key):
     global car_mode
     if key == "left mouse down":
         if not car_mode:
+            gun.play()
             x, y, z = mouse.position
             real_pos = player.position + (x * camera.fov, y * camera.fov, 0)
             direction = [real_pos[0] - player.x, real_pos[1] - player.y, 0]
