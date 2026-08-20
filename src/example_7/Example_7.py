@@ -1,7 +1,7 @@
 import math
 import random
 
-from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow, distance, mouse, color, curve, invoke, destroy
+from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow, distance, mouse, color, curve, invoke, destroy, raycast
 
 app = Ursina()
 camera.orthographic = True
@@ -52,6 +52,10 @@ def input(key):
             dot.animate_position(player.position + [3 * p for p in direction], duration=0.5, curve=curve.linear)
             player.rotation_z = 450 - math.degrees(math.atan2(direction[1], direction[0]))
             invoke(destroy, dot, delay=0.5)
+            shoot = raycast(player.position, direction, distance=10, ignore=[player, dot])
+            if shoot.hit and getattr(shoot.entity, 'tag', None) == "npc":
+                Entity(model="quad", texture="corpse", color=color.random_color(), scale=0.7, position=shoot.entity.position)
+                shoot.entity.disable()
 
     if key == "b":
         if distance(car, player) < 1.5:
