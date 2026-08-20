@@ -41,6 +41,7 @@ camera.add_script(follow)
 car_mode = False  # player is either in car mode or in the walk mode
 
 gun = Audio("assets/gun.ogg", loop=False, autoplay=False)
+drive = Audio("assets/car_drive.ogg", loop=True, autoplay=False)
 
 
 def input(key):
@@ -79,6 +80,12 @@ car_speed = 2
 def update():
     global car_mode, car_speed
     if car_mode:
+        if held_keys["w"] or held_keys["s"]:
+            if not drive.playing:
+                drive.play()
+        else:
+            drive.stop()
+
         head_ray = raycast(car.position, (math.cos(math.radians(360 - car.rotation_z)), math.sin(math.radians(360 - car.rotation_z)), 0), ignore=[car, ], distance=1.5)
         if head_ray.hit and getattr(head_ray.entity, 'tag', None) == "npc":
             Entity(model="quad", texture="corpse", color=color.random_color(), scale=0.7, position=head_ray.entity.position)
