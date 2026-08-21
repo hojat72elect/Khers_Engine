@@ -1,4 +1,4 @@
-from ursina import Ursina, Sky, Button, color, scene, application, Entity, camera, held_keys
+from ursina import Ursina, Sky, Button, color, scene, application, Entity, camera, held_keys, mouse, destroy
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 app = Ursina()
@@ -17,6 +17,14 @@ sword = Entity(model="blade", texture="sword", rotation=(30, -40), position=(0.5
 def input(key):
     if key == 'escape':
         application.quit()
+    for box in boxes:
+        if box.hovered:
+            if key == "left mouse down":
+                new = Button(color=color.white, model="cube", position=box.position + mouse.normal, texture="grass", parent=scene, origin_y=0.5)
+                boxes.append(new)
+            if key == "right mouse down":
+                boxes.remove(box)
+                destroy(box)
 
 
 def update():
