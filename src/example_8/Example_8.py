@@ -1,21 +1,20 @@
-from ursina import Ursina, Sky, Entity, color, duplicate
+from ursina import Ursina, Sky, Button, color, scene, application
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 app = Ursina()
-Sky()
-ground = Entity(model="plane", texture="grass", collider="mesh", scale=(100, 1, 100))
-player = FirstPersonController(position=(0, 2, -5))
+Sky(texture="sky_sunset")
+player = FirstPersonController()
 
-wall1 = Entity(model="cube", texture="wall", collider="box", scale=(100, 10, 5), position=(0, 5, 50), color=color.gray)
-wall2 = duplicate(wall1, z=-50)
-wall3 = duplicate(wall1, rotation_y=90, x=-50, z=0)
-wall4 = duplicate(wall3, x=50)
-wall5 = duplicate(wall1, position=(0, 2, 0), scale=(20, 5, 0.5), color=color.dark_gray)
+boxes = []
+for n in range(12):
+    for k in range(12):
+        box = Button(color=color.white, model="cube", position=(k, 0, n), texture="grass", parent=scene, origin_y=0.5)
+        boxes.append(box)
 
 
 def input(key):
     if key == 'escape':
-        app.quit()
+        application.quit()
 
 
 app.run()
