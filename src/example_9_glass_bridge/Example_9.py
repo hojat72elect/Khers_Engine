@@ -1,6 +1,6 @@
 from random import randint
 
-from ursina import Ursina, Entity, application, color, duplicate
+from ursina import Ursina, Entity, application, color, duplicate, invoke, destroy
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 app = Ursina()
@@ -26,6 +26,14 @@ pillar = Entity(model="cube", color=color.brown, scale=(1, 15, 1), y=8, z=58)
 def input(key):
     if key == 'escape':
         application.quit()
+
+
+def update():
+    for block1, block2, k, n in blocks:
+        for x, y in [(block1, k), (block2, n)]:
+            if x.intersects() and y:
+                invoke(destroy, x, delay=0.1)
+                x.fade_out(duration=0.1)
 
 
 app.run()
