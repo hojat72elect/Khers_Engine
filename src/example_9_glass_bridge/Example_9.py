@@ -19,6 +19,9 @@ for i in range(12):
 
     blocks.append((block, block2, randint(0, 3) > 0, randint(0, 3) > 0))
 
+goal = Entity(model="cube", collider="mesh", texture="grass", scale=(10, 1, 10), z=55)
+pillar = Entity(model="cube", color=color.brown, scale=(1, 15, 1), y=8, z=58)
+
 
 def input(key):
     if key == 'escape':
