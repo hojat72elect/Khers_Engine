@@ -1,4 +1,4 @@
-from ursina import Ursina, application, Entity, camera, color, time, curve
+from ursina import Ursina, application, Entity, camera, color, time, curve, duplicate, invoke
 
 app = Ursina()
 
@@ -8,6 +8,18 @@ ground = Entity(model="cube", color=color.yellow, y=-1, origin_y=.5, scale=(200,
 
 camera.orthographic = True
 camera.fov = 18
+
+diam = []
+
+
+def newObstacle(val):
+    new1 = Entity(model="diamond", color=color.violet, y=-0.5, texture="white_cube", x=val, collider="mesh")
+    new2 = duplicate(new1, y=0.35, x=val + 1, scale=0.8)
+    diam.extend((new1, new2))
+    invoke(newObstacle, val=val + 10, delay=1)
+
+
+newObstacle(30)
 
 
 def input(key):
@@ -20,6 +32,8 @@ def input(key):
 
 
 def update():
+    for ob in diam:
+        ob.x -= 10 * time.dt
     if not player.intersects().hit:
         player.y -= time.dt
     player.y = max(-0.5, player.y)
