@@ -1,4 +1,4 @@
-from ursina import Ursina, application, Entity, camera, color, time
+from ursina import Ursina, application, Entity, camera, color, time, curve
 
 app = Ursina()
 
@@ -13,6 +13,10 @@ camera.fov = 18
 def input(key):
     if key == 'escape':
         application.quit()
+    if key == "space":
+        if player.intersects().hit:
+            player.animate_y(player.y + 3, duration=0.3, curve=curve.out_sine)
+            player.animate_rotation_z(player.rotation_z + 180, duration=0.5, curve=curve.linear)
 
 
 def update():
