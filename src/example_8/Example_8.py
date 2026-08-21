@@ -1,4 +1,4 @@
-from ursina import Ursina, Sky, Button, color, scene, application
+from ursina import Ursina, Sky, Button, color, scene, application, Entity, camera
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 app = Ursina()
@@ -10,6 +10,8 @@ for n in range(12):
     for k in range(12):
         box = Button(color=color.white, model="cube", position=(k, 0, n), texture="grass", parent=scene, origin_y=0.5)
         boxes.append(box)
+
+sword = Entity(model="blade", texture="sword", rotation=(30, -40), position=(0.5, -0.6), parent=camera.ui, scale=(0.2, 0.15))
 
 
 def input(key):
