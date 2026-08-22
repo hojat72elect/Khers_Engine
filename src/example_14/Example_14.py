@@ -1,6 +1,6 @@
 from random import uniform
 
-from ursina import Ursina, camera, Entity, application, held_keys, time, duplicate, color, invoke
+from ursina import Ursina, camera, Entity, application, held_keys, time, duplicate, color, invoke, destroy
 
 app = Ursina()
 
@@ -45,6 +45,11 @@ def update():
             enemy.y -= 10 * time.dt
         else:
             enemy.y -= 5 * time.dt
+        if enemy.y<-10:
+            enemies.remove(enemy)
+            destroy(enemy)
+    if car.intersects().hit:
+        car.shake()
 
 
 def input(key):
