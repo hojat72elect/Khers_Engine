@@ -37,4 +37,7 @@ def input(key):
             dx = 0
 
 
+ground = Entity(model="cube", texture="grass", rotation=(90, 0, 0), scale=(5, 1, 5), z=1)
+apple = Entity(model="cube", texture="apple", scale=0.4, position=(1, -1, -1), collider="mesh")
+
 app.run()
