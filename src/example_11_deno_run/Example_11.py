@@ -1,6 +1,6 @@
 from random import randint
 
-from ursina import Ursina, window, color, Animation, camera, application, Entity, duplicate, time, invoke
+from ursina import Ursina, window, color, Animation, camera, application, Entity, duplicate, time, invoke, curve
 
 app = Ursina()
 window.color = color.white
@@ -20,6 +20,10 @@ camera.fov = 10
 def input(key):
     if key == 'escape':
         application.quit()
+    if key == "space":
+        if deno.y <= 0.1:
+            deno.animate_y(2, duration=0.4, curve=curve.out_sine)
+            invoke(deno.animate_y, 0, duration=0.4, curve=curve.in_sine, delay=0.4)
 
 
 def update():
