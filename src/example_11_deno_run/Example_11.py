@@ -1,6 +1,6 @@
 from random import randint
 
-from ursina import Ursina, window, color, Animation, camera, application, Entity, duplicate, time, invoke, curve
+from ursina import Ursina, window, color, Animation, camera, application, Entity, duplicate, time, invoke, curve, Text
 
 app = Ursina()
 window.color = color.white
@@ -27,12 +27,18 @@ def input(key):
 
 
 def update():
+    global points
+    points += 1
+    label.text = f"Points: {points}"
     for groud in pair:
         groud.x -= 6 * time.dt
         if groud.x < -35:
             groud.x += 100
     for c in cacti:
         c.x -= 6 * time.dt
+    if deno.intersects().hit:
+        deno.texture = "hit"
+        application.pause()
 
 
 def newCactus():
@@ -42,5 +48,8 @@ def newCactus():
 
 
 newCactus()
+
+label = Text(text=f"Points: {0}", color=color.black, position=(-0.6, 0.4))
+points = 0
 
 app.run()
