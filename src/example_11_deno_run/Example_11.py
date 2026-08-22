@@ -1,6 +1,6 @@
 from random import randint
 
-from ursina import Ursina, window, color, Animation, camera, application, Entity, duplicate, time, invoke, curve, Text
+from ursina import Ursina, window, color, Animation, camera, application, Entity, duplicate, time, invoke, curve, Text, Audio
 
 app = Ursina()
 window.color = color.white
@@ -16,12 +16,14 @@ cacti = []
 camera.orthographic = True
 camera.fov = 10
 
+sound = Audio("beep",autoplay=False)
 
 def input(key):
     if key == 'escape':
         application.quit()
     if key == "space":
         if deno.y <= 0.1:
+            sound.play()
             deno.animate_y(2, duration=0.4, curve=curve.out_sine)
             invoke(deno.animate_y, 0, duration=0.4, curve=curve.in_sine, delay=0.4)
 
