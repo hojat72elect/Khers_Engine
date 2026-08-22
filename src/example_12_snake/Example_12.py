@@ -6,7 +6,7 @@ camera.orthographic = True
 camera.fov = 8
 
 snake = Entity(model="cube", texture="snake", scale=0.4, z=-1, collider="box")
-body = [Entity(model="cube", scale=0.2, texture="body") for i in range(14)]
+body = [Entity(model="cube", scale=0.2, texture="body") for i in range(25)]
 
 dx = dy = 0
 
