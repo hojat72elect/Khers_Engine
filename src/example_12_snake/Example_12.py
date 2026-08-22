@@ -1,3 +1,5 @@
+from random import randint
+
 from ursina import Ursina, camera, Entity, time, application
 
 app = Ursina()
@@ -12,6 +14,12 @@ dx = dy = 0
 
 
 def update():
+    info = snake.intersects()
+    if info.hit:
+        apple.x = randint(-4, 4) / 2
+        apple.y = randint(-4, 4) / 2
+        new = Entity(model="cube", z=-1, scale=0.2, texture="body")
+        body.append(new)
     for i in range(len(body) - 1, 0, -1):
         pos = body[i - 1].position
         body[i].position = pos
