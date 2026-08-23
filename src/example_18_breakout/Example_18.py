@@ -1,4 +1,4 @@
-from ursina import *
+from ursina import Ursina, camera, window, color, Entity, Texture, mouse, time, random, clamp
 
 GAME_WIDTH = 800
 GAME_HEIGHT = 600
