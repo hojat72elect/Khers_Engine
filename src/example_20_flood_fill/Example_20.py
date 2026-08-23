@@ -182,7 +182,7 @@ def create_grid():
                 COLORS[color_index],
                 game_x,
                 game_y,
-                z=2,
+                z=100,
             )
 
             block.grid_x = x
@@ -966,8 +966,10 @@ grid_background = create_sprite(
     "grid",
     400,
     900,
-    z=0,
+    z=-1000,
 )
+
+grid_background.enabled = False
 
 create_grid()
 
