@@ -34,6 +34,13 @@ def input(key):
 def update():
     for fly in flies:
         fly.x -= 4 * time.dt
+        touch = fly.intersects()
+        if touch.hit:
+            flies.remove(fly)
+            destroy(fly)
+        t = me.intersects()
+        if t.hit and t.entity.scale == 2:
+            application.pause()
     me.y += held_keys["w"] * 6 * time.dt
     me.y -= held_keys["s"] * 6 * time.dt
     a = held_keys["w"] * -20
