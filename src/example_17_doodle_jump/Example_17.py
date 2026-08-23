@@ -1,6 +1,6 @@
 from random import randint
 
-from ursina import Ursina, Sky, Animation, color, camera, SmoothFollow, application, held_keys, time, Entity, duplicate, curve, destroy
+from ursina import Ursina, Sky, Animation, color, camera, SmoothFollow, application, held_keys, time, Entity, duplicate, curve, destroy, invoke, Text
 
 app = Ursina()
 Sky()
@@ -20,11 +20,30 @@ def input(key):
         application.quit()
 
 
+down = True
+
+
+def makeTrue():
+    global down
+    down = True
+
+
+label = Text(text="", color=color.olive, position=(-0.5, 0.45), size=2 * Text.size)
+points = int(bird.y)
+
+
 def update():
+    global down, points
+    points = max(points, bird.y)
+    label.text = str(round(100 * points))
+    if points - bird.y > 15:
+        quit()
     bird.x -= held_keys["a"] * 12 * time.dt
     bird.x += held_keys["d"] * 12 * time.dt
     bird.y -= 7 * time.dt
-    if bird.intersects().hit:
+    if down and bird.intersects().hit:
+        down = False
+        invoke(makeTrue, delay=0.4)
         bird.animate_y(bird.y + 7, duration=0.3, curve=curve.in_circ)
         plates.append(duplicate(platform, y=plates[-1].y + 5, x=randint(-5, 5)))
         obj = plates[0]
