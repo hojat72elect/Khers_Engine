@@ -720,6 +720,7 @@ def start_game():
         if sound_enabled and not sounds["theme-song"].playing:
             sounds["theme-song"].play()
 
+        title_click_area.enabled = False
         create_hearts()
         create_grid_cards()
 
@@ -872,8 +873,9 @@ def restart_game():
         title_text.y = 20
         title_text.alpha = 1
 
-        # Re-enable volume button.
+        # Re-enable volume button and title click area.
         volume_button.enabled = True
+        title_click_area.enabled = True
 
     invoke(
         restart,
