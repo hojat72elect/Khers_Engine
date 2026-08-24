@@ -37,7 +37,7 @@ target = Entity(
     model='quad',
     scale=(160 / 40, 280 / 40),
     position=(1.5, 1.5, -0.1),
-    color=color.yellow
+    color=color.black
 )
 
 # -----------------------------
@@ -102,10 +102,8 @@ def update():
     # ---------------------------------
     if collision:
         target.color = color.red
-    elif mouse_collision:
-        target.color = color.green
     else:
-        target.color = color.yellow
+        target.color = color.black
 
 
 def input(key):
