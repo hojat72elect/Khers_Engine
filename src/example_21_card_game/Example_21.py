@@ -217,6 +217,7 @@ class MemoryCard:
             position=(world_x, world_y, 0),
             scale=(CARD_WIDTH, CARD_HEIGHT),
             collider="box",
+            double_sided=True,
         )
 
         self.entity.name = card_name
@@ -230,6 +231,7 @@ class MemoryCard:
         self.flip_target_rotation = 0
         self.flip_elapsed = 0
         self.flip_duration = 0.5
+        self.texture_swapped = False
 
         # Entry animation.
         self.entry_start_y = self.entity.y
@@ -295,18 +297,33 @@ class MemoryCard:
 
             self.entity.rotation_y = rotation
 
-            # Swap texture around the midpoint.
-            if rotation < 90 and not self.face_up:
-                self.entity.texture = f"cards/{self.card_name}.png"
-                self.face_up = True
-
-            elif rotation >= 90 and self.face_up:
-                self.entity.texture = "cards/card-back.png"
-                self.face_up = False
+            # Swap texture at the midpoint (90 degrees) if not already swapped
+            if not self.texture_swapped:
+                if self.flip_start_rotation > self.flip_target_rotation:
+                    # Flipping from 180 to 0 (face down to face up)
+                    if rotation <= 90:
+                        self.entity.texture = f"cards/{self.card_name}.png"
+                        self.face_up = True
+                        self.texture_swapped = True
+                else:
+                    # Flipping from 0 to 180 (face up to face down)
+                    if rotation >= 90:
+                        self.entity.texture = "cards/card-back.png"
+                        self.face_up = False
+                        self.texture_swapped = True
 
             # Finish.
             if t >= 1:
                 self.entity.rotation_y = self.flip_target_rotation
+
+                # Ensure texture is correct based on final rotation
+                if self.flip_target_rotation == 0:
+                    self.entity.texture = f"cards/{self.card_name}.png"
+                    self.face_up = True
+                else:
+                    self.entity.texture = "cards/card-back.png"
+                    self.face_up = False
+
                 self.is_flipping = False
 
     # --------------------------------------------------------
@@ -319,6 +336,7 @@ class MemoryCard:
 
         self.is_flipping = True
         self.flip_elapsed = 0
+        self.texture_swapped = False
 
         play_sound("card-flip")
 
@@ -613,11 +631,19 @@ def card_clicked(card):
 
                 current_opened = card_opened
 
-                card.flip()
+                # Immediately reset both cards to face-down state
+                card.entity.texture = "cards/card-back.png"
+                card.entity.rotation_y = 180
+                card.face_up = False
+                card.is_flipping = False
 
-                current_opened.flip(
-                    callback=after_mismatch
-                )
+                current_opened.entity.texture = "cards/card-back.png"
+                current_opened.entity.rotation_y = 180
+                current_opened.face_up = False
+                current_opened.is_flipping = False
+
+                # Small delay before allowing next move
+                invoke(after_mismatch, delay=0.5)
 
         def after_mismatch():
             global card_opened
