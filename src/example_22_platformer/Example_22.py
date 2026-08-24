@@ -9,7 +9,7 @@ GAME_HEIGHT = 600
 
 GRAVITY = 900
 PLAYER_SPEED = 160
-JUMP_SPEED = 330
+JUMP_SPEED = 700
 
 
 # ============================================================
