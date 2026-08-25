@@ -1,4 +1,3 @@
-import os
 from random import choice, randint
 
 from ursina import *
@@ -37,15 +36,13 @@ camera.orthographic = True
 camera.fov = 20
 camera.position = (0, 0, -20)
 
+
 # ============================================================
 # ASSET PATHS
 # ============================================================
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
 def asset(*parts):
-    return os.path.join(BASE_DIR, *parts)
+    return os.path.join(*parts)
 
 
 # ============================================================
