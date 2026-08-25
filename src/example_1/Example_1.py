@@ -57,7 +57,7 @@ hello_text = Text(
 # Sound
 # -----------------------------
 clank_sound = Audio(
-    '../clank.wav',
+    'clank.wav',
     autoplay=False
 )
 
