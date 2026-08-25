@@ -1,6 +1,19 @@
+import os
 from random import choice, randint
 
-from ursina import *
+from ursina import (
+    Ursina,
+    window,
+    camera,
+    color,
+    Entity,
+    Text,
+    Audio,
+    time,
+    destroy,
+    BoxCollider,
+    Vec3
+)
 
 # ============================================================
 # CONFIGURATION
@@ -28,13 +41,10 @@ OBSTACLE_ANIMATION_SPEED = 0.1
 app = Ursina()
 
 window.title = "Pixel Runner"
-window.size = (GAME_WIDTH, GAME_HEIGHT)
 window.borderless = False
-window.color = color.rgb(94, 129, 162)
 
 camera.orthographic = True
-camera.fov = 20
-camera.position = (0, 0, -20)
+camera.fov = 18
 
 
 # ============================================================
@@ -63,15 +73,15 @@ obstacles = []
 sky = Entity(
     model='quad',
     texture=asset('graphics', 'Sky.png'),
-    scale=(20, 10),
-    position=(0, 0, 1)
+    scale=(55, 30),
+    position=(0, 0, 10)
 )
 
 ground = Entity(
     model='quad',
     texture=asset('graphics', 'ground.png'),
-    scale=(20, 2.5),
-    position=(0, -3.2, 0)
+    scale=(55, 15),
+    position=(0, -7.5, 0)
 )
 
 
@@ -90,7 +100,16 @@ class Player(Entity):
                 'player_walk_1.png'
             ),
             scale=(1.5, 2),
-            position=(PLAYER_X, GROUND_Y, -1)
+            position=(PLAYER_X, GROUND_Y, -1),
+            collider='box'
+        )
+
+        # Shrink the collider to ~70% of the sprite so only
+        # the visible body triggers a hit (not transparent edges).
+        self.collider = BoxCollider(
+            self,
+            center=Vec3(0, 0, 0),
+            size=Vec3(0.7, 0.85, 1)
         )
 
         self.walk_frames = [
@@ -217,8 +236,23 @@ class Obstacle(Entity):
                 randint(11, 14),
                 y_position,
                 -1
-            )
+            ),
+            collider='box'
         )
+
+        # Tighten the collider to the visible sprite area.
+        if obstacle_type == 'fly':
+            self.collider = BoxCollider(
+                self,
+                center=Vec3(0, 0, 0),
+                size=Vec3(0.7, 0.6, 1)
+            )
+        else:
+            self.collider = BoxCollider(
+                self,
+                center=Vec3(0, 0, 0),
+                size=Vec3(0.75, 0.8, 1)
+            )
 
         self.obstacle_type = obstacle_type
         self.frames = frames
@@ -448,13 +482,37 @@ def spawn_obstacle():
 # COLLISION
 # ============================================================
 
+def _aabb_overlap(a, b):
+    """Return True if entities a and b overlap on X and Y axes.
+
+    Uses each entity's collider centre and size (in local 0-1 space)
+    multiplied by the entity's world scale to get the actual half-
+    extents, then performs a standard axis-aligned bounding-box test.
+    """
+    a_col = a.collider
+    b_col = b.collider
+
+    # World-space half-extents
+    a_hx = abs(a.scale_x * a_col.size.x) / 2
+    a_hy = abs(a.scale_y * a_col.size.y) / 2
+    b_hx = abs(b.scale_x * b_col.size.x) / 2
+    b_hy = abs(b.scale_y * b_col.size.y) / 2
+
+    # World-space centres
+    ax = a.world_x + a_col.center.x * a.scale_x
+    ay = a.world_y + a_col.center.y * a.scale_y
+    bx = b.world_x + b_col.center.x * b.scale_x
+    by = b.world_y + b_col.center.y * b.scale_y
+
+    return (
+            abs(ax - bx) < (a_hx + b_hx)
+            and abs(ay - by) < (a_hy + b_hy)
+    )
+
+
 def check_collision():
     for obstacle in obstacles:
-
-        if player.intersects(
-                obstacle,
-                debug=False
-        ).hit:
+        if _aabb_overlap(player, obstacle):
             return True
 
     return False
