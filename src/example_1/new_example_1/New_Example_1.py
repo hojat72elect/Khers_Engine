@@ -89,7 +89,6 @@ def update():
     # ---------------------------------
     hit_info = potato.intersects(target)
     collision = hit_info.hit
-    print(f"Collision: {collision}, Potato: ({potato.x:.2f}, {potato.y:.2f}), Target: ({target.x:.2f}, {target.y:.2f}), HitInfo: {hit_info}")
 
     # ---------------------------------
     # Mouse / target collision
