@@ -1,5 +1,11 @@
-from pyglet import app
-from pyglet.window import Window
+from ursina import Ursina, application
 
-window = Window(width=1_280, height=720)
+app = Ursina()
+
+
+def input(key):
+    if key == "escape":
+        application.quit()
+
+
 app.run()
