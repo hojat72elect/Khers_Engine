@@ -62,12 +62,12 @@ clank_sound = Audio(
 )
 
 # Collision state
-collision = False
+potato_collision = False
 mouse_collision = False
 
 
 def update():
-    global collision, mouse_collision
+    global potato_collision, mouse_collision
 
     # ---------------------------------
     # Movement using held_keys
@@ -88,7 +88,7 @@ def update():
     # Potato / target collision
     # ---------------------------------
     hit_info = potato.intersects(target)
-    collision = hit_info.hit
+    potato_collision = hit_info.hit
 
     # ---------------------------------
     # Mouse / target collision
@@ -98,7 +98,9 @@ def update():
     # ---------------------------------
     # Target color
     # ---------------------------------
-    if collision:
+    if potato_collision and mouse_collision:
+        target.color = color.yellow
+    elif potato_collision:
         target.color = color.red
     elif mouse_collision:
         target.color = color.blue
