@@ -420,6 +420,12 @@ def start_game():
 
     obstacles.clear()
 
+    # Show game world
+
+    sky.enabled = True
+    ground.enabled = True
+    player.enabled = True
+
     # UI
 
     title_text.enabled = False
@@ -452,6 +458,14 @@ def game_over():
     title_text.enabled = True
 
     player_stand.enabled = True
+
+    score_text.enabled = False
+
+    # Hide game world
+
+    sky.enabled = False
+    ground.enabled = False
+    player.enabled = False
 
     # Remove obstacles
 
@@ -586,6 +600,11 @@ title_text.enabled = True
 message_text.enabled = True
 
 player_stand.enabled = True
+
+# Hide game world on the start screen
+sky.enabled = False
+ground.enabled = False
+player.enabled = False
 
 # ============================================================
 # START URSINA
