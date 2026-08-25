@@ -27,7 +27,8 @@ potato = Entity(
         0.5,  # adjust if your potato.png needs a different size
         0.5
     ),
-    position=(-5, 0, 0)
+    position=(-5, 0, 0),
+    collider='box'
 )
 
 # -----------------------------
@@ -37,7 +38,8 @@ target = Entity(
     model='quad',
     scale=(160 / 40, 280 / 40),
     position=(1.5, 1.5, -0.1),
-    color=color.black
+    color=color.black,
+    collider='box'
 )
 
 # -----------------------------
@@ -86,22 +88,20 @@ def update():
     # Potato / target collision
     # ---------------------------------
     collision = potato.intersects(target).hit
+    print(f"Collision: {collision}, Potato: ({potato.x:.2f}, {potato.y:.2f}), Target: ({target.x:.2f}, {target.y:.2f})")
 
     # ---------------------------------
     # Mouse / target collision
     # ---------------------------------
-    mouse_world_position = mouse.world_point
-
-    if mouse_world_position:
-        mouse_collision = target.contains(mouse_world_position)
-    else:
-        mouse_collision = False
+    mouse_collision = mouse.hovered_entity == target
 
     # ---------------------------------
     # Target color
     # ---------------------------------
     if collision:
         target.color = color.red
+    elif mouse_collision:
+        target.color = color.blue
     else:
         target.color = color.black
 
