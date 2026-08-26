@@ -3,7 +3,7 @@ from typing import Final
 from ursina import Entity, color
 
 
-class Player():
+class Player:
     JUMP_SPEED: Final[int] = 16
 
     def __init__(self, ground_entity: Entity):
