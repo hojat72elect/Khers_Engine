@@ -1,4 +1,6 @@
-from ursina import *
+from random import uniform
+
+from ursina import Ursina, camera, Entity, color, time, destroy, Text, application
 
 app = Ursina(title="Endless Runner Game", borderless=False, size=(800, 600))
 camera.orthographic = True
@@ -19,7 +21,7 @@ obstacles = []
 def create_obstacle():
     if game_over:
         return
-    height = random.uniform(0.7, 1.7)
+    height = uniform(0.7, 1.7)
     obstacle = Entity(model='quad', color=color.red, scale=(0.6, height), position=(camera.fov * camera.aspect_ratio, ground.y + ground.scale_y / 2 + height / 2))
     obstacles.append(obstacle)
 
