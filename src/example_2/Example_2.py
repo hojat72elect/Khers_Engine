@@ -4,7 +4,7 @@ from ursina import (Ursina, window, camera, color, Entity, Text, Audio, time, de
 
 GAME_WIDTH = 800
 GAME_HEIGHT = 400
-GROUND_Y = -2.0
+GROUND_Y = 1.0
 PLAYER_X = -6.0
 GRAVITY = 35
 JUMP_SPEED = 15
@@ -86,11 +86,11 @@ class Obstacle(Entity):
 
         if obstacle_type == 'fly':
             frames = ['assets/graphics/Fly/Fly1.png', 'assets/graphics/Fly/Fly2.png']
-            y_position = -0.3
+            y_position = 3
             scale = (1.4, 1.2)
         else:
             frames = ['assets/graphics/snail/snail1.png', 'assets/graphics/snail/snail2.png']
-            y_position = GROUND_Y
+            y_position = GROUND_Y-0.5
             scale = (1.4, 1.0)
 
         super().__init__(
