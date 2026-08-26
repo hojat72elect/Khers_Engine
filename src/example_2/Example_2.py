@@ -1,4 +1,3 @@
-import os
 from random import choice, randint
 
 from ursina import (Ursina, window, camera, color, Entity, Text, Audio, time, destroy, BoxCollider, Vec3)
@@ -20,19 +19,14 @@ window.borderless = False
 camera.orthographic = True
 camera.fov = 18
 
-
-def asset(*parts):
-    return os.path.join(*parts)
-
-
 game_active = False
 score = 0
 game_time = 0
 spawn_timer = 0
 obstacles = []
 
-sky = Entity(model='quad', texture=asset('graphics', 'Sky.png'), scale=(55, 30), position=(0, 0, 10))
-ground = Entity(model='quad', texture=asset('graphics', 'ground.png'), scale=(55, 15), position=(0, -7.5, 0))
+sky = Entity(model='quad', texture='graphics/Sky.png', scale=(55, 30), position=(0, 0, 10))
+ground = Entity(model='quad', texture='graphics/ground.png', scale=(55, 15), position=(0, -7.5, 0))
 
 
 class Player(Entity):
@@ -40,19 +34,15 @@ class Player(Entity):
     def __init__(self):
         super().__init__(
             model='quad',
-            texture=asset(
-                'graphics',
-                'Player',
-                'player_walk_1.png'
-            ),
+            texture='graphics/Player/player_walk_1.png',
             scale=(1.5, 2),
             position=(PLAYER_X, GROUND_Y, -1),
             collider='box'
         )
 
         self.collider = BoxCollider(self, center=Vec3(0, 0, 0), size=Vec3(0.7, 0.85, 1))
-        self.walk_frames = [asset('graphics', 'Player', 'player_walk_1.png'), asset('graphics', 'Player', 'player_walk_2.png')]
-        self.jump_frame = asset('graphics', 'Player', 'jump.png')
+        self.walk_frames = ['graphics/Player/player_walk_1.png', 'graphics/Player/player_walk_2.png']
+        self.jump_frame = 'graphics/Player/jump.png'
         self.animation_index = 0
         self.animation_timer = 0
         self.velocity_y = 0
@@ -95,11 +85,11 @@ class Obstacle(Entity):
     def __init__(self, obstacle_type):
 
         if obstacle_type == 'fly':
-            frames = [asset('graphics', 'Fly', 'Fly1.png'), asset('graphics', 'Fly', 'Fly2.png')]
+            frames = ['graphics/Fly/Fly1.png', 'graphics/Fly/Fly2.png']
             y_position = -0.3
             scale = (1.4, 1.2)
         else:
-            frames = [asset('graphics', 'snail', 'snail1.png'), asset('graphics', 'snail', 'snail2.png')]
+            frames = ['graphics/snail/snail1.png', 'graphics/snail/snail2.png']
             y_position = GROUND_Y
             scale = (1.4, 1.0)
 
@@ -142,19 +132,19 @@ score_text = Text(text='Score: 0', origin=(0, 0), position=(0, 0.42), scale=1.5,
 title_text = Text(text='Pixel Runner', origin=(0, 0), position=(0, 0.25), scale=2, color=color.rgb(111, 196, 169))
 message_text = Text(text='Press SPACE to run', origin=(0, 0), position=(0, -0.35), scale=1.3, color=color.rgb(111, 196, 169))
 game_over_text = Text(text='', origin=(0, 0), position=(0, -0.35), scale=1.3, color=color.rgb(111, 196, 169))
-player_stand = Entity(model='quad', texture=asset('graphics', 'Player', 'player_stand.png'), scale=(2, 2), position=(0, -0.1, -1))
+player_stand = Entity(model='quad', texture='graphics/Player/player_stand.png', scale=(2, 2), position=(0, -0.1, -1))
 player_stand.enabled = True
 jump_sound = None
 music = None
 
 try:
-    jump_sound = Audio(asset('audio', 'jump.wav'), autoplay=False)
+    jump_sound = Audio("audio/jump.wav", autoplay=False)
     jump_sound.volume = 0.5
 except Exception as e:
     print("Could not load jump sound:", e)
 
 try:
-    music = Audio(asset('audio', 'music.wav'), autoplay=False, loop=True)
+    music = Audio("audio/music.wav", autoplay=False, loop=True)
     music.volume = 0.15
 
 except Exception as e:
