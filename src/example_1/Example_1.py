@@ -1,4 +1,4 @@
-from ursina import *
+from ursina import Ursina, Entity, color, Text, Audio, held_keys, time, mouse, application
 
 app = Ursina()
 
