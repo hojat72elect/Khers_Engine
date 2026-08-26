@@ -4,10 +4,10 @@ app = Ursina()
 
 movement_speed = 5
 background = Entity(model='quad', scale=(16, 16), color=color.white, z=1)
-potato = Entity(model='quad', texture='../potato.png', scale=(0.5, 0.5), position=(-5, 0, 0), collider='box')
+potato = Entity(model='quad', texture='assets/potato.png', scale=(0.5, 0.5), position=(-5, 0, 0), collider='box')
 target = Entity(model='quad', scale=(160 / 40, 280 / 40), position=(1.5, 1.5, 0), color=color.black, collider='box')
 hello_text = Text(text='Hello World!', position=(0.0, 0.15), origin=(0, 0), color=color.black, scale=1.5)
-clank_sound = Audio('clank.wav', autoplay=False)
+clank_sound = Audio('assets/clank.wav', autoplay=False)
 potato_collision = False
 mouse_collision = False
 
