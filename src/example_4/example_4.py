@@ -16,16 +16,6 @@ player_velocity_y = 0
 is_jumping = False
 game_over = False
 obstacles = []
-
-
-def create_obstacle():
-    if game_over:
-        return
-    height = uniform(0.7, 1.7)
-    obstacle = Entity(model='quad', color=color.red, scale=(0.6, height), position=(camera.fov * camera.aspect_ratio, ground.y + ground.scale_y / 2 + height / 2))
-    obstacles.append(obstacle)
-
-
 spawn_timer = 0
 
 
@@ -37,7 +27,11 @@ def update():
     spawn_timer += dt
     if spawn_timer >= SPAWN_INTERVAL:
         spawn_timer -= SPAWN_INTERVAL
-        create_obstacle()
+        if game_over:
+            return
+        height = uniform(0.7, 1.7)
+        obstacle = Entity(model='quad', color=color.red, scale=(0.6, height), position=(camera.fov * camera.aspect_ratio, ground.y + ground.scale_y / 2 + height / 2))
+        obstacles.append(obstacle)
     player_velocity_y += GRAVITY * dt
     player.y += player_velocity_y * dt
     ground_top = ground.y + ground.scale_y / 2 + player.scale_y / 2
