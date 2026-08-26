@@ -2,6 +2,8 @@ from random import uniform
 
 from ursina import Ursina, camera, Entity, color, time, destroy, Text, application
 
+from Player import Player
+
 app = Ursina(title="Endless Runner Game", borderless=False, size=(800, 600))
 camera.orthographic = True
 camera.fov = 20
@@ -11,16 +13,16 @@ OBSTACLE_SPEED = 10
 SPAWN_INTERVAL = 1.5
 
 ground = Entity(model='quad', color=color.blue, scale=(30, 0.7), position=(0, -4.5))
-player = Entity(model='quad', color=color.rgb(50, 225, 30), scale=(1.5, 1.5), position=(-8, ground.y + ground.scale_y / 2 + 0.75))
-player_velocity_y = 0
-is_jumping = False
+player = Player(ground)
+
 game_over = False
 obstacles = []
 spawn_timer = 0
 
 
 def update():
-    global player_velocity_y, is_jumping, game_over, spawn_timer
+    global game_over, spawn_timer
+    global player
     if game_over:
         return
     dt = time.dt
@@ -32,13 +34,13 @@ def update():
         height = uniform(0.7, 1.7)
         obstacle = Entity(model='quad', color=color.red, scale=(0.6, height), position=(camera.fov * camera.aspect_ratio, ground.y + ground.scale_y / 2 + height / 2))
         obstacles.append(obstacle)
-    player_velocity_y += GRAVITY * dt
-    player.y += player_velocity_y * dt
-    ground_top = ground.y + ground.scale_y / 2 + player.scale_y / 2
-    if player.y <= ground_top:
-        player.y = ground_top
-        player_velocity_y = 0
-        is_jumping = False
+    player.vertical_velocity += GRAVITY * dt
+    player.entity.y += player.vertical_velocity * dt
+    ground_top = ground.y + ground.scale_y / 2 + player.entity.scale_y / 2
+    if player.entity.y <= ground_top:
+        player.entity.y = ground_top
+        player.vertical_velocity = 0
+        player.is_jumping = False
 
     for obstacle in obstacles[:]:
         obstacle.x -= OBSTACLE_SPEED * dt
@@ -46,24 +48,23 @@ def update():
             destroy(obstacle)
             obstacles.remove(obstacle)
 
-    px, py = player.x, player.y
-    phw, phh = player.scale_x / 2, player.scale_y / 2
+    px, py = player.entity.x, player.entity.y
+    phw, phh = player.entity.scale_x / 2, player.entity.scale_y / 2
     for obstacle in obstacles:
         ox, oy = obstacle.x, obstacle.y
         ohw, ohh = obstacle.scale_x / 2, obstacle.scale_y / 2
         if (px + phw > ox - ohw and px - phw < ox + ohw and
                 py - phh < oy + ohh and py + phh > oy - ohh):
-            print("Game Over!")
             game_over = True
             Text(text='GAME OVER', origin=(0, 0), scale=3, color=color.white)
             return
 
 
 def input(key):
-    global player_velocity_y, is_jumping
-    if key == 'space' and not is_jumping and not game_over:
-        player_velocity_y = JUMP_SPEED
-        is_jumping = True
+    global player
+    if key == 'space' and not player.is_jumping and not game_over:
+        player.vertical_velocity = JUMP_SPEED
+        player.is_jumping = True
     if key == 'escape':
         application.quit()
 
