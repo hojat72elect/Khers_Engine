@@ -32,13 +32,7 @@ ground = Entity(model='quad', texture='assets/graphics/ground.png', scale=(55, 1
 class Player(Entity):
 
     def __init__(self):
-        super().__init__(
-            model='quad',
-            texture='assets/graphics/Player/player_walk_1.png',
-            scale=(1.5, 2),
-            position=(PLAYER_X, GROUND_Y, -1),
-            collider='box'
-        )
+        super().__init__(model='quad', texture='assets/graphics/Player/player_walk_1.png', scale=(1.5, 2), position=(PLAYER_X, GROUND_Y, -1), collider='box')
 
         self.collider = BoxCollider(self, center=Vec3(0, 0, 0), size=Vec3(0.7, 0.85, 1))
         self.walk_frames = ['assets/graphics/Player/player_walk_1.png', 'assets/graphics/Player/player_walk_2.png']
@@ -90,7 +84,7 @@ class Obstacle(Entity):
             scale = (1.4, 1.2)
         else:
             frames = ['assets/graphics/snail/snail1.png', 'assets/graphics/snail/snail2.png']
-            y_position = GROUND_Y-0.5
+            y_position = GROUND_Y - 0.5
             scale = (1.4, 1.0)
 
         super().__init__(
