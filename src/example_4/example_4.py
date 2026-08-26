@@ -8,7 +8,6 @@ app = Ursina(title="Endless Runner Game", borderless=False, size=(800, 600))
 camera.orthographic = True
 camera.fov = 20
 GRAVITY = -30
-JUMP_SPEED = 16
 OBSTACLE_SPEED = 10
 SPAWN_INTERVAL = 1.5
 
@@ -63,7 +62,7 @@ def update():
 def input(key):
     global player
     if key == 'space' and not player.is_jumping and not game_over:
-        player.vertical_velocity = JUMP_SPEED
+        player.vertical_velocity = Player.JUMP_SPEED
         player.is_jumping = True
     if key == 'escape':
         application.quit()
