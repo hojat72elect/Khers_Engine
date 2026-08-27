@@ -2,14 +2,10 @@ from ursina import Ursina, camera, window, color, Entity, Texture, mouse, time, 
 
 GAME_WIDTH = 800
 GAME_HEIGHT = 600
-
 app = Ursina(title="Breakout", size=(GAME_WIDTH, GAME_HEIGHT), forced_aspect_ratio=GAME_WIDTH / GAME_HEIGHT, )
-
 camera.orthographic = True
 camera.fov = GAME_HEIGHT
-
 window.color = color.rgb(2, 138, 248)
-
 Texture.default_filtering = None
 
 
@@ -29,17 +25,8 @@ def to_phaser_y(y):
     return GAME_HEIGHT / 2 - y
 
 
-def create_sprite(
-        image_name,
-        x,
-        y,
-        z=0
-):
-    entity = Entity(
-        model="quad",
-        texture=f"assets/{image_name}.png",
-        position=(px(x), py(y), z),
-    )
+def create_sprite(image_name, x, y, z=0):
+    entity = Entity(model="quad", texture=f"assets/{image_name}.png", position=(px(x), py(y), z))
 
     if entity.texture:
         entity.scale_x = entity.texture.width
@@ -51,27 +38,19 @@ def create_sprite(
 ball = None
 paddle = None
 bricks = []
-
 ball_on_paddle = True
-
 ball_velocity_x = 0.0
 ball_velocity_y = 0.0
-
 BALL_START_X = 400
 BALL_START_Y = 500
-
 PADDLE_START_X = 400
 PADDLE_Y = 550
-
 PADDLE_MIN_X = 52
 PADDLE_MAX_X = 748
-
 BRICK_START_X = 112
 BRICK_START_Y = 100
-
 BRICK_COLUMNS = 10
 BRICK_ROWS = 6
-
 BRICK_CELL_WIDTH = 64
 BRICK_CELL_HEIGHT = 32
 
@@ -89,39 +68,17 @@ def create_bricks():
     global bricks
 
     bricks = []
-
     for row in range(BRICK_ROWS):
-
         for column in range(BRICK_COLUMNS):
-            x = (
-                    BRICK_START_X
-                    + column * BRICK_CELL_WIDTH
-            )
-
-            y = (
-                    BRICK_START_Y
-                    + row * BRICK_CELL_HEIGHT
-            )
-
-            brick = create_sprite(
-                BRICK_TYPES[row],
-                x,
-                y,
-                z=1,
-            )
-
+            x = (BRICK_START_X + column * BRICK_CELL_WIDTH)
+            y = (BRICK_START_Y + row * BRICK_CELL_HEIGHT)
+            brick = create_sprite(BRICK_TYPES[row], x, y, z=1)
             bricks.append(brick)
 
 
 def create_ball():
     global ball
-
-    ball = create_sprite(
-        "ball1",
-        BALL_START_X,
-        BALL_START_Y,
-        z=2,
-    )
+    ball = create_sprite("ball1", BALL_START_X, BALL_START_Y, z=2)
 
 
 def create_paddle():
