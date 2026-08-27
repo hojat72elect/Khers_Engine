@@ -7,9 +7,7 @@ GAME_HEIGHT = 480
 GRID_WIDTH = 40
 GRID_HEIGHT = 30
 CELL_SIZE = 16
-
 app = Ursina(title="Snake", size=(GAME_WIDTH, GAME_HEIGHT), forced_aspect_ratio=GAME_WIDTH / GAME_HEIGHT, )
-
 camera.orthographic = True
 camera.fov = GAME_HEIGHT
 window.color = color.rgb(191, 204, 0)
@@ -33,7 +31,7 @@ def to_phaser_y(y):
 
 
 def create_sprite(image_name, x, y, z=0):
-    entity = Entity(model="quad", texture=f"{image_name}.png", position=(px(x), py(y), z))
+    entity = Entity(model="quad", texture=f"assets/{image_name}.png", position=(px(x), py(y), z))
 
     if entity.texture:
         entity.scale_x = entity.texture.width
