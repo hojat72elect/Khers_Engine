@@ -5,27 +5,28 @@ from ursina import Ursina, window, color, Animation, camera, application, Entity
 app = Ursina()
 window.color = color.white
 
-deno = Animation("dino", collider="box", x=-5)
-ground1 = Entity(model="quad", texture="ground", scale=(50, 0.5, 1), z=1)
+dino = Animation("assets/dino", collider="box", x=-5)
+ground1 = Entity(model="quad", texture="assets/ground", scale=(50, 0.5, 1), z=1)
 ground2 = duplicate(ground1, x=50)
 pair = [ground1, ground2]
 
-cactus = Entity(model="quad", texture="cacti", x=20, collider="box")
+cactus = Entity(model="quad", texture="assets/cacti", x=20, collider="box")
 cacti = []
 
 camera.orthographic = True
 camera.fov = 10
 
-sound = Audio("beep",autoplay=False)
+sound = Audio("assets/beep", autoplay=False)
+
 
 def input(key):
     if key == 'escape':
         application.quit()
     if key == "space":
-        if deno.y <= 0.1:
+        if dino.y <= 0.1:
             sound.play()
-            deno.animate_y(2, duration=0.4, curve=curve.out_sine)
-            invoke(deno.animate_y, 0, duration=0.4, curve=curve.in_sine, delay=0.4)
+            dino.animate_y(2, duration=0.4, curve=curve.out_sine)
+            invoke(dino.animate_y, 0, duration=0.4, curve=curve.in_sine, delay=0.4)
 
 
 def update():
@@ -38,8 +39,8 @@ def update():
             groud.x += 100
     for c in cacti:
         c.x -= 6 * time.dt
-    if deno.intersects().hit:
-        deno.texture = "hit"
+    if dino.intersects().hit:
+        dino.texture = "hit"
         application.pause()
 
 
