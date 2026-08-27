@@ -7,8 +7,8 @@ app = Ursina()
 camera.orthographic = True
 camera.fov = 8
 
-snake = Entity(model="cube", texture="snake", scale=0.4, z=-1, collider="box")
-body = [Entity(model="cube", scale=0.2, texture="body") for i in range(25)]
+snake = Entity(model="cube", texture="assets/snake", scale=0.4, z=-1, collider="box")
+body = [Entity(model="cube", scale=0.2, texture="assets/body") for i in range(25)]
 
 dx = dy = 0
 
@@ -18,7 +18,7 @@ def update():
     if info.hit:
         apple.x = randint(-4, 4) / 2
         apple.y = randint(-4, 4) / 2
-        new = Entity(model="cube", z=-1, scale=0.2, texture="body")
+        new = Entity(model="cube", z=-1, scale=0.2, texture="assets/body")
         body.append(new)
     for i in range(len(body) - 1, 0, -1):
         pos = body[i - 1].position
@@ -46,6 +46,6 @@ def input(key):
 
 
 ground = Entity(model="cube", texture="grass", rotation=(90, 0, 0), scale=(5, 1, 5), z=1)
-apple = Entity(model="cube", texture="apple", scale=0.4, position=(1, -1, -1), collider="mesh")
+apple = Entity(model="cube", texture="assets/apple", scale=0.4, position=(1, -1, -1), collider="mesh")
 
 app.run()
