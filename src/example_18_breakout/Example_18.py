@@ -37,7 +37,7 @@ def create_sprite(
 ):
     entity = Entity(
         model="quad",
-        texture=f"{image_name}.png",
+        texture=f"assets/{image_name}.png",
         position=(px(x), py(y), z),
     )
 
@@ -144,7 +144,7 @@ def height(entity):
 
 
 def intersects(a, b):
-    return (abs(a.x - b.x) < (width(a) + width(b)) / 2 and abs(a.y - b.y) < (height(a) + height(b)) / 2)
+    return abs(a.x - b.x) < (width(a) + width(b)) / 2 and abs(a.y - b.y) < (height(a) + height(b)) / 2
 
 
 def reset_ball():
