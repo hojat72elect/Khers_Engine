@@ -2,17 +2,13 @@ from ursina import *
 
 GAME_WIDTH = 549
 GAME_HEIGHT = 480
-
 app = Ursina(title="Card Memory Game", borderless=False)
-
 window.title = "Card Memory Game"
 window.color = color.rgb(25, 42, 86)
 window.fps_counter.enabled = False
-
 camera.orthographic = True
 camera.fov = GAME_HEIGHT
 camera.position = (0, 0, -100)
-
 Texture.default_filtering = None
 
 
@@ -27,48 +23,13 @@ def wait(duration, callback):
 
 
 sounds = {
-    "theme-song": Audio(
-        "audio/fat-caps-audionatix.mp3",
-        autoplay=False,
-        loop=True,
-        volume=0.5,
-    ),
-
-    "whoosh": Audio(
-        "audio/whoosh.mp3",
-        autoplay=False,
-        volume=1.0,
-    ),
-
-    "card-flip": Audio(
-        "audio/card-flip.mp3",
-        autoplay=False,
-        volume=1.0,
-    ),
-
-    "card-match": Audio(
-        "audio/card-match.mp3",
-        autoplay=False,
-        volume=1.0,
-    ),
-
-    "card-mismatch": Audio(
-        "audio/card-mismatch.mp3",
-        autoplay=False,
-        volume=1.0,
-    ),
-
-    "card-slide": Audio(
-        "audio/card-slide.mp3",
-        autoplay=False,
-        volume=1.0,
-    ),
-
-    "victory": Audio(
-        "audio/victory.mp3",
-        autoplay=False,
-        volume=1.0,
-    ),
+    "theme-song": Audio("assets/audio/fat-caps-audionatix.mp3", autoplay=False, loop=True, volume=0.5),
+    "whoosh": Audio("assets/audio/whoosh.mp3", autoplay=False, volume=1.0),
+    "card-flip": Audio("assets/audio/card-flip.mp3", autoplay=False, volume=1.0),
+    "card-match": Audio("assets/audio/card-match.mp3", autoplay=False, volume=1.0),
+    "card-mismatch": Audio("assets/audio/card-mismatch.mp3", autoplay=False, volume=1.0),
+    "card-slide": Audio("assets/audio/card-slide.mp3", autoplay=False, volume=1.0),
+    "victory": Audio("assets/audio/victory.mp3", autoplay=False, volume=1.0)
 }
 
 sound_enabled = True
@@ -101,7 +62,6 @@ GRID_X = 113
 GRID_Y = 102
 PADDING_X = 10
 PADDING_Y = 10
-
 cards = []
 hearts = []
 card_opened = None
@@ -136,25 +96,17 @@ def update_camera_shake():
 class MemoryCard:
     def __init__(self, x, y, card_name, start_y=None):
         self.card_name = card_name
-
         self.is_flipping = False
         self.destroyed = False
         self.face_up = False
-
         if start_y is None:
             start_y = y
 
         world_x, world_y = px_to_world(x, start_y)
-
-        self.target_position = Vec3(
-            px_to_world(x, y)[0],
-            px_to_world(x, y)[1],
-            0,
-        )
-
+        self.target_position = Vec3(px_to_world(x, y)[0], px_to_world(x, y)[1], 0)
         self.entity = Entity(
             model="quad",
-            texture="cards/card-back.png",
+            texture="assets/cards/card-back.png",
             position=(world_x, world_y, 0),
             scale=(CARD_WIDTH, CARD_HEIGHT),
             collider="box",
@@ -182,107 +134,57 @@ class MemoryCard:
             self.entry_delay -= time.dt
         elif self.entity.y != self.target_position.y and self.entry_elapsed < self.entry_duration:
             self.entry_elapsed += time.dt
-
             t = min(self.entry_elapsed / self.entry_duration, 1.0)
-
-            # Expo-like easing.
             eased = 1 - pow(2, -10 * t)
-
-            self.entity.y = lerp(
-                self.entry_start_y,
-                self.target_position.y,
-                eased,
-            )
-
+            self.entity.y = lerp(self.entry_start_y, self.target_position.y, eased)
             if random.random() < 0.025:
                 play_sound("card-slide", 1.2)
 
-        # Flip animation
-
         if self.is_flipping:
             self.flip_elapsed += time.dt
-
-            t = min(
-                self.flip_elapsed / self.flip_duration,
-                1.0,
-            )
-
-            # Exponential ease-out.
+            t = min(self.flip_elapsed / self.flip_duration, 1.0)
             eased = 1 - pow(2, -10 * t)
-
-            rotation = lerp(
-                self.flip_start_rotation,
-                self.flip_target_rotation,
-                eased,
-            )
+            rotation = lerp(self.flip_start_rotation, self.flip_target_rotation, eased)
 
             self.entity.rotation_y = rotation
-
-            # Swap texture at the midpoint (90 degrees) if not already swapped
             if not self.texture_swapped:
                 if self.flip_start_rotation > self.flip_target_rotation:
-                    # Flipping from 180 to 0 (face down to face up)
                     if rotation <= 90:
                         self.entity.texture = f"cards/{self.card_name}.png"
                         self.face_up = True
                         self.texture_swapped = True
                 else:
-                    # Flipping from 0 to 180 (face up to face down)
                     if rotation >= 90:
                         self.entity.texture = "cards/card-back.png"
                         self.face_up = False
                         self.texture_swapped = True
 
-            # Finish.
             if t >= 1:
                 self.entity.rotation_y = self.flip_target_rotation
-
-                # Ensure texture is correct based on final rotation
                 if self.flip_target_rotation == 0:
                     self.entity.texture = f"cards/{self.card_name}.png"
                     self.face_up = True
                 else:
                     self.entity.texture = "cards/card-back.png"
                     self.face_up = False
-
                 self.is_flipping = False
 
     def flip(self, callback=None):
         if self.is_flipping or self.destroyed:
             return
-
         self.is_flipping = True
         self.flip_elapsed = 0
         self.texture_swapped = False
-
         play_sound("card-flip")
-
         if self.face_up:
             self.flip_start_rotation = 0
             self.flip_target_rotation = 180
         else:
             self.flip_start_rotation = 180
             self.flip_target_rotation = 0
-
-        # Small scale bounce.
-        original_scale = Vec3(
-            CARD_WIDTH,
-            CARD_HEIGHT,
-            1,
-        )
-
-        self.entity.animate_scale(
-            original_scale * 1.1,
-            duration=0.2,
-            curve=curve.in_expo,
-        )
-
-        self.entity.animate_scale(
-            original_scale,
-            duration=0.3,
-            delay=0.2,
-            curve=curve.out_expo,
-        )
+        original_scale = Vec3(CARD_WIDTH, CARD_HEIGHT, 1)
+        self.entity.animate_scale(original_scale * 1.1, duration=0.2, curve=curve.in_expo)
+        self.entity.animate_scale(original_scale, duration=0.3, delay=0.2, curve=curve.out_expo)
 
         def finish():
             if callback:
@@ -295,24 +197,18 @@ class MemoryCard:
             return
 
         self.destroyed = True
-
         self.entity.animate_y(
             self.entity.y - 1000,
             duration=0.5,
             curve=curve.in_elastic,
         )
-
         invoke(
             self.entity.disable,
             delay=0.5,
         )
 
 
-# Background
-
-
 background_x, background_y = px_to_world(50, 25)
-
 background = Entity(
     model="quad",
     texture="background.png",
@@ -320,11 +216,7 @@ background = Entity(
     scale=(GAME_WIDTH, GAME_HEIGHT),
 )
 
-# Volume button
-
-
 volume_x, volume_y = px_to_world(25, 25)
-
 volume_button = Entity(
     model="quad",
     texture="ui/volume-icon.png",
@@ -336,28 +228,20 @@ volume_button = Entity(
 
 def toggle_volume():
     global sound_enabled
-
     sound_enabled = not sound_enabled
-
     if sound_enabled:
         volume_button.texture = "ui/volume-icon.png"
-
         for sound in sounds.values():
             sound.volume = 1
-
         if game_started and not sounds["theme-song"].playing:
             sounds["theme-song"].play()
     else:
         volume_button.texture = "ui/volume-icon_off.png"
-
         for sound in sounds.values():
             sound.volume = 0
 
 
 volume_button.on_click = toggle_volume
-
-# Text elements
-
 
 title_text = Text(
     text="Memory Card Game\nClick to Play",
@@ -369,122 +253,62 @@ title_text = Text(
 )
 
 title_text_entity = title_text
-
-winner_text = Text(
-    text="YOU WIN",
-    origin=(0, 0),
-    position=(0, -1000),
-    scale=3,
-    color=color.rgb(140, 122, 230),
-    z=-20,
-)
-
-game_over_text = Text(
-    text="GAME OVER\nClick to restart",
-    origin=(0, 0),
-    position=(0, -1000),
-    scale=3,
-    color=color.red,
-    z=-20,
-)
-
-
-# Hearts
+winner_text = Text(text="YOU WIN", origin=(0, 0), position=(0, -1000), scale=3, color=color.rgb(140, 122, 230), z=-20)
+game_over_text = Text(text="GAME OVER\nClick to restart", origin=(0, 0), position=(0, -1000), scale=3, color=color.red, z=-20)
 
 
 def create_hearts():
     global hearts
-
     hearts = []
-
     for i in range(lives):
-        heart_x, heart_y = px_to_world(
-            140 + 30 * i,
-            20,
-        )
-
-        heart = Entity(
-            model="quad",
-            texture="ui/heart.png",
-            position=(1000, heart_y, -5),
-            scale=(32, 32),
-        )
-
+        heart_x, heart_y = px_to_world(140 + 30 * i, 20)
+        heart = Entity(model="quad", texture="ui/heart.png", position=(1000, heart_y, -5), scale=(32, 32))
         hearts.append(heart)
-
-        heart.animate_x(
-            heart_x,
-            duration=1,
-            delay=1 + i * 0.2,
-            curve=curve.in_out_expo,
-        )
-
-
-# Card grid
+        heart.animate_x(heart_x, duration=1, delay=1 + i * 0.2, curve=curve.in_out_expo)
 
 
 def create_grid_cards():
     global cards
-
     shuffled_names = CARD_NAMES + CARD_NAMES
     random.shuffle(shuffled_names)
-
     cards = []
 
     for index, name in enumerate(shuffled_names):
         column = index % 4
         row = index // 4
-
         x = GRID_X + (CARD_WIDTH + PADDING_X) * column
         y = GRID_Y + (CARD_HEIGHT + PADDING_Y) * row
-
         card = MemoryCard(
             x=x,
             y=y,
             card_name=name,
             start_y=-100,
         )
-
         card.start_entry_animation(
             index * 0.1
         )
-
         cards.append(card)
-
-
-# Card interaction
 
 
 def card_clicked(card):
     global card_opened
     global can_move
     global lives
-
     if not game_started:
         return
-
     if game_finished:
         return
-
     if not can_move:
         return
-
     if card.destroyed:
         return
-
     if card.is_flipping:
         return
-
     if card not in cards:
         return
-
     can_move = False
 
-    # There is already an open card.
-
     if card_opened is not None:
-
-        # Same card clicked twice.
         if card_opened is card:
             can_move = True
             return
@@ -493,19 +317,15 @@ def card_clicked(card):
             global card_opened
             global can_move
             global lives
-
             if card_opened.card_name == card.card_name:
                 play_sound("card-match")
                 opened = card_opened
                 opened.destroy()
                 card.destroy()
-
                 if opened in cards:
                     cards.remove(opened)
-
                 if card in cards:
                     cards.remove(card)
-
                 card_opened = None
                 can_move = True
                 if len(cards) == 0:
