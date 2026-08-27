@@ -115,55 +115,19 @@ class PhaserPlatformerGame:
     def __init__(self):
         self.game_over = False
         self.score = 0
-        self.sky_texture = load_texture('sky.png')
-        self.ground_texture = load_texture('platform.png')
-        self.star_texture = load_texture('star.png')
-        self.bomb_texture = load_texture('bomb.png')
-        self.dude_texture = load_texture('dude.png')
-        self.sky = Entity(
-            model='quad',
-            texture=self.sky_texture,
-            position=(400, 300, 10),
-            scale=(800, 600)
-        )
+        self.sky_texture = load_texture('assets/sky.png')
+        self.ground_texture = load_texture('assets/platform.png')
+        self.star_texture = load_texture('assets/star.png')
+        self.bomb_texture = load_texture('assets/bomb.png')
+        self.dude_texture = load_texture('assets/dude.png')
+        self.sky = Entity(model='quad', texture=self.sky_texture, position=(400, 300, 10), scale=(800, 600))
 
         self.platforms = []
-        self.platforms.append(
-            Platform(
-                position=(400, 32),
-                scale=(800, 64),
-                texture=self.ground_texture
-            )
-        )
-
-        self.platforms.append(
-            Platform(
-                position=(600, 200),
-                scale=(400, 32),
-                texture=self.ground_texture
-            )
-        )
-
-        self.platforms.append(
-            Platform(
-                position=(50, 350),
-                scale=(400, 32),
-                texture=self.ground_texture
-            )
-        )
-
-        self.platforms.append(
-            Platform(
-                position=(750, 380),
-                scale=(400, 32),
-                texture=self.ground_texture
-            )
-        )
-
-        self.player = Player(
-            position=(100, 150),
-            texture=self.dude_texture
-        )
+        self.platforms.append(Platform(position=(400, 32), scale=(800, 64), texture=self.ground_texture))
+        self.platforms.append(Platform(position=(600, 200), scale=(400, 32), texture=self.ground_texture))
+        self.platforms.append(Platform(position=(50, 350), scale=(400, 32), texture=self.ground_texture))
+        self.platforms.append(Platform(position=(750, 380), scale=(400, 32), texture=self.ground_texture))
+        self.player = Player(position=(100, 150), texture=self.dude_texture)
 
         self.stars = []
 
