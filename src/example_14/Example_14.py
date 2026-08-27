@@ -7,9 +7,9 @@ app = Ursina()
 camera.orthographic = True
 camera.fov = 10
 
-car = Entity(model="quad", texture="car", collider="box", scale=(2, 1), rotation_z=-90)
+car = Entity(model="quad", texture="assets/car", collider="box", scale=(2, 1), rotation_z=-90)
 
-road1 = Entity(model="quad", texture="road", scale=15, z=1)
+road1 = Entity(model="quad", texture="assets/road", scale=15, z=1)
 road2 = duplicate(road1, y=15)
 pair = [road1, road2]
 
@@ -18,14 +18,7 @@ enemies = []
 
 def newEnemy():
     val = uniform(-2, 2)
-    new = duplicate(
-        car,
-        texture="enemy",
-        x=2 * val,
-        y=25,
-        color=color.random_color(),
-        rotation_z=90 if val < 0 else -90
-    )
+    new = duplicate(car, texture="assets/enemy", x=2 * val, y=25, color=color.random_color(), rotation_z=90 if val < 0 else -90)
     enemies.append(new)
     invoke(newEnemy, delay=0.5)
 
@@ -45,7 +38,7 @@ def update():
             enemy.y -= 10 * time.dt
         else:
             enemy.y -= 5 * time.dt
-        if enemy.y<-10:
+        if enemy.y < -10:
             enemies.remove(enemy)
             destroy(enemy)
     if car.intersects().hit:
