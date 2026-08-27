@@ -5,7 +5,7 @@ from ursina import Ursina, Sky, Animation, color, camera, SmoothFollow, applicat
 app = Ursina()
 Sky()
 
-bird = Animation("bird", collider="box", color=color.orange, y=15)
+bird = Animation("assets/bird", collider="box", color=color.orange, y=15)
 camera.add_script(SmoothFollow(target=bird, offset=[0, 0, -40], speed=6))
 
 platform = Entity(model="cube", color=color.green, texture="white_cube", collider="box", scale=(3, 0.5))
