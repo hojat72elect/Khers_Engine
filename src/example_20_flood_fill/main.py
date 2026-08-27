@@ -28,7 +28,7 @@ def to_game_y(y):
 
 
 def create_sprite(image_name, x, y, z=0, scale=None):
-    entity = Entity(model="quad", texture=f"{image_name}.png", position=(px(x), py(y), z))
+    entity = Entity(model="quad", texture=f"assets/{image_name}.png", position=(px(x), py(y), z))
     if entity.texture:
         if scale is None:
             entity.scale_x = entity.texture.width
@@ -192,7 +192,7 @@ def create_arrow():
 class Particle(Entity):
 
     def __init__(self, x, y, texture_name):
-        super().__init__(model="quad", texture=f"{texture_name}.png", position=(px(x), py(y), 20))
+        super().__init__(model="quad", texture=f"assets/{texture_name}.png", position=(px(x), py(y), 20))
         self.scale_x = self.texture.width * 0.5
         self.scale_y = self.texture.height * 0.5
         self.velocity = Vec3(py_random.uniform(-160, 160), py_random.uniform(-180, 80), 0)
@@ -500,15 +500,11 @@ def update():
                 + 12 * __import__("math").sin(monster_bounce_time * 7)
         )
 
-    # Particles.
     for particle in particles.copy():
         particle.update_particle()
 
-    # Hover handling.
     hovered = mouse.hovered_entity
-
     hovered_icon = None
-
     for data in icons.values():
         if hovered is data["shadow"]:
             hovered_icon = data
@@ -524,7 +520,7 @@ def update():
                 cursor_indicator.enabled = False
 
         if arrow is not None:
-            arrow.texture = "arrow-white.png"
+            arrow.texture = "assets/arrow-white.png"
 
         if monster_bounce is not None:
             for data in icons.values():
@@ -547,8 +543,8 @@ def input(key):
                 return
 
 
-background = create_sprite(   "background",   400,   300,   z=-100)
-grid_background = create_sprite(   "grid",   400,   900,   z=-1000)
+background = create_sprite("background", 400, 300, z=-100)
+grid_background = create_sprite("grid", 400, 900, z=-1000)
 grid_background.enabled = False
 create_grid()
 help_flood()
