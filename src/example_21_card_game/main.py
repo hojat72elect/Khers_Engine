@@ -1,4 +1,6 @@
-from ursina import *
+from random import uniform, random
+
+from ursina import Ursina, window, color, camera, Texture, invoke, Audio, time, Vec3, Entity, lerp, curve, Text, Func, mouse, application
 
 GAME_WIDTH = 549
 GAME_HEIGHT = 480
@@ -86,8 +88,8 @@ def update_camera_shake():
     global camera_shake_time
     if camera_shake_time > 0:
         camera_shake_time -= time.dt
-        camera.x = random.uniform(-camera_shake_strength, camera_shake_strength)
-        camera.y = random.uniform(-camera_shake_strength, camera_shake_strength)
+        camera.x = uniform(-camera_shake_strength, camera_shake_strength)
+        camera.y = uniform(-camera_shake_strength, camera_shake_strength)
     else:
         camera.x = 0
         camera.y = 0
@@ -137,7 +139,7 @@ class MemoryCard:
             t = min(self.entry_elapsed / self.entry_duration, 1.0)
             eased = 1 - pow(2, -10 * t)
             self.entity.y = lerp(self.entry_start_y, self.target_position.y, eased)
-            if random.random() < 0.025:
+            if random() < 0.025:
                 play_sound("card-slide", 1.2)
 
         if self.is_flipping:
