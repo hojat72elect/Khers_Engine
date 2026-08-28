@@ -1,4 +1,7 @@
-from ursina import *
+from math import sin
+from random import uniform, choice
+
+from ursina import Entity, Vec2, time, load_texture, Text, held_keys, clamp, color, window, Ursina, camera
 
 GAME_WIDTH = 800
 GAME_HEIGHT = 600
@@ -29,21 +32,18 @@ class Star(Entity):
         )
 
         self.base_y = position[1]
-        self.bounce_speed = random.uniform(1.5, 3.0)
-        self.bounce_amount = random.uniform(2, 6)
+        self.bounce_speed = uniform(1.5, 3.0)
+        self.bounce_amount = uniform(2, 6)
         self.active = True
 
         self.velocity = Vec2(0, 0)
-        self.bounce_y = random.uniform(0.4, 0.8)
+        self.bounce_y = uniform(0.4, 0.8)
 
     def update_star(self):
         if not self.active:
             return
 
-        self.y = (
-                self.base_y
-                + math.sin(time.time() * self.bounce_speed) * self.bounce_amount
-        )
+        self.y = (self.base_y + sin(time.time() * self.bounce_speed) * self.bounce_amount)
 
 
 class Bomb(Entity):
@@ -57,7 +57,7 @@ class Bomb(Entity):
         )
 
         self.velocity = Vec2(
-            random.uniform(-200, 200),
+            uniform(-200, 200),
             20
         )
 
@@ -158,7 +158,7 @@ class PhaserPlatformerGame:
         )
 
         for star in self.stars:
-            star.velocity.y = random.uniform(-20, 0)
+            star.velocity.y = uniform(-20, 0)
 
     @staticmethod
     def overlaps(a, b):
@@ -366,9 +366,7 @@ class PhaserPlatformerGame:
                     )
 
                     if abs(bomb.velocity.x) < 10:
-                        bomb.velocity.x = random.choice(
-                            [-100, 100]
-                        )
+                        bomb.velocity.x = choice([-100, 100])
 
     def collect_star(self, star):
 
@@ -389,15 +387,15 @@ class PhaserPlatformerGame:
                 star.x = star.x
                 star.y = 600
                 star.velocity.y = 0
-                star.bounce_y = random.uniform(
+                star.bounce_y = uniform(
                     0.4,
                     0.8
                 )
 
             if self.player.x < 400:
-                x = random.uniform(400, 800)
+                x = uniform(400, 800)
             else:
-                x = random.uniform(0, 400)
+                x = uniform(0, 400)
 
             bomb = Bomb(
                 position=(x, 584),
