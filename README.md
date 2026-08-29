@@ -1,1 +1,1 @@
-Just a collection of Python games I have made so far.
+This is a collection of Python games I have made on top of the [Ursina](https://www.ursinaengine.org/) game framework.
