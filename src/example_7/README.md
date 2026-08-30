@@ -1,3 +1,0 @@
-- A simple knock off of 2D GTA game.
-- This is the first example of 2D raycasting in Ursina that I worked on.
-  - Also plays sounds
