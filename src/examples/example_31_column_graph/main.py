@@ -1,17 +1,14 @@
-import random
-
-from ursina import Ursina, color, Button, scene, Tooltip, ThinSlider, window, camera, EditorCamera
+from random import seed, randint
+from ursina import Ursina, color, Button, window, camera, EditorCamera, scene, Tooltip, ThinSlider
 
 app = Ursina()
-
 color.text_color = color.dark_text
-
 names = ['Amy', 'Ruby', 'Tara', 'Ann', 'Samantha', 'Gary', 'Lee', 'Frank', 'Joe', 'Thomas']
 
-random.seed(0)
+seed(0)
 data = dict()
 for name in names:
-    data[name] = random.randint(0, 100)
+    data[name] = randint(0, 100)
 
 sliders = list()
 
@@ -52,12 +49,11 @@ randomize_button.scale *= .75
 
 def randomize():
     for s in sliders:
-        s.value = random.randint(0, 100)
+        s.value = randint(0, 100)
         s.on_value_changed()
 
 
 randomize_button.on_click = randomize
-
 window.color = color.light_gray.tint(.1)
 window.fps_counter.enabled = False
 window.exit_button.visible = False
