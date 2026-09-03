@@ -1,5 +1,4 @@
 from random import randint
-
 from ursina import Ursina, window, color, Animation, camera, application, Entity, duplicate, time, invoke, curve, Text, Audio
 
 app = Ursina()
@@ -28,7 +27,6 @@ def input(key):
             dino.animate_y(2, duration=0.4, curve=curve.out_sine)
             invoke(dino.animate_y, 0, duration=0.4, curve=curve.in_sine, delay=0.4)
 
-
 def update():
     global points
     points += 1
@@ -43,16 +41,12 @@ def update():
         dino.texture = "hit"
         application.pause()
 
-
 def newCactus():
     new = duplicate(cactus, x=10 + randint(0, 5))
     cacti.append(new)
     invoke(newCactus, delay=2)
 
-
 newCactus()
-
 label = Text(text=f"Points: {0}", color=color.black, position=(-0.6, 0.4))
 points = 0
-
 app.run()

@@ -1,12 +1,10 @@
 import math
 import random
-
 from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow, distance, mouse, color, curve, invoke, destroy, raycast, Audio, Circle
 
 app = Ursina()
 camera.orthographic = True
 camera.fov = 9
-
 npcs = []
 for i in range(12):
     if i < 6:
@@ -34,15 +32,11 @@ for i in [-2.5, 2.5]:
         Sprite(model="cube", texture="assets/house", scale=0.75, collider="box", position=(i, j, 0), rotation_z=270 if j == -3.5 else 90)
 
 car = Entity(model="quad", texture="assets/car", collider="box", scale=(2, 1), y=10)
-
 follow = SmoothFollow(target=player, speed=8, offset=[0, 0, -4])
 camera.add_script(follow)
-
 car_mode = False  # player is either in car mode or in the walk mode
-
 gun = Audio("assets/gun.ogg", loop=False, autoplay=False)
 drive = Audio("assets/car_drive.ogg", loop=True, autoplay=False)
-
 
 def blink():
     if not car_mode and distance(car, player) < 1.5:
@@ -51,9 +45,7 @@ def blink():
         light.fade_out(duration=.5)
     invoke(blink, delay=1)
 
-
 blink()
-
 
 def input(key):
     global car_mode
@@ -84,9 +76,7 @@ def input(key):
                 follow.target = player
                 player.position = car.position - (0, 1, 0)
 
-
 car_speed = 2
-
 
 def update():
     global car_mode, car_speed
@@ -160,6 +150,5 @@ def update():
         player.rotation_z = 225
     if held_keys["d"] and held_keys["s"]:
         player.rotation_z = 135
-
 
 app.run()

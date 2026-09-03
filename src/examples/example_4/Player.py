@@ -1,7 +1,5 @@
 from typing import Final
-
 from ursina import Entity, color
-
 
 class Player:
     JUMP_SPEED: Final[int] = 16

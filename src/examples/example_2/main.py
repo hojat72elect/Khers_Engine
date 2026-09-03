@@ -1,5 +1,4 @@
 from random import choice, randint
-
 from ursina import (Ursina, window, camera, color, Entity, Text, Audio, time, destroy, BoxCollider, Vec3)
 
 GAME_WIDTH = 800

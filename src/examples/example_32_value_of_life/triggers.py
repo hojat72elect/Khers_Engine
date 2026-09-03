@@ -1,8 +1,6 @@
-from ursina import *
-
+from ursina import Draggable, color, scene, Entity, distance_2d, invoke, camera, Animation, Sprite, lerp, Vec3, held_keys, time, Text, Sequence, Func, Wait, window, application, Ursina
 
 class UseTrigger(Draggable):
-
     use_key = 'space'
 
     def __init__(self, **kwargs):
@@ -14,15 +12,14 @@ class UseTrigger(Draggable):
         self.model = 'sphere'
         self.collision = False
 
-        self.dot = Entity(parent=self, model='sphere', world_scale=.25*.05, y=.5, z=-1, color=color.white66, enabled=False)
+        self.dot = Entity(parent=self, model='sphere', world_scale=.25 * .05, y=.5, z=-1, color=color.white66, enabled=False)
         self.radius = self.scale_x
         self.require_key = 'tab'
         self.use_key = UseTrigger.use_key
         self.disabled = False
 
         for key, value in kwargs.items():
-            setattr(self, key ,value)
-
+            setattr(self, key, value)
 
     def update(self):
         super().update()
@@ -30,7 +27,6 @@ class UseTrigger(Draggable):
             return
 
         self.dot.enabled = distance_2d(self.world_position, self.player.world_position) < self.radius
-
 
     def input(self, key):
         super().input(key)
@@ -53,7 +49,6 @@ class UseTrigger(Draggable):
                 except:
                     print('invalid use string:', self.use)
 
-
 class Teleporter(UseTrigger):
 
     def use(self):
@@ -61,9 +56,6 @@ class Teleporter(UseTrigger):
         for f in self.player.followers:
             if f.following:
                 f.position = self.player.position
-        # camera.overlay.fade_in(.4)
-        # invoke(setattr, self.player, 'position', self.target.position, delay=.4)
-        # camera.overlay.fade_out(.4, delay=.5)
 
 class CableCar(Teleporter):
     def __init__(self, **kwargs):
@@ -72,13 +64,11 @@ class CableCar(Teleporter):
         self.on_cooldown = False
 
         for key, value in kwargs.items():
-            setattr(self, key ,value)
-
+            setattr(self, key, value)
 
     def update(self):
         super().update()
         self.disabled = len(self.player.followers) < 3
-
 
     def use(self):
         if len(self.player.followers) < 3 or self.on_cooldown:
@@ -96,7 +86,6 @@ class CableCar(Teleporter):
 
         camera.overlay.fade_out(duration=.4, delay=.5)
 
-
 class NPC(UseTrigger):
     def __init__(self, player, **kwargs):
         super().__init__()
@@ -110,11 +99,10 @@ class NPC(UseTrigger):
         self.player_idle.color = color.Color(0, .3, 1, 1)
 
         self.scale = self.player.scale
-        self.dot.world_scale = .25*.05
+        self.dot.world_scale = .25 * .05
 
         for key, value in kwargs.items():
-            setattr(self, key ,value)
-
+            setattr(self, key, value)
 
     def update(self):
         super().update()
@@ -128,12 +116,12 @@ class NPC(UseTrigger):
             self.position = lerp(
                 self.position,
                 Vec3(
-                    self.player.x - ((held_keys['d'] - held_keys['a']) * .01*self.i),
-                    self.player.y - ((held_keys['w'] - held_keys['s']) * .01*self.i),
+                    self.player.x - ((held_keys['d'] - held_keys['a']) * .01 * self.i),
+                    self.player.y - ((held_keys['w'] - held_keys['s']) * .01 * self.i),
                     self.player.z
-                    ),
+                ),
                 time.dt * 10
-                )
+            )
             # self.x = self.player.x - ((held_keys['d'] - held_keys['a']) * .01*self.i)
             # self.y = self.player.y - ((held_keys['w'] - held_keys['s']) * .01*self.i)
             self.z = self.player.z - (held_keys['w'] * .01) + (held_keys['s'] * .01)
@@ -144,7 +132,6 @@ class NPC(UseTrigger):
         self.player.followers.append(self)
         self.i = len(self.player.followers)
         self.following = True
-
 
 class TalkativeNPC(NPC):
 
@@ -158,7 +145,7 @@ class TalkativeNPC(NPC):
             '''.split('\n')
         lines = [l.strip() for l in lines if l != '']
         # print(lines)
-        lines = [Text(l, parent=self, position=(.5,1.5), origin=(0,0), enabled=False, world_scale=2) for l in lines]
+        lines = [Text(l, parent=self, position=(.5, 1.5), origin=(0, 0), enabled=False, world_scale=2) for l in lines]
         for l in lines:
             if hasattr(l, 'raw_text') and l.raw_text.startswith('<lime>'):
                 l.parent = self.player
@@ -192,7 +179,6 @@ class TalkativeNPC(NPC):
         if key == 'escape' and hasattr(self, 'seq'):
             self.seq.finish()
 
-
 class Altar(UseTrigger):
 
     def use(self):
@@ -201,18 +187,16 @@ class Altar(UseTrigger):
 
         self.disabled = True
 
-
 class ObservatoryDoor(UseTrigger):
     def __init__(self, **kwargs):
         super().__init__()
 
         self.opened_eyes = False
-        self.moon_open = Animation('moon', fps=3, parent=camera.ui, scale=(16/9,1), loop=False, enabled=False, autoplay=False)
-        self.moon_loop = Animation('moon_loop', fps=3, parent=camera.ui, scale=(16/9,1), loop=True, enabled=False, autoplay=False)
+        self.moon_open = Animation('moon', fps=3, parent=camera.ui, scale=(16 / 9, 1), loop=False, enabled=False, autoplay=False)
+        self.moon_loop = Animation('moon_loop', fps=3, parent=camera.ui, scale=(16 / 9, 1), loop=True, enabled=False, autoplay=False)
 
         for key, value in kwargs.items():
-            setattr(self, key ,value)
-
+            setattr(self, key, value)
 
     def use(self):
         # print('use')
@@ -237,7 +221,6 @@ class ObservatoryDoor(UseTrigger):
             # self.moon_loop.enabled = not self.moon_loop.enabled
             camera.overlay.fade_out(duration=.5, delay=.4)
 
-
 class Sacrifice(UseTrigger):
 
     def use(self):
@@ -253,7 +236,7 @@ class Sacrifice(UseTrigger):
             '''.split('\n')
         lines = [l.strip() for l in lines if l != '']
         # print(lines)
-        lines = [Text(l, parent=camera.overlay, position=(0,0,-.1), origin=(0,0), enabled=False, world_scale=2) for l in lines]
+        lines = [Text(l, parent=camera.overlay, position=(0, 0, -.1), origin=(0, 0), enabled=False, world_scale=2) for l in lines]
         for l in lines:
             l.enabled = False
             l.world_scale = 50
@@ -270,7 +253,7 @@ class Sacrifice(UseTrigger):
             self.seq.append(Func(setattr, l, 'enabled', False))
 
         self.seq.append(Func(setattr, window.exit_button, 'enabled', True))
-        self.seq.append(Func(setattr, window.exit_button, 'position', (0,0)))
+        self.seq.append(Func(setattr, window.exit_button, 'position', (0, 0)))
         self.seq.append(Func(setattr, window.exit_button.text_entity, 'text', 'exit'))
         self.seq.append(Wait(5))
         self.seq.append(Func(application.quit))
@@ -284,16 +267,7 @@ class Sacrifice(UseTrigger):
     #     if key == 'escape' and hasattr(self, 'seq'):
     #         self.seq.finish()
 
-
 if __name__ == '__main__':
     app = Ursina()
-    # UseTrigger()
     p = Entity(moving=False)
-    # NPC(p)
-    # TalkativeNPC(p).use()
-    # od = ObservatoryDoor()
-    # Sacrifice(player=p).use()
-    # def input(key):
-    #     if key == 'space':
-    #         od.use()
     app.run()

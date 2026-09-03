@@ -1,4 +1,4 @@
-from ursina import Ursina, Entity, color, EditorCamera, held_keys, time
+from ursina import Ursina, Entity, color, EditorCamera, held_keys, time, Vec3
 
 app = Ursina()
 player = Entity(model='cube', color=color.orange, collider='box', origin_y=-.5)

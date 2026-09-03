@@ -1,4 +1,4 @@
-from ursina import *
+from ursina import window, Ursina, load_blender_scene, time, color, scene, Entity, camera, raycast, distance_xz, invoke, Func, application, destroy, held_keys, mouse, Vec3, duplicate, Sky, curve
 from ursina.shaders import colored_lights_shader
 from ursina.shaders import ssao_shader
 from ursina.prefabs.first_person_controller import FirstPersonController

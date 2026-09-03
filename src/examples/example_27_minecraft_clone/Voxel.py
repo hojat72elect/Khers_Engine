@@ -1,7 +1,6 @@
 from random import uniform
 from ursina import Button, scene, color
 
-
 class Voxel(Button):
     """
     Our voxel is just a 3D button, with a "cube" model and a "scene" parent.

@@ -1,8 +1,7 @@
-from ursina import *
-
+from pathlib import Path
+from ursina import Ursina, window, color, Entity, duplicate, Animation, Sprite, input_handler, Audio, camera, SmoothFollow, application, mouse, floor, held_keys, raycast, clamp, lerp, scene, Draggable, time, invoke
 
 app = Ursina()
-
 window.title = 'Value of Life'
 window.color = color.black
 window.editor_ui.enabled = False
@@ -31,8 +30,7 @@ collider = Entity(
     origin=(-.5, -.5),
     position=(-.5, -.5),
     collider='box',
-    texture='climb_collision',
-    # enabled = False,
+    texture='climb_collision'
 )
 
 collider_size = (int(bg.texture.width / 16), int(bg.texture.height // 16))

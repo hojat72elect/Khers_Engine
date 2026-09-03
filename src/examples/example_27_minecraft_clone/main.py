@@ -1,6 +1,6 @@
+from examples.example_27_minecraft_clone.Voxel import Voxel
 from ursina import Ursina, application, raycast, camera, mouse, destroy, Sky
 from ursina.prefabs.first_person_controller import FirstPersonController
-from example_27_minecraft_clone.Voxel import Voxel
 
 if __name__ == '__main__':
     app = Ursina()
@@ -8,7 +8,6 @@ if __name__ == '__main__':
     for z in range(8):
         for x in range(8):
             voxel = Voxel(position=(x, 0, z))
-
 
     def input(key):
         if key == 'escape':

@@ -1,5 +1,4 @@
 import random
-
 from ursina import Ursina, Sky, Animation, camera, time, Entity, color, duplicate, invoke
 
 app = Ursina()

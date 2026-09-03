@@ -1,17 +1,12 @@
 from random import randint
-
 from ursina import Ursina, camera, Entity, time, application
 
 app = Ursina()
-
 camera.orthographic = True
 camera.fov = 8
-
 snake = Entity(model="cube", texture="assets/snake", scale=0.4, z=-1, collider="box")
 body = [Entity(model="cube", scale=0.2, texture="assets/body") for i in range(25)]
-
 dx = dy = 0
-
 
 def update():
     info = snake.intersects()
@@ -28,7 +23,6 @@ def update():
     snake.x += time.dt * dx
     snake.y += time.dt * dy
 
-
 def input(key):
     global dx, dy
     if key == 'escape':
@@ -44,8 +38,6 @@ def input(key):
             dy = y
             dx = 0
 
-
 ground = Entity(model="cube", texture="grass", rotation=(90, 0, 0), scale=(5, 1, 5), z=1)
 apple = Entity(model="cube", texture="assets/apple", scale=0.4, position=(1, -1, -1), collider="mesh")
-
 app.run()

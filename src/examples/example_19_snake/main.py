@@ -1,5 +1,4 @@
 import random
-
 from ursina import Ursina, camera, window, color, Entity, Texture, held_keys, time
 
 GAME_WIDTH = 640
