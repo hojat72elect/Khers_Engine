@@ -11,3 +11,8 @@ dependencies = [
     "numpy>=2.5.2",
     "psd-tools>=1.19.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+]
