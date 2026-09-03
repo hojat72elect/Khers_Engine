@@ -9,4 +9,5 @@ dependencies = [
     "pyperclip>=1.11.0",
     "screeninfo>=0.8.1",
     "numpy>=2.5.2",
+    "psd-tools>=1.19.0",
 ]
