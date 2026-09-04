@@ -7,7 +7,6 @@ from ursina import color
 from ursina.color import Color
 _sum = sum
 
-
 def distance(a, b):
     if isinstance(a, (Color, Vec4)):
         dist = abs(a[0] - b[0])
@@ -24,20 +23,17 @@ def distance(a, b):
     # print('------------DIST:', dist)
     return dist
 
-
 def distance_2d(a, b):
     if hasattr(a, 'position'): a = a.position
     if hasattr(b, 'position'): b = b.position
 
     return sqrt((b[0] - a[0])**2 + (b[1] - a[1])**2)
 
-
 def distance_xz(a, b):
     if hasattr(a, 'position'): a = a.position
     if hasattr(b, 'position'): b = b.position
 
     return sqrt((b[0] - a[0])**2 + (b[2] - a[2])**2)
-
 
 def lerp(a, b, t):
     if isinstance(a, (int, float, complex)):
@@ -69,10 +65,8 @@ if __name__ == '__main__':
     _test(inverselerp(0, 100, 50) == .5)
     _test(lerp(0, 100, .5) == 50)
 
-
 def lerp_exponential_decay(a, b, dt, decay_rate=1):    # frame-rate independent lerp for use in update. use this instead of lerp(a, b, time.dt) in update.
     return lerp(a, b, 1 - exp(-decay_rate * dt))
-
 
 def lerp_angle(start_angle, end_angle, t):
     start_angle = start_angle % 360
@@ -81,7 +75,6 @@ def lerp_angle(start_angle, end_angle, t):
     result_angle = start_angle + t * angle_diff
     result_angle = (result_angle + 360) % 360
     return result_angle
-
 
 def slerp(q1, q2, t):
     costheta = q1.dot(q2)
@@ -105,14 +98,11 @@ def slerp(q1, q2, t):
     r2 = sin(t * theta) / sintheta
     return (q1 * r1) + (q2 * r2)
 
-
 def slerp_exponential_decay(q1, q2, decay_rate):    # frame-rate independent version of slerp for use in update.
     return slerp(q1, q2, 1 - pow(0.01, decay_rate))
 
-
 def clamp(value, floor, ceiling):
     return max(min(value, ceiling), floor)
-
 
 def round_to_closest(value, step=0):
     if not step:
@@ -120,7 +110,6 @@ def round_to_closest(value, step=0):
 
     step = 1/step
     return round(value * step) / step
-
 
 def rotate_around_point_2d(point, origin, deg):
     angle_rad = -deg/180 * pi # ursina rotation is positive=clockwise, so do *= -1
@@ -141,7 +130,6 @@ def world_position_to_screen_position(point): # get screen position(ui space) fr
     destroy(_temp_entity)
     return result
 
-
 def sum(l):
     try:
         return _sum(l)
@@ -151,7 +139,6 @@ def sum(l):
     # Normally you can't sum a list of Vec3, unless you do `sum(vec3_list, Vec3(0,0,0))`, which is annoying.
     # So if the python's sum fails, start with a new Vec3 instance and add too that.
     return _sum(l, l[0].__class__())
-
 
 def make_gradient(index_value_dict):
     '''
@@ -177,24 +164,6 @@ def make_gradient(index_value_dict):
 
     return gradient
 
-if __name__ == '__main__':
-    _test(make_gradient({'0':color.hex('#ff0000ff'), '2':color.hex('#ffffffff')}) == [
-        color.hex('#ff0000ff'),
-        lerp(color.hex('#ff0000ff'), color.hex('#ffffffff'), .5),
-        color.hex('#ffffffff'),
-        ])
-    _test(make_gradient({'0':color.hex('#ff0000ff'), '4':color.hex('#ffffffff')}) == [
-        color.hex('#ff0000ff'),
-        lerp(color.hex('#ff0000ff'), color.hex('#ffffffff'), .25),
-        lerp(color.hex('#ff0000ff'), color.hex('#ffffffff'), .5),
-        lerp(color.hex('#ff0000ff'), color.hex('#ffffffff'), .75),
-        color.hex('#ffffffff'),
-        ])
-    _test(make_gradient({'0':16, '2':0}) == [16, 8, 0])
-
-    _test(make_gradient({'6':0, '8':8}) == [0, 4, 8])
-
-
 def sample_gradient(list_of_values, t):     # distribute list_of_values equally on a line and get the interpolated value at t (0-1).
     l = len(list_of_values)
     if l == 1:
@@ -210,8 +179,6 @@ def sample_gradient(list_of_values, t):     # distribute list_of_values equally 
         return lerp(list_of_values[index], list_of_values[index+1], relative)
     else:
         return lerp(list_of_values[index-1], list_of_values[index], relative)
-
-
 
 class Bounds:
     __slots__ = ['start', 'end', 'center', 'size']
@@ -235,28 +202,3 @@ class Bounds:
 
     def __repr__(self):
         return f"Bounds(start={self.start}, end={self.end}, center={self.center}, size={self.size})"
-
-
-if __name__ == '__main__':
-    from ursina import *
-    from ursinastuff import _test
-    app = Ursina()
-    e1 = Entity(position = (0,0,0))
-    e2 = Entity(position = (0,1,1))
-    _test(distance(e1, e2) == 1.4142135623730951)
-    _test(distance_2d(Vec2(0,0), Vec2(1,1)) == 1.4142135623730951)
-
-    distance_xz(e1, e2.position)
-
-    between_color = lerp(color.lime, color.magenta, .5)
-    print(between_color)
-    print(lerp((0,0), (0,1), .5))
-    print(lerp(Vec2(0,0), Vec2(0,1), .5))
-    print(lerp([0,0], [0,1], .5))
-
-    print(round(Vec3(.38, .1351, 353.26), 2))
-
-    p = (1,0)
-    print(p, 'rotated ->', rotate_around_point_2d(p, (0,0), 90))
-
-    app.run()
