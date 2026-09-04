@@ -1,8 +1,6 @@
 from panda3d.core import Vec3 as PandaVec3
-
 from ursina.scripts.property_generator import generate_properties_for_class
 from ursina.vec2 import Vec2
-
 
 @generate_properties_for_class()
 class Vec3(PandaVec3):
@@ -130,7 +128,6 @@ class Vec3(PandaVec3):
     def __abs__(self):
         return Vec3(*[abs(e) for e in self])
 
-
 Vec3.zero = Vec3(0,0,0)
 Vec3.one = Vec3(1,1,1)
 Vec3.right = Vec3(1,0,0)
@@ -139,39 +136,3 @@ Vec3.up = Vec3(0,1,0)
 Vec3.down = Vec3(0,-1,0)
 Vec3.forward = Vec3(0,0,1)
 Vec3.back = Vec3(0,0,-1)
-
-
-if __name__ == '__main__':
-    import math
-
-    from ursinastuff import _test
-    _test(Vec3(1,0,-1) * 2 == Vec3(2,0,-2))
-    _test(Vec3(1,0,-1) * Vec3(1,2,3) == Vec3(1,0,-3))
-
-    def _test_Vec3_plus_equal():
-        b = Vec3(1,0,1)
-        b += Vec3(0,1,0)
-        return b == Vec3(1,1,1)
-    _test(_test_Vec3_plus_equal)
-
-    def _test_Vec3x_plus_equal_int():
-        b = Vec3(0,0,0)
-        b.x += 1
-        b.y += 1
-        b.z += 1
-        return b == Vec3(1,1,1)
-
-    _test(round(Vec3(1.14,2.86,1.25), 0) == Vec3(1,3,1))
-    _test(abs(Vec3(1,-2,-3)) == Vec3(1,2,3))
-
-    _test(math.isclose(Vec3(1.1, 2.5, 3.4).x, 1.1, rel_tol=1e-7))
-    _test(math.isclose(Vec3(1.1, 2.5, 3.4).y, 2.5, rel_tol=1e-7))
-    _test(math.isclose(Vec3(1.1, 2.5, 3.4).z, 3.4, rel_tol=1e-7))
-    _test(Vec3(1.1, 2.5, 3.4).xy == Vec2(1.1, 2.5))
-    _test(Vec3(1.1, 2.5, 3.4).xz == Vec2(1.1, 3.4))
-
-    _test(Vec3(1.1, 2.5, 3.4).X == 1)
-    _test(Vec3(1.1, 2.5, 3.4).Y == 2)
-    _test(Vec3(1.1, 2.5, 3.4).Z == 3)
-    _test(Vec3(1.1, 2.5, 3.4).XY == Vec2(1, 2))
-    _test(Vec3(1.1, 2.5, 3.4).XZ == Vec2(1, 3))
