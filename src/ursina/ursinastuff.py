@@ -5,7 +5,6 @@ from ursina import application
 from ursina.scene import instance as scene
 from ursina.sequence import Sequence, Func, Wait
 
-
 class Empty():
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
@@ -28,10 +27,8 @@ class DotDict(dict):
         except KeyError:
             raise AttributeError(f"'DotDict' object has no attribute '{attr}'")
 
-
 class Default:
     pass
-
 
 def invoke(function, *args, **kwargs):  # reserved keywords: 'delay', 'unscaled'
     delay = 0
@@ -62,7 +59,6 @@ def invoke(function, *args, **kwargs):  # reserved keywords: 'delay', 'unscaled'
         auto_destroy=True, ignore_paused=ignore_paused, unscaled=unscaled, started=True,
     )
 
-
 def after(delay, unscaled=True, ignore_paused=False, entity=None):    # function for @after decorator. Use the decorator, not this.
     '''@after decorator for calling a function after some time.
 
@@ -81,7 +77,6 @@ def after(delay, unscaled=True, ignore_paused=False, entity=None):    # function
         return wrapper()
     return _decorator
 
-
 def size_list():    # return a list of current python objects sorted by size
     import operator
 
@@ -93,7 +88,6 @@ def size_list():    # return a list of current python objects sorted by size
     globals_list.sort(key=operator.itemgetter(1), reverse=True)
     print('scene size:', globals_list)
 
-
 def find_sequence(name, file_types, folders): # find frame_0, frame_1, frame_2 and so on
     for folder in folders:
         for file_type in file_types:
@@ -102,7 +96,6 @@ def find_sequence(name, file_types, folders): # find frame_0, frame_1, frame_2 a
                 files.sort()
                 return files
     return []
-
 
 def import_all_classes(path=application.asset_folder, debug=False):
     path = str(path)
@@ -135,13 +128,11 @@ def import_all_classes(path=application.asset_folder, debug=False):
 
     return imported_successfully
 
-
 def print_on_screen(text, position=(0,0), origin=(-.5,.5), scale=1, duration=1, color=(1,1,1,1)):
     from ursina.text import Text
     from ursina import destroy
     text_entity = Text(text=text, position=position, origin=origin, scale=scale, color=color)
     destroy(text_entity, delay=duration)
-
 
 import traceback
 from inspect import getframeinfo, stack
@@ -215,27 +206,9 @@ def _test(result):
         traceback.print_stack(f=caller_frame)
         return False
 
-
-
-
 # define a new metaclass which overrides the "__call__" function
 class PostInitCaller(type):
     def __call__(cls, *args, **kwargs):
         obj = type.__call__(cls, *args, **kwargs)
         obj.__post_init__()
         return obj
-
-if __name__ == '__main__':
-
-    from ursina import *
-    app = Ursina()
-
-
-
-
-
-    a = Audio('sine')
-    a.play()
-    destroy(a, delay=1)
-    # Player()
-    app.run()
