@@ -46,3 +46,13 @@ class TestVec3:
         assert sut.Z == 3
         assert sut.XY == Vec2(1, 2)
         assert sut.XZ == Vec2(1, 3)
+
+    def test_static_values(self):
+        assert Vec3.zero == Vec3(0, 0, 0)
+        assert Vec3.one == Vec3(1, 1, 1)
+        assert Vec3.right == Vec3(1, 0, 0)
+        assert Vec3.left == Vec3(-1, 0, 0)
+        assert Vec3.up == Vec3(0, 1, 0)
+        assert Vec3.down == Vec3(0, -1, 0)
+        assert Vec3.forward == Vec3(0, 0, 1)
+        assert Vec3.back == Vec3(0, 0, -1)
