@@ -1,11 +1,9 @@
 import re
 import traceback
 
-
 def camel_to_snake(value):
     s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', value)
     return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
-
 
 def snake_to_camel(value):
     camel = ''
@@ -13,7 +11,6 @@ def snake_to_camel(value):
     for w in words:
         camel += w.title()
     return camel
-
 
 def multireplace(string, replacements, ignore_case=False):
     """
@@ -42,8 +39,6 @@ def print_warning(str, *args):
     from ursina import application
     if application.print_warnings:
         print('\033[93mwarning:', str, *args, '\033[0m')
-
-
 
 if __name__ == '__main__':
     from ursina .ursinastuff import _test

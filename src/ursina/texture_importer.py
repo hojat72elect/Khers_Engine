@@ -5,15 +5,12 @@ import importlib.util
 from ursina import application
 from ursina.texture import Texture
 
-
 imported_textures = dict()
 file_types = ('.tif', '.jpg', '.jpeg', '.png', '.gif')
 textureless = False
-
 use_thumbhash = False
 thumbhashes = None
 thumbhash_path = application.textures_compressed_folder / 'thumbhashes.json'
-
 
 def load_texture(name, folder:Path=None, use_cache=True, filtering='default'):
     if textureless and '*' not in name:
@@ -78,8 +75,6 @@ def load_texture(name, folder:Path=None, use_cache=True, filtering='default'):
     imported_textures[name] = None  # prevent searching for the same missing texture multiple times
     return None
 
-
-
 def compress_textures(name=''):
     try:
         from PIL import Image
@@ -132,7 +127,6 @@ def compress_textures(name=''):
             image.save(application.textures_compressed_folder / (f.stem + '.png'), 'PNG')
             print('    compressing to png:', application.textures_compressed_folder / (f.stem + '.png'))
 
-
 def generate_thumbhashes():
     import json
     thumbhashes = dict()
@@ -154,10 +148,3 @@ def generate_thumbhashes():
 
     with thumbhash_path.open('w') as file:
         json.dump(thumbhashes, file, indent=0)
-
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-    Entity(model='quad', texture='white_cube')
-    app.run()

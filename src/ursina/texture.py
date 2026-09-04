@@ -49,7 +49,6 @@ class Texture():
             filtering = Texture.default_filtering      # None/'bilinear'/'mipmap' default: 'None'
         self.filtering = filtering
 
-
     @staticmethod
     def new(size, color=(255,255,255)):
         img = PNMImage(*size, num_channels=len(color))
@@ -61,17 +60,14 @@ class Texture():
         panda_tex.load(img)
         return Texture(panda_tex)
 
-
     def name_getter(self):
         try:
             return self.path.name
         except:
             return f'PIL_texture_{self.size}'
 
-
     def __str__(self):
         return self.name
-
 
     def size_getter(self):
         return Vec2(self.width, self.height)
@@ -90,21 +86,17 @@ class Texture():
             return self._texture.getOrigFileYSize()
         return 0
 
-
     def pixels_getter(self):
         pixels = Array2D(*self.size, default_value=None)
         for (x,y), value in enumerate_2d(pixels):
             pixels[x][y] = self.get_pixel(x, y)
         return pixels
 
-
     def raw_pixels_getter(self):
         pixels = Array2D(*self.size, default_value=None)
         for (x,y), value in enumerate_2d(pixels):
             pixels[x][y] = self.get_pixel_raw(x, y)
         return pixels
-
-
 
     def filtering_setter(self, value):
         # print('setting filtering:', value)
@@ -120,12 +112,10 @@ class Texture():
             self._texture.setMinfilter(SamplerState.FT_linear_mipmap_linear)
             self._filtering = 'mipmap'
 
-
     def repeat_setter(self, value):
         self._repeat = value
         self._texture.setWrapU(value)
         self._texture.setWrapV(value)
-
 
     def get_pixel_raw(self, x, y):
         if not self._cached_image:
@@ -133,7 +123,6 @@ class Texture():
             self._cached_image = Image.open(self.path)
 
         return self._cached_image.getpixel((x, self.height-y-1))
-
 
     def get_pixel(self, x, y):
         col = self.get_pixel_raw(x, y)
@@ -146,7 +135,6 @@ class Texture():
             col = (col[0], col[0], col[0])
 
         return color.rgba32(*col)
-
 
     def get_pixels(self, start, end):
         start = (clamp(start[0], 0, self.width), clamp(start[1], 0, self.width))
@@ -166,7 +154,6 @@ class Texture():
 
         self._cached_image.putpixel((x, self.height-y-1), tuple(int(e*255) for e in color))
 
-
     def apply(self):
         from PIL import Image
         if not self._cached_image:
@@ -175,14 +162,12 @@ class Texture():
         self._texture.setRamImageAs(self._cached_image.transpose(Image.FLIP_TOP_BOTTOM).tobytes(), self._cached_image.mode)
         # self._texture.setRamImageAs(self._cached_image.tobytes(), self._cached_image.mode)
 
-
     def save(self, path):
         if not self._cached_image:
             from PIL import Image
             self._cached_image = Image.open(self.path)
 
         self._cached_image.save(path)
-
 
     def to_PIL_Image(self):
         from PIL import Image
@@ -203,82 +188,5 @@ class Texture():
         image = image.transpose(Image.FLIP_TOP_BOTTOM)
         return image
 
-
     def __repr__(self):
         return self.name
-
-
-if __name__ == '__main__':
-    from ursina import *
-    from ursina import texture_importer
-    app = Ursina()
-    '''
-        The Texture class rarely used manually but usually instantiated
-        when assigning a texture to an Entity
-        texture = Texture(path / PIL.Image / panda3d.core.Texture)
-
-        A texture file can be a .png, .jpg or .psd.
-        If it's a .psd it and no compressed version exists, it will compress it automatically.
-    '''
-    e = Entity(model='quad', texture='test_tileset')
-    e.texture.set_pixel(0, 2, color.blue)
-    e.texture.apply()
-    #
-    # for y in range(e.texture.height):
-    #     for x in range(e.texture.width):
-    #         if e.texture.get_pixel(x,y) == color.blue:
-    #             print('found blue pixel at:', x, y)
-
-    # test
-    application.asset_folder = Path(r'C:\sync\high resolution images')
-    e = Entity(model='quad')
-    # from PIL import Image
-
-    # from ursina.prefabs.memory_counter import MemoryCounter
-    # MemoryCounter()
-    def input(key):
-        if key == 'a':
-            # img = Image.open(r'C:\sync\high resolution images\tesla_city.png')
-            # print('-------', img)
-            # e.texture = Texture(img)
-            e.texture = 'tesla_city'
-
-        if key == 'space':
-            # if not 'tesla_city' in texture_importer.imported_textures:
-            #     return
-            # print('del texture')
-            # del texture_importer.imported_textures['tesla_city']
-            # del e.texture
-            # tex = e.texture._texture
-            t = e.texture._texture
-            # e.texture._texture = None
-            e.texture = None
-            t.releaseAll()
-            # print(t.releaseAll())
-            t.clearRamImage()
-            # e.texture._texture.clear()
-            # e.texture._texture = None
-            # e.texture = None
-            # destroy(e)
-        if key == 'p':
-            for key, value in texture_importer.imported_textures.items():
-                print(key, value)
-
-    e.texture = 'test_tileset'
-    # e.texture.set_pixels([e for e in e.texture.get_pixels()])
-    e.texture.apply()
-
-    # tex = Texture.new((512,512), (255,0,0))
-
-    pixels = e.texture.pixels
-    new_grid = Array2D(width=pixels.width, height=pixels.height)
-    print('w:', pixels.width, 'h:', pixels.height)
-    for (x,y), value in enumerate_2d(pixels):
-        new_grid[x][y] = int(color.rgba32(*value).v > .5)
-
-
-    texture_from_base64_string = Entity(model='cube', y=1.5, scale=1, texture=Texture('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAAJ0lEQVR4nGK5d/gdAwODArcEkGRiQAKMmut0gdTX/YroMoAAAAD//8caBbV8Qu6pAAAAAElFTkSuQmCC'))
-    EditorCamera()
-
-    # print(new_grid)
-    app.run()
