@@ -23,7 +23,6 @@ class Trigger(Entity):
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-
     def update(self):
         self._i += 1
         if self._i < self.update_rate:
@@ -50,22 +49,3 @@ class Trigger(Entity):
 
             if other in self.triggerers and hasattr(self, 'on_trigger_stay'):
                 self.on_trigger_stay()
-
-
-
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-
-    player = Entity(model='cube', color=color.azure, scale=.05)
-    def update():
-        player.x += held_keys['d'] * time.dt * 2
-        player.x -= held_keys['a'] * time.dt * 2
-
-    t = Trigger(trigger_targets=(player,), x=1, model='sphere', color=color.hsv(0,1,1,.5))
-    t.on_trigger_enter = Func(print, 'enter')
-    t.on_trigger_exit =  Func(print, 'exit')
-    t.on_trigger_stay =  Func(print, 'stay')
-
-    app.run()
