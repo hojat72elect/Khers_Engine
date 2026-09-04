@@ -1,11 +1,9 @@
 from panda3d.core import TextNode
 from panda3d.core import FontPool
 from panda3d.core import Filename
-
 import builtins
 import re
 import sys
-
 import ursina
 from ursina import camera
 from ursina import application
@@ -38,7 +36,6 @@ def _search_for_file(name, folders, file_types=None): # prioritizes based on fil
                 return file_path
 
     return None
-
 
 @generate_properties_for_class()
 class Text(Entity):
@@ -94,9 +91,6 @@ class Text(Entity):
                 continue
             setattr(self, key, value)
 
-
-
-
     def text_getter(self):
         t = ''
         y = 0
@@ -111,7 +105,6 @@ class Text(Entity):
             t += tn.node().text
 
         return t
-
 
     def text_setter(self, text): # set this to update the text.
         self.raw_text = text
@@ -192,7 +185,6 @@ class Text(Entity):
             self.create_text_section(text=s[0], tag=s[1], x=s[2], y=s[3])
 
         self.align()
-
 
     def create_text_section(self, text, tag='', x=0, y=0):
         # print(text, tag)
@@ -291,7 +283,6 @@ class Text(Entity):
             if self.text:
                 self.text = self.raw_text   # update text
 
-
     def color_setter(self, value):
         self._color = value
         self.current_color = value
@@ -300,7 +291,6 @@ class Text(Entity):
             tn.node().setTextColor(value)
         for img in self.images:
             img.color = value
-
 
     def shader_setter(self, value):
         self._shader = value
@@ -316,7 +306,6 @@ class Text(Entity):
     #     for tn in self.text_nodes:
     #         for key, shader_input in value.items():
     #             tn.setShaderInput(key, shader_input)
-
 
     def line_height_getter(self):
         return getattr(self, '_line_height', 1)
@@ -347,7 +336,6 @@ class Text(Entity):
 
         return longest_line_length * self.size
 
-
     @property
     def height(self): # gets the height of the text
         return (len(self.lines) * self.line_height * self.size)
@@ -363,7 +351,6 @@ class Text(Entity):
         if self.font is None:
             return
         self._font.setPixelsPerUnit(value)
-
 
     def wordwrap_setter(self, value):   # set this to make the text wrap after a certain number of characters.
         self._wordwrap = value
@@ -388,7 +375,6 @@ class Text(Entity):
 
         self.text = new_text
 
-
     def origin_setter(self, value):
         self._origin = value
         if self.text:
@@ -403,7 +389,6 @@ class Text(Entity):
         elif self.background_entity:
             from ursina.ursinastuff import destroy
             destroy(self.background_entity)
-
 
     def align(self):
         value = self.origin
@@ -430,7 +415,6 @@ class Text(Entity):
             # tn.setZ(tn.getZ() - (halfheight * value[1] * 2 * self.size))
             tn.setY(tn.getY() - (halfheight * value[1] * 2 * self.size))
 
-
     def create_background(self, padding=size*2, radius=.1, color=ursina.color.black66, model_class=Quad):
         from ursina import Quad, destroy
 
@@ -456,7 +440,6 @@ class Text(Entity):
         # self.background_entity.model = 'quad'
         self.background_entity.color = color
 
-
     def appear(self, speed=.025):   # make the text animate in, one character at a time
         self.enabled = True
         # self.visible = True   # setting visible seems to reset the colors
@@ -477,7 +460,6 @@ class Text(Entity):
         self.appear_sequence.start()
         return self.appear_sequence
 
-
     def get_width(string, font=None):
         t = Text(string, add_to_scene_entities=False)
         if font:
@@ -486,55 +468,3 @@ class Text(Entity):
         from ursina import destroy
         destroy(t)
         return w
-
-
-
-if __name__ == '__main__':
-    from ursina import *
-    from ursina import Ursina, dedent, window
-    app = Ursina()
-    # Text.size = .001
-    descr = dedent('''
-        <red>Rainstorm<default> <red>Rainstorm<default>
-        Summon a rain storm to deal 5 <blue>water<default> damage to everyone, test including yourself.
-        1234 1234 1234 1234 1234 <hex('#3d966e')> 1234<default> 2134 1234 1234 1234 1234 1234 2134 2134 1234 1234 1234 1234
-        Lasts for 4 rounds.''').strip()
-
-    # Text.default_font = 'VeraMono.ttf'
-    # Text.default_font = 'consola.ttf'
-    # color.text_color = color.lime
-    Text.default_resolution = 1080 * Text.size
-    test = Text(text=descr, wordwrap=30, scale=1)
-
-
-    # test.align()
-    # test = Text(descr)
-
-    # test.text = ''
-    # print(test.images)
-  # print('\n', test.text, '\n\n')
-    # test.font = 'VeraMono.ttf'
-    # Text.font = 'VeraMono.ttf'
-    # test.origin = (.5, .5)
-    # test.origin = (0, 0)
-    # test.wordwrap = 40
-
-    # text = Text(text=descr, wordwrap=10, origin=(-.5,.5), y=.25, background=True)
-    # Entity(parent=camera.ui, model='circle', scale=.05, color=color.yellow, y=text.y, z=-1)
-
-
-    def input(key):
-        if key == 'a':
-            # test.appear(speed=.025)
-            print('a')
-            test.text = '<default><image:file_icon> <red><image:file_icon> test '
-            print('by', test.text)
-
-        if key == 'c':
-            test.text = ''
-    test.create_background()
-    Sky(color=color.dark_gray)
-    EditorCamera()
-    window.fps_counter.enabled = False
-    print('....', Text.get_width('yolo'))
-    app.run()
