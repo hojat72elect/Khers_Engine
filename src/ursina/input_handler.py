@@ -1,7 +1,6 @@
 from collections import defaultdict
 from enum import Enum
 
-
 class Keys(Enum):
     left_mouse_down = 'left mouse down'
     left_mouse_up = 'left mouse up'
@@ -86,11 +85,8 @@ class Keys(Enum):
             return self.value == other.value
         return self.value == other
 
-
-
 held_keys = defaultdict(lambda: 0)
 rebinds = dict()
-
 
 def bind(original_key, alternative_key):
     if not original_key in rebinds:
@@ -125,11 +121,9 @@ def unbind(key):
     else:
         rebinds[key] = 'none'
 
-
 def rebind(to_key, from_key):
     unbind(to_key)
     bind(to_key, from_key)
-
 
 def input(key):
     if key.endswith('hold') or key == Keys.scroll_down or key == Keys.scroll_up:
@@ -142,7 +136,6 @@ def input(key):
     else:
         held_keys[key] = 1
 
-
 def get_combined_key(key):
     '''
     Adds control, shift and alt prefix to key.
@@ -152,35 +145,3 @@ def get_combined_key(key):
     '''
 
     return ''.join(e+'+' for e in ('control', 'shift', 'alt') if held_keys[e] and not e == key) + key
-
-
-
-if __name__ == '__main__':
-    from ursina import *
-    from ursina import Ursina, input_handler
-
-    app = Ursina(borderless=False)
-    input_handler.bind('z', 'w')  # 'z'-key will now be registered as 'w'-key
-    input_handler.bind('left mouse down', 'attack')  # 'left mouse down'-key will now send 'attack'to input functions
-    input_handler.bind('gamepad b', 'attack')  # 'gamepad b'-key will now be registered as 'attack'-key
-
-
-    def input(key):
-        print('got key:', key)
-        if key == 'attack':
-            destroy(Entity(model='cube', color=color.blue), delay=.2)
-        # if key == 'left mouse down':
-        #     print('pressed left mouse button')
-
-        # if key == Keys.left_mouse_down:   # same as above, but with Keys enum.
-        #     print('pressed left mouse button')
-
-
-    # def update():
-    #     for key, value in held_keys.items():
-    #         if value != 0:
-    #             print(key, value)
-
-
-
-    app.run()
