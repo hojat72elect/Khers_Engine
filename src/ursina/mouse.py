@@ -8,10 +8,8 @@ from ursina.camera import instance as camera
 from ursina.hit_info import HitInfo
 from ursina.vec3 import Vec3
 from ursina.ursinamath import distance
-
 from pathlib import Path
 from panda3d.core import WindowProperties
-
 
 class Mouse:
     def __init__(self):
@@ -339,24 +337,4 @@ class Mouse:
                     if hasattr(s, 'on_mouse_exit'):
                         s.on_mouse_exit()
 
-
-
 instance = Mouse()
-
-
-if __name__ == '__main__':
-    from ursina import *
-    from ursina import Ursina, Button, mouse
-    app = Ursina()
-    Button(parent=scene, text='a')
-
-    def input(key):
-        if key == 'space':
-            mouse.locked = not mouse.locked
-            print(mouse.velocity)
-
-    # Cursor()
-    # mouse.visible = False
-
-
-    app.run()
