@@ -11,7 +11,7 @@ class TestVec3:
         sut2 = Vec3(1, 2, 3)
         assert sut1 * sut2 == Vec3(1, 0, -3)
 
-    def test_plus_equal(self):
+    def test_adding_two_vec3(self):
         sut = Vec3(1, 0, 1)
         sut += Vec3(0, 1, 0)
         assert sut == Vec3(1, 1, 1)
