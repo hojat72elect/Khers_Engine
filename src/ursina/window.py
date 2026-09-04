@@ -1,14 +1,11 @@
 import sys
-
 from panda3d.core import WindowProperties, loadPrcFileData
 from screeninfo import get_monitors
-
 from ursina import application, color, input_handler
 from ursina.scene import instance as scene  # for toggling collider visibility
 from ursina.string_utilities import print_info, print_warning
 from ursina.vec2 import Vec2
 from ursina.shaders.text_with_shadows_shader import text_with_shadows_shader
-
 
 class Window(WindowProperties):
 
@@ -124,7 +121,6 @@ class Window(WindowProperties):
     @property
     def bottom_right(self):
         return Vec2(self.aspect_ratio/2, -.5)
-
 
     def center_on_screen(self):
         if application.window_type == 'none' or not self.main_monitor:
@@ -517,105 +513,4 @@ class Window(WindowProperties):
                 globalClock.setMode(ClockObject.MLimited)
                 globalClock.setFrameRate(int(value))
 
-
 instance = Window()
-
-
-if __name__ == '__main__':
-    from ursina import *
-    application.trace_entity_definition = True
-    # application.development_mode = False
-    # app = Ursina(borderless=True, forced_aspect_ratio=16/9)
-    app = Ursina(
-        title='Ursina',
-        # borderless=False,
-        # borderless=True,
-        # fullscreen=True,
-        # show_ursina_splash=True,
-        # development_mode=False,
-        vsync = False,
-        )
-    # button_list = ButtonList(
-    #     {
-    #     'widow.position = Vec2(0,0)': Func(setattr, window, 'position', Vec2(0,0)),
-    #     'widow.size = Vec2(512,512)': Func(setattr, window, 'size', Vec2(512,512)),
-    #     'widow.center_on_screen()': window.center_on_screen,
-
-    #     'widow.borderless = True': Func(setattr, window, 'borderless', True),
-    #     'widow.borderless = False': Func(setattr, window, 'borderless', False),
-
-    #     'widow.fullscreen = True': Func(setattr, window, 'fullscreen', True),
-    #     'widow.fullscreen = False': Func(setattr, window, 'fullscreen', False),
-
-    #     'widow.vsync = True': Func(setattr, window, 'vsync', True),
-    #     'widow.vsync = False': Func(setattr, window, 'vsync', False),
-
-
-    #     'application.base.win.request_properties(self)': Func(application.base.win.request_properties, window),
-
-    #     }, y=0
-    # )
-    # startup_value = Text(y=.5,x=-.5)
-    # startup_value.text = f'''
-    #     position: {window.position}
-    #     size: {window.size}
-    #     aspect_ratio: {window.aspect_ratio}
-    #     window.main_monitor.width: {window.main_monitor.width}
-    #     window.main_monitor.height: {window.main_monitor.height}
-
-    # '''
-
-    # position_text = Text(y=.5)
-
-# if __name__ == '__main__':
-#     from hyposolus import preprocessor
-#     _________________AUTOMATIC_NAME_TEST__________ = Entity()
-    # def update():
-    #     position_text.text = f'''
-    #         position: {window.position}
-    #         size: {window.size}
-    #         aspect_ratio: {window.aspect_ratio}
-    #         window.main_monitor.width: {window.main_monitor.width}
-    #         window.main_monitor.height: {window.main_monitor.height}
-    #
-    #     '''
-
-    def input(key):
-        if key == 'space':
-            # x = window.main_monitor.x + ((window.main_monitor.width - window.size[0]) / 2)
-            # y = window.main_monitor.y + ((window.main_monitor.height - window.size[1]) / 2)
-            # window.position = Vec2(x,y)
-            window.center_on_screen()
-        if key == 'p':
-            for e in scene.entities:
-                if not e.eternal:
-                    print(e.name)
-
-
-    # window.borderless = False
-    # window.fullscreen = True
-
-    # window.size = window.size - Vec2(1,1)
-    # window.monitor_index = 0
-    # window.center_on_screen()
-    # print('------------', window.monitors)
-    # time.sleep(2)
-    # window.forced_aspect_ratio = 1
-    # window.vsync = 10
-    # window.title = 'ursina'
-    # window.borderless = False
-    # window.fullscreen = False
-    # window.fps_counter.enabled = False
-    # window.cog_button.enabled = False
-    # window.position =(0,837)
-    window.color =color.white
-
-    # camera.orthographic = True
-    # camera.fov = 2
-    # Text(text='adoij', x=.1)
-    # def input(key):
-    #     if key == 'space':
-    #         window.center_on_screen()
-
-    # Entity(model='cube', color=color.green, collider='box', texture='shore')
-    app.run()
