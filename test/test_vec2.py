@@ -1,7 +1,7 @@
 from ursina import Vec2
 
-class TestVec2:
 
+class TestVec2:
     def test_general_behavior(self):
         sut = Vec2(1, 1)
         assert sut.X == 1
@@ -22,7 +22,7 @@ class TestVec2:
         assert sut.Y == 5
 
     def test_vec2_constants(self):
-        assert Vec2.zero == Vec2(0,0)
+        assert Vec2.zero == Vec2(0, 0)
         assert Vec2.one == Vec2(1, 1)
         assert Vec2.right == Vec2(1, 0)
         assert Vec2.left == Vec2(-1, 0)
@@ -30,7 +30,13 @@ class TestVec2:
         assert Vec2.down == Vec2(0, -1)
 
         assert Vec2.cardinal_directions == (Vec2.up, Vec2.right, Vec2.down, Vec2.left)
-        assert Vec2.ordinal_directions == (Vec2(1, 1), Vec2(1, -1), Vec2(-1, -1), Vec2(-1, 1))
-        assert Vec2.compass_directions == Vec2.cardinal_directions + Vec2.ordinal_directions
-
-
+        assert Vec2.ordinal_directions == (
+            Vec2(1, 1),
+            Vec2(1, -1),
+            Vec2(-1, -1),
+            Vec2(-1, 1),
+        )
+        assert (
+            Vec2.compass_directions
+            == Vec2.cardinal_directions + Vec2.ordinal_directions
+        )
