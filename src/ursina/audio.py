@@ -12,15 +12,14 @@ from panda3d.core import AudioManager
 
 from ursina.ursinastuff import DotDict
 audio_groups = DotDict(
-    music =     DotDict(volume_multiplier=1),
-    ambient =   DotDict(volume_multiplier=1),
-    sfx =       DotDict(volume_multiplier=1),
-    dialogue =  DotDict(volume_multiplier=1),
+    music=DotDict(volume_multiplier=1),
+    ambient=DotDict(volume_multiplier=1),
+    sfx=DotDict(volume_multiplier=1),
+    dialogue=DotDict(volume_multiplier=1),
 )
 
 audio_clip_cache = dict()
 _audio_manager = AudioManager.create_AudioManager()
-
 
 @generate_properties_for_class()
 class Audio(Entity):
@@ -52,7 +51,6 @@ class Audio(Entity):
         if self.auto_destroy:
             invoke(self.stop, destroy=True, delay=self.length)
 
-
     def volume_setter(self, value):
         if not self._clip:  return
         self._volume = value
@@ -73,7 +71,6 @@ class Audio(Entity):
         if not self._clip:  return
         self._loops = value
         self._clip.setLoopCount(value)
-
 
     def clip_setter(self, value):
         # if value in audio_clip_cache:
@@ -107,7 +104,6 @@ class Audio(Entity):
 
         self._clip = value
 
-
     def length_getter(self):       # get the duration of the audio clip.
         return self.clip.length() if self.clip else 0
 
@@ -123,14 +119,13 @@ class Audio(Entity):
 
     def time_getter(self):
         return self.clip.get_time()
+
     def time_setter(self, value):
         self.clip.set_time(value)
-
 
     def balance_setter(self, value):    # pan the audio. should be a value between -.5 and .5. default: 0
         self._balance = value
         self.clip.setBalance(value*2)
-
 
     def play(self, start=0):
         if application.paused and not self.ignore_paused:
@@ -188,39 +183,3 @@ class Audio(Entity):
 
     def note_pitch_setter(self, offset):
         self.pitch = pow(1 / 1.05946309436, offset)
-
-if __name__ == '__main__':
-    import random
-
-    from ursina import Ursina
-
-    app = Ursina()
-    a = Audio('sine', loop=True, autoplay=True)
-
-    a.volume = .5
-    print('---', a.volume)
-    # a = Audio('life_is_currency_wav', pitch=1)
-    def input(key):
-        if key == 'space':
-            a = Audio('sine', pitch=random.uniform(.5,1), loop=True)
-    # print(a.clip)
-    # a.volume=0
-    # b = Audio(a.clip)
-    # a2 = Audio(clip=a.clip)
-    # a2 = duplicate(a)
-    # a2.clip = a.clip
-    # a2.play()
-    # print(a2.clip)
-    # a.fade_out(delay=1)
-    # DebugMenu(a)
-
-    # def input(key):
-    #     if key == 'f':
-    #         a.fade_out(duration=4, curve=curve.linear)
-    #
-    # def update():
-    #     print(a.time)
-
-
-
-    app.run()
