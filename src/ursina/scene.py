@@ -1,7 +1,6 @@
 from panda3d.core import NodePath, Fog
 from ursina import color
 
-
 class Scene(NodePath):
     def __init__(self):
         super().__init__('scene')
@@ -89,37 +88,4 @@ class Scene(NodePath):
     def children(self, value):
         self._children = value
 
-
 instance = Scene()
-
-
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-    # yolo = Button(name='yolo', text='yolo')
-    e = Entity(model='plane', color=color.black, scale=100)
-    EditorCamera()
-    s = Sky()
-
-    def input(key):
-        if key == 'l':
-            for e in scene.entities:
-                print(e.name)
-
-        if key == 'd':
-            scene.clear()
-            Entity(model='cube')
-
-
-    from ursina.shaders.unlit_with_fog_shader import unlit_with_fog_shader
-    e = Entity(model='cube', shader=unlit_with_fog_shader)
-    # scene.fog_density = .1          # sets exponential density
-    unlit_with_fog_shader.fog_color = color.blue
-    unlit_with_fog_shader.fog_density = (0,100)
-
-    # scene.fog_density = (0, 200)   # sets linear density start and end
-    # scene.fog_color = color.green
-    Entity(parent=camera.ui, model='quad', scale=.1)
-
-    app.run()
