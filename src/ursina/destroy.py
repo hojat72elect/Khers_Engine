@@ -1,10 +1,8 @@
 import sys
-
 from ursina import application
 from ursina.scene import instance as scene
 from ursina.ursinastuff import invoke
 from ursina.sequence import Sequence
-
 
 def destroy(entity, delay=0, unscaled=True, ignore_paused=False, force_destroy=False):
     if application.development_mode:
@@ -17,7 +15,6 @@ def destroy(entity, delay=0, unscaled=True, ignore_paused=False, force_destroy=F
 
     return invoke(_destroy, entity, delay=delay, unscaled=unscaled, ignore_paused=ignore_paused, force_destroy=force_destroy)
     # return Sequence(Wait(delay), Func(_destroy, entity), auto_destroy=True, started=True)
-
 
 def _destroy(entity, force_destroy=False):
     # from ursina import camera
@@ -81,37 +78,3 @@ def _destroy(entity, force_destroy=False):
     #     entity.texture.releaseAll()
 
     # del entity
-
-
-
-if __name__ == '__main__':
-    from ursina import Entity, Ursina
-    app = Ursina()
-    class E(Entity):
-        def __init__(self, name):
-            super().__init__()
-            self.num_frames = 0
-            self.name = name
-            # destroy(self)
-
-        def update(self):
-            self.num_frames += 1
-            print(f"updating {self}")
-            if self.name == "e2" and self.num_frames == 3:
-                print("destroying e2")
-                destroy(self)
-
-
-    app = Ursina(window_type="none")
-    e1 = E("e1")
-    e2 = E("e2")
-    e3 = E("e3")
-
-
-    # def update():
-    #     print()
-    #     if e1.num_frames > 4:
-    #         exit()
-
-
-    app.run()

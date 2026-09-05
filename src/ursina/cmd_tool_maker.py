@@ -2,7 +2,6 @@ import inspect
 import functools
 import sys
 
-
 def auto_validate_input(cls):
     for attr_name, attr_value in cls.__dict__.items():
         if callable(attr_value) and not attr_name.startswith('_'):
@@ -48,7 +47,6 @@ def auto_validate_input(cls):
             setattr(cls, attr_name, wrapper)
     return cls
 
-
 def auto_log_function(function):
     '''Decorator to log function calls and their arguments.'''
     sig = inspect.signature(function)
@@ -72,7 +70,6 @@ def auto_log_method_calls(cls):
         if callable(attr_value) and not attr_name.startswith('_'):
             setattr(cls, attr_name, auto_log_function(attr_value))
     return cls
-
 
 def make_command_line_app(cls):
     args = sys.argv[1:]
@@ -153,7 +150,6 @@ def make_command_line_app(cls):
 
         method(*args, **kwargs)
 
-
 def print_valid_method_args(obj, method_name):
     def get_original_method_sig(obj, method_name):
         method = getattr(obj, method_name)
@@ -177,7 +173,6 @@ def print_valid_method_args(obj, method_name):
                 print(f"  --{param_name}={default_val}")
         else:
             print(f"  --{param_name}=<required>")
-
 
 def parse_value(value, expected_type):
     try:

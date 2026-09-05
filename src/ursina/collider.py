@@ -1,8 +1,6 @@
 from panda3d.core import CollisionBox, CollisionCapsule, CollisionNode, CollisionPolygon, CollisionSphere, NodePath
-
 from ursina.mesh import Mesh
 from ursina.vec3 import Vec3
-
 
 class Collider(NodePath):
     def __init__(self, entity, shape):
@@ -40,7 +38,6 @@ class Collider(NodePath):
         else:
             self.node_path.hide()
 
-
 class BoxCollider(Collider):
     def __init__(self, entity, center=(0,0,0), size=(1,1,1)):
         self.center = center
@@ -50,13 +47,11 @@ class BoxCollider(Collider):
         size = [max(0.001, e) for e in size] # collider needs to have thickness
         super().__init__(entity, CollisionBox(Vec3(center[0], center[1], center[2]), size[0], size[1], size[2]))
 
-
 class SphereCollider(Collider):
     def __init__(self, entity, center=(0,0,0), radius=.5):
         self.center = center
         self.radius = radius
         super().__init__(entity, CollisionSphere(center[0], center[1], center[2], radius))
-
 
 class CapsuleCollider(Collider):
     def __init__(self, entity, center=(0,0,0), height=2, radius=.5):
@@ -64,7 +59,6 @@ class CapsuleCollider(Collider):
         self.height = height
         self.radius = radius
         super().__init__(entity, CollisionCapsule(center[0], center[1] + radius, center[2], center[0], center[1] + height, center[2], radius))
-
 
 class MeshCollider(Collider):
     def __init__(self, entity, mesh=None, center=(0,0,0)):
@@ -132,41 +126,3 @@ class MeshCollider(Collider):
         self.node_path.node().clearSolids()
         self.collision_polygons.clear()
         self.node_path.removeNode()
-
-
-
-if __name__ == '__main__':
-    from ursina import *
-    from ursina import Button, Circle, EditorCamera, Pipe, Ursina, color, scene
-    app = Ursina()
-
-    e = Button(parent=scene, model='sphere', x=2)
-    e.collider = 'box'          # add BoxCollider based on entity's bounds.
-    e.collider = 'sphere'       # add SphereCollider based on entity's bounds.
-    e.collider = 'capsule'      # add CapsuleCollider based on entity's bounds.
-    e.collider = 'mesh'         # add MeshCollider matching the entity's model.
-    e.collider = e.model        # copy target model/Mesh and use it as MeshCollider.
-    e.collider = load_model('icosphere')    # load a model by name and use it as MeshCollider.
-
-    e.collider = BoxCollider(e, center=Vec3(0,0,0), size=Vec3(1,1,1))   # add BoxCollider at custom positions and size.
-    e.collider = SphereCollider(e, center=Vec3(0,0,0), radius=.75)      # add SphereCollider at custom positions and size.
-    e.collider = CapsuleCollider(e, center=Vec3(0,0,0), height=3, radius=.75) # add CapsuleCollider at custom positions and size.
-    e.collider = MeshCollider(e, mesh=e.model, center=Vec3(0,0,0))      # add MeshCollider with custom shape and center.
-
-    m = Pipe(base_shape=Circle(6), thicknesses=(1, .5))
-    e = Button(parent=scene, model='cube', collider='mesh', color=color.red, highlight_color=color.yellow)
-    # e = Button(parent=scene, model='quad', collider=, color=color.lime, x=-1)
-
-    sphere = Button(parent=scene, model='icosphere', collider='mesh', color=color.red, highlight_color=color.yellow, x=4)
-
-    EditorCamera()
-
-    def input(key):
-        if key == 'c':
-            e.collider = None
-
-    # def update():
-    #     print(mouse.point)
-
-
-    app.run()
