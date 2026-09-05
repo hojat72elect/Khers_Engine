@@ -13,10 +13,8 @@ import gltf
 import builtins
 from ursina.sequence import Func
 
-
 imported_meshes = dict()
 blender_scenes = dict()
-# folders = (application.asset_folder, )
 
 def load_model(name, folder=None, file_types=('.bam', '.ursinamesh', '.obj', '.glb', '.gltf', '.blend'), use_deepcopy=False, gltf_no_srgb=Func(getattr, application, 'gltf_no_srgb')):
     if callable(gltf_no_srgb):
@@ -123,7 +121,6 @@ def load_model(name, folder=None, file_types=('.bam', '.ursinamesh', '.obj', '.g
 
     return None
 
-
 # find blender installations
 if application.development_mode:
 
@@ -157,7 +154,6 @@ if application.development_mode:
         if which_process.returncode == 0:
             blender_exec = which_process.stdout.decode().strip()
             application.blender_paths['default'] = blender_exec
-
 
 def load_blender_scene(name, folder:Path=Func(getattr, application, 'asset_folder'), reload=False, skip_hidden=True, models_only=False, uvs=True, vertex_colors=True, normals=True, triangulate=True, decimals=4, scenes_folder='scenes'):
     if callable(folder):
@@ -210,8 +206,6 @@ def load_blender_scene(name, folder:Path=Func(getattr, application, 'asset_folde
         blender_scenes[name] = loc['scene_parent']
         return loc['scene_parent']
 
-
-
 def get_blender(blend_file):    # try to get a matching blender version in case we have multiple blender version installed
     if not application.blender_paths:
         print_warning(f"Error: Trying to load .blend file, but no blender installation was found. blender_paths: {application.blender_paths}. If Blender is not installed, install it. If Blender is installed, but not found, make sure to install it to the default install location. If it's still not found, you can provide a custom path like this: application.blender_paths['default'] = Path('C:\\Program Files\\...')")
@@ -233,7 +227,6 @@ def get_blender(blend_file):    # try to get a matching blender version in case 
         except:
             print_info('using default blender version')
             return application.blender_paths['default']
-
 
 def blend_to_obj(blend_file:Path, out_folder=Func(getattr, application, 'models_compressed_folder'), export_mtl=True):
     if callable(out_folder):
@@ -262,7 +255,6 @@ def blend_to_obj(blend_file:Path, out_folder=Func(getattr, application, 'models_
     exported.append(blend_file)
 
     return exported
-
 
 def obj_to_ursinamesh(folder=Func(getattr, application, 'models_compressed_folder'), out_folder=Func(getattr, application, 'models_compressed_folder'), name='*', return_mesh=True, save_to_file=False, delete_obj=False):
     if callable(folder):
@@ -543,73 +535,7 @@ def ursina_mesh_to_obj(mesh, name='', out_path=Func(getattr, application, 'model
         f.write(obj)
         print_info('saved obj:', out_path / (name + '.obj'))
 
-
-
 def compress_internal():
     for blend_file in application.internal_models_folder.glob('*.blend'):
         blend_to_obj(blend_file, export_mtl=False)
         obj_to_ursinamesh(application.internal_models_compressed_folder, application.internal_models_compressed_folder, return_mesh=False, save_to_file=True, delete_obj=True)
-
-
-if __name__ == '__main__':
-    compress_internal()
-    from ursina import *
-    from ursina import Ursina, Entity, EditorCamera, Sky
-    app = Ursina()
-    # print('imported_meshes:\n', imported_meshes)
-    # Entity(model='quad').model.save('quad.bam')
-    m = obj_to_ursinamesh(folder=application.asset_folder.parent / 'samples', name='procedural_rock_0', save_to_file=False, delete_obj=False)
-    print(m.serialize())
-    # Entity(model=m)
-    # EditorCamera()
-
-
-    # application.asset_folder = application.asset_folder.parent / 'samples'
-    # application.asset_folder = Path(r'C:\\Users\\Petter\\Downloads\\')
-    # Entity(model='c1a0')
-    # from ursina.shaders import lit_with_shadows_shader
-    # Entity.default_shader = lit_with_shadows_shader
-    # Entity(model='race')
-    # Entity(model='ambulance', x=1.5)
-
-    # application.asset_folder = Path(r'''C:\Users\Petter\Downloads''')
-    # t = perf_counter()
-    # Entity(model='untitled')
-    # print('-------', perf_counter() - t)
-    # m = load_model('cube', use_deepcopy=True)
-    # ground = Entity(model='plane', scale=10, texture='brick', texture_scale=Vec2(4))
-    # DirectionalLight()
-
-    # blender_scene = load_blender_scene(path=application.asset_folder, name='desert', reload=True)
-    # blender_scene = load_blender_scene(path=application.asset_folder, name='blender_level_editor_test_scene_2')
-    # print('-------', time.time() - t)
-
-    # print('--------', blender_scene.children)
-    # for e in blender_scene.children:
-    #     # e.color = color.random_color()
-    #     e.shader = rim_shader
-    #     e.texture='matcap_4'
-    #
-    #
-    # blender_scene.Plane_002.collider = 'mesh'
-    # from ursina.prefabs.first_person_controller import FirstPersonController
-    # player = FirstPersonController()
-
-    # def input(key):
-    #     if key == '+':
-    #         for e in blender_scene.children:
-    #             e.texture_scale = Vec2(e.texture_scale[0], e.texture_scale[1]+.1)
-    #     if key == '-':
-    #         for e in blender_scene.children:
-    #             e.texture_scale = Vec2(e.texture_scale[0], e.texture_scale[1]-.1)
-    #         print(blender_scene.children[0].texture_scale)
-    #
-    EditorCamera()
-    Sky(texture='sky_sunset')
-    # def update():
-    #     blender_scene.Cube.x += (held_keys['d'] - held_keys['a']) * time.dt * 10
-
-
-    app.run()
-    # e = Entity(model=Cylinder(16))
-    # ursina_mesh_to_obj(e.model, name='quad_export_test')
