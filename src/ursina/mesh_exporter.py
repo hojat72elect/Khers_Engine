@@ -206,20 +206,7 @@ def ursinamesh_to_dae(mesh, name, folder:Path=application.models_compressed_fold
   </scene>
 </COLLADA>
     '''
+    (folder / f'{name}.dae').parent.mkdir(parents=True, exist_ok=True)
     with (folder / f'{name}.dae').open('w') as f:
         f.write(text)
 
-
-if __name__ == '__main__':
-    from ursina import Ursina, Entity, load_model, EditorCamera, Sky
-    app = Ursina()
-
-    t = perf_counter()
-    Entity(model='untitled')
-    print('-------', perf_counter() - t)
-    m = load_model('cube', use_deepcopy=True)
-    ursinamesh_to_dae(m, 'dae_export_test.dae')
-    EditorCamera()
-    Sky(texture='sky_sunset')
-
-    app.run()
