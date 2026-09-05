@@ -414,6 +414,3 @@ class UrsinaBuild:
     #     f'\\build\\{PROJECT_FOLDER.stem}.exe'
     #     ])
 
-
-if __name__ == '__main__':
-    make_command_line_app(UrsinaBuild)

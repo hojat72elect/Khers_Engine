@@ -1,13 +1,8 @@
 from ursina.scripts.property_generator import generate_properties_for_class
 
-if __name__ == '__main__':
-    from ursina.ursinastuff import _test
-
-
 def flatten_list(target_list):
     import itertools
     return list(itertools.chain(*target_list))
-
 
 def flatten_completely(target_list):
     for i in target_list:
@@ -15,7 +10,6 @@ def flatten_completely(target_list):
             yield from flatten_list(i)
         else:
             yield i
-
 
 def enumerate_2d(lst):    # usage: for (x, y), value in enumerate_2d(my_2d_list)
     if isinstance(lst, Array2D):
@@ -28,14 +22,11 @@ def enumerate_2d(lst):    # usage: for (x, y), value in enumerate_2d(my_2d_list)
         for x in range(width):
             yield (x, y), lst[x][y]
 
-
 def enumerate_3d(target_3d_list):   # usage: for (x, y, z), value in enumerate_3d(my_3d_list)
     for x, vertical_slice in enumerate(target_3d_list):
         for y, log in enumerate(vertical_slice):
             for z, value in enumerate(log):
                 yield (x, y, z), value
-
-
 
 @generate_properties_for_class()
 class Array2D(list):
@@ -190,41 +181,6 @@ class Array2D(list):
 
         return cropped_array
 
-
-
-if __name__ == '__main__':
-    from textwrap import dedent, indent
-    grid = Array2D(width=16, height=8)
-    # print(grid)
-    padded_grid = grid.add_margin(top=4, right=7, bottom=3, left=2, value=7)
-    # print('added margin:', padded_grid)
-    # print('cropped_array:\n', padded_grid.get_area((2,3), (padded_grid.width-7, padded_grid.height-4)))
-
-    _test(
-        Array2D(data=[[1,6], [2,7], [3,8], [4,9], [5,10]]).to_string()
-        ==
-        indent(dedent('''
-        6,  7,  8,  9, 10
-        1,  2,  3,  4,  5
-        ''').strip(), ' ')
-    )
-
-    _test(Array2D(data=[[1,6], [2,7], [3,8], [4,9], [5,10]]).rows == [[1,2,3,4,5], [6,7,8,9,10]])
-
-    _test(Array2D.from_string('''
-        0,1,0
-        2,3,4
-        0,1,1
-        0,0,0
-        ''', int) ==
-        Array2D(data=[
-        [0,0,2,0],
-        [0,1,3,1],
-        [0,1,4,0]
-        ])
-    )
-
-
 class Array3D(list):
     __slots__ = ('width', 'height', 'depth', 'default_value')
 
@@ -312,16 +268,13 @@ class Array3D(list):
                         continue
                     self[true_x][true_y][true_z] = data[true_x-x][true_y-y][true_z-z]
 
-
 def chunk_list(target_list, chunk_size):
     # yield successive chunks from list
     for i in range(0, len(target_list), chunk_size):
         yield target_list[i:i + chunk_size]
 
-
 def rotate_2d_list(target_2d_list):
     return [list(row) for row in zip(*target_2d_list[::-1], strict=True)]  # rotate
-
 
 def rotate_3d_list(target_3d_list, clockwise=True): # rotates around the y (up) axis where 1 is 90 degrees clockwise
     new_data = Array3D(width=target_3d_list.depth, height=target_3d_list.height, depth=target_3d_list.width)
@@ -340,7 +293,6 @@ def rotate_3d_list(target_3d_list, clockwise=True): # rotates around the y (up) 
 
     return new_data
 
-
 def string_to_2d_list(string, char_value_map=None): # char_value_map default: {'.': 0, '#': 1}
     from textwrap import dedent
     if char_value_map is None:
@@ -351,45 +303,8 @@ def string_to_2d_list(string, char_value_map=None): # char_value_map default: {'
     grid = [list(row) for row in zip(*grid[::-1], strict=False)]  # rotate
     return grid
 
-if __name__ == '__main__':
-    from ursina.ursinastuff import _test
-
-    _test(string_to_2d_list('''\
-        #..#.###..####..#..
-        #..#.#..#.###...#..
-        #..#.###.....#..#..
-        .##..#..#.####..#..
-        ''')
-        ==
-        rotate_2d_list([
-        [1,0,0,1, 0, 1,1,1,0, 0, 1,1,1,1, 0, 0,1,0,0],
-        [1,0,0,1, 0, 1,0,0,1, 0, 1,1,1,0, 0, 0,1,0,0],
-        [1,0,0,1, 0, 1,1,1,0, 0, 0,0,0,1, 0, 0,1,0,0],
-        [0,1,1,0, 0, 1,0,0,1, 0, 1,1,1,1, 0, 0,1,0,0],
-    ])
-    )
-
-
 def list_2d_to_string(target_2d_list, characters='.#'):
     return '\n'.join([''.join([characters[e] for e in line]) for line in target_2d_list])
-
-if __name__ == '__main__':
-    list_2d = [
-        [1,0,0,1, 0, 1,1,1,0, 0, 1,1,1,1, 0, 0,1,0,0],
-        [1,0,0,1, 0, 1,0,0,1, 0, 1,1,1,0, 0, 0,1,0,0],
-        [1,0,0,1, 0, 1,1,1,0, 0, 0,0,0,1, 0, 0,1,0,0],
-        [0,1,1,0, 0, 1,0,0,1, 0, 1,1,1,1, 0, 0,1,0,0],
-    ]
-    from textwrap import dedent
-    expected_result = dedent('''
-        #..#.###..####..#..
-        #..#.#..#.###...#..
-        #..#.###.....#..#..
-        .##..#..#.####..#..
-        ''').strip()
-
-    _test(list_2d_to_string(list_2d) == expected_result)
-
 
 def sample_bilinear(target_2d_list:Array2D, x, y, clamp_if_outside=True):
     X = clamp(int(x), 0, target_2d_list.width-1)
@@ -411,20 +326,6 @@ def sample_bilinear(target_2d_list:Array2D, x, y, clamp_if_outside=True):
 
     return interpolated_height
 
-if __name__ == '__main__':
-    list_2d = Array2D(data=[
-        [1,1,0],
-        [1,0,0],
-        [1,0,0],
-    ])
-    _test(sample_bilinear(list_2d, 0, 0) == 1)
-    _test(sample_bilinear(list_2d, 1, 1) == 0)
-    _test(sample_bilinear(list_2d, .5, .5) == .75)
-    _test(sample_bilinear(list_2d, .5, .75) == 0.625)
-
-
-
 class LoopingList(list):
     def __getitem__(self, i):
         return super().__getitem__(i % len(self))
-

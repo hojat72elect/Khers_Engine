@@ -12,7 +12,6 @@ from ursina.string_utilities import print_info
 from ursina.texture import Texture
 from ursina.window import instance as window
 
-
 @generate_properties_for_class()
 class Camera(Entity):
     def __init__(self, shader=None, **kwargs):
@@ -192,41 +191,4 @@ class Camera(Entity):
 
         self.filter_quad.setShaderInput(name, value)
 
-
 instance = Camera()
-
-
-if __name__ == '__main__':
-    from ursina import *
-    from ursina import EditorCamera, Entity, Ursina, camera
-
-    # window.borderless = False
-    app = Ursina()
-
-    camera.orthographic = True
-
-    e = Entity()
-    e.model = 'quad'
-    e.color = color.random_color()
-    e.position = (-2, 0, 10)
-
-    e = Entity()
-    e.model = 'quad'
-    e.color = color.random_color()
-    e.position = (2, 0, 10)
-
-    e = Entity()
-    e.model = 'quad'
-    e.color = color.random_color()
-    e.position = (0, 0, 40)
-
-    EditorCamera()
-    # from ursina import *
-    # Button(text='test button')
-    from ursina.shaders import camera_grayscale_shader
-    camera.shader = camera_grayscale_shader
-
-    # def update():
-    #     t = Texture(camera.render_texture)
-    #     print(t.pixels)
-    app.run()
