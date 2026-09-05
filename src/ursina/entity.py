@@ -31,9 +31,7 @@ from ursina.vec4 import Vec4
 _Ursina_instance = None
 _warn_if_ursina_not_instantiated = True # gets set to True after Ursina.__init__() to ensure the correct order.
 
-
 from ursina.scripts.property_generator import generate_properties_for_class
-
 
 @generate_properties_for_class()
 class Entity(NodePath, metaclass=PostInitCaller):
@@ -1588,75 +1586,3 @@ class Entity(NodePath, metaclass=PostInitCaller):
         hit_info.world_normal = Vec3(*collision.get_surface_normal(scene).normalized())
 
         return hit_info
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-
-    # e = Entity(model='quad', color=color.orange, position=(0,0,1), scale=1.5, rotation=(0,0,45), texture='brick')
-
-    # '''example of inheriting Entity'''
-    # class Player(Entity):
-    #     def __init__(self, **kwargs):
-    #         super().__init__()
-    #         self.model='cube'
-    #         self.color = color.red
-    #         self.scale_y = 2
-
-    #         for key, value in kwargs.items():
-    #             setattr(self, key, value)
-
-    #     # input and update functions gets automatically called by the engine
-    #     def input(self, key):
-    #         if key == 'space':
-    #             # self.color = self.color.inverse()
-    #             self.animate_x(2, duration=1)
-
-    #     def update(self):
-    #         self.x += held_keys['d'] * time.dt * 10
-    #         self.x -= held_keys['a'] * time.dt * 10
-
-    # player = Player(x=-1)
-
-
-    # # test
-    # e = Entity(model='cube', collider='box', texture='shore', texture_scale=Vec2(2), color=hsv(.3,1,.5))
-    # print(repr(e))
-    # # a = Entity()
-    # # b = Entity(parent=a)
-
-
-    # # e.animate_x(3, duration=2, delay=.5, loop=True)
-    # # e.animate_position(Vec3(1,1,1), duration=1, loop=True)
-    # # e.animate_rotation(Vec3(45,45,45))
-    # # e.animate_scale(2, duration=1, curve=curve.out_expo_boomerang, loop=True)
-    # # e.animate_color(color.green, loop=True)
-    # # e.shake()
-    # # e.fade_out(delay=.5)
-    # # e.fade_in(delay=2.5)
-    # # e.blink(color.red, duration=1, curve=curve.linear_boomerang, loop=True)
-
-
-    # shader test
-    from ursina.shaders import lit_with_shadows_shader, matcap_shader
-    ground = Entity(model='plane', texture='grass', scale=10, shader=lit_with_shadows_shader)
-    e = Entity(model='cube', y=1, texture='grass',
-        # shader=unlit_shader
-        )
-
-    # e1 = Entity(parent=e, model='cube', y=1, x=.5, shader=matcap_shader, texture='shore')
-    # e2 = Entity(parent=e1, model='cube', x=2, shader=lit_with_shadows_shader, texture='white_cube')
-    DirectionalLight().look_at(Vec3(1,-1,.5))
-    EditorCamera(rotation_x=15)
-
-    scene.fog_color = color.blue
-    scene.fog_density = (0,100)
-
-    # # test deepcopy
-    # print_warning(repr(e1))
-    # e1_copy = deepcopy(e1)
-
-    # Text('Press i to generate .pyi file, so geterated properties')
-    # def input
-
-    app.run()

@@ -1,19 +1,17 @@
+""""
+todo : This script is a serious spaghetti code and at this time, it won't be possible to take the runner code out of it.
+"""
 from ursina import input_handler, held_keys, Entity
 from panda3d.core import InputDevice, InputDeviceManager
 
 main_gamepad_index = 0
-
 
 if __name__ == '__main__':
     from ursina import Ursina, Text, time, color, window
     app = Ursina()
     window.color = color.black
 
-
-# input_handler.gamepad = None
 input_handler.gamepads = base.devices.getDevices(InputDevice.DeviceClass.gamepad)
-
-# def disconnect_all():
 
 def connect_all():
     for i, gamepad in enumerate(input_handler.gamepads):
@@ -87,10 +85,8 @@ def vibrate(gamepad_index=0, low_freq_motor=1, high_freq_motor=1, duration=.1, c
         return
     input_handler.gamepads[gamepad_index].set_vibration(low_freq_motor, high_freq_motor)
     invoke(Func(input_handler.gamepads[gamepad_index].set_vibration, 0, 0), delay=duration)
-
 Entity(name='gamepad_handler', update=update, eternal=True) # connect update() to an entity so it runs
 connect_all()
-
 
 if __name__ == '__main__':
     text_entity = Text()
