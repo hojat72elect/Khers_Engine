@@ -8,22 +8,17 @@ camera.fov = GAME_HEIGHT
 window.color = color.rgb(2, 138, 248)
 Texture.default_filtering = None
 
-
 def px(x):
     return x - GAME_WIDTH / 2
-
 
 def py(y):
     return GAME_HEIGHT / 2 - y
 
-
 def to_phaser_x(x):
     return x + GAME_WIDTH / 2
 
-
 def to_phaser_y(y):
     return GAME_HEIGHT / 2 - y
-
 
 def create_sprite(image_name, x, y, z=0):
     entity = Entity(model="quad", texture=f"assets/{image_name}.png", position=(px(x), py(y), z))
@@ -31,9 +26,7 @@ def create_sprite(image_name, x, y, z=0):
     if entity.texture:
         entity.scale_x = entity.texture.width
         entity.scale_y = entity.texture.height
-
     return entity
-
 
 ball = None
 paddle = None
@@ -63,10 +56,8 @@ BRICK_TYPES = [
     "purple1",
 ]
 
-
 def create_bricks():
     global bricks
-
     bricks = []
     for row in range(BRICK_ROWS):
         for column in range(BRICK_COLUMNS):
@@ -75,15 +66,12 @@ def create_bricks():
             brick = create_sprite(BRICK_TYPES[row], x, y, z=1)
             bricks.append(brick)
 
-
 def create_ball():
     global ball
     ball = create_sprite("ball1", BALL_START_X, BALL_START_Y, z=2)
 
-
 def create_paddle():
     global paddle
-
     paddle = create_sprite(
         "paddle1",
         PADDLE_START_X,
@@ -91,18 +79,14 @@ def create_paddle():
         z=2,
     )
 
-
 def width(entity):
     return entity.scale_x
-
 
 def height(entity):
     return entity.scale_y
 
-
 def intersects(a, b):
     return abs(a.x - b.x) < (width(a) + width(b)) / 2 and abs(a.y - b.y) < (height(a) + height(b)) / 2
-
 
 def reset_ball():
     global ball_on_paddle
@@ -114,12 +98,10 @@ def reset_ball():
     ball.y = py(BALL_START_Y)
     ball_on_paddle = True
 
-
 def reset_level():
     for brick in bricks:
         brick.enabled = True
     reset_ball()
-
 
 def launch_ball():
     global ball_on_paddle
@@ -127,26 +109,21 @@ def launch_ball():
     global ball_velocity_y
     if not ball_on_paddle:
         return
-
     ball_velocity_x = -75
     ball_velocity_y = -300
     ball_on_paddle = False
 
-
 def update_paddle():
     mouse_x = (mouse.x + 0.5) * GAME_WIDTH
     mouse_x = clamp(mouse_x, PADDLE_MIN_X, PADDLE_MAX_X, )
-
     paddle.x = px(mouse_x)
     if ball_on_paddle:
         ball.x = paddle.x
-
 
 def hit_paddle():
     global ball_velocity_x
     ball_x = to_phaser_x(ball.x)
     paddle_x = to_phaser_x(paddle.x)
-
     diff = 0
 
     if ball_x < paddle_x:
@@ -158,7 +135,6 @@ def hit_paddle():
     else:
         ball_velocity_x = (2 + random.random() * 8)
 
-
 def check_paddle_collision():
     global ball_velocity_y
     if not intersects(ball, paddle):
@@ -167,16 +143,12 @@ def check_paddle_collision():
         return
 
     ball.y = (paddle.y + (height(ball) + height(paddle)) / 2)
-
     ball_velocity_y = -abs(ball_velocity_y)
-
     hit_paddle()
-
 
 def check_brick_collisions():
     global ball_velocity_x
     global ball_velocity_y
-
     for brick in bricks:
         if not brick.enabled:
             continue
@@ -185,27 +157,21 @@ def check_brick_collisions():
 
         dx = ball.x - brick.x
         dy = ball.y - brick.y
-
         overlap_x = (width(ball) + width(brick)) / 2 - abs(dx)
-
         overlap_y = (height(ball) + height(brick)) / 2 - abs(dy)
 
         if overlap_x < overlap_y:
-
             ball_velocity_x *= -1
             if dx > 0:
                 ball.x = (brick.x + (width(ball) + width(brick)) / 2)
             else:
                 ball.x = (brick.x - (width(ball) + width(brick)) / 2)
-
         else:
             ball_velocity_y *= -1
-
             if dy > 0:
                 ball.y = (brick.y + (height(ball) + height(brick)) / 2)
             else:
                 ball.y = (brick.y - (height(ball) + height(brick)) / 2)
-
         brick.enabled = False
 
         if not any(
@@ -214,7 +180,6 @@ def check_brick_collisions():
         ):
             reset_level()
         break
-
 
 def check_world_bounds():
     global ball_velocity_x
@@ -228,20 +193,16 @@ def check_world_bounds():
         x = half_width
         ball_velocity_x = abs(ball_velocity_x)
         ball.x = px(x)
-
     if x + half_width >= GAME_WIDTH:
         x = GAME_WIDTH - half_width
         ball_velocity_x = -abs(ball_velocity_x)
         ball.x = px(x)
-
     if y - half_height <= 0:
         y = half_height
         ball_velocity_y = abs(ball_velocity_y)
         ball.y = py(y)
-
     if y > GAME_HEIGHT:
         reset_ball()
-
 
 def update():
     global ball_velocity_x
@@ -253,14 +214,11 @@ def update():
 
     ball.x += ball_velocity_x * time.dt
     ball.y -= ball_velocity_y * time.dt
-
     check_world_bounds()
     if ball_on_paddle:
         return
-
     check_paddle_collision()
     check_brick_collisions()
-
 
 def input(key):
     if key == "left mouse up":
@@ -268,11 +226,8 @@ def input(key):
     if key == "space":
         launch_ball()
 
-
 create_bricks()
 create_ball()
 create_paddle()
-
 reset_ball()
-
 app.run()

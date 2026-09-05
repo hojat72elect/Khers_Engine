@@ -11,10 +11,8 @@ for i in range(10):
 
 Sky()
 
-
 def input(key):
     if key == 'escape':
         application.quit()
-
 
 app.run()

@@ -425,7 +425,6 @@ class LevelEditorScene:
         if self.scene_parent:
             destroy(self.scene_parent)
 
-
 class Undo(Entity):
     def __init__(self, **kwargs):
         super().__init__(parent=LEVEL_EDITOR, undo_data=[], undo_index=-1)
@@ -500,7 +499,6 @@ class Undo(Entity):
         LEVEL_EDITOR.render_selection()     # make sure the gizmo position updates
         self.undo_index += 1
 
-
 axis_colors = {
     'x' : color.magenta,
     'y' : color.yellow,
@@ -520,7 +518,6 @@ if not load_model('scale_gizmo', application.internal_models_compressed_folder):
     Entity(parent=p, model='cube', z=.5, scale=.2)
     arrow_model = p.combine()
     arrow_model.save('scale_gizmo.ursinamesh', folder=application.internal_models_compressed_folder, max_decimals=4)
-
 
 class GizmoArrow(Draggable):
     def __init__(self, model='arrow', collider='box', **kwargs):
@@ -584,8 +581,6 @@ class GizmoArrow(Draggable):
             self.step = (1,1,1)
         elif key == 'control up':
             self.step = (0,0,0)
-
-
 
 class Gizmo(Entity):
     def __init__(self, **kwargs):
@@ -674,8 +669,6 @@ class Gizmo(Entity):
         if self.subgizmos['xz'].dragging:
             self.fake_gizmo.world_position = self.subgizmos['xz'].world_position
 
-
-
 class RotationGizmo(Entity):
     model = None
 
@@ -749,9 +742,6 @@ class RotationGizmo(Entity):
             else:
                 for e in LEVEL_EDITOR.selection:
                     e.rotation -= rotation_amount
-
-
-
 
 class ScaleGizmo(Draggable):
     def __init__(self, **kwargs):
@@ -883,9 +873,6 @@ class BoxGizmo(Entity):
             if not self.scale_from_center:
                 self.target.world_position = lerp(self.scaler.world_position, self.helper.world_position, .5)
 
-
-
-
 class GizmoToggler(Entity):
     def __init__(self, **kwargs):
         super().__init__(parent=LEVEL_EDITOR)
@@ -903,7 +890,6 @@ class GizmoToggler(Entity):
 
         if key in self.animator.animations and not mouse.left:
             self.animator.state = key
-
 
 class QuickGrabber(Entity):
     def __init__(self, **kwargs):
@@ -1034,7 +1020,6 @@ class QuickGrabber(Entity):
             self.offset_helper.world_position = Vec3(*[round(e * snap_step) /snap_step for e in self.offset_helper.world_position])
             self.target_entity.world_position = Vec3(*[round(e * snap_step) /snap_step for e in self.target_entity.world_position])
 
-
 class QuickScaler(Entity):
     def __init__(self, **kwargs):
         super().__init__(
@@ -1113,7 +1098,6 @@ class QuickScaler(Entity):
                 LEVEL_EDITOR.render_selection(update_gizmo_position=False)
                 return
 
-
 class QuickRotator(Entity):
     def __init__(self):
         super().__init__(parent=LEVEL_EDITOR)
@@ -1146,7 +1130,6 @@ class QuickRotator(Entity):
         if held_keys['r'] and not held_keys['control'] and not held_keys['shift'] and mouse.velocity != Vec3(0,0,0):
             LEVEL_EDITOR.render_selection(update_gizmo_position=False)
             return
-
 
 class RotateRelativeToView(Entity):
     _rotation_helper = Entity(name='RotateRelativeToView_rotation_helper', add_to_scene_entities=False)
@@ -1193,9 +1176,6 @@ class RotateRelativeToView(Entity):
         if self.target_entity and held_keys['t']:
             __class__._rotation_helper.rotation_y -= mouse.velocity[0] * __class__.sensitivity.x / camera.aspect_ratio
             __class__._rotation_helper.rotation_x += mouse.velocity[1] * __class__.sensitivity.y
-
-
-
 
 class Selector(Entity):
     def __init__(self):
@@ -1259,8 +1239,6 @@ class Selector(Entity):
 
         [setattr(e, 'collision', False) for e in LEVEL_EDITOR.entities if not hasattr(e, 'is_gizmo')]
 
-
-
 class SelectionBox(Entity):
     def __init__(self, **kwargs):
         super().__init__(parent=LEVEL_EDITOR.ui, visible=False, **kwargs)
@@ -1317,9 +1295,6 @@ class SelectionBox(Entity):
             self.scale_x = mouse.x - self.x
             self.scale_y = mouse.y - self.y
 
-
-
-
 class WhiteCube(Entity):
     default_values = Entity.default_values | dict(model='cube', shader='lit_with_shadows_shader', texture='white_cube', collider='box', name='cube') # combine dicts
     def __init__(self, **kwargs):
@@ -1327,7 +1302,6 @@ class WhiteCube(Entity):
 
     def __deepcopy__(self, memo):
         return eval(repr(self))
-
 
 class ClassSpawner(Entity):
     default_values = Entity.default_values | dict(class_to_spawn='', model='wireframe_cube', color=color.blue, name='ClassSpawner') # combine dicts
@@ -1358,7 +1332,6 @@ class ClassSpawner(Entity):
     def __deepcopy__(self, memo):
         return eval(repr(self))
 
-
 class TriplanarCube(Entity):
     default_values = Entity.default_values | dict(model='cube', shader='triplanar_shader', texture='white_cube', collider='box', name='cube') # combine dicts
 
@@ -1369,7 +1342,6 @@ class TriplanarCube(Entity):
     def __deepcopy__(self, memo):
         return eval(repr(self))
 
-
 class Pyramid(Entity):
     default_values = Entity.default_values | dict(name='pyramid', texture='brick') # combine dicts
 
@@ -1379,7 +1351,6 @@ class Pyramid(Entity):
     def __deepcopy__(self, memo):
         return eval(repr(self))
 
-
 class Rock(Entity):
     default_values = Entity.default_values | dict(name='rock', model='procedural_rock_0', collider='box', color=hsv(20,.2,.45)) # combine dicts
     gizmo_color = color.brown
@@ -1388,7 +1359,6 @@ class Rock(Entity):
 
     def __deepcopy__(self, memo):
         return eval(repr(self))
-
 
 class Spawner(Entity):
     def __init__(self):
@@ -1458,7 +1428,6 @@ class Spawner(Entity):
             if held_keys['n'] or mouse.left:
                 self.target.position = mouse.world_point
 
-
 class Deleter(Entity):
     def __init__(self):
         super().__init__(parent=LEVEL_EDITOR)
@@ -1489,7 +1458,6 @@ class Deleter(Entity):
         LEVEL_EDITOR.selection.clear()
         LEVEL_EDITOR.render_selection()
 
-
 class Grouper(Entity):
     def __init__(self):
         super().__init__(parent=LEVEL_EDITOR)
@@ -1509,8 +1477,6 @@ class Grouper(Entity):
 
             LEVEL_EDITOR.selection = [group_entity, ]
             LEVEL_EDITOR.render_selection()
-
-
 
 class PointOfViewSelector(Entity):
     def __init__(self, **kwargs):
@@ -1538,12 +1504,6 @@ class PointOfViewSelector(Entity):
             elif key == '3': LEVEL_EDITOR.editor_camera.animate_rotation((0,90,0)) # right
             elif key == '7': LEVEL_EDITOR.editor_camera.animate_rotation((90,0,0)) # top
             elif key == '5': camera.orthographic = not camera.orthographic
-
-
-# class PaintBucket(Entity):
-#     def input(self, key):
-#         if held_keys['alt'] and key == 'c' and mouse.hovered_entity:
-#             self.color = mouse.hovered_entity.color
 
 class Copier(Entity):
     prefix = 'ursina_editor_copy_data:```py\n'
@@ -1576,9 +1536,6 @@ class Copier(Entity):
                 LEVEL_EDITOR.current_scene.undo.record_undo(('delete entities', [LEVEL_EDITOR.entities.index(en) for en in clones], [repr(e) for e in clones]))
                 print('------------------------')
                 LEVEL_EDITOR.render_selection()
-
-
-
 
 class LevelMenu(Entity):
     def __init__(self, **kwargs):
@@ -1714,7 +1671,6 @@ class LevelMenu(Entity):
         LEVEL_EDITOR.inspector.update_inspector()
         LEVEL_EDITOR.sun_handler.update_bounds(LEVEL_EDITOR.current_scene.scene_parent)
 
-
 class HierarchyList(Entity):
     def __init__(self):
         super().__init__(parent=LEVEL_EDITOR.ui, position=window.top_left+Vec2(0,-.05))
@@ -1786,7 +1742,6 @@ class HierarchyList(Entity):
         self.entity_list_text.text = self._text
         self.selected_renderer.model.generate()
 
-
 Text.default_font = 'VeraMono.ttf'
 class InspectorInputField(InputField):
     def __init__(self, **kwargs):
@@ -1797,7 +1752,6 @@ class InspectorInputField(InputField):
         self.text_field.text_entity.color = color.light_gray
         self.highlight_color = color._32
 
-
 class InspectorButton(Button):
     defaults = dict(model='quad', origin=(-.5,.5), text='?', text_origin=(-.5,0), text_color=color.light_gray, color=color.black90, highlight_color=color._32)
 
@@ -1806,7 +1760,6 @@ class InspectorButton(Button):
         super().__init__(**kwargs)
         self.text_entity.x = .025
         self.text_entity.scale *= .75
-
 
 class ColorField(InspectorButton):
     def __init__(self, attr_name='color', is_shader_input=False, value=color.white, **kwargs):
@@ -1830,7 +1783,6 @@ class ColorField(InspectorButton):
         LEVEL_EDITOR.color_menu.color_field = self
         LEVEL_EDITOR.color_menu.position = self.preview.get_position(relative_to=camera.ui).xy + Vec2(.025,-.01)
         LEVEL_EDITOR.menu_handler.state = 'color_menu'
-
 
 class Inspector(Entity):
     def __init__(self):
@@ -2016,8 +1968,6 @@ class Inspector(Entity):
 
                 i += 1
 
-
-
 class MenuHandler(Entity):
     def __init__(self):
         super().__init__(parent=LEVEL_EDITOR)
@@ -2075,7 +2025,6 @@ class AssetMenu(ButtonList):
         self.x = mouse.x
         self.y = mouse.y
 
-
 class ModelMenu(AssetMenu):
     def on_enable(self):
         # self.model_names = [e.stem for e in application.internal_models_compressed_folder.glob('**/*.ursinamesh')]
@@ -2105,7 +2054,6 @@ class ModelMenu(AssetMenu):
         #         e.collider = None
 
         LEVEL_EDITOR.menu_handler.state = 'None'
-
 
 class TextureMenu(AssetMenu):
     def __init__(self, **kwargs):
@@ -2137,7 +2085,6 @@ class TextureMenu(AssetMenu):
         LEVEL_EDITOR.inspector.update_inspector()
         LEVEL_EDITOR.menu_handler.state = 'None'
 
-
 class ShaderMenu(AssetMenu):
     def on_enable(self):
         self.asset_names = [
@@ -2156,7 +2103,6 @@ class ShaderMenu(AssetMenu):
             exec(f'from ursina.shaders import {name}')
             exec(f'e.shader = {name}')
         LEVEL_EDITOR.inspector.update_inspector()
-
 
 class ColorMenu(Entity):
     def __init__(self):
@@ -2241,7 +2187,6 @@ class ColorMenu(Entity):
         LEVEL_EDITOR.menu_handler.state = 'None'
         LEVEL_EDITOR.current_scene.undo.record_undo([(LEVEL_EDITOR.entities.index(e), 'color', e.original_color, e.color) for e in LEVEL_EDITOR.selection])
 
-
 class ColliderMenu(AssetMenu):
     def on_enable(self):
         self.asset_names = ['None', 'box', 'sphere', 'mesh', ]
@@ -2256,7 +2201,6 @@ class ColliderMenu(AssetMenu):
 
         LEVEL_EDITOR.inspector.update_inspector()
         LEVEL_EDITOR.menu_handler.state = 'None'
-
 
 class ClassMenu(AssetMenu):
     def __init__(self, **kwargs):
@@ -2275,7 +2219,6 @@ class ClassMenu(AssetMenu):
 
         LEVEL_EDITOR.inspector.update_inspector()
         LEVEL_EDITOR.menu_handler.state = 'None'
-
 
 class Help(Button):
     def __init__(self, **kwargs):
@@ -2310,7 +2253,6 @@ class Help(Button):
         )
         self.tooltip.background.color = color.black
         self.tooltip.original_scale = .75
-
 
 class Duplicator(Entity):
     def __init__(self, **kwargs):
@@ -2402,8 +2344,6 @@ class Duplicator(Entity):
             else:
                 self.axis_lock = None
 
-
-
 class SunHandler(Entity):
     def __init__(self, **kwargs):
         super().__init__(parent=LEVEL_EDITOR, **kwargs)
@@ -2422,7 +2362,6 @@ class SunHandler(Entity):
         if key == 'l':
             print('toggle sun')
             self.update_bounds()
-
 
 from ursina.prefabs.radial_menu import RadialMenu
 class RightClickMenu(Entity):
@@ -2450,8 +2389,6 @@ class RightClickMenu(Entity):
             if LEVEL_EDITOR.selection and sum(abs(e) for e in mouse.position-self.start_click_pos) < .005 and LEVEL_EDITOR.selector.get_hovered_entity() in LEVEL_EDITOR.selection:
                 self.radial_menu.enabled = True
 
-
-
 class Search(Entity):
     def __init__(self, **kwargs):
         super().__init__(parent=LEVEL_EDITOR.ui, **kwargs)
@@ -2474,7 +2411,6 @@ def get_major_axis_relative_to_view(entity): # if we're looking at the entity fr
     is_positive_direction = dir[axis_index] > 0
 
     return axis_index, is_positive_direction
-
 
 if __name__ == '__main__':
     from ursina import *

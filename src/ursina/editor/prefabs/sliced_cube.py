@@ -1,6 +1,5 @@
 from ursina.editor.level_editor import *
 
-
 def stretch_model(mesh, scale, limit=.25, scale_multiplier=1, regenerate=False):
     verts = [Vec3(*e) for e in mesh.vertices]
     mesh.uvs = [Vec2(*e) for e in mesh.uvs]
@@ -28,14 +27,9 @@ def stretch_model(mesh, scale, limit=.25, scale_multiplier=1, regenerate=False):
     if regenerate:
         mesh.generate()
 
-
-
-
 if not load_model('sliceable_cube.ursinamesh', path=Path(__file__).parent):
     m = load_model('sliceable_cube.blend', path=Path(__file__).parent)
     m.save('sliceable_cube.ursinamesh')
-
-
 
 @generate_properties_for_class()
 class SlicedCube(Entity):
@@ -57,18 +51,8 @@ class SlicedCube(Entity):
         self.scale = kwargs['scale']
         self.texture = kwargs['texture']
 
-
     def __deepcopy__(self, memo):
         return eval(repr(self))
-
-    # def scale_getter(self):
-    #     return super().scale_getter()
-
-    # def scale_setter(self, value):
-    #     super().scale_setter(value)
-    #     print('------------uuuuuuuuuu')
-    #     if self.model:  # ensure init is done and that there's a Mesh as model
-    #         self.generate()
 
     def generate(self):
         print('update model',self.scale)
@@ -83,18 +67,15 @@ class SlicedCube(Entity):
         if self.model and name in ('scale', 'scale_x', 'scale_y', 'scale_z', 'transform', 'world_transform'):
             self.generate()
 
-
-
 if __name__ == '__main__':
     app = Ursina(borderless=False)
     level_editor = LevelEditor()
     level_editor.goto_scene(0,0)
-
     sliced_cube = SlicedCube(selectable=True, texture='sliceable_cube_template', shader='unlit_shader', scale_multiplier=1.5)
+
     def input(key):
         if key == 'space':
             sliced_cube.generate()
-
 
     level_editor.add_entity(sliced_cube)
     app.run()

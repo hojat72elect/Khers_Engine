@@ -34,18 +34,15 @@ collider = Entity(
 )
 
 collider_size = (int(bg.texture.width / 16), int(bg.texture.height // 16))
-
 collider.texture.filtering = None
 collider.color = color.white66
 collider.color = color.clear
-
 target_fov = 1.5
 camera_target = Entity(model='cube', color=color.clear, z=-1, scale=.1, eternal=True)
 camera_target.target = player
 max_fov = 2
 camera.orthographic = True
 camera.add_script(SmoothFollow(target=camera_target, offset=(0, 0, -50)))
-
 
 def update():
     if application.development_mode:

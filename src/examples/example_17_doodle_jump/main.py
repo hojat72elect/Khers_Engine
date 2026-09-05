@@ -1,13 +1,10 @@
 from random import randint
-
 from ursina import Ursina, Sky, Animation, color, camera, SmoothFollow, application, held_keys, time, Entity, duplicate, curve, destroy, invoke, Text
 
 app = Ursina()
 Sky()
-
 bird = Animation("assets/bird", collider="box", color=color.orange, y=15)
 camera.add_script(SmoothFollow(target=bird, offset=[0, 0, -40], speed=6))
-
 platform = Entity(model="cube", color=color.green, texture="white_cube", collider="box", scale=(3, 0.5))
 plates = []
 for i in range(5):
@@ -19,18 +16,14 @@ def input(key):
     if key == 'escape':
         application.quit()
 
-
 down = True
-
 
 def makeTrue():
     global down
     down = True
 
-
 label = Text(text="", color=color.olive, position=(-0.5, 0.45), size=2 * Text.size)
 points = int(bird.y)
-
 
 def update():
     global down, points
@@ -49,6 +42,5 @@ def update():
         obj = plates[0]
         plates.pop(0)
         destroy(obj)
-
 
 app.run()

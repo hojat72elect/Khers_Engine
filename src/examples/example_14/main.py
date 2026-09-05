@@ -1,20 +1,14 @@
 from random import uniform
-
 from ursina import Ursina, camera, Entity, application, held_keys, time, duplicate, color, invoke, destroy
 
 app = Ursina()
-
 camera.orthographic = True
 camera.fov = 10
-
 car = Entity(model="quad", texture="assets/car", collider="box", scale=(2, 1), rotation_z=-90)
-
 road1 = Entity(model="quad", texture="assets/road", scale=15, z=1)
 road2 = duplicate(road1, y=15)
 pair = [road1, road2]
-
 enemies = []
-
 
 def newEnemy():
     val = uniform(-2, 2)
@@ -22,9 +16,7 @@ def newEnemy():
     enemies.append(new)
     invoke(newEnemy, delay=0.5)
 
-
 newEnemy()
-
 
 def update():
     car.x -= held_keys["a"] * 5 * time.dt
@@ -44,10 +36,8 @@ def update():
     if car.intersects().hit:
         car.shake()
 
-
 def input(key):
     if key == 'escape':
         application.quit()
-
 
 app.run()

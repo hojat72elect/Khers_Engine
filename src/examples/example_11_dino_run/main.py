@@ -8,15 +8,11 @@ dino = Animation("assets/dino", collider="box", x=-5)
 ground1 = Entity(model="quad", texture="assets/ground", scale=(50, 0.5, 1), z=1)
 ground2 = duplicate(ground1, x=50)
 pair = [ground1, ground2]
-
 cactus = Entity(model="quad", texture="assets/cacti", x=20, collider="box")
 cacti = []
-
 camera.orthographic = True
 camera.fov = 10
-
 sound = Audio("assets/beep", autoplay=False)
-
 
 def input(key):
     if key == 'escape':

@@ -12,40 +12,31 @@ camera.fov = GAME_HEIGHT
 window.color = color.rgb(191, 204, 0)
 Texture.default_filtering = None
 
-
 def px(x):
     return x - GAME_WIDTH / 2
-
 
 def py(y):
     return GAME_HEIGHT / 2 - y
 
-
 def to_phaser_x(x):
     return x + GAME_WIDTH / 2
-
 
 def to_phaser_y(y):
     return GAME_HEIGHT / 2 - y
 
-
 def create_sprite(image_name, x, y, z=0):
     entity = Entity(model="quad", texture=f"assets/{image_name}.png", position=(px(x), py(y), z))
-
     if entity.texture:
         entity.scale_x = entity.texture.width
         entity.scale_y = entity.texture.height
     return entity
-
 
 UP = 0
 DOWN = 1
 LEFT = 2
 RIGHT = 3
 
-
 class Food:
-
     def __init__(self, x, y):
         self.entity = create_sprite("food", x * CELL_SIZE, y * CELL_SIZE, z=1)
         self.total = 0
@@ -65,18 +56,13 @@ class Food:
     def eat(self):
         self.total += 1
 
-
 class Snake:
-
     def __init__(self, x, y):
         self.head_x = x
         self.head_y = y
         self.body = []
-
         head = create_sprite("body", x * CELL_SIZE, y * CELL_SIZE, z=2)
-
         self.body.append({"entity": head, "x": x, "y": y})
-
         self.alive = True
         self.speed = 100
         self.move_time = 0
@@ -169,21 +155,17 @@ class Snake:
 
             if 0 <= y < len(grid) and 0 <= x < len(grid[y]):
                 grid[y][x] = False
-
         return grid
-
 
 snake = None
 food = None
 game_time = 0.0
-
 
 def create():
     global snake
     global food
     food = Food(3, 4)
     snake = Snake(8, 8)
-
 
 def reposition_food():
     test_grid = []
@@ -192,15 +174,12 @@ def reposition_food():
         row = []
         for x in range(GRID_WIDTH):
             row.append(True)
-
         test_grid.append(row)
 
     snake.update_grid(test_grid)
-
     valid_locations = []
 
     for y in range(GRID_HEIGHT):
-
         for x in range(GRID_WIDTH):
 
             if test_grid[y][x]:
@@ -210,11 +189,8 @@ def reposition_food():
         return False
 
     x, y = random.choice(valid_locations)
-
     food.set_position(x, y)
-
     return True
-
 
 def update_controls():
     if held_keys["left arrow"]:
@@ -225,7 +201,6 @@ def update_controls():
         snake.face_up()
     elif held_keys["down arrow"]:
         snake.face_down()
-
 
 def update():
     global game_time
@@ -238,7 +213,6 @@ def update():
     if snake.update(game_time):
         if snake.collide_with_food(food):
             reposition_food()
-
 
 create()
 app.run()

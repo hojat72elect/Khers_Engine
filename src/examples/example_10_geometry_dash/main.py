@@ -12,7 +12,6 @@ camera.fov = 18
 diam = []
 plates = []
 
-
 def newObstacle(val):
     new1 = Entity(model="diamond", color=color.violet, y=-0.5, texture="white_cube", x=val, collider="mesh")
     new2 = duplicate(new1, y=0.35, x=val + 1, scale=0.8)
@@ -23,9 +22,7 @@ def newObstacle(val):
             plates.append(e)
     invoke(newObstacle, val=val + 10, delay=1)
 
-
 newObstacle(30)
-
 
 def input(key):
     if key == 'escape':
@@ -37,7 +34,6 @@ def input(key):
             dust = Entity(model=Circle(), scale=-3, color=color.smoke, position=player.position)
             dust.animate_scale(2, duration=0.3, curve=curve.linear)
             dust.fade_out(duration=0.2)
-
 
 def update():
     for ob in diam:
@@ -52,6 +48,5 @@ def update():
         for en in t.entities:
             if en.color == color.violet:
                 quit()
-
 
 app.run()

@@ -12,16 +12,13 @@ camera.fov = GAME_HEIGHT
 camera.position = (0, 0, -100)
 Texture.default_filtering = None
 
-
 def px_to_world(x, y):
     world_x = x - GAME_WIDTH / 2
     world_y = GAME_HEIGHT / 2 - y
     return world_x, world_y
 
-
 def wait(duration, callback):
     invoke(callback, delay=duration)
-
 
 sounds = {
     "theme-song": Audio("assets/audio/fat-caps-audionatix.mp3", autoplay=False, loop=True, volume=0.5),
@@ -35,7 +32,6 @@ sounds = {
 
 sound_enabled = True
 
-
 def play_sound(name, volume=1.0):
     if not sound_enabled:
         return
@@ -43,10 +39,8 @@ def play_sound(name, volume=1.0):
     sound = sounds.get(name)
     if sound is None:
         return
-
     sound.volume = volume
     sound.play()
-
 
 CARD_NAMES = [
     "card-0",
@@ -75,13 +69,11 @@ game_won = False
 camera_shake_time = 0
 camera_shake_strength = 0
 
-
 def shake_camera(duration=0.6, strength=3):
     global camera_shake_time
     global camera_shake_strength
     camera_shake_time = duration
     camera_shake_strength = strength
-
 
 def update_camera_shake():
     global camera_shake_time
@@ -92,7 +84,6 @@ def update_camera_shake():
     else:
         camera.x = 0
         camera.y = 0
-
 
 class MemoryCard:
     def __init__(self, x, y, card_name, start_y=None):
@@ -226,7 +217,6 @@ volume_button = Entity(
     collider="box",
 )
 
-
 def toggle_volume():
     global sound_enabled
     sound_enabled = not sound_enabled
@@ -241,9 +231,7 @@ def toggle_volume():
         for sound in sounds.values():
             sound.volume = 0
 
-
 volume_button.on_click = toggle_volume
-
 title_text = Text(
     text="Memory Card Game\nClick to Play",
     origin=(0, 0),
@@ -252,11 +240,9 @@ title_text = Text(
     color=color.rgb(140, 122, 230),
     z=-20,
 )
-
 title_text_entity = title_text
 winner_text = Text(text="YOU WIN", origin=(0, 0), position=(0, -1000), scale=3, color=color.rgb(140, 122, 230), z=-20)
 game_over_text = Text(text="GAME OVER\nClick to restart", origin=(0, 0), position=(0, -1000), scale=3, color=color.red, z=-20)
-
 
 def create_hearts():
     global hearts
@@ -267,13 +253,11 @@ def create_hearts():
         hearts.append(heart)
         heart.animate_x(heart_x, duration=1, delay=1 + i * 0.2, curve=curve.in_out_expo)
 
-
 def create_grid_cards():
     global cards
     shuffled_names = CARD_NAMES + CARD_NAMES
     random.shuffle(shuffled_names)
     cards = []
-
     for index, name in enumerate(shuffled_names):
         column = index % 4
         row = index // 4
@@ -289,7 +273,6 @@ def create_grid_cards():
             index * 0.1
         )
         cards.append(card)
-
 
 def card_clicked(card):
     global card_opened
@@ -366,9 +349,7 @@ def card_clicked(card):
         card.flip(callback=first_card_finished)
         card_opened = card
 
-
 def connect_card_click(card):   card.entity.on_click = Func(card_clicked, card)
-
 
 def remove_life():
     global lives
@@ -380,7 +361,6 @@ def remove_life():
         invoke(last_heart.disable, delay=1)
         hearts.pop()
     lives -= 1
-
 
 def start_game():
     global game_started
@@ -407,11 +387,9 @@ def start_game():
 
     invoke(begin, delay=0.8)
 
-
 def enable_game():
     global can_move
     can_move = True
-
 
 def win_game():
     global game_finished
@@ -419,7 +397,6 @@ def win_game():
     global can_move
     if game_finished:
         return
-
     game_finished = True
     game_won = True
     can_move = False
@@ -427,7 +404,6 @@ def win_game():
     play_sound("victory")
     winner_text.y = -1000
     winner_text.animate_y(0, duration=0.8, curve=curve.out_bounce)
-
 
 def lose_game():
     global game_finished
@@ -442,7 +418,6 @@ def lose_game():
     play_sound("whoosh", 1.3)
     game_over_text.y = -1000
     game_over_text.animate_y(0, duration=0.8, curve=curve.out_bounce)
-
 
 def restart_game():
     global cards
@@ -507,18 +482,15 @@ def restart_game():
         ),
     )
 
-
 def click_winner():
     if not game_won:
         return
     restart_game()
 
-
 def click_game_over():
     if not game_over:
         return
     restart_game()
-
 
 winner_click_area = Entity(
     model="quad",
@@ -530,7 +502,6 @@ winner_click_area = Entity(
 
 winner_click_area.enabled = False
 winner_click_area.on_click = click_winner
-
 game_over_click_area = Entity(
     model="quad",
     position=(0, 0, -30),
@@ -538,22 +509,17 @@ game_over_click_area = Entity(
     collider="box",
     color=color.clear,
 )
-
 game_over_click_area.enabled = False
 game_over_click_area.on_click = click_game_over
 title_click_area = Entity(model="quad", position=(0, 20, -30), scale=(450, 130), collider="box", color=color.clear)
 
-
 def title_hover():
     mouse.cursor = "hand"
-
 
 def title_click():
     start_game()
 
-
 title_click_area.on_click = title_click
-
 
 def input(key):
     if key == "escape":
@@ -565,13 +531,11 @@ def input(key):
         if game_finished:
             restart_game()
 
-
 def update():
     update_camera_shake()
     for card in cards:
         if not card.destroyed:
             card.update()
-
     if mouse.hovered_entity is not None:
         if mouse.hovered_entity in [card.entity for card in cards]:
             mouse.cursor = "hand"
@@ -581,10 +545,8 @@ def update():
             mouse.cursor = "arrow"
     else:
         mouse.cursor = "arrow"
-
     winner_click_area.enabled = game_won
     game_over_click_area.enabled = game_over
     volume_button.enabled = True
-
 
 app.run()

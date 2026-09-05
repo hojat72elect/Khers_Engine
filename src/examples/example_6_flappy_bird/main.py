@@ -9,7 +9,6 @@ bird.velocity = 0
 camera.orthographic = True
 camera.fov = 20
 
-
 def update():
     bird.velocity = bird.velocity - 15 * time.dt
     bird.y = bird.y + bird.velocity * time.dt
@@ -19,15 +18,12 @@ def update():
     if touch.hit or bird.y < -10:
         quit()
 
-
 def input(key):
     if key == "space":
         bird.velocity = 8
 
-
 pipes = []
 pipe = Entity(model="quad", color=color.green, texture="white_cube", position=(20, 10), scale=(3, 15, 1), collider="box")
-
 
 def newPipe():
     y = random.randint(4, 12)
@@ -35,7 +31,6 @@ def newPipe():
     new2 = duplicate(pipe, y=y - 22)
     pipes.extend((new1, new2))
     invoke(newPipe, delay=5)
-
 
 newPipe()
 app.run()

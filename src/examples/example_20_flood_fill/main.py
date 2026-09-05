@@ -1,5 +1,4 @@
 import random as py_random
-
 from ursina import Ursina, Entity, Text, camera, window, color, Texture, mouse, time, destroy, invoke, Vec3, curve
 
 GAME_WIDTH = 800
@@ -10,22 +9,17 @@ camera.fov = GAME_HEIGHT
 Texture.default_filtering = None
 window.color = color.black
 
-
 def px(x):
     return x - GAME_WIDTH / 2
-
 
 def py(y):
     return GAME_HEIGHT / 2 - y
 
-
 def to_game_x(x):
     return x + GAME_WIDTH / 2
 
-
 def to_game_y(y):
     return GAME_HEIGHT / 2 - y
-
 
 def create_sprite(image_name, x, y, z=0, scale=None):
     entity = Entity(model="quad", texture=f"assets/{image_name}.png", position=(px(x), py(y), z))
@@ -36,7 +30,6 @@ def create_sprite(image_name, x, y, z=0, scale=None):
         else:
             entity.scale = scale
     return entity
-
 
 GRID_SIZE = 14
 CELL_SIZE = 36
@@ -65,18 +58,14 @@ monster_bounce_time = 0
 arrow_base_x = 109 - 24
 arrow_time = 0
 
-
 def random_color():
     return py_random.randrange(len(COLORS))
-
 
 def color_frame(index):
     return COLORS[index]
 
-
 def create_text(text, x, y, size=24, alpha=1):
     return Text(text=text, position=(px(x) / GAME_WIDTH, py(y) / GAME_HEIGHT,), origin=(0, 0), scale=size / 24, color=color.white, alpha=alpha)
-
 
 def create_grid():
     global grid
@@ -84,7 +73,6 @@ def create_grid():
 
     for x in range(GRID_SIZE):
         column = []
-
         for y in range(GRID_SIZE):
             game_x = GRID_X + x * CELL_SIZE
             game_y = GRID_Y + y * CELL_SIZE
@@ -96,9 +84,7 @@ def create_grid():
             block.target_x = game_x
             block.target_y = game_y
             column.append(block)
-
         grid.append(column)
-
 
 def get_block(x, y):
     if x < 0 or x >= GRID_SIZE:
@@ -107,11 +93,9 @@ def get_block(x, y):
         return None
     return grid[x][y]
 
-
 def flood_fill(old_color, new_color, start_x, start_y):
     global matched
     matched = []
-
     if old_color == new_color:
         return
     if get_block(start_x, start_y) is None:
@@ -140,7 +124,6 @@ def flood_fill(old_color, new_color, start_x, start_y):
         stack.append((x, y - 1))
         stack.append((x, y + 1))
 
-
 def help_flood():
     for _ in range(8):
         x = py_random.randrange(14)
@@ -149,10 +132,8 @@ def help_flood():
         old_color = block.current_color
         new_color = (old_color + 1) % len(COLORS)
         flood_fill(old_color, new_color, x, y)
-
     for block in matched:
         block.texture = f"{COLORS[block.current_color]}.png"
-
 
 def create_icons():
     global icons
@@ -166,31 +147,25 @@ def create_icons():
         shadow.monster = monster
         shadow.icon_x = x
         shadow.icon_y = y
-
         if x < 400:
             monster.x = px(-200)
             shadow.x = px(-200)
         else:
             monster.x = px(1000)
             shadow.x = px(1000)
-
         icons[color_name] = {"monster": monster, "shadow": shadow, "x": x, "y": y}
-
 
 def create_cursor():
     global cursor_indicator
     cursor_indicator = create_sprite("cursor-over", 0, 0, z=10)
     cursor_indicator.enabled = False
 
-
 def create_arrow():
     global arrow
     arrow = create_sprite("arrow-white", arrow_base_x, 48, z=10)
     arrow.alpha = 0
 
-
 class Particle(Entity):
-
     def __init__(self, x, y, texture_name):
         super().__init__(model="quad", texture=f"assets/{texture_name}.png", position=(px(x), py(y), 20))
         self.scale_x = self.texture.width * 0.5
@@ -214,11 +189,9 @@ class Particle(Entity):
                 particles.remove(self)
             destroy(self)
 
-
 def explode_particles(texture_name, x, y, amount=6):
     for _ in range(amount):
         Particle(x, y, texture_name)
-
 
 def animate_block_change(block, new_color, delay):
     def change():
@@ -229,9 +202,7 @@ def animate_block_change(block, new_color, delay):
             to_game_y(block.y),
             6,
         )
-
     invoke(change, delay=delay)
-
 
 def reveal_grid():
     global allow_click
@@ -243,7 +214,6 @@ def reveal_grid():
             block = grid[x][y]
             block.animate_y(py(block.target_y), duration=0.8, delay=delay, curve=curve.in_out_quad)
             delay += 0.02
-
     icon_delay = delay - 1.0
 
     for data in [
@@ -276,16 +246,13 @@ def reveal_grid():
     arrow.animate('alpha', 1, duration=0.5, delay=icon_delay + 1.0)
     invoke(enable_input, delay=icon_delay + 1.5)
 
-
 def enable_input():
     global allow_click
     allow_click = True
 
-
 def icon_hovered(data):
     global monster_bounce
     global monster_bounce_time
-
     icon_color = COLORS.index(next(name for name, value in icons.items() if value is data))
     if icon_color == current_color:
         cursor_indicator.texture = "cursor-invalid.png"
@@ -300,7 +267,6 @@ def icon_hovered(data):
     monster = data["monster"]
     monster_bounce = monster
     monster_bounce_time = 0
-
 
 def icon_clicked(data):
     global current_color
@@ -322,10 +288,8 @@ def icon_clicked(data):
     moves -= 1
     text_number.text = str(moves).zfill(2)
     flood_fill(old_color, new_color, 0, 0)
-
     if matched:
         start_flow()
-
 
 def start_flow():
     global allow_click
@@ -337,7 +301,6 @@ def start_flow():
     )
 
     allow_click = False
-
     if len(matched) > 98:
         increment = 0.006
     else:
@@ -356,7 +319,6 @@ def start_flow():
     total_time = len(matched) * increment + 0.05
     invoke(finish_flow, delay=total_time)
 
-
 def finish_flow():
     global allow_click
     allow_click = True
@@ -364,7 +326,6 @@ def finish_flow():
         game_won()
     elif moves <= 0:
         game_lost()
-
 
 def check_won():
     top_left = grid[0][0].current_color
@@ -374,7 +335,6 @@ def check_won():
             if grid[x][y].current_color != top_left:
                 return False
     return True
-
 
 def clear_grid():
     global allow_click
@@ -397,7 +357,6 @@ def clear_grid():
 
     return delay + 0.8
 
-
 def game_lost():
     global game_over
     game_over = True
@@ -408,7 +367,6 @@ def game_lost():
     text_message.enabled = True
     text_message.alpha = 0
     text_message.animate('alpha', 1, duration=1, delay=duration)
-
 
 def game_won():
     global game_over
@@ -423,7 +381,6 @@ def game_won():
     winner.animate_rotation_z(1440, duration=1, delay=duration)
     invoke(start_win_particles, delay=duration + 1.5)
 
-
 def start_win_particles():
     explode_random_particles()
     invoke(explode_random_particles, delay=0.12)
@@ -431,13 +388,11 @@ def start_win_particles():
     invoke(explode_random_particles, delay=0.36)
     invoke(explode_random_particles, delay=0.48)
 
-
 def explode_random_particles():
     texture_name = py_random.choice(COLORS)
     x = py_random.randint(128, 672)
     y = py_random.randint(28, 572)
     explode_particles(texture_name, x, y, 8)
-
 
 def reset_game():
     global moves
@@ -475,7 +430,6 @@ def reset_game():
     current_color = grid[0][0].current_color
     invoke(enable_input, delay=delay + 0.8)
 
-
 def update():
     global arrow_time
     global monster_bounce_time
@@ -486,7 +440,6 @@ def update():
 
     if monster_bounce is not None:
         monster_bounce_time += time.dt
-
         base_y = py(
             next(
                 data["y"]
@@ -494,7 +447,6 @@ def update():
                 if data["monster"] is monster_bounce
             )
         )
-
         monster_bounce.y = (
                 base_y
                 + 12 * __import__("math").sin(monster_bounce_time * 7)
@@ -529,19 +481,16 @@ def update():
                     break
             monster_bounce = None
 
-
 def input(key):
     if key == "left mouse down":
         if game_over:
             reset_game()
             return
-
         hovered = mouse.hovered_entity
         for data in icons.values():
             if hovered is data["shadow"]:
                 icon_clicked(data)
                 return
-
 
 background = create_sprite("background", 400, 300, z=-100)
 grid_background = create_sprite("grid", 400, 900, z=-1000)

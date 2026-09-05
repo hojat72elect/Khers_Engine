@@ -1,7 +1,5 @@
 from random import uniform
-
 from ursina import Ursina, camera, Entity, color, time, destroy, Text, application
-
 from Player import Player
 
 app = Ursina(title="Endless Runner Game", borderless=False, size=(800, 600))
@@ -17,7 +15,6 @@ player = Player(ground)
 game_over = False
 obstacles = []
 spawn_timer = 0
-
 
 def update():
     global game_over, spawn_timer
@@ -58,7 +55,6 @@ def update():
             Text(text='GAME OVER', origin=(0, 0), scale=3, color=color.white)
             return
 
-
 def input(key):
     global player
     if key == 'space' and not player.is_jumping and not game_over:
@@ -66,6 +62,5 @@ def input(key):
         player.is_jumping = True
     if key == 'escape':
         application.quit()
-
 
 app.run()

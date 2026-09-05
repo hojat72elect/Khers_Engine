@@ -1,6 +1,5 @@
 from math import sin
 from random import uniform, choice
-
 from ursina import Entity, Vec2, time, load_texture, Text, held_keys, clamp, color, window, Ursina, camera
 
 GAME_WIDTH = 800
@@ -8,7 +7,6 @@ GAME_HEIGHT = 600
 GRAVITY = 900
 PLAYER_SPEED = 160
 JUMP_SPEED = 700
-
 
 class Platform(Entity):
     def __init__(self, position, scale, texture):
@@ -19,7 +17,6 @@ class Platform(Entity):
             texture=texture,
             collider='box'
         )
-
 
 class Star(Entity):
     def __init__(self, position, texture):
@@ -45,7 +42,6 @@ class Star(Entity):
 
         self.y = (self.base_y + sin(time.time() * self.bounce_speed) * self.bounce_amount)
 
-
 class Bomb(Entity):
     def __init__(self, position, texture):
         super().__init__(
@@ -62,7 +58,6 @@ class Bomb(Entity):
         )
 
         self.bounce = 1.0
-
 
 class Player(Entity):
 
@@ -108,7 +103,6 @@ class Player(Entity):
         self.animation_timer = 0
         self.animation_frame = 0
         self.set_frame(4)
-
 
 class PhaserPlatformerGame:
 
@@ -446,7 +440,6 @@ class PhaserPlatformerGame:
         self.check_star_collisions()
         self.check_bomb_collisions()
 
-
 app = Ursina()
 window.title = 'Phaser Platformer - Ursina'
 window.size = (GAME_WIDTH, GAME_HEIGHT)
@@ -456,9 +449,7 @@ camera.fov = 600
 camera.position = (400, 300, -10)
 game = PhaserPlatformerGame()
 
-
 def update():
     game.update()
-
 
 app.run()

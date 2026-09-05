@@ -1,6 +1,5 @@
 from ursina.editor.level_editor import *
 
-
 class PipeEditor(Entity):
     def __init__(self, points=[Vec3(0,0,0), Vec3(0,1,0)], **kwargs):
         super().__init__(original_parent=LEVEL_EDITOR, selectable=True, name='Pipe', **kwargs)
@@ -77,13 +76,10 @@ class PipeEditor(Entity):
         elif self.edit_mode and key.endswith(' up'):
             invoke(self.generate, delay=3/60)
 
-
 if __name__ == '__main__':
-
     app = Ursina(borderless=False)
 
     level_editor = LevelEditor()
     level_editor.goto_scene(0,0)
-    # cube = WhiteCube(selectable=True)
     level_editor.entities.append(PipeEditor())
     app.run()

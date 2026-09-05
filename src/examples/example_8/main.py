@@ -13,7 +13,6 @@ for n in range(12):
 
 sword = Entity(model="blade", texture="assets/sword", rotation=(30, -40), position=(0.5, -0.6), parent=camera.ui, scale=(0.2, 0.15))
 
-
 def input(key):
     if key == 'escape':
         application.quit()
@@ -26,7 +25,6 @@ def input(key):
                 boxes.remove(box)
                 destroy(box)
 
-
 def update():
     if held_keys["left mouse"]:
         sword.position = (0.4, -0.5)
@@ -34,6 +32,5 @@ def update():
         sword.position = (0.4, -0.5)
     else:
         sword.position = (0.5, -0.6)
-
 
 app.run()

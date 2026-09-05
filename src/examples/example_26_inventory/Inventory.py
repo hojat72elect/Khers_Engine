@@ -16,7 +16,6 @@ class Inventory(Entity):
 
         self.width = width
         self.height = height
-
         for key, value in kwargs.items():
             setattr(self, key, value)
 

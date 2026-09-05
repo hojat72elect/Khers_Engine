@@ -66,12 +66,9 @@ def open_chest():
         level.chest.on_click = Func(print, 'already opened')
         level.chest_lid.on_click = Func(print, 'already opened')
 
-
 level.chest.on_click = open_chest
 level.chest_lid.on_click = open_chest
-
 player.original_speed = player.speed
-
 
 def input(key):
     if key == "escape":
@@ -120,9 +117,7 @@ def input(key):
         if held_keys['control'] and key == 'r':
             player.position = level.start_point.position
 
-
 orginal_chest_color = level.chest.color
-
 
 def update():
     if not level.bow.enabled and mouse.hovered_entity in (level.chest, level.chest_lid) and distance_xz(player.position, level.chest.position) < 6:
@@ -132,17 +127,14 @@ def update():
         level.chest.color = orginal_chest_color
         level.chest_lid.color = orginal_chest_color
 
-
 def open_gate():
     destroy(level.eye)
     destroy(level.eye_trigger)
     level.gate.animate_position(level.gate.position + (level.gate.left) * 10, duration=5, curve=curve.linear)
     level.gate_001.animate_position(level.gate_001.position + (level.gate_001.right) * 10, duration=5, curve=curve.linear)
 
-
 if application.development_mode:
     from ursina.scripts.noclip_mode import NoclipMode
-
     player.add_script(NoclipMode(speed=32))
 
 camera.clip_plane_far = 500

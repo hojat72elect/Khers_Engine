@@ -156,14 +156,12 @@ class TalkativeNPC(NPC):
             l.enabled = False
 
         self.seq = Sequence()
-        # original_player_speed = self.player.speed
         self.player.speed = 0
         self.disabled = True
         self.dot.enabled = False
         speed = .1
 
         for l in lines:
-            # self.seq.append(Wait(.5))
             self.seq.append(Func(l.appear, speed))
             self.seq.append(Wait((len(l.text) * speed) + 2))
             self.seq.append(Func(setattr, l, 'enabled', False))
