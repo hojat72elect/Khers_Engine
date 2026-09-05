@@ -2,7 +2,6 @@ from pathlib import Path
 from panda3d.core import Shader as Panda3dShader
 from ursina import application
 
-
 default_vertex_shader = '''
 #version 430
 uniform mat4 p3d_ModelViewProjectionMatrix;
@@ -15,7 +14,6 @@ void main() {
   uv = p3d_MultiTexCoord0;
 }
 '''
-
 default_fragment_shader='''
 #version 430
 
@@ -210,41 +208,3 @@ class Shader:
 {'\n'.join(combined_vertex_shader_output)}
 ''')
         print(combined_shader)
-        # if self.vertex.split('#version ',1)[] == #version
-
-
-        # if 'void main()' in self.fragment and 'void main()' in other.fragment:
-        #     # merge fragment mains
-
-
-
-
-
-
-if __name__ == '__main__':
-    from time import perf_counter
-    t = perf_counter()
-    from ursina import *
-    from ursina import Ursina, Entity, held_keys, scene, EditorCamera
-
-    app = Ursina()
-    Entity(model='cube', shader=Shader(name='test_shader'))
-    EditorCamera()
-    def input(key):
-        if held_keys['control'] and key == 'r':
-            reload_shaders()
-
-    def reload_shaders():
-        for e in scene.entities:
-            if hasattr(e, '_shader'):
-                print('-------', e.shader)
-                # e._shader = Panda3dShader.make(language, vertex, fragment, geometry)
-
-
-    from ursina.shaders.unlit_shader import unlit_shader
-    from ursina.shaders.matcap_shader import matcap_shader
-
-    combined_shader = unlit_shader + matcap_shader
-    print(combined_shader)
-
-    app.run()

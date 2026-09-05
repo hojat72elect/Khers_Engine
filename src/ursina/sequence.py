@@ -4,7 +4,6 @@ from ursina import application
 
 Wait = float
 
-
 class Func:
     def __init__(self, func, *args, **kwargs):
         self.func = func
@@ -13,7 +12,6 @@ class Func:
 
     def __call__ (self):
         return self.func(*self.args, **self.kwargs)
-
 
 class Sequence:
     default_time_step = None
@@ -152,35 +150,3 @@ class Sequence:
             if self.auto_destroy and self in application.sequences:
                 application.sequences.remove(self)
                 del self
-
-
-
-if __name__ == '__main__':
-    from ursina import *
-    from ursina import Entity, Ursina
-    app = Ursina()
-    e = Entity(model='quad')
-    def some_func():
-        print('some_func')
-
-    s = Sequence(
-        some_func,
-        1,
-        Func(print, 'one'),
-        Func(e.fade_out, duration=1),
-        Wait(1),
-        loop=True
-        )
-
-    for i in range(8):
-        s.append(Func(print, i))
-        s.append(Wait(.2))
-
-    print(s)
-
-    def input(key):
-        actions = {'s' : s.start, 'f' : s.finish, 'p' : s.pause, 'r' : s.resume}
-        if key in actions:
-            actions[key]()
-
-    app.run()
