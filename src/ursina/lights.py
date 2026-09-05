@@ -7,7 +7,6 @@ from ursina import Entity, Vec2, Vec3, color, scene
 from ursina.prefabs.sky import Sky
 from ursina.scripts.property_generator import generate_properties_for_class
 
-
 class Light(Entity):
     default_values = {'rotation_x':90, }
     def __init__(self, color=color.white, **kwargs):
@@ -21,7 +20,6 @@ class Light(Entity):
     def color(self, value):
         self._color = value
         self._light.setColor(value)
-
 
 @generate_properties_for_class()
 class DirectionalLight(Light):
@@ -71,8 +69,6 @@ class DirectionalLight(Light):
         super().look_at(target, axis=axis)
         self.update_bounds(self._bounds_entity)
 
-
-
 class PointLight(Light):
     def __init__(self, **kwargs):
         super().__init__()
@@ -81,8 +77,6 @@ class PointLight(Light):
 
         for key, value in kwargs.items():
             setattr(self, key ,value)
-
-
 
 class AmbientLight(Light):
     def __init__(self, **kwargs):
@@ -93,8 +87,6 @@ class AmbientLight(Light):
         for key, value in kwargs.items():
             setattr(self, key ,value)
 
-
-
 class SpotLight(Light):
     def __init__(self, **kwargs):
         super().__init__()
@@ -103,40 +95,3 @@ class SpotLight(Light):
 
         for key, value in kwargs.items():
             setattr(self, key ,value)
-
-
-
-
-if __name__ == '__main__':
-    from ursina import EditorCamera, Ursina, Vec3, color
-    from ursina.shaders import lit_with_shadows_shader  # you have to apply this shader to enties for them to receive shadows.
-
-    app = Ursina()
-
-    Entity.default_shader = lit_with_shadows_shader
-    ground = Entity(model='plane', scale=10, texture='grass')
-    lit_cube = Entity(model='cube', y=1, color=color.light_gray)
-
-    light = DirectionalLight()
-    light.look_at(Vec3(1,-1,1))
-
-    dont_cast_shadow = Entity(model='cube', y=1, x=2, color=color.light_gray)
-    dont_cast_shadow.hide(0b0001)
-
-    unlit_entity = Entity(model='cube', y=1,x=-2, unlit=True, color=color.light_gray)
-
-    bar = Entity(model='cube', position=(0,3,-2), scale=(10,.2,.2), color=color.light_gray)
-    # dont_cast_shadow.hide(0b0001)
-
-    # How to render shows in a limited area.
-    # to make it easier to see, make a box to define where we will have shadows. we can make this invisible after.
-    shadow_bounds_box = Entity(model='wireframe_cube', scale=5, visible=0)
-    light.update_bounds(shadow_bounds_box)
-
-    EditorCamera(rotation=(30,30,0))
-    Sky()
-    # from ursina import window
-    # window.borderless = True
-    # window.size = Vec2(1920,1080) * .5
-    # window.editor_ui.enabled = False
-    app.run()

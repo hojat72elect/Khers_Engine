@@ -21,7 +21,6 @@ time.dt = 0
 time.dt_unscaled = 0
 keyboard_keys = '1234567890qwertyuiopasdfghjklzxcvbnm'
 
-
 from ursina.scripts.singleton_decorator import singleton
 @singleton
 class Ursina(ShowBase):
@@ -367,15 +366,3 @@ class Ursina(ShowBase):
             print('application successfully started')
 
         super().run()
-
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina(
-        # development_mode=False,
-        # use_ingame_console=True,
-        # show_ursina_splash=True,
-    )
-    def input(key):
-        print(key)
-    app.run()
