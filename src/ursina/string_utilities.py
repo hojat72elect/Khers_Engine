@@ -39,11 +39,3 @@ def print_warning(str, *args):
     from ursina import application
     if application.print_warnings:
         print('\033[93mwarning:', str, *args, '\033[0m')
-
-if __name__ == '__main__':
-    from ursina .ursinastuff import _test
-    _test(camel_to_snake('CamelToSnake') == 'camel_to_snake')
-    _test(snake_to_camel('snake_to_camel') == 'SnakeToCamel')
-
-    test_var = 1
-    printvar(test_var)
