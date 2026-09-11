@@ -78,32 +78,3 @@ default_input = {
     'back_color': color.hsv(240, .05, .76),
     }
 )
-
-
-if __name__ == '__main__':
-    from ursina import *
-    from ursina.prefabs.primitives import *
-    app = Ursina()
-    window.color=color.black
-
-    # e = Entity(model='sphere', shader=basic_lighting_shader)
-    shader = colored_lights_shader
-
-    Entity(model='cube', color=color.white, shader=colored_lights_shader)
-    e = Entity(model='cube', x=1.2, shader=colored_lights_shader, color=color.white)
-    e.set_shader_input('top_color', hsv(0,1,1))
-    e.set_shader_input('bottom_color', hsv(0,0,0))
-    e.set_shader_input('left_color', hsv(0,0,0))
-    e.set_shader_input('right_color', hsv(0,0,0))
-    e.set_shader_input('front_color', hsv(0,0,0))
-    e.set_shader_input('back_color', hsv(0,0,0))
-
-    GrayPlane(scale=10, y=-2, texture='shore')
-
-    Sky(color=color.light_gray)
-    EditorCamera(rotate_around_mouse_hit=False)
-
-
-    EditorCamera()
-
-    app.run()
