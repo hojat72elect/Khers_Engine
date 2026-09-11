@@ -174,33 +174,3 @@ color_names = ('white', 'smoke', 'light_gray', 'gray', 'dark_gray', 'black',
 colors = dict()
 for cn in color_names:
     colors[cn] = getattr(sys.modules[__name__], cn)
-
-
-if __name__ == '__main__':
-    from ursina import *
-    from ursina import Button, Entity, Quad, Ursina, color, grid_layout
-    from ursina.ursinastuff import _test
-    app = Ursina()
-
-    _test(hsv(30,1,1) == color.orange)
-    _test(color.brightness(color.blue) == 1.0)
-    _test(color.red.rgb == (1.0, 0.0, 0.0))
-    _test(color.red.rgba == (1.0, 0.0, 0.0, 1.0))
-
-    p = Entity(x=-2)
-    for key in color.colors:
-        print(key)
-        b = Button(parent=p, model=Quad(0), color=color.colors[key], text=key)
-        b.text_entity.scale *= .5
-
-    grid_layout(p.children, max_x=8)
-
-    for name in ('r', 'g', 'b', 'h', 's', 'v', 'brightness'):
-        print(name + ':', getattr(color.random_color(), name))
-
-    e = Entity(model='cube', color=color.lime)
-    print(e.color.name)
-    print('rgb to hex:', color.rgb_to_hex(*color.blue))
-    # e.color = hex('ced9a9')
-    e.color = color.rgba32(1,2,3)
-    app.run()
