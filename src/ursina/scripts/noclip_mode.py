@@ -1,6 +1,5 @@
 from ursina import *
 
-
 class NoclipMode:
     def __init__(self, speed=10, require_key='shift'):
         self.speed = speed
@@ -42,7 +41,6 @@ class NoclipMode:
 
         self.entity.position += direction * time.dt * self.speed
 
-
 class NoclipMode2d:
     def __init__(self, speed=10, require_key='shift'):
         self.speed = speed
@@ -77,20 +75,3 @@ class NoclipMode2d:
 
         self.entity.x += (held_keys['d'] - held_keys['a']) * time.dt * self.speed
         self.entity.y += (held_keys['w'] - held_keys['s']) * time.dt * self.speed
-
-
-
-
-if __name__ == '__main__':
-    app = Ursina()
-
-    player = Entity(model='cube', color=color.orange)
-    Entity(model='plane', scale=10)
-    EditorCamera()
-    # def update():
-    #     player.x += held_keys['d'] * .1
-    #     player.x -= held_keys['a'] * .1
-
-
-    player.add_script(NoclipMode2d())
-    app.run()

@@ -1,9 +1,7 @@
 from math import sqrt
 
-
 def distance(a, b):
     return sqrt((b[0] - a[0])**2 + (b[1] - a[1])**2 + (b[2] - a[2])**2)
-
 
 def merge_overlapping_vertices(vertices, triangles=None, max_distance=.1):
 
@@ -28,22 +26,3 @@ def merge_overlapping_vertices(vertices, triangles=None, max_distance=.1):
         unique.append(v)
 
     return unique, triangles
-
-
-if __name__ == '__main__':
-    verts = ((0,0,0), (1,0,0), (1,1,0), (0,0,0), (1,1,0), (0,1,0))
-    tris = (0,1,2,3,4,5)
-
-    new_verts, new_tris = merge_overlapping_vertices(verts, tris)
-    print('verts:', (verts), (new_verts))
-    print('tris:', (tris), (new_tris))
-
-    from ursina import *
-    app = Ursina()
-
-    e = Entity(model=Mesh(new_verts, new_tris, mode='triangle'))
-    EditorCamera()
-
-    app.run()
-    # m = Cylinder(8)
-    # calculate_normals(m.vertices)
