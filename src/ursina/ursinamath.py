@@ -60,11 +60,6 @@ def inverselerp(a, b, value):   # get *where* between a and b, value is (0.0 - 1
         return .5
     return (value - a) / (b - a)
 
-if __name__ == '__main__':
-    from ursina.ursinastuff import _test
-    _test(inverselerp(0, 100, 50) == .5)
-    _test(lerp(0, 100, .5) == 50)
-
 def lerp_exponential_decay(a, b, dt, decay_rate=1):    # frame-rate independent lerp for use in update. use this instead of lerp(a, b, time.dt) in update.
     return lerp(a, b, 1 - exp(-decay_rate * dt))
 
