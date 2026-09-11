@@ -4,7 +4,6 @@ from ursina import *
 from ursina import color
 from ursina.vec3 import Vec3
 
-
 def get_world_normals(model):
     import numpy as np
     normals = [np.array((n[0], n[2], n[1])) for n in model.normals]
@@ -12,7 +11,6 @@ def get_world_normals(model):
     normals = [object_matrix.xformVec(Vec3(*n)) for n in normals]
     normals = [Vec3(n[0], n[2], n[1]).normalized() for n in normals]
     return normals
-
 
 def colorize(model, left=color.white, right=color.blue, down=color.red, up=color.green, back=color.white, forward=color.white, smooth=True, world_space=True, strength=1):
 
@@ -55,19 +53,3 @@ def colorize(model, left=color.white, right=color.blue, down=color.red, up=color
 
     model.colors = cols
     model.generate()
-
-
-if __name__ == '__main__':
-    app = Ursina()
-    import random
-    for i in range(10):
-        e = Entity(model=load_model('sphere', path=application.internal_models_compressed_folder, use_deepcopy=True))
-        e.position = (random.uniform(-3,3),random.uniform(-3,3),random.uniform(-3,3))
-        e.rotation = (random.uniform(0,360),random.uniform(0,360),random.uniform(0,360))
-        e.scale = random.uniform(1,3)
-        e.model.colorize(smooth=False, world_space=True, strength=.5)
-
-
-    Sky(color=color.gray)
-    EditorCamera()
-    app.run()

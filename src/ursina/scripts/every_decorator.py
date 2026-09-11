@@ -27,33 +27,7 @@ class every:
         every.decorated_methods.append(wrapper)  # store the decorated method
         return wrapper
 
-
 def get_class_name(func):
     qualname_parts = func.__qualname__.split('.')
     class_name = qualname_parts[-2] if len(qualname_parts) > 1 else None
     return class_name
-
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-
-    # @every(.1)
-    # def test():
-    #     print('test')
-
-
-    class Enemy(Entity):
-        @every(.2)
-        def attack(self):
-            print('attack')
-
-    enemy = Enemy(enabled=1)
-
-    # test that it gets pause when disabling the entity
-    def input(key):
-        if key == 'space':
-            enemy.enabled = not enemy.enabled
-            print(enemy.enabled)
-
-    app.run()

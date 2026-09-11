@@ -5,7 +5,6 @@ def normalize_v3(v):
     v[mask] /= lens[mask][:, None]
     # leave zero vectors as zero
 
-
 def generate_normals(vertices, triangles=None, smooth=True):
     import numpy
 
@@ -65,32 +64,3 @@ def generate_normals(vertices, triangles=None, smooth=True):
 
 
     return normals
-
-if __name__ == '__main__':
-    vertices = (
-        (-0.0, -0.5, 0.0), (0.1, -0.48, -0.073), (-0.038, -0.48, -0.11),
-        (0.361804, -0.22, -0.26), (0.3, -0.32, -0.22), (0.40, -0.25, -0.14),
-        (-0.0, -0.5, 0.0), (-0.038, -0.48, -0.11), (-0.03, -0.48, -0.11)
-    )
-    from time import perf_counter
-    t = perf_counter()
-    norms = generate_normals(vertices, smooth=True)
-    print('------', perf_counter() - t)
-    # print(norms)
-    # from ursina import *
-    # app = Ursina()
-    # m = Mesh(vertices=vertices)
-    # m.generate_normals()
-    # e = Entity(model=m)
-    # # print(e.normals)
-    # if e.normals:
-    #     verts = list()
-    #     for i in range(len(e.vertices)):
-    #         verts.append(e.vertices[i])
-    #         verts.append(Vec3(e.vertices[i][0], e.vertices[i][1], e.vertices[i][2])
-    #             + Vec3(e.normals[i][0], e.normals[i][1], e.normals[i][2])*2)
-    #
-    #     lines=Entity(model=Mesh(verts, mode='line'))
-    # # e.shader = 'shader_normals'
-    # EditorCamera()
-    # app.run()
