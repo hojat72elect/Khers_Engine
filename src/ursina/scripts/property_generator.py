@@ -1,6 +1,5 @@
 from types import FunctionType
 
-
 def generate_properties_for_class(getter_suffix='_getter', setter_suffix='_setter', deleter_suffix='_deleter'):
     def decorator(cls):
         names = set()
@@ -52,51 +51,3 @@ def generate_properties_for_class(getter_suffix='_getter', setter_suffix='_sette
 
         return cls
     return decorator
-
-
-
-if __name__ == '__main__':
-    class Z:
-        pass
-
-    @generate_properties_for_class(getter_suffix='_getter', setter_suffix='_setter')
-    class A:
-        pass
-        # def x_getter(self):
-        #     print('get original x')
-        #     return self._x
-
-        # def x_setter(self, value):
-        #     self._x = value
-        #     print('A setter side effect')
-
-
-    @generate_properties_for_class()
-    class B(A):
-        def __init__(self):
-            super().__init__()
-
-        def x_setter(self, value):
-            self._x = value
-            # super().x_setter(value) # enables you to use getters and setters with inheritance while keeping the parent class's behavior
-            print('B setter side effect')
-        # @x.setter
-        # def x(self, value):
-        #     setattr(super(), 'x', value)
-        #     print('-----', )
-
-
-
-    # how you'd do it without the property generator, using __getattr__ and __setattr__
-    # class B(A):
-    #     def __setattr__(self, name, value):
-    #         super().__setattr__(name, value)
-    #
-    #         if name == 'x':
-    #             print('custom x stuff!')
-
-
-    e = B()
-    e.x = 2
-    print('xxxxxxxx', e.x)
-    # del e.x
