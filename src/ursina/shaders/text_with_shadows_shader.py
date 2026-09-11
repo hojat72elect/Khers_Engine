@@ -62,20 +62,3 @@ default_input = {
 )
 
 text_with_shadows_shader.compile()
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-    # window.color = color._16
-
-    text_entity = Text('some <orange>COOL <default> text here', parent=scene, scale=25, shader=text_with_shadows_shader)
-
-    def input(key):
-        if key == 'f':
-            text_entity.fade_out()
-        if key == 'o':
-            text_entity.set_shader_input('shadow_offset', Vec2(.1,.1))
-
-
-    EditorCamera()
-
-    app.run()

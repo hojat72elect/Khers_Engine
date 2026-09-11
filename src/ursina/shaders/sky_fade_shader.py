@@ -139,22 +139,3 @@ continuous_input = {
     'camera_world_position': Func(getattr, camera, 'world_position'),
     }
 )
-
-if __name__ == '__main__':
-    import random
-
-    from ursina import Entity, Sky, Ursina
-    from ursina.prefabs.first_person_controller import FirstPersonController
-    app = Ursina()
-    FirstPersonController(gravity=0)
-    # camera.z = -200
-    # EditorCamera(rotation_x=60)
-    sky = Sky(texture='sky_sunset')
-    e = Entity(model='plane', scale=(2000,1,2000), texture='grass', shader=sky_fade_shader)
-    e.set_shader_input('sky_texture', sky.texture)
-    for i in range(100):
-        Entity(model='cube', scale=(25,random.randint(10,150),25), x=-1000+(random.random()*2000), z=-1000+(random.random()*2000), origin_y=-.5, shader=sky_fade_shader, shader_input=dict(sky_texture=sky.texture))
-    # camera.fov = 100
-    # camera.clip_plane_far = 1000
-    print('-----------', camera.clip_plane_far)
-    app.run()

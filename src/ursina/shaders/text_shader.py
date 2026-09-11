@@ -69,21 +69,3 @@ default_input = {
     'outline_power': 1.0,
 }
 )
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-    # window.color = color._16
-
-    text_entity = Text('some <orange>COOL <default> text here', parent=scene, scale=25)
-    text_shader.compile()
-
-    for tn in text_entity.text_nodes:
-        tn.setShader(text_shader._shader)
-        for key, value in text_shader.default_input.items():
-            tn.setShaderInput(key, value)
-            print(tn.getColorScale())
-
-    EditorCamera()
-
-    app.run()
