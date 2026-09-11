@@ -31,33 +31,3 @@ void main() {
 ''',
 geometry='',
 )
-
-
-
-if __name__ == '__main__':
-    from ursina import *
-    from ursina.prefabs.primitives import AzureSphere, GrayPlane, WhiteCube
-    app = Ursina()
-    window.color=color.black
-
-    # e = Entity(model='sphere', shader=normals_shader)
-    # e.setShaderInput('transform_matrix', e.getNetTransform().getMat())
-    shader = normals_shader
-
-    a = WhiteCube(shader=shader)
-    b = AzureSphere(rotation_y=180, x=3)
-    b.shader = shader
-    # AzureSphere(shader=a.shader, y=2)
-    GrayPlane(scale=10, y=-2, texture='shore')
-
-    Sky(color=color.light_gray)
-    EditorCamera()
-
-    def update():
-        b.rotation_z += 1
-        b.rotation_y += 1
-        b.rotation_x += 1
-        # a.rotation_x += 1
-    # EditorCamera()
-
-    app.run()
