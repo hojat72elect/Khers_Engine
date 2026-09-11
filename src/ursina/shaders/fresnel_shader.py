@@ -77,26 +77,3 @@ continuous_input = {
     'camera_world_position': Func(getattr, camera, 'world_position'),
     }
 )
-
-
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-    # window.color=color.black
-
-    b = Entity(model='sphere', color=color.black, shader=fresnel_shader)
-    b = Entity(model=Quad(), color=color.dark_gray, shader=fresnel_shader, x=.25, parent=camera.ui, scale=.2, ignore=True)
-    b.shader_input = {
-        'bias': .01,
-        'scale': 1.5,
-        'power': 1.5,
-        'fresnel_color': color.hex('#123123')
-    }
-    b.animate_rotation_y(15, duration=1, curve=curve.linear_boomerang, loop=True)
-    ground = Entity(model='plane', color=color.gray, shader=fresnel_shader, y=-1, scale=64, texture='grass', texture_scale=Vec2(32,32))
-    ground.set_shader_input('fresnel_color', color.gray)
-    ground.set_shader_input('fresnel_texture', load_texture('white_cube'))
-    EditorCamera()
-
-    app.run()

@@ -59,25 +59,3 @@ void main() {
 }
 ''',
 )
-
-
-
-if __name__ == '__main__':
-    from ursina import *
-    from ursina.prefabs.primitives import *
-    app = Ursina(vsync = False)
-    window.color=color.black
-
-    b = AzureSphere(rotation_y=180, x=3, scale=2,
-        #texture='shore'
-    )
-    b.model.mode = 'point'
-    b.model.colors = [color.random_color() for e in b.model.vertices]
-    b.model.generate()
-    b.shader = point_shader
-    GrayPlane(scale=10, y=-2, texture='shore')
-
-    Sky(color=color.light_gray)
-    EditorCamera()
-
-    app.run()
