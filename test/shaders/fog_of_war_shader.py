@@ -10,12 +10,13 @@ from ursina import (
     camera,
 )
 import random
+from ursina.shaders.fog_of_war_shader import fog_of_war_shader
 
 if __name__ == "__main__":
    
     app = Ursina()
     window.color = color.black
-    Entity.default_shader = shaders.fog_of_war_shader
+    Entity.default_shader = fog_of_war_shader
     editor_camera = EditorCamera()
 
     ground = Entity(model="plane", collider="box", scale=64, texture="grass", texture_scale=(4, 4))
@@ -40,7 +41,7 @@ if __name__ == "__main__":
         light.z += held_keys["w"] - held_keys["s"]
 
         for e in scene.entities:
-            if hasattr(e, "shader") and e.shader == shaders.fog_of_war_shader:
+            if hasattr(e, "shader") and e.shader == fog_of_war_shader:
                 e.set_shader_input("light_position", light.world_position + camera.world_position)
                 
     app.run()
