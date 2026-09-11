@@ -66,36 +66,3 @@ def get_camera_world_position():
     from ursina import camera
     return camera.world_position
 unlit_with_fog_shader.continuous_input['camera_world_position'] = get_camera_world_position
-
-
-
-if __name__ == '__main__':
-    from ursina import EditorCamera, Entity, Ursina, camera
-    app = Ursina()
-    # window.color=color.black
-    # from ursina.lights import DirectionalLight
-    # DirectionalLight()
-
-    shader = unlit_with_fog_shader
-
-    a = Entity(model='cube', shader=shader)
-    # b = YellowSphere(shader=shader, rotation_y=180, x=3, texture='shore')
-    # from panda3d.core import Material
-    # myMaterial = Material()
-    # myMaterial.setShininess(5.0) #Make this material shiny
-    # myMaterial.setAmbient((0, 0, 1, 1)) #Make this material blue
-    # b.set_material(myMaterial)
-    # AzureSphere(shader=a.shader, y=2)
-    ground = Entity(model='plane', color=color.gray, scale=10, y=-2, texture='shore', shader=shader, texture_scale=(10,10))
-    ground.set_shader_input('texture_scale', Vec2(2, 1))
-    #Sky(color=color.light_gray)
-    EditorCamera()
-
-    # scene.fog_color = color.blue
-    # scene.fog_density = (0, 100)
-
-    # def input(key):
-    #     if key == 'b':
-    #         unlit_with_fog_shader.fog_color = color.blue
-
-    app.run()
