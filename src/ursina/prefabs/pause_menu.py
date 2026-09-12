@@ -1,6 +1,5 @@
 from ursina import *
 
-
 class PauseMenu(Entity):
     def __init__(self, **kwargs):
         super().__init__(ignore_paused=True, **kwargs)
@@ -22,12 +21,3 @@ class PauseMenu(Entity):
 
             application.paused = not application.paused # Pause/unpause the game.
             self.menu.enabled = application.paused     # Also toggle "PAUSED" graphic.
-
-
-
-if __name__ == '__main__':
-    app = Ursina()
-
-    PauseMenu()
-
-    app.run()
