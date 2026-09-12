@@ -1,6 +1,5 @@
 from ursina import *
 
-
 class Animation(Sprite):
     def __init__(self, name, fps=12, loop=True, autoplay=True, frame_times=None, **kwargs):
 
@@ -87,25 +86,3 @@ class Animation(Sprite):
             super().__setattr__(name, value)
         except Exception as e:
             return e
-
-
-
-
-
-if __name__ == '__main__':
-    # application.asset_folder = application.asset_folder.parent.parent / 'samples'
-    app = Ursina()
-
-    '''
-    Loads an image sequence as a frame animation.
-    Consider using SpriteSheetAnimation instead if possible.
-    So if you have some frames named image_000.png, image_001.png, image_002.png and so on,
-    you can load it like this: Animation('image')
-
-    You can also load a .gif by including the file type: Animation('image.gif')
-    '''
-
-    a = Animation('ursina_wink')
-# Animation('city_in_desert_valley_water.gif')
-
-    app.run()

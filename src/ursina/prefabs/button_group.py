@@ -2,7 +2,6 @@ from ursina import Entity, Button, camera, color, Text, window, mouse, destroy, 
 from ursina.scripts.grid_layout import grid_layout
 from ursina.scripts.property_generator import generate_properties_for_class
 
-
 @generate_properties_for_class()
 class ButtonGroup(Entity):
     default_selected_color = color.azure
@@ -123,45 +122,3 @@ class ButtonGroup(Entity):
 
     def on_value_changed(self): # assign a function to this to make something happen when you change the ButtonGroup's value
         pass
-
-
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-
-    # # test setting custom default colors
-    # Text.default_font = 'VeraMono.ttf'
-    # color.text_color = color.orange
-    # Button.default_highlight_color = color.blue
-    # Button.default_color = color.turquoise
-    # ButtonGroup.default_highlight_selected_color = color.white
-
-    center = Entity(parent=camera.ui, model='circle', scale=.005, color=color.red, z=-1)
-    gender_selection = ButtonGroup(('man', 'woman', 'other'),
-        origin=(-.5,0),
-        label='choose gender:',
-        max_x=1
-        )
-
-    def on_value_changed():
-        print('set gender:', gender_selection.value)
-    gender_selection.on_value_changed = on_value_changed
-
-
-    window.color = color._32
-
-    # test
-    for e in [(-.5,.5), (0,.5), (.5,.5), (-.5,0), (0,0), (.5,0), (-.5,-.5), (0,-.5), (.5,-.5)]:
-        Button(
-            text='*',
-            model='quad',
-            text_origin=e,
-            scale=.095,
-            origin=(-.5,.5),
-            position = window.top_left + Vec2(*e)*.2 + Vec2(.1,-.1),
-            tooltip=Tooltip(str(e)),
-            on_click=Func(setattr, gender_selection, 'origin', e),
-        )
-
-    app.run()

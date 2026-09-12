@@ -31,11 +31,3 @@ class ASCIIEditor(GridEditor):
         #     undo_index += 1
         #     undo_stack = undo_stack[:undo_index]
         #     undo_stack.append(deepcopy(grid))
-
-if __name__ == '__main__':
-    from ursina import Ursina
-    app = Ursina()
-
-    editor = ASCIIEditor()
-
-    app.run()
