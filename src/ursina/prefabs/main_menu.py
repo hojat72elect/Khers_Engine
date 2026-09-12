@@ -1,13 +1,6 @@
 from ursina import *
 from ursina.ursinastuff import DotDict
 
-# class button_classButton):
-#     def __init__(self, text='', **kwargs):
-#         super().__init__(text=text, scale=(.25, .075), highlight_color=color.azure, **kwargs)
-#         for k, v in kwargs.items():
-#             setattr(self, k, v)
-
-
 class MainMenu(Entity):
     def __init__(self, button_class=Button, button_size=Vec2(.25,.075), **kwargs):
         super().__init__(parent=camera.ui)
@@ -87,9 +80,3 @@ class MainMenu(Entity):
             menu.on_enable = animate_in
 
         self.state_handler.state = 'main_menu'
-
-
-if __name__ == '__main__':
-    app = Ursina()
-    MainMenu()
-    app.run()

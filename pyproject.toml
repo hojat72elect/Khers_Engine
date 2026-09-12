@@ -10,6 +10,7 @@ dependencies = [
     "screeninfo>=0.8.1",
     "numpy>=2.5.2",
     "psd-tools>=1.19.0",
+    "psutil>=7.2.2",
 ]
 
 [dependency-groups]

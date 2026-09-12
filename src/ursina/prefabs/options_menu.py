@@ -1,6 +1,5 @@
-from ursina import Animator, Audio, Button, Entity, Slider, Text, audio, camera, color, hsv, scene
+from ursina import Animator, Audio, Button, Entity, Slider, Text, audio, camera, color, window, scene
 from ursina.prefabs.button_group import ButtonGroup
-
 
 class MenuButton(Button):
     def __init__(self, text='', **kwargs):
@@ -8,7 +7,6 @@ class MenuButton(Button):
         for key, value in kwargs.items():
             setattr(self, key ,value)
 
-# button_size = (.25, .075)
 button_spacing = .05
 
 class OptionsMenu(Entity):
@@ -95,32 +93,3 @@ class OptionsMenu(Entity):
             self.state_handler.state = tabs.value.strip().lower()
         tabs.on_value_changed = on_tab_changed
         # # options_back = MenuButton(parent=options_menu, text='Back', x=-.25, origin_x=-.5, on_click=Func(setattr, state_handler, 'state', 'main_menu'))
-
-
-
-if __name__ == '__main__':
-    from ursina import Ursina, window, Button
-    app = Ursina()
-    # Text.default_font = 'VeraMono.ttf'
-    window.color = hsv(0, 0, 10/255)
-    Button.default_color = color._24
-    Button.default_highlight_color = color._32
-    # ButtonGroup.default_selected_color = color.hex('#85a9f7')
-    # ButtonGroup.default_selected_color = color.hex('#ff5eef')
-    # ButtonGroup.default_selected_color = color.hex('#85a9f7')
-    # color.text_color = hsv(240, 1, .8)
-    # color.text_color = hsv(60, 0, 10/255)
-    # Button.default_color
-    from ursina import NineSlice
-    NineSlice.outset = .4
-    Button.default_color = color.white
-    Button.default_model = NineSlice
-    Button.default_texture = 'nineslice_rainbow'
-    Button.default_radius = .5
-
-
-    options_menu = OptionsMenu()
-    # window.color = color._16
-    background = Entity(parent=camera.ui, model='quad', texture='shore', scale=(camera.aspect_ratio,1), color=color.dark_gray, z=1, world_y=0)
-    # Audio('chillstep_1.ogg', loop=True, group='music')
-    app.run()

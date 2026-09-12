@@ -1,10 +1,7 @@
 import math
 import os
-
 import psutil
-
 from ursina import Text, Vec2, camera, window
-
 
 def size(size_bytes):
     if size_bytes == 0:
@@ -14,7 +11,6 @@ def size(size_bytes):
     p = math.pow(1024, i)
     s = round(size_bytes / p, 2)
     return f"{s} {size_name[i]}"
-
 
 class MemoryCounter(Text):
     def __init__(self, **kwargs):
@@ -36,13 +32,3 @@ class MemoryCounter(Text):
             self.text = str(size(self.process.memory_info().rss))
 
             self.i = 0
-
-
-if __name__ == '__main__':
-    from ursina import Ursina
-    app = Ursina()
-    MemoryCounter()
-    '''
-    Displays the amount of memory used in the bottom right corner
-    '''
-    app.run()

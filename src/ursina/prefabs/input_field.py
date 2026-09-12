@@ -1,7 +1,6 @@
 from ursina import *
 from ursina.scripts.property_generator import generate_properties_for_class
 
-
 class ContentTypes:
     int = '0123456789'
     float = int + '.,'
@@ -116,23 +115,3 @@ class InputField(Button):
 
     # def text_origin_setter(self, value):
     #     self.text_field.text_entity.text_origin = value
-
-
-if __name__ == '__main__':
-    app = Ursina()
-    # window.fullscreen_size = (1366, 768)
-    # background = Entity(model='quad', texture='pixelscape_combo', parent=camera.ui, scale=(camera.aspect_ratio,1), color=color.white)
-    gradient = Entity(model='quad', texture='vertical_gradient', parent=camera.ui, scale=(camera.aspect_ratio,1), color=color.hsv(240,.6,.1,.75))
-
-    username_field = InputField(y=-.12, limit_content_to='0123456789', default_value='11', active=True, scale_x=1)
-    username_field.text = '0929468098'
-    password_field = InputField(y=-.18, hide_content=True)
-    username_field.next_field = password_field
-
-    def submit():
-        print('ursername:', username_field.text)
-        print('password:',  password_field.text)
-
-    Button(text='Login', scale=.1, color=color.cyan.tint(-.4), y=-.26, on_click=submit).fit_to_text()
-    username_field.on_value_changed = submit
-    app.run()
