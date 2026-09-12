@@ -8,7 +8,6 @@ from pathlib import Path
 from ursina import Entity, application, camera, mesh_importer, print_on_screen, scene, texture_importer, window
 from ursina.mesh_importer import load_model
 
-
 def is_valid_python(code):
    try:
        ast.parse(code)
@@ -16,7 +15,6 @@ def is_valid_python(code):
        return False, e
 
    return True
-
 
 def make_code_reload_safe(code):
     newtext = ''
@@ -46,8 +44,6 @@ def make_code_reload_safe(code):
             newtext += line + '\n'
 
     return newtext
-
-
 
 class HotReloader(Entity):
     def __init__(self, path=__file__, **kwargs):
@@ -267,147 +263,3 @@ class HotReloader(Entity):
                 except Exception as e:
                     print('failed to reload shader:', shader.path.name, 'error:', e)
                     pass
-
-# class InGameTextEditor(Entity):
-#     def __init__(self, path, **kwargs):
-#         super().__init__(parent=camera.ui, z=-10)
-#         self.file_path = path
-#
-#         self.add_script(Scrollable(min=0, max=10))
-#         self.bg = Entity(parent=self, model='quad', scale_x=camera.aspect_ratio, color=color.hsv(0,0,0,.9), z=1, collider='box', origin_y=.5, y=.5, scale_y=10, eternal=True)
-#         self.header = Text(parent=self, x=-.5, y=.475, text=self.file_path.name)
-#         self.text_editor = TextField(parent=self, font_size=14, max_lines=50)
-#         self.text_editor.text_entity.text_colors['default'] = color.hsv(219, .0, .95)
-#         self.text_editor.text_entity.text_colors['class_color'] = color.hsv(40, .61, .9)
-#         self.text_editor.text_entity.text_colors['kw_color'] = color.hsv(210, .59, .94)
-#         self.text_editor.text_entity.text_colors['func_color'] = color.hsv(250, .46, .87)
-#         self.text_editor.text_entity.text_colors['param_clor'] = color.hsv(30, .71, .92)
-#         self.text_editor.text_entity.text_colors['string_color'] = color.hsv(90, .48, .86)
-#
-#
-#         self.text_editor.replacements = {
-#
-#             'from ':    f'☾kw_color☽from ☾default☽',
-#             'import ':  f'☾kw_color☽import ☾default☽',
-#             'def ':     f'☾kw_color☽def ☾default☽',
-#             'for ':     f'☾kw_color☽for ☾default☽',
-#             'if ':      f'☾kw_color☽if ☾default☽',
-#             ' in ':     f'☾kw_color☽ in ☾default☽',
-#
-#             'print(':   f'☾func_color☽print☾default☽(',
-#             'range(':   f'☾func_color☽range☾default☽(',
-#             '__init__': f'☾func_color☽__init__☾default☽',
-#             'super':    f'☾func_color☽super☾default☽',
-#
-#             'class ':   f'☾class_color☽class ☾default☽',
-#             'Entity':   f'☾lime☽Entity☾default☽',
-#             'self.':    f'☾class_color☽self☾default☽.',
-#             '(self)':   f'(☾class_color☽self☾default☽)',
-#             'self,':    f'☾class_color☽self☾default☽,',
-#
-#             'highlight_color = ':    f'☾param_clor☽highlight_color☾default☽ = ',
-#
-#             '\',':    f'\',☾default☽',   # end quote
-#             '\':':    f'\':☾default☽',   # end quote
-#             '\')':    f'\')☾default☽',   # end quote
-#             '\'':    f'☾string_color☽\'', # start quote
-#             }
-#
-#         self.eternal = True
-#         self.ignore_paused = True
-#
-#         with self.file_path.open() as f:
-#             self.text_editor.text = f.read()
-#             self.text_editor.render()
-#
-#
-#         for key, value in kwargs.items():
-#             setattr(self, key, value)
-#
-#
-#     def on_enable(self):
-#         application.pause()
-#         self.ignore_input = False
-#
-#
-#     def on_disable(self):
-#         application.resume()
-#         self.ignore_input = True
-#
-#
-#     def input(self, key):
-#         if held_keys['control'] and key == 'enter':
-#             if self.reload_code():
-#                 if held_keys['shift']:
-#                     self.enabled = False
-#
-#
-#     def reload(self):
-#         cleaned_text = make_code_reload_safe(self.text_editor.text)
-#
-#         try:
-#             scene.clear()
-#             exec(cleaned_text)
-#             print('...............')
-#             print(cleaned_text)
-#             print('...............')
-#             return True
-#         except Exception as e:
-#             # exception = is_valid_python(cleaned_text)
-#             if type(e) == SyntaxError:
-#                 print('Error on line:', e)
-#             else:
-#                 import traceback
-#                 error_message = traceback.format_exc()
-#                 print(error_message)
-#
-#             return False
-#
-
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-    # hot_reloader = HotReloader()
-    # application.hot_reloader.path = application.asset_folder.parent.parent / 'samples' / 'platformer.py'
-    # Sky()
-
-    '''
-    By default you can press F5 to reload the starting script, F6 to reimport textures and F7 to reload models.
-    '''
-    # window.size *= .5
-    # window.position += Vec2(100,300)
-    # bg = Sprite('shore')
-    #
-    # button = Button(text='test button', scale=.75, model=Circle(32), color=color.red)
-
-    # test
-    from ursina.shaders import lit_with_shadows_shader
-    from ursina.prefabs.primitives import *
-
-    shader = lit_with_shadows_shader
-
-    a = AzureCube(shader=shader, texture='shore')
-    b = WhiteSphere(shader=shader, rotation_y=180, x=3, texture='brick')
-    b.texture.filtering = None
-    GrayPlane(scale=10, y=-2, texture='shore', shader=shader)
-
-
-    # Enable shadows; we need to set a frustum for that.
-    from ursina.lights import DirectionalLight
-    sun = DirectionalLight(y=10, rotation=(90+30,90,0))
-    sun._light.show_frustum()
-
-
-    Sky(color=color.light_gray)
-
-    print(Sky.instances)
-    EditorCamera()
-
-    def update():
-        a.x += (held_keys['d'] - held_keys['a']) * time.dt * 5
-        a.y += (held_keys['e'] - held_keys['q']) * time.dt * 5
-        a.z += (held_keys['w'] - held_keys['s']) * time.dt * 5
-
-
-    app.run()

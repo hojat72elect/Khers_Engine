@@ -1,6 +1,5 @@
 from ursina import *
 
-
 class FrameAnimation3d(Entity):
     def __init__(self, name, fps=12, loop=True, autoplay=True, frame_times=None, auto_destroy=False, **kwargs):
         super().__init__(name=name)
@@ -86,22 +85,3 @@ class FrameAnimation3d(Entity):
 
     def on_destroy(self):
         self.sequence.kill()
-
-
-
-if __name__ == '__main__':
-    application.asset_folder = application.asset_folder.parent.parent / 'samples'
-    app = Ursina()
-
-    '''
-    Loads an obj sequence as a frame animation.
-    So if you have some frames named run_cycle_000.obj, run_cycle_001.obj, run_cycle_002.obj and so on,
-    you can load it like this: FrameAnimation3d('run_cycle_')
-    '''
-
-    FrameAnimation3d('blob_animation_')
-
-    # test
-    EditorCamera()
-
-    app.run()

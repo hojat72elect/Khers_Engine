@@ -10,7 +10,6 @@ from ursina.array_tools import Array2D, enumerate_2d
 from ursina.scripts.property_generator import generate_properties_for_class
 from ursina.shaders import unlit_shader
 
-
 @generate_properties_for_class()
 class GridEditor(Entity):
     def __init__(self, size=(32,32), palette=(' ', '#', '|', 'o'), canvas_color=color.white, edit_mode=True, **kwargs):
@@ -19,7 +18,6 @@ class GridEditor(Entity):
         self.canvas = Entity(parent=self, model='quad', origin=(-.5,-.5), shader=unlit_shader, scale=(self.w/self.h, 1), color=canvas_color)
         self.canvas_collider = Entity(parent=self.canvas, model='wireframe_quad', origin=self.canvas.origin, color=color.blue, scale=2, position=(-.5,-.5), collider='box', visible=False)
         sys.setrecursionlimit(max(sys.getrecursionlimit(), self.w * self.h))
-        # self.grid = [[palette[0] for x in range(self.w)] for y in range(self.h)]
         if not hasattr(self, 'grid'):
             self.grid = Array2D(self.w, self.h, default_value=palette[0])
         self.brush_size = 1
@@ -39,7 +37,6 @@ class GridEditor(Entity):
         self.selection_renderer = Entity(parent=self.gizmo_parent, model=Mesh(mode='line', thickness=2), color=color.lime, alpha=.5, z=-.01, origin=(-.5,-.5))
         self.rect_selection = [Vec2(0,0), Vec2(0,0)]
         self.rect_tool = Entity(parent=self.gizmo_parent, model=Quad(0, mode='line', thickness=2), color=color.cyan, z=-.01, origin=(-.5,-.5), start=Vec2(0,0), end=Vec2(0,0), enabled=False)
-        # self.selection_mover = Draggable(parent=self.canvas, model='circle', color=color.blue, origin=(.5,.5), step=(1/self.w,1/self.h,0), enabled=False)
         self.selection_matrix = [[0 for y in range(self.h)] for x in range(self.w)]
         self.temp_paste_layer = Entity(parent=self.cursor, model='quad', origin=(-.5,-.5), z=-.02, enabled=False)
         Entity(parent=self.temp_paste_layer, model='wireframe_quad', origin=self.temp_paste_layer.origin, color=color.black)
@@ -75,18 +72,15 @@ class GridEditor(Entity):
         }
 
         self.help_icon = Button(parent=self.canvas, scale=.025, model='circle', origin=(-.5,-.5), position=(-.0,1.005,-1), text='?', target_scale=.025)
-
         self.help_icon.tooltip = Tooltip(
             text='\n'.join([f'{key:<20}: {value}' for key, value in self.shortcuts.items()]),
             font='VeraMono.ttf',
             wordwrap=100,
-            # scale=.75,
             )
         self.edit_mode = edit_mode
 
         for key, value in kwargs.items():
             setattr(self, key ,value)
-
 
     def palette_setter(self, value):
         self._palette = value
@@ -102,7 +96,6 @@ class GridEditor(Entity):
             b = Button(parent=self.palette_parent, scale=.05, text=button_text, model='quad', color=color._32, shader=unlit_shader)
             b.on_click = Func(setattr, self, 'selected_char', e)
             b.tooltip = Tooltip(str(e))
-
             if isinstance(e, Color):
                 b.color = e
 
@@ -116,7 +109,6 @@ class GridEditor(Entity):
         self.cursor.enabled = value
         self.outline.enabled = value
         self.palette_parent.enabled = value
-
 
     def update(self):
         if not self.edit_mode:
@@ -501,7 +493,6 @@ class GridEditor(Entity):
         self.selection_renderer.model.triangles = [(i, i+1) for i in range(0, len(verts), 2)]
         self.selection_renderer.model.generate()
 
-
 class PixelEditor(GridEditor):
     def __init__(self, texture, palette=(color.black, color.white, color.light_gray, color.gray, color.red, color.orange, color.yellow, color.lime, color.green, color.turquoise, color.cyan, color.azure, color.blue, color.violet, color.magenta, color.pink), **kwargs):
         super().__init__(texture=texture, size=texture.size, palette=palette, **kwargs)
@@ -562,22 +553,3 @@ class PixelEditor(GridEditor):
     def texture(self, value):
         if hasattr(self, 'canvas'):
             self.canvas.texture = value
-
-
-
-if __name__ == '__main__':
-    app = Ursina()
-    '''
-    pixel editor example, it's basically a drawing tool.
-    can be useful for level editors and such
-    here we create a new texture, but can also give it an existing texture to modify.
-    '''
-    from PIL import Image
-    t = Texture(Image.new(mode='RGBA', size=(32,32), color=(0,0,0,1)))
-    editor = PixelEditor(parent=scene, texture=load_texture('test_tileset'), scale=10)
-    camera.orthographic = True
-    camera.fov = 15
-    EditorCamera(rotation_speed=0)
-
-
-    app.run()

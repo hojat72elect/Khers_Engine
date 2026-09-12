@@ -1,4 +1,4 @@
-from ursina import Button, Entity, Func, Mesh, Plane, ThinSlider, Vec2, Vec3, camera, color, copy, generate_properties_for_class, make_gradient
+from ursina import Button, Entity, Func, Mesh, Plane, ThinSlider, Vec2, Vec3, camera, color, copy, generate_properties_for_class, make_gradient, lerp
 from ursina.prefabs.color_picker import ColorPicker
 
 gradient_editor_arrow = Mesh(vertices=[(v+Vec3(0,-.4,0))*Vec3(.0175,.025,1) for v in (Vec3(0,0,0),Vec3(-.5,.5,0),Vec3(.5,.5,0),Vec3(-.5,.75,0),Vec3(.5,.75,0))], triangles=(0,2,1,1,2,4,4,3,1))
@@ -88,13 +88,5 @@ class GradientEditor(Entity):
         return {key:color.rgb_to_hex(*col) for key, col in self.value.items()}
 
     def copy(self):
-        # print('copied:', {key:color.rgb_to_hex(*col) for key, col in self.value.items()})
         import pyperclip
         pyperclip.copy(str(self.hex_values))
-
-
-if __name__ == '__main__':
-    from ursina import Ursina
-    app = Ursina()
-    GradientEditor()
-    app.run()
