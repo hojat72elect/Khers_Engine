@@ -1,6 +1,5 @@
 from ursina import Entity, Slider, color, Button, camera, Quad, copy, Color
 
-
 class ColorPicker(Entity):
     default_values = dict(parent=camera.ui)
 
@@ -63,11 +62,3 @@ class ColorPicker(Entity):
 
         if self.on_value_changed:
             self.on_value_changed()
-
-
-if __name__ == '__main__':
-    from ursina import Ursina
-    app = Ursina()
-    ColorPicker()
-
-    app.run()

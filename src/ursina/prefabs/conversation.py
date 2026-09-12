@@ -2,13 +2,11 @@ from copy import copy
 
 from ursina import *
 
-
 class _ConversationNode:
     __slots__ = ['index', 'indent_level', 'content', 'code', 'children', 'is_answer']
 
     def __str__(self):
         return f'{__class__.__name__}:\n    ' + '\n    '.join([f'{e} = {getattr(self, e)}' for e in __class__.__slots__])
-
 
 class Conversation(Entity):
 
@@ -192,54 +190,3 @@ class Conversation(Entity):
 
         return nodes
 
-
-
-if __name__ == '__main__':
-    app = Ursina()
-
-    variables = Empty(
-        evil=0,
-        chaos=0,
-        bar_mission_solved=False,
-    )
-    conversation = Conversation(variables_object=variables)
-    # conversation.question.model = 'quad'
-    # for b in conversation.buttons:
-    #     b.model = 'quad'
-
-    convo = dedent('''
-    I'm looking for my sister. Can you help me find her, please? I haven't seen her in days! Who know what could've happened!?
-    I'm worried. Will you help me?
-        * Yes, of course. This can be a dangerous city.
-            Oh no! Do you think something happened to her?
-            What should I do?!
-                * She's probably fine. She can handle herself.
-                    You're right. I'm still worried though.
-                        * Don't worry, I'll look for her.
-                * Maybe. (stats.chaos += 1)
-                    Help me look for her, please! *runs off*
-        * I'm sorry, but I don't have time right now. (evil += 1)
-            A true friend wouldn't say that.
-        * I know where she is! (if bar_mission_solved)
-            Really? Where?
-                * I saw her on a ship by the docks, it looked like they were ready to set off.
-                    Thank you! *runs off*
-    ''')
-    conversation.start_conversation(convo)
-    # conversation.parse_conversation(convo)
-    # def input(key):
-    #     if key == 'left mouse down' and mouse.hovered_entity in conversation.buttons:
-    #         print('add sound here')
-
-
-
-
-    def input(key):
-        if key == 'space':
-            print(variables.evil)
-            # conversation.start_conversation()
-
-    # window.color = color._16
-    # window.size = window.fullscreen_size * .5
-    Sprite('shore', z=1)
-    app.run()

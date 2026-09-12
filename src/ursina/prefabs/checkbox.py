@@ -1,6 +1,5 @@
 from ursina import Button, Text, Quad
 
-
 class Checkbox(Button):
     def __init__(self, start_value=False, **kwargs):
         super().__init__(scale=Text.size, model=Quad(radius=.25))
@@ -22,12 +21,3 @@ class Checkbox(Button):
     def value(self, new_value):
         self._value = new_value
         self.text = ' x'[int(new_value)]
-
-
-if __name__ == '__main__':
-    from ursina import Ursina, Slider
-    app = Ursina()
-    Checkbox(start_value=True)
-    Checkbox(x=.1, start_value=False)
-    Slider(y=-.1)
-    app.run()
