@@ -1,9 +1,6 @@
 from ursina import Entity, camera, Text, Vec2, mouse, color, floor, clamp, time, held_keys, destroy, curve
 import pyperclip
-
 from ursina.string_utilities import multireplace
-# from tree_view import TreeView
-
 
 class TextField(Entity):
     def __init__(self, max_lines=64, line_height=1.1, character_limit=None, **kwargs):
@@ -122,8 +119,6 @@ class TextField(Entity):
 
         self._prev_text = ''
 
-
-
     @property
     def active(self):
         return self._active
@@ -136,7 +131,6 @@ class TextField(Entity):
         if not value:
             self.selection = [Vec2(0,0), Vec2(0,0)]
             self.draw_selection()
-
 
     def add_text(self, s, move_cursor=True, rerender=True):
         if self.character_limit and len(self.text) >= self.character_limit:
@@ -160,7 +154,6 @@ class TextField(Entity):
         if clear_redo:
             self.on_redo.clear()
         self.on_undo.append((text, y, x))
-
 
     def move_line(self, line_index, delta, move_cursor=True):
         x, y = int(self.cursor.x), int(self.cursor.y)
@@ -202,7 +195,6 @@ class TextField(Entity):
         self._append_undo(self.text, y, x)
         self.text = '\n'.join(lines)
         # print('moved line')
-
 
     def erase(self, rerender=True):
         # if not self.selection or self.selection[0] == self.selection[1]:
@@ -267,7 +259,6 @@ class TextField(Entity):
             return [self.selection[1], self.selection[0]]
         return self.selection
 
-
     def delete_selected(self):
         if not self.selection or self.selection[0] == self.selection[1]:
             return
@@ -288,7 +279,6 @@ class TextField(Entity):
         self.draw_selection()
         self.render()
 
-
     def get_selected(self):
         if not self.selection or self.selection[0] == self.selection[1]:
             return None
@@ -307,7 +297,6 @@ class TextField(Entity):
             selected_text += lines[y][(int(sel[0][0]) if y == start_y else 0) : (int(sel[1][0]) if y == end_y else len(lines[y])) ]
 
         return selected_text
-
 
     def get_mouse_position_unclamped(self):
         if self.world_space_mouse:
@@ -328,7 +317,6 @@ class TextField(Entity):
             y = floor(mpos.y / self.cursor_parent.scale_y)
 
         return (x, y)
-
 
     def get_mouse_position(self):
         (x, y) = self.get_mouse_position_unclamped()
@@ -351,7 +339,6 @@ class TextField(Entity):
 
         if render:
             self.render()
-
 
     def input(self, key):
         # print('-------------', key)
@@ -673,8 +660,6 @@ class TextField(Entity):
                     if self.selection:
                         self.selection[1] = self.cursor.position
 
-
-
     def move_to_start_of_word(self):
         cursor = self.cursor
         x, y = int(cursor.x), int(cursor.y)
@@ -733,7 +718,6 @@ class TextField(Entity):
         self.set_scroll(len(self.text.split('\n'))-self.max_lines+blank_lines_at_bottom)
         # print('scrolled to bottom', min(len(self.text.split('\n')), self.max_lines))
 
-
     def text_input(self, key):
         cursor, add_text = self.cursor, self.add_text
 
@@ -759,7 +743,6 @@ class TextField(Entity):
             cursor.x -= 1
 
         self.render()
-
 
     def render(self):
         lines = self.text.split('\n')
@@ -795,8 +778,6 @@ class TextField(Entity):
         if self.on_value_changed:
             self.on_value_changed()
 
-
-
     def update(self):
         if self.active and self.register_mouse_input and mouse.left and mouse.moving:
             self.cursor.position = self.get_mouse_position()
@@ -805,14 +786,12 @@ class TextField(Entity):
 
             self.draw_selection()
 
-
     def select_all(self):
         lines = self.text.split('\n')
         if lines:
             self.selection = [Vec2(0,0), Vec2(len(lines[-1]), len(lines) - 1)]
 
         self.draw_selection()
-
 
     def draw_selection(self):
         # print(self.selection)
@@ -851,61 +830,3 @@ class TextField(Entity):
 
         for e in self.selection_parent.children:
             e.enabled = e.y >= self.scroll and e.y < self.scroll+self.max_lines
-
-
-if __name__ == '__main__':
-    from ursina import Ursina, window, Button
-    app = Ursina(vsync=60)
-
-    # camera.orthographic = True
-    # camera.fov = 1
-    # window.size = window.fullscreen_size
-    # window.x = 200
-
-    window.color = color.hsv(0, 0, .1)
-    Button.default_color = color._20
-    window.color = color._25
-
-    # Text.size = 1/window.fullscreen_size[1]*16
-    # Text.default_font = 'consola.ttf'
-    # Text.default_resolution = 16*2
-    # TreeView()
-    te = TextField(max_lines=30, scale=1, register_mouse_input = True, text='1234')
-    #te = TextField(max_lines=300, scale=1, register_mouse_input = True, scroll_size = (50,3))
-    # te.line_numbers.enabled = True
-    # for name in color.color_names:
-    #     if name == 'black':
-    #         continue
-    #     te.replacements[f' {name}'] = f'☾{name}☽ {name}☾default☽'
-    # te.replacements = {
-    #     'class ':    '☾orange☽class ☾default☽',
-    #     'def ':      '☾azure☽def ☾default☽',
-    #     '__init__':  '☾cyan☽__init__☾default☽',
-    #     'Entity':    '☾lime☽Entity☾default☽',
-    #     'self.':     '☾orange☽self☾default☽.',
-    #     '(self)':     '(☾orange☽self☾default☽)',
-    #     'self,':     '☾orange☽self☾default☽,',
-    #     '    ':      '☾dark_gray☽----☾default☽',
-    #     }
-    #
-    from textwrap import dedent
-    te.text = dedent('''
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Aliquam sapien tellus, venenatis sit amet ante et, malesuada porta risus.
-        Etiam et mi luctus, viverra urna at, maximus eros. Sed dictum faucibus purus,
-        nec rutrum ipsum condimentum in. Mauris iaculis arcu nec justo rutrum euismod.
-        Suspendisse dolor tortor, congue id erat sit amet, sollicitudin facilisis velit.
-        Aliquam sapien tellus, venenatis sit amet ante et, malesuada porta risus.
-        Etiam et mi luctus, viverra urna at, maximus eros. Sed dictum faucibus purus,
-        nec rutrum ipsum condimentum in. Mauris iaculis arcu nec justo rutrum euismod.
-        Suspendisse dolor tortor, congue id erat sit amet, sollicitudin facilisis velit.
-        '''*30
-        )[1:]
-    te.render()
-
-    def input(key):
-        if key == '3':
-            te.input('scroll down')
-
-
-    app.run()

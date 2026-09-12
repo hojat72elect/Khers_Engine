@@ -2,7 +2,6 @@ from ursina import *
 from ursina.ursinamath import sample_gradient
 from ursina.prefabs.particle_system import play_particle_system
 
-
 class SplashScreen(Sprite):
     '''A simple splash screen that shows a static image'''
 
@@ -22,7 +21,6 @@ class SplashScreen(Sprite):
 
     def on_destroy(self):
         camera.overlay.animate_color(color.clear, duration=.25)
-
 
 class UrsinaSplashScreen(Entity):
     def __init__(self):
@@ -80,27 +78,3 @@ class UrsinaSplashScreen(Entity):
             self.text_entity.animate_scale_y(0, delay=.4, duration=.2, curve=curve.in_back)
             self.text_entity.animate_scale_x(self.text_entity.original_scale*1.5, delay=.55, duration=.1, curve=curve.out_expo)
             invoke(self.on_destroy, delay=.65)
-
-
-
-if __name__ == '__main__':
-    app = Ursina(size=Vec2(1920,1080), )
-
-    window.color = color.black
-    ursina_splash_screen = UrsinaSplashScreen()
-
-    # application.calculate_dt = False
-    # time.dt =  1/60
-    # from ursina.prefabs.video_recorder import VideoRecorder
-    # vr = VideoRecorder(max_duration=3, fps=60, name='splash_screen')
-    # def on_window_ready():
-    #     vr.start_recording()
-
-
-    # EditorCamera()
-
-
-
-    # add a custom splash screen after the first one
-    # ursina_splash.on_destroy = Func(SplashScreen, 'shore')
-    app.run()

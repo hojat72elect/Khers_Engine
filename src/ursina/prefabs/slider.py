@@ -1,6 +1,5 @@
 from ursina import *
 
-
 @generate_properties_for_class()
 class Slider(Entity):
     def __init__(self, min=0, max=1, default=None, height=Text.size, text='', dynamic=False, radius=Text.size/2, bar_color=color.black66, **kwargs):
@@ -124,8 +123,6 @@ class Slider(Entity):
         except Exception as e:
             return e
 
-
-
 class ThinSlider(Slider):
     def __init__(self, *args, **kwargs):
         kwargs['height'] = Text.size
@@ -136,24 +133,3 @@ class ThinSlider(Slider):
         self.bg.highlight_color = color.text_color
         self.knob.color = lerp(color.text_color, color.inverse(color.text_color), .1)
         self.label.color = color.text_color
-
-
-
-
-if __name__ == '__main__':
-    app = Ursina()
-
-    box = Entity(model='cube', origin_y=-.5, scale=1, color=color.orange)
-
-    def scale_box():
-        box.scale_y = slider.value
-        print(thin_slider.value)
-
-    slider = Slider(0, 20, default=10, height=Text.size*3, y=-.4, step=1, on_value_changed=scale_box, vertical=True)
-
-    thin_slider = ThinSlider(text='height', dynamic=True, on_value_changed=scale_box)
-
-    thin_slider.label.origin = (0,0)
-    thin_slider.label.position = (.25, -.1)
-
-    app.run()
