@@ -1,7 +1,6 @@
 from ursina import *
 from ursina.scripts.property_generator import generate_properties_for_class
 
-
 @generate_properties_for_class()
 class FileButton(Button):
     def __init__(self, load_menu, path, **kwargs):
@@ -42,8 +41,6 @@ class FileButton(Button):
             self.highlight_color = color.dark_gray
 
         self.load_menu.open_button.color = color.azure if self.load_menu.selection else color.dark_gray
-
-
 
 @generate_properties_for_class()
 class FileBrowser(Entity):
@@ -181,26 +178,3 @@ class FileBrowser(Entity):
 
     def selection_getter(self):
         return [c.path for c in self.button_parent.children if c.selected == True]
-
-
-
-
-if __name__ == '__main__':
-    app = Ursina()
-
-    fb = FileBrowser(file_types=('.*'), enabled=False)
-
-    def on_submit(paths):
-        print('--------', paths)
-        for p in paths:
-            print('---', p)
-
-    fb.on_submit = on_submit
-
-    Text('Press Tab to open file browser', origin=(0,0), z=1)
-    def input(key):
-        if key == 'tab':
-            fb.enabled = not fb.enabled
-
-
-    app.run()

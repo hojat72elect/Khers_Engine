@@ -1,7 +1,6 @@
 from ursina import *
 from ursina.prefabs.file_browser import FileBrowser, FileButton
 
-
 class FileButtonSave(FileButton):
     def on_click(self):
         if len([e for e in self.parent.children if e.selected]) >= self.load_menu.selection_limit and not self.selected:
@@ -18,7 +17,6 @@ class FileButtonSave(FileButton):
         else:
             self.selected = True
             self.load_menu.open()
-
 
 @generate_properties_for_class()
 class FileBrowserSave(FileBrowser):
@@ -79,25 +77,3 @@ class FileBrowserSave(FileBrowser):
 
     def on_submit(self, path):  # implement .on_submit to handle saving
         print('save to path:', path, 'please implement .on_submit to handle saving')
-
-
-
-if __name__ == '__main__':
-    from ursina import *
-    from ursina.prefabs.file_browser_save import FileBrowserSave
-
-    app = Ursina()
-    wp = FileBrowserSave(file_type = '.*')
-
-
-    import json
-    save_data = {'level': 4, 'name':'Link'}
-    wp.data = json.dumps(save_data)
-
-    wp.enabled = False
-    def input(key):
-        if key == 'tab':
-            wp.enabled = not wp.enabled
-
-
-    app.run()

@@ -1,6 +1,5 @@
 from ursina import Entity, Vec2, Vec3, camera, clamp, curve, destroy, held_keys, lerp, mouse, slerp, time, lerp_exponential_decay
 
-
 class EditorCamera(Entity):
 
     def __init__(self,
@@ -166,31 +165,3 @@ class EditorCamera(Entity):
         super().__setattr__(name, value)
         if hasattr(self, 'smoothing_helper') and name in ('rotation', 'rotation_x', 'rotation_y', 'rotation_z'):
             setattr(self.smoothing_helper, name, value)
-
-
-
-if __name__ == '__main__':
-    # window.vsync = False
-    from ursina import Ursina, Sky, load_model, color, Text, window, Button
-    app = Ursina(vsync=False, use_ingame_console=True)
-    '''
-    Simple camera for debugging.
-    Hold right click and move the mouse to rotate around point.
-    '''
-
-    sky = Sky()
-    e = Entity(model=load_model('cube', use_deepcopy=True), color=color.white, collider='box')
-    e.model.colorize()
-
-    ground = Entity(model='plane', scale=32, texture='white_cube', texture_scale=(32,32), collider='box')
-    box = Entity(model='cube', collider='box', texture='white_cube', scale=(10,2,2), position=(2,1,5), color=color.light_gray)
-
-    b = Button(position=window.top_left, scale=.05)
-    ec = EditorCamera(ignore_scroll_on_ui=True)
-    rotation_info = Text(position=window.top_left)
-
-    def update():
-        rotation_info.text = str(int(ec.rotation_y)) + '\n' + str(int(ec.rotation_x))
-
-
-    app.run()

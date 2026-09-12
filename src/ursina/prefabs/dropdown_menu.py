@@ -1,6 +1,5 @@
 from ursina import *
 
-
 class DropdownMenuButton(Button):
     def __init__(self, text='', **kwargs):
         super().__init__(scale=(.25,.025), origin=(-.5,.5), pressed_scale=1, text_origin=(-.5,0), text_size=.8, text=text, **kwargs)
@@ -8,7 +7,6 @@ class DropdownMenuButton(Button):
         if self.text_entity:
             self.text_entity.x = .05
             # self.text_entity.scale *= .8
-
 
 class DropdownMenu(DropdownMenuButton):
     def __init__(self, text='', buttons:list=None, **kwargs):
@@ -56,26 +54,3 @@ class DropdownMenu(DropdownMenuButton):
             return
 
         self.close()
-
-
-if __name__ == '__main__':
-    from ursina.prefabs.dropdown_menu import DropdownMenu, DropdownMenuButton
-
-    app = Ursina()
-    # DropdownMenu(text='File')
-    DropdownMenu('File', buttons=(
-        DropdownMenuButton('New'),
-        DropdownMenuButton('Open'),
-        DropdownMenu('Reopen Project', buttons=(
-            DropdownMenuButton('Project 1'),
-            DropdownMenuButton('Project 2'),
-            )),
-        DropdownMenuButton('Save'),
-        DropdownMenu('Options', buttons=(
-            DropdownMenuButton('Option a'),
-            DropdownMenuButton('Option b'),
-            )),
-        DropdownMenuButton('Exit'),
-        ))
-
-    app.run()
