@@ -17,25 +17,3 @@ void main() {
 
 ''',
 geometry='')
-
-
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-
-    e = Entity(model='sphere', color=color.orange)
-    e = Entity(model='cube', y=-1)
-    camera.shader = camera_grayscale_shader
-    # camera.set_shader_input('contrast', 1)
-    EditorCamera()
-
-    def input(key):
-        if key == 'space':
-            if camera.shader:
-                camera.shader = None
-            else:
-                camera.shader = camera_grayscale_shader
-
-    Sky()
-    app.run()

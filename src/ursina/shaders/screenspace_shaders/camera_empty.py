@@ -28,23 +28,3 @@ void main() {
 }
 
 ''')
-
-
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-
-    e = Entity(model='sphere', color=color.yellow)
-    e = Entity(model='cube', y=-1)
-    camera.shader = camera_empty_shader
-    camera.set_shader_input('contrast', 1)
-
-    #slider = ThinSlider(max=1, dynamic=True, position=(-.25, -.45))
-    #def set_blur():
-    #    camera.set_shader_input("contrast", slider.value)
-    #slider.on_value_changed = set_blur
-
-    EditorCamera()
-    Sky()
-    app.run()

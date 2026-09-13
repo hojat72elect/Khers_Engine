@@ -41,34 +41,3 @@ void main () {
 '''
 ,
 geometry='')
-
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-    Entity(model='cube', texture='white_cube', color=color.red)
-    Entity(model='cube', texture='white_cube', color=color.white, x=1.1)
-    Entity(model='sphere', texture='white_cube', color=color.gray, y=1.1)
-    # e = Entity(model='quad', scale=3, shader=empty_shader)
-    camera.shader = empty_shader
-    print(camera.shader)
-
-    t = 0
-    frame = 0
-
-    #e.set_shader_input('iResolution', window.size)
-    #e.set_shader_input('iTime', t)
-    #e.set_shader_input('iFrame', frame)
-
-    def update():
-      global t, frame
-      t += time.dt
-      #e.set_shader_input('iTime', t)
-
-      frame += 1
-      #e.set_shader_input('iFrame', frame)
-
-
-    EditorCamera()
-
-    app.run()

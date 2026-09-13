@@ -18,15 +18,3 @@ void main() {
     color = texture(tex, new_uv);
 }
 ''')
-
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-
-    e = Entity(model='sphere', color=color.orange)
-    e = Entity(model='cube', y=-1)
-    camera.shader = pixelation_shader
-    EditorCamera()
-
-    app.run()

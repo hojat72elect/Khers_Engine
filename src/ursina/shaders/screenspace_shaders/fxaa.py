@@ -95,30 +95,3 @@ default_input={
     'window_size': Vec2(1280,720),
 }
 )
-
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-    window.color=color.black
-
-    # b = Entity(model='sphere')
-    Entity(model='plane', scale=10, y=-2, texture='shore')
-    # Entity(model='quad', texture='circle', x=2)
-    EditorCamera()
-    Entity(model='quad', color=color.red, double_sided=True)
-    Entity(model='quad', color=color.green, z=-.001, scale=.5, texture='circle')
-    # Button(scale=.25, model='circle')
-    camera.shader = fxaa_shader
-    camera.clip_plane_far=100
-    Sky()
-
-    def input(key):
-        if key == 'space':
-            if not camera.shader:
-                camera.shader = fxaa_shader
-            else:
-                camera.shader = None
-
-
-    app.run()
