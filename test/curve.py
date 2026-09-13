@@ -3,7 +3,6 @@ from ursina.curve import CubicBezier,combine, linear, reverse, in_expo
 
 if __name__ == '__main__':
     '''Draws a sheet with every curve and its name'''
-    
     app = Ursina()
     camera.orthographic = True
     camera.fov = 16

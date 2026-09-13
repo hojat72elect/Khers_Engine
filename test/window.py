@@ -1,7 +1,6 @@
 from ursina import window, application,Ursina, color, scene
 
 if __name__ == "__main__":
-
     application.trace_entity_definition = True
     app = Ursina(title="Ursina", vsync=False)
 

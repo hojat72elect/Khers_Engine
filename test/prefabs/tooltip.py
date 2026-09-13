@@ -2,7 +2,6 @@ from ursina import Ursina, Tooltip, NineSlice, Vec2, Text, color
 
 if __name__ == "__main__":
     app = Ursina()
-
     tooltip_test = Tooltip(
         "<scale:1.5><pink>"
         + "Rainstorm"

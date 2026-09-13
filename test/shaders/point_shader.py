@@ -1,5 +1,4 @@
 import random
-
 from ursina import EditorCamera, Entity, Mesh, MeshModes, Ursina, Vec3, color
 from ursina.prefabs.primitives import ThinSlider
 from ursina.shaders.point_shader import point_shader
@@ -7,7 +6,6 @@ from ursina.shaders.point_shader import point_shader
 if __name__ == "__main__":
     app = Ursina(vsync=1)
     Entity(model="plane", scale=10, texture="grass")
-
     vertices = [Vec3(*(random.random() * 10 for _ in range(3))) for i in range(100)]
     e = Entity(
         model=Mesh(

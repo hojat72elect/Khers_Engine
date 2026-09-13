@@ -1,25 +1,14 @@
-from ursina import (
-    Ursina,
-    Entity,
-    color,
-    window,
-    EditorCamera,
-    shaders,
-    held_keys,
-    scene,
-    camera,
-)
+from ursina import Ursina, Entity, color, window, EditorCamera, held_keys, scene, camera
 import random
 from ursina.shaders.fog_of_war_shader import fog_of_war_shader
 
 if __name__ == "__main__":
-   
     app = Ursina()
     window.color = color.black
     Entity.default_shader = fog_of_war_shader
     editor_camera = EditorCamera()
-
     ground = Entity(model="plane", collider="box", scale=64, texture="grass", texture_scale=(4, 4))
+
     for i in range(16):
         Entity(
             model="cube",

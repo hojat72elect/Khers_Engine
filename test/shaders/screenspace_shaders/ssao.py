@@ -20,6 +20,8 @@ if __name__ == '__main__':
                 camera.shader = ssao_shader
 
     random.seed(2)
+
     for i in range(20):
         e = Entity(model='cube', position=Vec3(random.random(),random.random(),random.random())*3, rotation=Vec3(random.random(),random.random(),random.random())*360)
+
     app.run()

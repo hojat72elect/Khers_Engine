@@ -15,7 +15,6 @@ if __name__ == '__main__':
     EditorCamera()
     print(time.time() - t)
 
-    # test
     for e in [(-.5,.5), (0,.5), (.5,.5), (-.5,0), (0,0), (.5,0), (-.5,-.5), (0,-.5), (.5,-.5)]:
         Button(
             text="*",

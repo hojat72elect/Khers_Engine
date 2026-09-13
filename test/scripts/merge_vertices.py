@@ -10,5 +10,4 @@ if __name__ == '__main__':
     app = Ursina()
     e = Entity(model=Mesh(newVertices, newTris, mode="triangle"))
     EditorCamera()
-
     app.run()

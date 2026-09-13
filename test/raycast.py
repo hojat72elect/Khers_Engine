@@ -33,5 +33,5 @@ if __name__ == '__main__':
     camera.y = 2
     app.run()
     EditorCamera()
-    
+
     app.run()

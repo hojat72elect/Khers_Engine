@@ -4,7 +4,6 @@ from time import perf_counter
 
 if __name__ == '__main__':
     app = Ursina()
-
     t = perf_counter()
     Entity(model='untitled')
     print('-------', perf_counter() - t)
@@ -12,5 +11,4 @@ if __name__ == '__main__':
     ursinamesh_to_dae(m, 'dae_export_test')
     EditorCamera()
     Sky(texture='sky_sunset')
-
     app.run()

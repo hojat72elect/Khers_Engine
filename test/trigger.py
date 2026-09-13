@@ -13,5 +13,4 @@ if __name__ == '__main__':
     trigger.on_trigger_enter = Func(print, "enter")
     trigger.on_trigger_exit = Func(print, "exit")
     trigger.on_trigger_stay = Func(print, "stay")
-
     app.run()

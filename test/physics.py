@@ -8,19 +8,20 @@ if __name__ == '__main__':
         def __init__(self, **kwargs):
             super().__init__(collider=CapsuleCollider(), model=Capsule(), color=color.orange, y=2, z=0, mass=1, friction=1, lock_axis=Vec3(0, 0, 0), lock_rotation=Vec3(1, 1, 1), rotational_friction=Vec3.zero)
             Entity(parent=self, model='sphere', z=.2, y=.25, scale=1, color=color.red)
-
             self.camera_controller = EditorCamera(pan_speed=Vec2.zero)
-
             self.rotation_helper = Entity(loose_parent=self, model='wireframe_cube', visible=False)
+
             def rotation_helper_update():
                 self.rotation_helper.position = self.position
                 self.rotation_helper.rotation_y = self.camera_controller.rotation_y
-            self.rotation_helper.update = rotation_helper_update
 
+            self.rotation_helper.update = rotation_helper_update
             self.direction_helper = Entity(parent=self.rotation_helper, scale=.2, model='sphere', always_on_top=True, enabled=1, color=color.pink, visible=False)
             self.helper = Entity(parent=self)
+
             for key, value in kwargs.items():
                 setattr(self, key, value)
+
             self.physics_update_loop = Sequence(self.physics_update, 1/30, loop=True, started=True)
 
         def update(self):
@@ -32,12 +33,11 @@ if __name__ == '__main__':
             direction = Vec3(h, 0, v).normalized()
             limit = 14
             self.friction = 10 if direction.length() < 0.1 else .5
-
             self.input_strength = min(Vec3(h, 0, v).length(), 1)
+
             if self.input_strength:
                 self.direction_helper.position = direction * 3
                 self.helper.look_at_2d(self.direction_helper.world_position, 'y')
-
                 vel = self.velocity
                 xz_vel = (self.helper.forward * 100 * self.input_strength).xz
                 speed = xz_vel.length()
@@ -90,5 +90,4 @@ if __name__ == '__main__':
     physics_handler.gravity = 50
     physics_handler.show_debug = True
     print('----------------------------', physics_handler.show_debug)
-
     app.run()

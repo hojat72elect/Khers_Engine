@@ -5,8 +5,8 @@ if __name__ == "__main__":
     app = Ursina()
     window.color = color.black
     shader = shaders.colored_lights_shader
-
     Entity(model="cube", shader=shaders.colored_lights_shader)
+
     e = Entity(model="cube", x=1.2, shader=shaders.colored_lights_shader)
     e.set_shader_input("top_color", hsv(0, 1, 1))
     e.set_shader_input("bottom_color", hsv(0, 0, 0))

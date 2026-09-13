@@ -3,7 +3,6 @@ from ursina.shaders.normals_shader import normals_shader
 import random
 
 if __name__ == '__main__':
-
     app = Ursina()
     '''Terrain using an RGB texture as input'''
     terrain_from_heightmap_texture = Entity(model=Terrain('heightmap_1', skip=8), scale=(40,5,20), texture='heightmap_1')

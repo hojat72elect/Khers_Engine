@@ -1,7 +1,6 @@
 from ursina import EditorCamera, Ursina, camera, duplicate, held_keys, raycast, time, Entity, Vec3, color, boxcast, scene
 
 if __name__ == '__main__':
-
     app = Ursina()
     '''
     Casts a ray from *origin*, in *direction*, with length *distance* and returns
@@ -14,7 +13,6 @@ if __name__ == '__main__':
     Example where we only move if a wall is not hit:
     '''
     class Player(Entity):
-
         def update(self):
             self.direction = Vec3(
                 self.forward * (held_keys['w'] - held_keys['s'])
@@ -31,11 +29,9 @@ if __name__ == '__main__':
     wall_right = duplicate(wall_left, x=4)
     camera.y = 2
     app.run()
-
     breakpoint()
     d = Entity(parent=scene, position=(0,0,2), model='cube', color=color.orange, collider='box', scale=2)
     e = Entity(model='cube', color=color.lime)
-
     camera.position = (0, 15, -15)
     camera.look_at(e)
     speed = .01
@@ -47,10 +43,8 @@ if __name__ == '__main__':
         e.position += e.left * held_keys['a'] * speed
         e.position += e.back * held_keys['s'] * speed
         e.position += e.right * held_keys['d'] * speed
-
         e.rotation_y -= held_keys['q'] * rotation_speed
         e.rotation_y += held_keys['e'] * rotation_speed
-
         ray = boxcast(e.world_position, e.right, 3, debug=True)
         intersection_marker.world_position = ray.world_point
         intersection_marker.visible = ray.hit

@@ -7,7 +7,6 @@ if __name__ == "__main__":
     app = Ursina(vsync=1)
     camera.clip_plane_near = 1
     Entity(model="plane", scale=10, texture="grass")
-
     vertices = [Vec3(*(random.random() * 10 for _ in range(3))) for i in range(100)]
     e = Entity(
         model=Mesh(

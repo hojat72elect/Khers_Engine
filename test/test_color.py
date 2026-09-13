@@ -1,6 +1,5 @@
 from ursina import color, hsv
 
-
 class TestColor:
     def test_general_behavior(self):
         assert hsv(30, 1, 1) == color.orange

@@ -1,21 +1,10 @@
 import random
-from ursina import (
-    Cone,
-    EditorCamera,
-    Entity,
-    Quat,
-    Ursina,
-    Vec3,
-    application,
-    color,
-    window,
-)
+from ursina import Cone, EditorCamera, Entity, Quat, Ursina, Vec3, application, color, window
 from ursina.shaders.instancing_shader import instancing_shader
 
 if __name__ == "__main__":
     window.vsync = False
     app = Ursina()
-
     instances = []
     Entity(model="plane", texture="grass", scale=128)
     application.asset_folder = application.asset_folder.parent.parent

@@ -40,7 +40,6 @@ if __name__ == '__main__':
 
     continious_line = Entity(position=(4,0), model=Mesh(
         vertices=(Vec3(0,0,0), Vec3(.6,.3,0), Vec3(1,1,0), Vec3(.6,1.7,0), Vec3(0,2,0)),
-        # triangles= ((0,1), (3,4,5)),
         mode='line',
         thickness=4,
         ), color=color.cyan)
@@ -134,14 +133,11 @@ if __name__ == '__main__':
 
     copy_test = Entity(position=(12,0), model=copy(quad.model))
     Text(parent=copy_test, text='copy_test', y=1, scale=5, origin=(0,-.5))
-
     deepcopy_test = Entity(position=(12,-2), model=deepcopy(quad.model))
     Text(parent=deepcopy_test, text='deepcopy_test', y=1, scale=5, origin=(0,-.5))
-
     clear_test = Entity(position=(12,-4), model=deepcopy(quad.model))
     clear_test.model.clear()
     Text(parent=clear_test, text='.clear() test', y=1, scale=5, origin=(0,-.5))
-
     window.color = color.black
     EditorCamera()
     app.run()

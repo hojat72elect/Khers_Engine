@@ -6,7 +6,6 @@ if __name__ == "__main__":
     app = Ursina()
     window.color = color.black
     shader = matcap_shader
-
     a = WhiteCube(shader=shader, texture="shore")
     b = WhiteSphere(shader=shader, rotation_y=180, x=3, texture="shore")
     GrayPlane(scale=10, y=-2, texture="shore")

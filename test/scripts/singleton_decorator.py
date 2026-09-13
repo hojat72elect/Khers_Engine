@@ -1,4 +1,5 @@
 from ursina.scripts.singleton_decorator import singleton
+from ursina.ursinastuff import _test
 
 if __name__ == '__main__':
 
@@ -13,5 +14,4 @@ if __name__ == '__main__':
 
     app = DecoratedClass()
     app_2 = DecoratedClass()
-    from ursina.ursinastuff import _test
     _test(app == app_2)

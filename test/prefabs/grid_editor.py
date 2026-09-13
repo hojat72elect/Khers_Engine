@@ -3,7 +3,6 @@ from ursina import Ursina, Texture, scene, load_texture, camera, EditorCamera
 from ursina.prefabs.grid_editor import PixelEditor
 
 if __name__ == '__main__':
-
     '''
     pixel editor example, it's basically a drawing tool.
     can be useful for level editors and stuff like that.

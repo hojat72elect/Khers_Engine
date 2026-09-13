@@ -4,7 +4,6 @@ import random
 
 if __name__ == '__main__':
     app = Ursina()
-
     player = Entity(model="wireframe_cube", color=color.magenta, origin_y=-0.5, alpha=1)
     run_particles = ParticleSystem(
         parent=player,
@@ -22,7 +21,6 @@ if __name__ == '__main__':
     )
     EditorCamera()
     window.color = color.black
-
     S = 5
     spawn_points = [Vec3(*[random.uniform(-S,S) for _ in range(3)]) for i in range(1)]
     print(spawn_points)

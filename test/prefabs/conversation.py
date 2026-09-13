@@ -3,7 +3,6 @@ from ursina.prefabs.conversation import Conversation
 
 if __name__ == '__main__':
     app = Ursina()
-
     variables = Empty(evil=0, chaos=0, bar_mission_solved=False)
     conversation = Conversation(variables_object=variables)
     convo = dedent('''

@@ -1,5 +1,6 @@
 from ursina import Ursina, Entity, color, Text, window, EditorCamera, Vec3, Vec2
 from ursina.shaders.lit_with_shadows_shader import lit_with_shadows_shader
+from ursina.lights import DirectionalLight
 
 if __name__ == '__main__':
     app = Ursina()
@@ -19,7 +20,6 @@ if __name__ == '__main__':
             combine_parent.shader = lit_with_shadows_shader
             print('combined in:', perf_counter() - t)
 
-    from ursina.lights import DirectionalLight
     sun = DirectionalLight()
     sun.look_at(Vec3(-1,-1,-1))
     EditorCamera()

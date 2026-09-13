@@ -7,10 +7,9 @@ if __name__ == '__main__':
     mouse.visible = False
     player = Entity(z=1)
     player.graphics = Entity(parent=player, scale=.1, model='circle')
-
     pivot = Entity()
-
     trail_renderers = []
+
     for i in range(1):
         tr = TrailRenderer(size=[1,1], segments=8, min_spacing=.2, fade_speed=0, parent=player, color_gradient=[color.magenta, color.cyan.tint(-.5), color.clear])
         trail_renderers.append(tr)
@@ -18,12 +17,10 @@ if __name__ == '__main__':
     def update():
         player.position = lerp(player.position, mouse.position*10, time.dt*4)
 
-
     def input(key):
         if key == 'escape':
             for e in trail_renderers:
                 e.enabled = not e.enabled
-
         if key == 'space':
             destroy(pivot)
 
