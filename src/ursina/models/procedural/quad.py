@@ -1,5 +1,8 @@
 from copy import deepcopy
-from ursina import Mesh, Vec3, Vec2, lerp
+from ursina.mesh import Mesh
+from ursina.vec3 import Vec3
+from ursina.vec2 import Vec2
+from ursina.ursinamath import lerp
 from ursina.ursinamath import sum
 
 class Quad(Mesh):
