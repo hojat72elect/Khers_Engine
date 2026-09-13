@@ -1,40 +1,5 @@
 from ursina import *
 
-# def play_synth_adsr(
-#     wave = 'sine',
-#     max_volume = .75,
-#     # start_volume = 0,
-#
-#     attack = .05,
-#     decay = .01,             # time to fade down to sustain volume
-#     sustain_volume = .5,     # volume of middle part relative to max volume
-#     sustain_length = .2,     # duration of middle part
-#     release = .2,            # fade out duration
-#     # release_volume = None,   # default is the same as sustain
-#     # end_volume = 0,
-#
-#     start_pitch = 0,
-#     end_pitch = 2,
-#     pitch_curve = curve.linear,
-#     # volume_multiplier = 1
-#
-#         ):
-#
-#     total_duration = attack + decay + sustain_length + release
-#     # if release_volume is None:
-#     #     release_volume = sustain_volume
-#
-#     a = Audio(wave, loop=True, pitch=pow(1 / 1.05946309436, -pitch), volume=start_volume)
-#     a.animate('volume', max_volume, duration=attack, curve=curve.linear)
-#     a.animate('volume', sustain_volume*max_volume, duration=decay, delay=attack, curve=curve.linear)
-#     a.animate('volume', sustain_volume*max_volume, duration=sustain_length, delay=attack+decay, curve=curve.linear)
-#     a.animate('volume', 0, duration=release, delay=attack+decay+sustain_length, curve=curve.linear)
-#
-#     a.animate('pitch', pow(1 / 1.05946309436, -end_pitch), duration=total_duration, curve=pitch_curve)
-#     a.animations.append(invoke(a.stop, delay=total_duration))
-#     return a
-
-
 def ursfx(volume_curve, volume=.75, wave='sine', pitch=0, pitch_change=0, speed=1, pitch_curve=curve.linear, ignore_paused=False):  # play a retro style sound effect
     a = Audio(wave, loop=True, pitch=pow(1 / 1.05946309436, -pitch), volume=volume_curve[0][1] * volume, ignore_paused=ignore_paused)
 
@@ -46,7 +11,6 @@ def ursfx(volume_curve, volume=.75, wave='sine', pitch=0, pitch_change=0, speed=
 
     invoke(a.stop, delay=volume_curve[4][0] / speed, unscaled=True, ignore_paused=ignore_paused)
     return a
-
 
 class UrsfxGUI(Entity):
     def __init__(self, ignore_paused=True, play_after_change=True, **kwargs):
@@ -274,7 +238,6 @@ class UrsfxGUI(Entity):
         if self.play_after_change:
             self.play()
 
-
 gui = None
 def open_gui():
     global gui
@@ -286,11 +249,3 @@ def open_gui():
                 gui.enabled = not gui.enabled
         Entity(input=toggle_gui_input)
     gui.enabled = True
-
-
-if __name__ == '__main__':
-    app = Ursina()
-    sfx_editor = UrsfxGUI()
-    # application.paused = True
-    Sprite('shore', z=10, ppu=64, color=color.gray)
-    app.run()

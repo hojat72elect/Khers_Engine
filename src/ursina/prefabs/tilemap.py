@@ -207,19 +207,3 @@ class Tilemap(GridEditor):
         if self.tilemap.path:
             self.tilemap.save(self.tilemap.path)
             print('saving:', self.tilemap.path)
-
-
-
-if __name__ == '__main__':
-    app = Ursina()
-    EditorCamera(rotation_speed=0)
-    tilemap = Tilemap('tilemap_test_level', tileset='test_tileset', tileset_size=Vec2(8,4), parent=scene)
-    tilemap.canvas.texture = 'tilemap_test_level'
-    # tilemap = Tilemap('brick', tileset='tileset_cave', tileset_size=(8,4), parent=scene)
-    camera.orthographic = True
-    camera.position = tilemap.tilemap.size / 2
-    camera.fov = tilemap.tilemap.height
-
-    Text('press tab to toggle edit mode', position=window.top_left)
-
-    app.run()

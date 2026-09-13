@@ -1,6 +1,5 @@
 from ursina import *
 
-
 class Tooltip(Text):
 
     def __init__(self, text='', wordwrap=40, background_color=color.black66, background_model_class=Quad, background_radius=.1, padding=.05, **kwargs):
@@ -23,23 +22,3 @@ class Tooltip(Text):
         self.x = min(self.x, (.5 * window.aspect_ratio) - self._width - self.size - .005)
         self.y = min(self.y, .5 - (self.height + self.size + .005))
         self.z = -99
-
-if __name__ == '__main__':
-    app = Ursina()
-
-    tooltip_test = Tooltip(
-    '<scale:1.5><pink>' + 'Rainstorm' + '<scale:1> \n \n' +
-'''Summon a <blue>rain
-storm <default>to deal 5 <blue>water
-damage <default>to <red>everyone, <default>including <orange>yourself. <default>
-Lasts for 4 rounds.'''.replace('\n', ' '),
-        background_color=color.white,
-        background_model_class=NineSlice,
-        background_radius = .25,
-        padding=Vec2(.1),
-        font=Text.default_monospace_font,
-        wordwrap=50,
-)
-    tooltip_test.background_entity.texture = 'nineslice_rainbow'
-    tooltip_test.enabled = True
-    app.run()

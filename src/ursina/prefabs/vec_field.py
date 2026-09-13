@@ -5,7 +5,6 @@ from ursina.prefabs.input_field import ContentTypes, InputField
 from ursina.text import Text
 from ursina.vec2 import Vec2
 
-
 class VecField(Button):
     def __init__(self, default_value=Vec2.zero, character_limit=8, content_type=ContentTypes.math, **kwargs):
         kwargs = dict(parent=camera.ui, scale=(.5,.05), character_limit=character_limit, text='', text_origin=(-.5,0), color=color.black90) | kwargs
@@ -113,25 +112,3 @@ class VecField(Button):
 
             for i, field in enumerate(self.fields): # set text temporarily while dragging
                 field.text_field.text_entity.text = str(self._value[i])[:self.character_limit]
-
-
-
-if __name__ == '__main__':
-    from ursina import *
-    app = Ursina()
-    # Entity(parent=camera.ui, model='quad', scale=.05, z=-10)
-    # field = VecField(text=' field', default_value=Vec3(0,0,0))
-    def on_value_changed():
-        print('set value to:', field.value)
-
-    field = VecField(text=' int list', default_value=[10,1])
-    field = VecField(text=' float list', default_value=[1.0,-2.0], y=-.1)
-    field = VecField(text=' Vec4', default_value=Vec4(1,-2,0,0), y=-.2)
-    field = VecField(text=' float', default_value=1.0, y=-.3)
-    field = VecField(text=' int', default_value=0, y=-.4)
-    # field.on_value_changed = on_value_changed
-
-    # Entity(color=color.azure, scale=(.5,.05), model='quad', parent=camera.ui)
-    # InputField(y=-.1)
-    Sprite('shore', color=color.dark_gray)
-    app.run()
