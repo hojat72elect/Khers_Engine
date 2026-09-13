@@ -30,13 +30,3 @@ class Circle(Mesh):
 
         destroy(origin)
         super().__init__(vertices=self.vertices, mode=mode, **kwargs)
-
-
-if __name__ == '__main__':
-    app = Ursina()
-    e = Entity(model=Circle(8, mode='line', thickness=10), color=color.hsv(60,1,1,.3))
-    e = Entity(model=Circle(8, mode='line', thickness=10), color=color.hsv(60,1,1,.3), x=1)
-    print(e.model)
-    origin = Entity(model='quad', color=color.orange, scale=(.05, .05))
-    ed = EditorCamera(rotation_speed = 200, panning_speed=200)
-    app.run()

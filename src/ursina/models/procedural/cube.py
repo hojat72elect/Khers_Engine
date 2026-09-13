@@ -1,7 +1,6 @@
 from ursina import *
 from ursina.models.procedural.plane import Plane
 
-
 def Cube(bevel=0, subdivisions=(1,1,1), mode='triangle', **kwargs):
 
     if subdivisions == (1,1,1):
@@ -35,13 +34,3 @@ def Cube(bevel=0, subdivisions=(1,1,1), mode='triangle', **kwargs):
         destroy(e)
 
     return cube
-
-
-if __name__ == '__main__':
-    app = Ursina()
-
-    e = Entity(model=Cube(subdivisions=(3,3,3), mode='line'), color=color.red)
-    e = Entity(model=Cube(subdivisions=(1,1,1), mode='line'), color=color.green, x=2)
-
-    _ed = EditorCamera(rotation_speed = 200, panning_speed=200)
-    app.run()

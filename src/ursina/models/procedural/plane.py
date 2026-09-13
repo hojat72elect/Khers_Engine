@@ -1,6 +1,5 @@
 from ursina import *
 
-
 class Plane(Mesh):
     def __init__(self, subdivisions=(1,1), mode='triangle', **kwargs):
 
@@ -21,15 +20,3 @@ class Plane(Mesh):
                 i += 1
 
         super().__init__(vertices=self.vertices, triangles=self.triangles, uvs=self.uvs, mode=mode, **kwargs)
-
-
-
-if __name__ == '__main__':
-    app = Ursina()
-
-    front =  Entity(model=Plane(subdivisions=(3,6)), texture='brick', rotation_x=-90)
-    wireframe_renderer =  duplicate(front, wireframe=True, color=color.azure, always_on_top=True)
-
-    _ed = EditorCamera()
-    Entity(model='cube', color=color.green, scale=.05)
-    app.run()

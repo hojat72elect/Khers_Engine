@@ -1,7 +1,6 @@
 from ursina import Mesh, Vec3, rotate_around_point_2d
 from copy import deepcopy
 
-
 class Cone(Mesh):
     _cache = {}
     def __new__(cls, resolution=4, radius=.5, height=1, add_bottom=True, mode='triangle'):
@@ -38,32 +37,3 @@ class Cone(Mesh):
 
 
         super().__init__(vertices=verts, uvs=[e.xy for e in verts], mode=mode, **kwargs)
-
-
-if __name__ == '__main__':
-    from ursina import Ursina, Entity, color, EditorCamera, destroy, scene
-    app = Ursina()
-    # e = Entity(model=Cone(3), texture='brick')
-    graphics = Entity(model=Cone(8, radius=.4, height=2), origin_y=-.5, color=color.hex('#121024'))
-
-    # # rotate model
-    # for i, v in enumerate(e.model.vertices):
-    #     x, y = rotate_around_point_2d((v.x, v.y), (0,0), 90)
-    #
-    #     e.model.vertices[i] = Vec3(x, y, v.z)
-    #
-    # e.model.generate()
-    Entity(model='wireframe_cube')
-    origin = Entity(model='quad', color=color.orange, scale=(.05, .05))
-    ed = EditorCamera()
-    def input(key):
-        global graphics
-        if key == 'd':
-            destroy(graphics)
-            graphics.model = None
-        if key == 'space':
-            graphics = Entity(model=Cone(8, radius=.4, height=2), origin_y=-.5, color=color.hex('#121024'))
-
-
-    app.run()
-

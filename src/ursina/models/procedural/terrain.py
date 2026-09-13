@@ -1,6 +1,5 @@
 from ursina import *
 
-
 def texture_to_height_values(heightmap:Texture, skip=1):
     from numpy import asarray, flip, swapaxes
     from PIL import Image
@@ -23,8 +22,6 @@ def texture_to_height_values(heightmap:Texture, skip=1):
     height_values = flip(height_values, axis=0)
     height_values = swapaxes(height_values, 0, 1)
     return height_values
-
-
 
 class Terrain(Mesh):
     def __init__(self, heightmap='', height_values=None, gradient=None, skip=1, **kwargs):
@@ -86,42 +83,3 @@ class Terrain(Mesh):
 
 
         super().generate()
-
-
-
-if __name__ == '__main__':
-    from ursina.shaders.normals_shader import normals_shader
-    app = Ursina()
-    '''Terrain using an RGB texture as input'''
-    terrain_from_heightmap_texture = Entity(model=Terrain('heightmap_1', skip=8), scale=(40,5,20), texture='heightmap_1')
-
-    '''
-    I'm just getting the height values from the previous terrain as an example, but you can provide your own.
-    It should be a list of lists, where each value is between 0 and 255.
-    '''
-    hv = terrain_from_heightmap_texture.model.height_values.tolist()
-    terrain_from_list = Entity(model=Terrain(height_values=hv), scale=(40,40,40), texture='heightmap_1', x=40, shader=normals_shader)
-    terrain_bounds = Entity(model='wireframe_cube', origin_y=-.5, scale=(40,40,40), color=color.lime)
-    Entity(model='cube', shader=normals_shader, y=8, scale=4)
-    def input(key):
-        if key == 'space':  # randomize the terrain
-            terrain_from_list.model.height_values = [[random.uniform(0,255) for a in column] for column in terrain_from_list.model.height_values]
-            terrain_from_list.model.generate()
-
-    EditorCamera(rotation_x=90)
-    camera.orthographic = True
-    Sky()
-    player = Entity(model='sphere', color=color.azure, scale=.2, origin_y=-.5)
-
-    def update():
-        direction = Vec3(held_keys['d'] - held_keys['a'], 0, held_keys['w'] - held_keys['s']).normalized()
-        player.position += direction * time.dt * 8
-        y = terraincast(player.world_position, terrain_from_list, terrain_from_list.model.height_values)
-        if y is not None:
-            player.y = y
-
-
-
-
-
-    app.run()
