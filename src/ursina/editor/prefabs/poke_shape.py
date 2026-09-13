@@ -59,10 +59,8 @@ class PokeShape(Entity):
         self.generate()
         self.ready = True
 
-
     def draw_inspector(self):
         return {'edit_mode': bool, 'wall_height': float, 'subdivisions':int, 'smoothing_distance':float}
-
 
     def generate(self):
         # print('--------------', self.texture_scale)
@@ -138,7 +136,6 @@ class PokeShape(Entity):
                 # self.add_new_point_renderer.model.vertices.append(self._point_gizmos[i].world_position)
             self.add_new_point_renderer.model.generate()
 
-
     def __deepcopy__(self, memo):
         changes = self.get_changes(__class__)
 
@@ -147,7 +144,6 @@ class PokeShape(Entity):
         # print('---------------', _copy.texture_scale)
         return _copy
 
-
     def points_getter(self):
         return [e.position for e in self._point_gizmos]
 
@@ -155,7 +151,6 @@ class PokeShape(Entity):
         [destroy(e) for e in self._point_gizmos]
         self._point_gizmos = LoopingList([Entity(parent=self, original_parent=self, position=e, selectable=False, name='PokeShape_point', is_gizmo=True, enabled=False) for e in value])
         LEVEL_EDITOR.entities.extend(self._point_gizmos)
-
 
     def edit_mode_getter(self):
         return getattr(self, '_edit_mode', False)
@@ -187,20 +182,11 @@ class PokeShape(Entity):
             self.collider = 'mesh'
         LEVEL_EDITOR.render_selection()
 
-    # @property
-    # def wall_height(self):
-    #     return self._wall_height
-    # @wall_height.setter
-    # def wall_height(self, value):
-    #     self._wall_height = value
-    #     self.generate()
-
     def update(self):
         if self.edit_mode:
             if mouse.left or held_keys['d']:
                 LEVEL_EDITOR.render_selection()
                 self.generate()
-
 
     def input(self, key):
         combined_key = input_handler.get_combined_key(key)
@@ -251,14 +237,3 @@ class PokeShape(Entity):
     #         return
     #
     #     super().__setattr__(name, value)
-
-
-if __name__ == '__main__':
-    app = Ursina(borderless=False)
-
-    level_editor = LevelEditor()
-    level_editor.goto_scene(0,0)
-    # cube = WhiteCube(selectable=True)
-    # level_editor.entities.append(PokeShape())
-    level_editor.add_entity(PokeShape(points=[Vec3(-6.89023, 0, -5.93539), Vec3(-5.63213, 0, -6.7236), Vec3(-3.06749, 0, -7.45143), Vec3(0.883525, 0, -6.64059), Vec3(6.21342, 0.000496293, -5.19114), Vec3(11.1816, 0.000748294, -1.60608), Vec3(13.0414, 0.000874309, 0.223267), Vec3(12.6511, 0.0010004, 2.84322), Vec3(9.07899, 0.000750429, 5.98706), Vec3(5.59802, 0.000500321, 5.69713), Vec3(3.45835, 0.000375334, 7.03647), Vec3(2.95372, 0.000250343, 9.16615), Vec3(4.31376, 0.00012526, 9.91672), Vec3(5.6031, 0, 12.5358), Vec3(4.99113, 0.00049994, 13.8873), Vec3(3.37031, 0.000749853, 15.6645), Vec3(-0.513243, 0.000874871, 16.5425), Vec3(-2.08884, 0.000999762, 15.3409), Vec3(-3.86994, 0.000500111, 16.2354), Vec3(-5.61374, 0.000375315, 18.7785), Vec3(-5.64462, 0.000250529, 22.5197), Vec3(-18.9718, 0.000125618, 15.9756), Vec3(-14.6812, 0, 10.564), Vec3(-14.2555, 0, 7.90265), Vec3(-13.5866, 0, 4.08694), Vec3(-10.7991, 0, 1.16432), Vec3(-9.05981, 0, 1.75484), Vec3(-7.52061, 0, 0.920164), Vec3(-6.02536, 0, -1.79266), Vec3(-7.2474, 0, -3.23652)]))
-    app.run()

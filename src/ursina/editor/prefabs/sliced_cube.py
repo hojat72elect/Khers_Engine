@@ -66,16 +66,3 @@ class SlicedCube(Entity):
         super().__setattr__(name, value)
         if self.model and name in ('scale', 'scale_x', 'scale_y', 'scale_z', 'transform', 'world_transform'):
             self.generate()
-
-if __name__ == '__main__':
-    app = Ursina(borderless=False)
-    level_editor = LevelEditor()
-    level_editor.goto_scene(0,0)
-    sliced_cube = SlicedCube(selectable=True, texture='sliceable_cube_template', shader='unlit_shader', scale_multiplier=1.5)
-
-    def input(key):
-        if key == 'space':
-            sliced_cube.generate()
-
-    level_editor.add_entity(sliced_cube)
-    app.run()
