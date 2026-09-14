@@ -1,5 +1,5 @@
 from panda3d.core import NodePath, Fog
-from ursina import application, destroy, color
+from ursina import application, color
 
 class Scene(NodePath):
     def __init__(self):
@@ -17,6 +17,7 @@ class Scene(NodePath):
         self.reparent_to(render)
 
     def clear(self):
+        from ursina import destroy
         to_destroy = [e for e in self.entities if not e.eternal]
         to_keep = [e for e in self.entities if e.eternal]
         for d in to_destroy:

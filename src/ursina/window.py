@@ -6,10 +6,8 @@ from ursina.string_utilities import print_info, print_warning
 from ursina.vec2 import Vec2
 from ursina.shaders.text_with_shadows_shader import text_with_shadows_shader
 import time
-from ursina import Button, ButtonList, Entity, Func, Text, Tooltip, camera
 import webbrowser
-from ursina import EditorCamera, Text, camera, color, window, application, color, input_handler
-from Xlib import Xatom, display
+from ursina import application
 
 class Window(WindowProperties):
     def _ready(self, title, icon, borderless, fullscreen, size, forced_aspect_ratio, position, vsync, editor_ui_enabled, window_type, render_mode):
@@ -69,6 +67,7 @@ class Window(WindowProperties):
         self.center = Vec2(0, 0)
 
     def apply_settings(self):
+        from ursina import color
         self.forced_aspect_ratio = None # example: window.forced_aspect_ratio = 16/9
         self.always_on_top = False
         self.vsync = True   # can't be set during play
@@ -112,6 +111,7 @@ class Window(WindowProperties):
         self.position = Vec2(x,y)
 
     def make_editor_gui(self):     # called by main after setting up camera and application.development_mode
+        from ursina import Entity, camera, input_handler, Button, Text, Tooltip, ButtonList, Func, color
         self.editor_ui = Entity(parent=camera.ui, eternal=True, enabled=self.editor_ui_enabled)
 
         def window_input(key):
@@ -257,6 +257,7 @@ class Window(WindowProperties):
         self.cog_button.on_click = _toggle_cog_menu
 
     def update_aspect_ratio(self):
+        from ursina import camera
         if hasattr(self, 'prev_size'):
             self.prev_aspect_ratio = self.prev_size[0] / self.prev_size[1]
         else:
@@ -370,6 +371,7 @@ class Window(WindowProperties):
         self.render_mode = self.render_modes[i]
 
     def toggle_editor_camera(self):
+        from ursina import EditorCamera, Text, camera, color
         if not application.development_mode:
             print('window.toggle_editor_camera() is only available in development_mode')
             return
@@ -454,6 +456,7 @@ class Window(WindowProperties):
         if value:
             self.setZOrder(WindowProperties.Z_top)
             if sys.platform == "linux":
+                from Xlib import Xatom, display
                 d = display.Display()
                 window_id = base.win.getWindowHandle().getIntHandle()
                 window = d.create_resource_object('window', window_id)  # Get the window from X11

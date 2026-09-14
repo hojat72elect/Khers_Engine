@@ -10,7 +10,6 @@ from ursina.scripts.property_generator import generate_properties_for_class
 from ursina.shader import Shader
 from ursina.string_utilities import print_info
 from ursina.texture import Texture
-from ursina.window import instance as window
 
 @generate_properties_for_class()
 class Camera(Entity):
@@ -39,6 +38,7 @@ class Camera(Entity):
 
 
     def _set_up(self):
+        from ursina import window
         self.display_region = application.base.camNode.get_display_region(0)
         win = self.display_region.get_window()
 
@@ -124,6 +124,7 @@ class Camera(Entity):
     def aspect_ratio_getter(self):      # get current aspect ratio. can not be set.
         if hasattr(self, 'perspective_lens'):
             return self.perspective_lens.get_aspect_ratio()
+        from ursina import window
         return window.aspect_ratio
 
 

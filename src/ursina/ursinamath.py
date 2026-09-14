@@ -5,7 +5,6 @@ from ursina.vec2 import Vec2
 from ursina.vec3 import Vec3
 from ursina import color
 from ursina.color import Color
-from ursina import camera, Entity, destroy
 
 _sum = sum
 
@@ -115,6 +114,7 @@ def rotate_around_point_2d(point, origin, deg):
     return origin[0] + (dx * cos_angle - dy * sin_angle), origin[1] + (dx * sin_angle + dy * cos_angle)
 
 def world_position_to_screen_position(point):  # get screen position(ui space) from world space.
+    from ursina import Entity, destroy
     _temp_entity = Entity(position=point, add_to_scene_entities=False)
     result = _temp_entity.screen_position
     destroy(_temp_entity)
