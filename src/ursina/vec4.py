@@ -1,7 +1,6 @@
 from panda3d.core import Vec4 as PandaVec4
 
 class Vec4(PandaVec4):
-
     def __round__(self, decimals=4):
         return Vec4(*(round(e, decimals) for e in self))
 
@@ -28,7 +27,6 @@ class Vec4(PandaVec4):
 
         if len(value) == 3:
             return Vec4(self[0]+value[0], self[1]+value[1], self[2]+value[2], self[3])
-
         elif len(value) == 2:
             return Vec4(self[0]+value[0], self[1]+value[1], self[2], self[3])
 

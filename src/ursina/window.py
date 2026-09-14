@@ -1,31 +1,25 @@
 import sys
 from panda3d.core import WindowProperties, loadPrcFileData
 from screeninfo import get_monitors
-from ursina import application, color, input_handler
 from ursina.scene import instance as scene  # for toggling collider visibility
 from ursina.string_utilities import print_info, print_warning
 from ursina.vec2 import Vec2
 from ursina.shaders.text_with_shadows_shader import text_with_shadows_shader
+import time
+from ursina import Button, ButtonList, Entity, Func, Text, Tooltip, camera
+import webbrowser
+from ursina import EditorCamera, Text, camera, color, window, application, color, input_handler
+from Xlib import Xatom, display
 
 class Window(WindowProperties):
-
     def _ready(self, title, icon, borderless, fullscreen, size, forced_aspect_ratio, position, vsync, editor_ui_enabled, window_type, render_mode):
         loadPrcFileData('', f'window-title {title}')
         loadPrcFileData('', f'undecorated {borderless}')
         loadPrcFileData('', f'sync-video {vsync}')
         loadPrcFileData('', 'coordinate-system y-up-left')
         loadPrcFileData('', 'textures-auto-power-2 #t')
-        # loadPrcFileData('', 'framebuffer-alpha #t')
-
         loadPrcFileData('', 'notify-level-util error')
         loadPrcFileData('', 'load-file-type p3assimp')
-
-        # loadPrcFileData('', 'allow-portal-cull #t')
-        # loadPrcFileData("", "framebuffer-multisample 1")
-        # loadPrcFileData('', 'multisamples 2')
-        # loadPrcFileData('', 'textures-power-2 none')
-        # loadPrcFileData('', 'threading-model Cull/Draw')
-        # fallback to one of these if opengl is not supported
         loadPrcFileData('', 'aux-display pandadx9')
         loadPrcFileData('', 'aux-display pandadx8')
         loadPrcFileData('', 'aux-display tinydisplay')
@@ -33,7 +27,6 @@ class Window(WindowProperties):
 
         self.title = title
         self.icon = icon
-
         self.monitors = []
         self.main_monitor = None
         self.monitor_index = 0
@@ -71,30 +64,15 @@ class Window(WindowProperties):
         self.windowed_position = None   # gets set when entering fullscreen so position will be correct when going back to windowed mode
         self.show_ursina_splash = False
         self.editor_ui_enabled = editor_ui_enabled
-
         self.top = Vec2(0, .5)
         self.bottom = Vec2(0, -.5)
         self.center = Vec2(0, 0)
 
-
     def apply_settings(self):
         self.forced_aspect_ratio = None # example: window.forced_aspect_ratio = 16/9
         self.always_on_top = False
-
         self.vsync = True   # can't be set during play
-        # self.borderless = borderless
-
-        # if size:
-        #     self.windowed_size = size
-        # self.size = self.windowed_size
-
-        # if fullscreen:
-        #     self.fullscreen = fullscreen
-        # self._fullscreen = not application.development_mode
         self.center_on_screen()
-
-
-
         self.color = color.dark_gray
         self.render_modes = ('default', 'wireframe', 'colliders', 'normals')
         self.render_mode = 'default'
@@ -102,22 +80,26 @@ class Window(WindowProperties):
         if application.window_type != 'none':
             base.accept('aspectRatioChanged', self.update_aspect_ratio)
 
-
     @property
     def left(self):
         return Vec2(-self.aspect_ratio/2, 0)
+
     @property
     def right(self):
         return Vec2(self.aspect_ratio/2, 0)
+
     @property
     def top_left(self):
         return Vec2(-self.aspect_ratio/2, .5)
+
     @property
     def top_right(self):
         return Vec2(self.aspect_ratio/2, .5)
+
     @property
     def bottom_left(self):
         return Vec2(-self.aspect_ratio/2, -.5)
+
     @property
     def bottom_right(self):
         return Vec2(self.aspect_ratio/2, -.5)
@@ -129,22 +111,15 @@ class Window(WindowProperties):
         y = self.main_monitor.y + ((self.main_monitor.height - self.size[1]) / 2)
         self.position = Vec2(x,y)
 
-
     def make_editor_gui(self):     # called by main after setting up camera and application.development_mode
-        import time
-
-        from ursina import Button, ButtonList, Entity, Func, Text, Tooltip, camera
-
         self.editor_ui = Entity(parent=camera.ui, eternal=True, enabled=self.editor_ui_enabled)
 
         def window_input(key):
             combined_key = input_handler.get_combined_key(key)
             if combined_key == 'f12':
                 self.editor_ui.enabled = not self.editor_ui.enabled
-
             elif combined_key == 'f11':
                 self.fullscreen = not self.fullscreen
-
             elif combined_key == 'f10':
                 i = self.render_modes.index(self.render_mode) + 1
                 if i >= len(self.render_modes):
@@ -159,27 +134,52 @@ class Window(WindowProperties):
                 self.toggle_editor_camera()
 
         self.input_entity = Entity(name='window.input_entity', input=window_input, ignore_paused=True, eternal=True)
-
         self.exit_button = Button(parent=self.editor_ui, text='x', eternal=True, ignore_paused=True, origin=(.5, .5), enabled=self.borderless and application.development_mode, position=self.top_right, z=-999, scale=(.05, .025), color=color.red.tint(-.2), shortcuts=('control+shift+alt+q', 'alt+f4'), on_click=application.quit, name='exit_button')
 
         def _exit_button_input(key):
             if input_handler.get_combined_key(key) in self.exit_button.shortcuts:
                 self.exit_button.on_click()
+                
         self.exit_button.input = _exit_button_input
-
         text_with_shadows_shader.default_input['shadow_offset'] = Vec2(.01,-.01)
-        self.fps_counter = Text(parent=self.editor_ui, eternal=True, origin=(.5,.5), text='60', ignore=False, i=0, ignore_paused=True,
-            position=((.5*self.aspect_ratio)-.01, .47+(.02*(not self.exit_button.enabled)), -999), shader=text_with_shadows_shader)
+        self.fps_counter = Text(
+            parent=self.editor_ui,
+            eternal=True,
+            origin=(0.5, 0.5),
+            text="60",
+            ignore=False,
+            i=0,
+            ignore_paused=True,
+            position=(
+                (0.5 * self.aspect_ratio) - 0.01,
+                0.47 + (0.02 * (not self.exit_button.enabled)),
+                -999,
+            ),
+            shader=text_with_shadows_shader,
+        )
 
         def _fps_counter_update():
             if self.fps_counter.i > 60:
                 self.fps_counter.text = str(int(1//time.dt_unscaled))
                 self.fps_counter.i = 0
             self.fps_counter.i += 1
+            
         self.fps_counter.update = _fps_counter_update
-
-        self.entity_counter = Text(parent=self.editor_ui, enabled=application.development_mode, eternal=True, shader=text_with_shadows_shader, origin=(.5,.5), text='00', ignore=False, t=0,
-            position=((.5*self.aspect_ratio)-.01, .425+(.02*(not self.exit_button.enabled)), -999))
+        self.entity_counter = Text(
+            parent=self.editor_ui,
+            enabled=application.development_mode,
+            eternal=True,
+            shader=text_with_shadows_shader,
+            origin=(0.5, 0.5),
+            text="00",
+            ignore=False,
+            t=0,
+            position=(
+                (0.5 * self.aspect_ratio) - 0.01,
+                0.425 + (0.02 * (not self.exit_button.enabled)),
+                -999,
+            ),
+        )
         self.entity_counter.text_entity = Text(parent=self.entity_counter, text='entities:', origin=(.5,-.75), scale=.4, add_to_scene_entities=False, eternal=True, shader=text_with_shadows_shader)
 
         def _entity_counter_update():
@@ -187,10 +187,23 @@ class Window(WindowProperties):
                 self.entity_counter.text = str(len([e for e in scene.entities if e and not e.eternal]))
                 self.entity_counter.i = 0
             self.entity_counter.t += time.dt
+            
         self.entity_counter.update = _entity_counter_update
-
-        self.collider_counter = Text(parent=self.editor_ui, enabled=application.development_mode, eternal=True, origin=(.5,.5), text='00', ignore=False, t=.1,
-            position=((.5*self.aspect_ratio)-.01, .38+(.02*(not self.exit_button.enabled)), -999), shader=text_with_shadows_shader)
+        self.collider_counter = Text(
+            parent=self.editor_ui,
+            enabled=application.development_mode,
+            eternal=True,
+            origin=(0.5, 0.5),
+            text="00",
+            ignore=False,
+            t=0.1,
+            position=(
+                (0.5 * self.aspect_ratio) - 0.01,
+                0.38 + (0.02 * (not self.exit_button.enabled)),
+                -999,
+            ),
+            shader=text_with_shadows_shader,
+        )
         self.collider_counter.text_entity = Text(parent=self.collider_counter, text='colliders:', origin=(.5,-.75), scale=.4, add_to_scene_entities=False, eternal=True, shader=text_with_shadows_shader)
 
         def _collider_counter_update():
@@ -200,29 +213,39 @@ class Window(WindowProperties):
             self.collider_counter.t += time.dt
         self.collider_counter.update = _collider_counter_update
 
-
-
-        import webbrowser
-        self.cog_menu = ButtonList({
-            # 'Build' : Func(print, ' '),
-            'API Reference' : Func(webbrowser.open, 'https://www.ursinaengine.org/api_reference.html'),
-            # 'Asset Store' : Func(webbrowser.open, 'https://itch.io/tools/tag-ursina'),
-            'ursfx (Sound Effect Maker)' : lambda: exec('from ursina.prefabs import ursfx; ursfx.open_gui()'),
-            # 'Open Scene Editor' : Func(print, ' '),
-            'Change Render Mode <gray>[F10]<default>' : self.next_render_mode,
-            'Reset Render Mode <gray>[Shift+F10]<default>' : Func(setattr, self, 'render_mode', 'default'),
-            'Toggle Editor Camera <gray>[Control+F10]<default>' : self.toggle_editor_camera,
-            'Toggle Hotreloading <gray>[F9]<default>' : application.hot_reloader.toggle_hotreloading,
-            'Reload Shaders <gray>[F7]<default>' : application.hot_reloader.reload_shaders,
-            'Reload Models <gray>[F7]<default>' : application.hot_reloader.reload_models,
-            'Reload Textures <gray>[F6]<default>' : application.hot_reloader.reload_textures,
-            'Reload Code <gray>[F5]<default>' : application.hot_reloader.reload_code,
-        },
-            width=.4, scale=.75, x=(.5*self.aspect_ratio)-(.4*.75), enabled=False, eternal=True, name='cog_menu', z=-10, color=color.black90, ignore_paused=True,
+        self.cog_menu = ButtonList(
+            {
+                # 'Build' : Func(print, ' '),
+                "API Reference": Func(
+                    webbrowser.open, "https://www.ursinaengine.org/api_reference.html"
+                ),
+                # 'Asset Store' : Func(webbrowser.open, 'https://itch.io/tools/tag-ursina'),
+                "ursfx (Sound Effect Maker)": lambda: exec(
+                    "from ursina.prefabs import ursfx; ursfx.open_gui()"
+                ),
+                # 'Open Scene Editor' : Func(print, ' '),
+                "Change Render Mode <gray>[F10]<default>": self.next_render_mode,
+                "Reset Render Mode <gray>[Shift+F10]<default>": Func(
+                    setattr, self, "render_mode", "default"
+                ),
+                "Toggle Editor Camera <gray>[Control+F10]<default>": self.toggle_editor_camera,
+                "Toggle Hotreloading <gray>[F9]<default>": application.hot_reloader.toggle_hotreloading,
+                "Reload Shaders <gray>[F7]<default>": application.hot_reloader.reload_shaders,
+                "Reload Models <gray>[F7]<default>": application.hot_reloader.reload_models,
+                "Reload Textures <gray>[F6]<default>": application.hot_reloader.reload_textures,
+                "Reload Code <gray>[F5]<default>": application.hot_reloader.reload_code,
+            },
+            width=0.4,
+            scale=0.75,
+            x=(0.5 * self.aspect_ratio) - (0.4 * 0.75),
+            enabled=False,
+            eternal=True,
+            name="cog_menu",
+            z=-10,
+            color=color.black90,
+            ignore_paused=True,
         )
         self.cog_menu.on_click = self.cog_menu.disable
-        # print(self.cog_menu.scale_y)
-        # self.cog_menu.scale *= .75
         self.cog_menu.highlight.color = color.azure
         self.cog_button = Button(parent=self.editor_ui, eternal=True, model='quad', texture='cog', scale=.015, origin=(1,-1), position=self.bottom_right, ignore_paused=True, name='cog_button', enabled=application.development_mode)
         self.cog_menu.y = self.cog_button.y + (self.cog_menu.bg.scale_y * self.cog_menu.scale_y) + Text.size
@@ -232,8 +255,6 @@ class Window(WindowProperties):
         def _toggle_cog_menu():
             self.cog_menu.enabled = not self.cog_menu.enabled
         self.cog_button.on_click = _toggle_cog_menu
-        # print('-----------', time.time() - t) # 0.04
-
 
     def update_aspect_ratio(self):
         if hasattr(self, 'prev_size'):
@@ -242,13 +263,9 @@ class Window(WindowProperties):
             self.prev_aspect_ratio = self.aspect_ratio
 
         self.prev_size = self.size
-
-        from ursina import camera, window
         value = [int(e) for e in base.win.getSize()]
         camera.set_shader_input('window_size', value)
-
         print_info('changed aspect ratio:', round(self.prev_aspect_ratio, 3), '->', round(self.aspect_ratio, 3))
-
         camera.ui_lens.set_film_size(camera._ui_size * .5 * self.aspect_ratio, camera._ui_size * .5)
         for e in [e for e in scene.entities if e.parent == camera.ui] + self.editor_ui.children:
             if e in scene._entities_marked_for_removal:
@@ -259,7 +276,6 @@ class Window(WindowProperties):
             camera.orthographic_lens.set_film_size(camera.fov * window.aspect_ratio, camera.fov)
             base.cam.node().set_lens(camera.orthographic_lens)
 
-
     @property
     def position(self):
         if application.window_type == 'none':
@@ -267,7 +283,6 @@ class Window(WindowProperties):
 
         wp = base.win.getProperties()
         return Vec2(wp.getXOrigin(), wp.getYOrigin())
-
 
     @position.setter
     def position(self, value):
@@ -277,7 +292,6 @@ class Window(WindowProperties):
         self.setOrigin(int(value[0]), int(value[1]))
         if application.base and hasattr(application.base.win, 'request_properties'):
             application.base.win.request_properties(self)
-
 
     @property
     def size(self):
@@ -304,7 +318,6 @@ class Window(WindowProperties):
         except:
             pass # not initialized yet
 
-
     @property
     def aspect_ratio(self):
         try:
@@ -325,7 +338,6 @@ class Window(WindowProperties):
 
         self.size = self.size
 
-
     @property
     def render_mode(self):
         return getattr(self, '_render_mode', None)
@@ -333,7 +345,6 @@ class Window(WindowProperties):
     @render_mode.setter
     def render_mode(self, value):
         self._render_mode = value
-        # print('render mode:', value)
         base.wireframeOff()
 
         # disable collision display mode
@@ -345,27 +356,20 @@ class Window(WindowProperties):
 
         if value == 'wireframe':
             base.wireframeOn()
-
         elif value == 'colliders':
             for e in [e for e in scene.entities if e.model or e.collider]:
                 e.show_collider = True
-
         elif value == 'normals':
             for e in [e for e in scene.entities if e.model and e.alpha]:
                 e.show_normals = True
-
 
     def next_render_mode(self):
         i = self.render_modes.index(self.render_mode) + 1
         if i >= len(self.render_modes):
             i = 0
-
         self.render_mode = self.render_modes[i]
 
-
     def toggle_editor_camera(self):
-        from ursina import EditorCamera, Text, camera, color
-
         if not application.development_mode:
             print('window.toggle_editor_camera() is only available in development_mode')
             return
@@ -381,7 +385,6 @@ class Window(WindowProperties):
 
         application.paused = self.editor_camera.enabled
 
-
     @property
     def title(self):
         return self._title
@@ -391,7 +394,6 @@ class Window(WindowProperties):
         self._title = value
         loadPrcFileData('', f'window-title {value}')
 
-
     @property
     def icon(self):
         return self._icon
@@ -400,7 +402,6 @@ class Window(WindowProperties):
     def icon(self, value):
         self._icon = value
         self.setIconFilename(value)
-
 
     @property
     def borderless(self):
@@ -415,19 +416,15 @@ class Window(WindowProperties):
         self.setUndecorated(value)
         if hasattr(self, 'exit_button'):
             self.exit_button.enabled = not value
-
         if application.base and hasattr(application.base.win, 'request_properties'):
             application.base.win.request_properties(self)
-
 
     @property
     def fullscreen(self):
         return getattr(self, '_fullscreen', True)
 
-
     @fullscreen.setter
     def fullscreen(self, value):
-        # print('----------------------', value, self._fullscreen)
         self._fullscreen = value
         if application.window_type == 'none':
             return
@@ -446,11 +443,7 @@ class Window(WindowProperties):
             else:
                 self.center_on_screen()
 
-        # self.setFullscreen(value)
         base.win.request_properties(self)
-        # except:
-        #     print_warning('failed to set fullscreen', value)
-        #     pass'
 
     @property
     def always_on_top(self):
@@ -461,16 +454,12 @@ class Window(WindowProperties):
         if value:
             self.setZOrder(WindowProperties.Z_top)
             if sys.platform == "linux":
-                from Xlib import Xatom, display
                 d = display.Display()
-                # root = d.screen().root
                 window_id = base.win.getWindowHandle().getIntHandle()
                 window = d.create_resource_object('window', window_id)  # Get the window from X11
                 NET_WM_STATE = d.intern_atom('_NET_WM_STATE')
                 NET_WM_STATE_ABOVE = d.intern_atom('_NET_WM_STATE_ABOVE')
                 window.change_property(NET_WM_STATE, Xatom.ATOM, 32, [NET_WM_STATE_ABOVE])
-
-                # window.change_property(NET_WM_STATE, X.Atom.ATOM, 32, [NET_WM_STATE_ABOVE])     # Change the window property to make it "always on top"
                 d.sync()    # Map the changes and flush the display
 
         else:
@@ -487,7 +476,6 @@ class Window(WindowProperties):
             return
 
         base.camNode.get_display_region(0).get_window().set_clear_color(value)
-
 
     @property
     def vsync(self):

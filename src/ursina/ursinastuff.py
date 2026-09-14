@@ -1,17 +1,25 @@
 import sys
 import os
-
 from ursina import application
 from ursina.scene import instance as scene
 from ursina.sequence import Sequence, Func, Wait
+import operator
+import traceback
+from inspect import getframeinfo, stack
+import ast
+import textwrap
+import inspect
+from ursina.string_utilities import snake_to_camel
+from glob import iglob
 
-class Empty():
+class Empty:
     def __init__(self, **kwargs):
         for key, value in kwargs.items():
-            setattr(self, key ,value)
+            setattr(self, key, value)
 
 class DotDict(dict):
     """Custom dictionary class to allow dot notation access."""
+
     def __getattr__(self, attr):
         try:
             return self[attr]
@@ -56,18 +64,21 @@ def invoke(function, *args, **kwargs):  # reserved keywords: 'delay', 'unscaled'
     return Sequence(
         Wait(delay),
         Func(function, *args, **kwargs),
-        auto_destroy=True, ignore_paused=ignore_paused, unscaled=unscaled, started=True,
+        auto_destroy=True,
+        ignore_paused=ignore_paused,
+        unscaled=unscaled,
+        started=True,
     )
 
-def after(delay, unscaled=True, ignore_paused=False, entity=None):    # function for @after decorator. Use the decorator, not this.
-    '''@after decorator for calling a function after some time.
+def after(delay, unscaled=True, ignore_paused=False, entity=None):  # function for @after decorator. Use the decorator, not this.
+    """@after decorator for calling a function after some time.
 
-        example:
-        @after(.4)
-        def reset_cooldown():
-            self.on_cooldown = False
-            self.color = color.green
-    '''
+    example:
+    @after(.4)
+    def reset_cooldown():
+        self.on_cooldown = False
+        self.color = color.green
+    """
     def _decorator(func):
         def wrapper(*args, **kwargs):
             sequence = invoke(func, *args, **kwargs, delay=delay, unscaled=unscaled, ignore_paused=ignore_paused)
@@ -78,20 +89,17 @@ def after(delay, unscaled=True, ignore_paused=False, entity=None):    # function
     return _decorator
 
 def size_list():    # return a list of current python objects sorted by size
-    import operator
-
     globals_list = []
     globals_list.clear()
     for e in globals():
-        # object, size
         globals_list.append([e, sys.getsizeof(e)])
     globals_list.sort(key=operator.itemgetter(1), reverse=True)
     print('scene size:', globals_list)
 
-def find_sequence(name, file_types, folders): # find frame_0, frame_1, frame_2 and so on
+def find_sequence(name, file_types, folders):  # find frame_0, frame_1, frame_2 and so on
     for folder in folders:
         for file_type in file_types:
-            files = list(folder.glob(f'**/{name}*.{file_type}'))
+            files = list(folder.glob(f"**/{name}*.{file_type}"))
             if files:
                 files.sort()
                 return files
@@ -100,8 +108,6 @@ def find_sequence(name, file_types, folders): # find frame_0, frame_1, frame_2 a
 def import_all_classes(path=application.asset_folder, debug=False):
     path = str(path)
     sys.path.append(path)
-    from ursina.string_utilities import snake_to_camel
-    from glob import iglob
     imported_successfully = []
 
     for file_path in iglob(path + '**/*.py', recursive=True):
@@ -112,7 +118,6 @@ def import_all_classes(path=application.asset_folder, debug=False):
         if rel_path.startswith('.'):
             rel_path = rel_path[1:]
         module_name = os.path.basename(file_path).split('.')[0]
-        # class_name = snake_to_camel(module_name)
         module_name = module_name
         import_statement = 'from ' + rel_path + ' import *'
 
@@ -133,12 +138,6 @@ def print_on_screen(text, position=(0,0), origin=(-.5,.5), scale=1, duration=1, 
     from ursina import destroy
     text_entity = Text(text=text, position=position, origin=origin, scale=scale, color=color)
     destroy(text_entity, delay=duration)
-
-import traceback
-from inspect import getframeinfo, stack
-import ast
-import textwrap
-import inspect
 
 def _test(result):
     if callable(result):
