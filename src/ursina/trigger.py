@@ -1,25 +1,14 @@
 from ursina.entity import Entity
 from ursina.ursinamath import distance
-import time
-
-# TODO:
-# circle
-# AArectangle
-# AAbox
-# box
-
-# sphere
 
 class Trigger(Entity):
     def __init__(self, **kwargs):
         super().__init__()
-
         self.trigger_targets = None
         self.radius = .5
         self.triggerers = []
         self.update_rate = 4
         self._i = 0
-
         for key, value in kwargs.items():
             setattr(self, key, value)
 
@@ -27,7 +16,6 @@ class Trigger(Entity):
         self._i += 1
         if self._i < self.update_rate:
             return
-
         self._i = 0
 
         for other in self.trigger_targets:
@@ -35,7 +23,7 @@ class Trigger(Entity):
                 continue
 
             dist = distance(other, self)
-            if not other in self.triggerers and dist <= self.radius:
+            if other not in self.triggerers and dist <= self.radius:
                 self.triggerers.append(other)
                 if hasattr(self, 'on_trigger_enter'):
                     self.on_trigger_enter()

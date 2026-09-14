@@ -9,21 +9,18 @@ from ursina import color
 from ursina.ursinamath import clamp
 from ursina.array_tools import Array2D, enumerate_2d
 from ursina.scripts.property_generator import generate_properties_for_class
+import base64
+from PIL import Image
+from io import BytesIO
 
 @generate_properties_for_class()
-class Texture():
-
+class Texture:
     default_filtering = None      # options: None / 'bilinear' / 'mipmap'
 
     def __init__(self, value, filtering='default'):
-
         if isinstance(value, str) and value.startswith('data:image/png;base64'):
-            import base64
-            from PIL import Image
-            from io import BytesIO
             base64_data = value.lstrip('data:image/png;base64')   # remove prefix
             value = Image.open(BytesIO(base64.b64decode(base64_data))).convert('RGBA')
-
         elif isinstance(value, str):
             value = Path(value)
 
@@ -31,18 +28,14 @@ class Texture():
             self.path = Path(value)
             self._texture = TexturePool.loadTexture(Filename.fromOsSpecific(str(value)))
             self._cached_image = None   # for get_pixel() method
-
         elif isinstance(value, PandaTexture):
             self._texture = value
-
         else:
-            from PIL import Image
             image = value.convert('RGBA')
             self._texture = PandaTexture()
             self._texture.setup2dTexture(image.width, image.height, PandaTexture.TUnsignedByte, PandaTexture.FRgba)
             self._texture.setRamImageAs(image.transpose(Image.FLIP_TOP_BOTTOM).tobytes(), image.mode)
             self._cached_image = image   # for get_pixel() method
-            # self._cached_image = image.transpose(Image.FLIP_TOP_BOTTOM)
             self.path = None
 
         if filtering == 'default':
@@ -99,7 +92,6 @@ class Texture():
         return pixels
 
     def filtering_setter(self, value):
-        # print('setting filtering:', value)
         if value in (None, False, 'nearest', 'nearest neighbor', 'point'):
             self._texture.setMagfilter(SamplerState.FT_nearest)
             self._texture.setMinfilter(SamplerState.FT_nearest)
@@ -121,12 +113,10 @@ class Texture():
         if not self._cached_image:
             from PIL import Image
             self._cached_image = Image.open(self.path)
-
         return self._cached_image.getpixel((x, self.height-y-1))
 
     def get_pixel(self, x, y):
         col = self.get_pixel_raw(x, y)
-
         if isinstance(col, int):
             col = (col, col, col)
         if self._cached_image.mode == 'LA':
@@ -140,40 +130,30 @@ class Texture():
         start = (clamp(start[0], 0, self.width), clamp(start[1], 0, self.width))
         end = (clamp(end[0], 0, self.width), clamp(end[1], 0, self.width))
         pixels = []
-
         for y in range(start[1], end[1]):
             for x in range(start[0], end[0]):
                 pixels.append(self.get_pixel(x,y))
-
         return pixels
 
     def set_pixel(self, x, y, color):
         if not self._cached_image:
             from PIL import Image
             self._cached_image = Image.open(self.path)
-
         self._cached_image.putpixel((x, self.height-y-1), tuple(int(e*255) for e in color))
 
     def apply(self):
         from PIL import Image
         if not self._cached_image:
             self._cached_image = Image.open(self.path)
-
         self._texture.setRamImageAs(self._cached_image.transpose(Image.FLIP_TOP_BOTTOM).tobytes(), self._cached_image.mode)
-        # self._texture.setRamImageAs(self._cached_image.tobytes(), self._cached_image.mode)
 
     def save(self, path):
         if not self._cached_image:
             from PIL import Image
             self._cached_image = Image.open(self.path)
-
         self._cached_image.save(path)
 
     def to_PIL_Image(self):
-        from PIL import Image
-        # Ensure the texture data is available
-        # self._texture.prepareRamImage()
-
         # Get the size and format
         width = self._texture.getXSize()
         height = self._texture.getYSize()

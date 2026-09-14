@@ -1,16 +1,10 @@
 from panda3d.core import TextNode
 from panda3d.core import FontPool
-from panda3d.core import Filename
-import builtins
 import re
-import sys
-import ursina
-from ursina import camera
-from ursina import application
+
+from ursina import camera, clamp, application, color, destroy
 from ursina.entity import Entity
 from ursina.sequence import Sequence, Func, Wait
-from ursina import color
-from ursina import destroy
 from ursina.shaders.text_shader import text_shader
 from ursina.string_utilities import print_warning
 from ursina.scripts.property_generator import generate_properties_for_class
@@ -30,9 +24,7 @@ def _search_for_file(name, folders, file_types=None): # prioritizes based on fil
 
     for file_type in file_types:
         for folder in folders:
-            # print('-----', 'searchpattern:', f'{folder}/**/{name}{file_type}', 'result:', list(folder.glob(f'**/{name}.{file_type}')))
             for file_path in folder.glob(f'**/{name}{file_type}'):
-                #print('FOUND FONT:', file_path)
                 return file_path
 
     return None
@@ -50,13 +42,11 @@ class Text(Entity):
         super().__init__(ignore=ignore)
         self.size = Text.size
         self.parent = camera.ui
-
         self.setColorScaleOff()
         self.text_nodes = []
         self.images = []
         self.origin = (-.5, .5)
         self.raw_text = text
-
         self.font = Text.default_font
         self.shader = text_shader
         self.shader.compile()
@@ -75,14 +65,12 @@ class Text(Entity):
         self.current_color = self.text_colors['default']
         self.scale_override = 1
         self.background_entity = None
-        self.appear_sequence = None # gets created when calling appear()
-
+        self.appear_sequence = None  # gets created when calling appear()
 
         if 'origin' in kwargs:   # set the scale before model for correct corners
             setattr(self, 'origin', kwargs['origin'])
         if 'use_tags' in kwargs:
             setattr(self, 'use_tags', kwargs['use_tags'])
-
         if text != '':
             self.text = text
 
@@ -106,7 +94,7 @@ class Text(Entity):
 
         return t
 
-    def text_setter(self, text): # set this to update the text.
+    def text_setter(self, text):  # set this to update the text.
         self.raw_text = text
 
         # clear stuff
@@ -121,17 +109,13 @@ class Text(Entity):
             return
 
         # check if using tags
-        if (not self.use_tags
-            # or self.text == self.start_tag or self.text == self.end_tag
-            # or not self.start_tag in text or not self.end_tag in text
-            ):
-
+        if not self.use_tags:
             self.create_text_section(text)
             self.align()
             return
 
         # parse tags
-        text = self.start_tag + self.end_tag + str(text) # start with empty tag for alignment to work?
+        text = (self.start_tag + self.end_tag + str(text))  # start with empty tag for alignment to work?
         sections = []
         section = ''
         tag = self.start_tag+'default'+self.end_tag
@@ -187,14 +171,12 @@ class Text(Entity):
         self.align()
 
     def create_text_section(self, text, tag='', x=0, y=0):
-        # print(text, tag)
         self.text_node = TextNode('t')
         self.text_node_path = self.attachNewNode(self.text_node)
         try:
             self.text_node.setFont(self._font)
         except:
             pass    # default font
-
 
         if tag != '<>':
             tag = tag[1:-1]
@@ -226,8 +208,6 @@ class Text(Entity):
                     model='quad',
                     texture=texture_name,
                     color=self.current_color,
-                    # scale=self.scale_override,
-                    # position=(x*self.size*self.scale_override, y*self.size*self.line_height),
                     origin=(.0, -.25),
                     add_to_scene_entities=False,
                     )
@@ -268,8 +248,6 @@ class Text(Entity):
         if not font_file_path:
             print_warning('missing font:', value)
             return
-        # font = FontPool.load_font(str(font_file_path))
-        # since FontPool can't import fonts from path on Windows, add the directory to the "model path" and load by name
         from panda3d.core import getModelPath
         _model_path = getModelPath()
         _model_path.append_path(str(font_file_path.parent.resolve()))
@@ -302,11 +280,6 @@ class Text(Entity):
             for key, shader_input in value.default_input.items():
                 tn.setShaderInput(key, shader_input)
 
-    # def shader_input_setter(self, value):
-    #     for tn in self.text_nodes:
-    #         for key, shader_input in value.items():
-    #             tn.setShaderInput(key, shader_input)
-
     def line_height_getter(self):
         return getattr(self, '_line_height', 1)
 
@@ -337,8 +310,8 @@ class Text(Entity):
         return longest_line_length * self.size
 
     @property
-    def height(self): # gets the height of the text
-        return (len(self.lines) * self.line_height * self.size)
+    def height(self):  # gets the height of the text
+        return len(self.lines) * self.line_height * self.size
 
     @property
     def lines(self):
@@ -363,16 +336,14 @@ class Text(Entity):
             for word in line.split(' '):
                 clean_string = re.sub('<.*?>', '', word)
                 x += len(clean_string) + 1
-                # print('w:', word, 'len:', len(clean_string), 'clean str:', clean_string)
 
                 if x >= value:
                     new_text += '\n'
                     x = 0
-
                 new_text += word + ' '
-
+                
             new_text += '\n'
-
+            
         self.text = new_text
 
     def origin_setter(self, value):
@@ -395,32 +366,20 @@ class Text(Entity):
 
         linewidths = [self.text_nodes[0].node().calcWidth(line) for line in self.lines]
         for tn in self.text_nodes:
-            # center text horizontally
-            # linenumber = abs(int(tn.getZ() / self.size / self.line_height))
             linenumber = abs(int(tn.getY() / self.size / self.line_height))
             linenumber = clamp(linenumber, 0, len(linewidths)-1)
 
             tn.setX(tn.getX() - (linewidths[linenumber] / 2 * self.size * tn.getScale()[0] / self.size))
-            # tn.setX(tn.getX() - (linewidths[linenumber] / 2 * self.size))
-            # add offset based on origin/value
-            # x -= half line width * text node scale
-            tn.setX(
-                tn.getX() - (linewidths[linenumber] / 2 * value[0] * 2 * self.size) * tn.getScale()[0] / self.size
-                )
+            tn.setX(tn.getX() - (linewidths[linenumber] / 2 * value[0] * 2 * self.size) * tn.getScale()[0] / self.size)
             # center text vertically
             halfheight = len(linewidths) * self.line_height / 2
-            # tn.setZ(tn.getZ() + (halfheight * self.size))
             tn.setY(tn.getY() + (halfheight * self.size))
-            # add offset
-            # tn.setZ(tn.getZ() - (halfheight * value[1] * 2 * self.size))
             tn.setY(tn.getY() - (halfheight * value[1] * 2 * self.size))
 
-    def create_background(self, padding=size*2, radius=.1, color=ursina.color.black66, model_class=Quad):
+    def create_background(self, padding=size * 2, radius=0.1, color=color.black66, model_class=Quad):
         from ursina import Quad, destroy
-
         if self.background_entity:
             destroy(self.background_entity)
-
         self.background_entity = Entity(parent=self, z=.01, add_to_scene_entities=False)
 
         if isinstance(padding, (int, float, complex)):
@@ -428,21 +387,16 @@ class Text(Entity):
 
         w, h = self.width + padding[0], self.height + padding[1]
         self.background_entity.x -= self.origin_x * self.width
-        # if self.origin_x == .5:
-        #     self._background.x += self.origin_x * self.width * 2
         self.background_entity.y -= self.origin_y * self.height
-
         self.background_entity.scale = (w,h)
         if model_class == Quad:
             self.background_entity.model = Quad(aspect=self.background_entity.scale.x/self.background_entity.scale.y, radius=radius)
         else:
             self.background_entity.model = model_class(entity_scale=self.background_entity.scale.xy, radius=radius)
-        # self.background_entity.model = 'quad'
         self.background_entity.color = color
 
     def appear(self, speed=.025):   # make the text animate in, one character at a time
         self.enabled = True
-        # self.visible = True   # setting visible seems to reset the colors
         if self.appear_sequence:
             self.appear_sequence.finish()
 
@@ -451,12 +405,10 @@ class Text(Entity):
             target_text = tn.node().getText()
             tn.node().setText('')
             new_text = ''
-
             for char in target_text:
                 new_text += char
                 self.appear_sequence.append(Wait(speed))
                 self.appear_sequence.append(Func(tn.node().setText, new_text))
-
         self.appear_sequence.start()
         return self.appear_sequence
 
