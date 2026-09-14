@@ -1,10 +1,8 @@
 import time
 import platform
-
 from direct.showbase.ShowBase import ShowBase
 from direct.task.Task import Task
 from panda3d.core import ConfigVariableBool
-
 from ursina.window import instance as window
 from ursina import application
 from ursina import input_handler
@@ -14,9 +12,8 @@ from ursina.mouse import instance as mouse
 from ursina import entity
 from ursina import shader
 from ursina.audio import _audio_manager
-
-
 import __main__
+
 time.dt = 0
 time.dt_unscaled = 0
 keyboard_keys = '1234567890qwertyuiopasdfghjklzxcvbnm'
@@ -222,7 +219,6 @@ class Ursina(ShowBase):
 
         return Task.cont
 
-
     def input_up(self, key, is_raw=False): # internal method for key release
         if not is_raw and key in keyboard_keys:
             return
@@ -232,7 +228,6 @@ class Ursina(ShowBase):
 
         key += ' up'
         self.input(key)
-
 
     def input_hold(self, key, is_raw=False):   # internal method for handling repeating input that occurs when you hold the key
         key = key.replace('control-', '')
@@ -244,7 +239,6 @@ class Ursina(ShowBase):
 
         key += ' hold'
         self.input(key)
-
 
     def input(self, key, is_raw=False): # internal method for handling input
         """Built-in input handler. Propagates the input to all entities and the input function of the main script. Main use case for this it to simulate input though code, like: app.input('a').
@@ -280,7 +274,6 @@ class Ursina(ShowBase):
                     __main__.input(key)
 
         break_outer = False
-
 
         for e in scene.entities:
             if e.enabled is False or e.ignore or e.ignore_input:
@@ -318,7 +311,6 @@ class Ursina(ShowBase):
         for key in bound_keys:
             mouse.input(key)
 
-
     def text_input(self, key):  # internal method for handling text input
         key_code = ord(key)
         if key_code < 32 or (key_code >= 127 and key_code <= 160):
@@ -347,7 +339,6 @@ class Ursina(ShowBase):
 
     def step(self): # use this control the update loop yourself. call app.step() in a while loop for example, instead of app.run()
         self.taskMgr.step()
-
 
     def run(self, info=True):
         if application.show_ursina_splash:

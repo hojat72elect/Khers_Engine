@@ -1,10 +1,8 @@
 from pathlib import Path
 from textwrap import dedent
 from typing import Literal
-
 from panda3d.core import CullFaceAttrib, MovieTexture, NodePath, Quat, TextureStage, TransparencyAttrib
 from panda3d.core import Shader as Panda3dShader
-
 import ursina
 from ursina import application, color, curve, shader
 from ursina.collider import BoxCollider, CapsuleCollider, Collider, MeshCollider, SphereCollider
@@ -82,14 +80,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
         self.position = position
         self.rotation = rotation
         self.scale = scale
-
-        # if shader is not None:
-        #     if scene.fog_color != ursina.color.clear:
-        #         from ursina.shaders.unlit_with_fog_shader import unlit_with_fog_shader
-        #         default_shader = Entity.default_shader if Entity.default_shader is not None else unlit_with_fog_shader
-        #     else:
-        #         from ursina.shaders.unlit_shader import unlit_shader
-        #         default_shader = unlit_shader
         self.shader = shader if shader is not Default else __class__.default_shader
 
         self.model = model
@@ -119,7 +109,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
                 self.animations.append(Sequence(Func(method, self), Wait(method._every.interval), loop=True, started=True, entity=self))
                 print('append to animations:', self)
 
-
         self.line_definition = None # returns a Traceback(filename, lineno, function, code_context, index).
         if application.trace_entity_definition and add_to_scene_entities or (not _Ursina_instance and _warn_if_ursina_not_instantiated and add_to_scene_entities):
             from inspect import getframeinfo, stack
@@ -145,8 +134,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
         if not _Ursina_instance and _warn_if_ursina_not_instantiated and add_to_scene_entities:
             print_warning('Tried to instantiate Entity before Ursina. Please create an instance of Ursina first (app = Ursina())', self.line_definition)
 
-
-
     def __post_init__(self):
         if self.add_to_scene_entities:
             scene.entities.append(self)
@@ -156,8 +143,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
 
         elif not self.enabled and hasattr(self, 'on_disable'):
             self.on_disable()
-
-
 
     def _list_to_vec(self, value):
         if isinstance(value, int | float | complex):
@@ -178,13 +163,11 @@ class Entity(NodePath, metaclass=PostInitCaller):
 
         return new_value
 
-
     def enable(self): # same as .enabled = True
         self.enabled = True
 
     def disable(self): # same as .enabled = False
         self.enabled = False
-
 
     def enabled_getter(self):
         return getattr(self, '_enabled', True)
@@ -209,8 +192,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
         for loose_child in self.loose_children:
             loose_child.enabled = value
 
-
-
     def model_setter(self, value):  # set model with model='model_name' (without file type extension)
         if value == '':
             value = None
@@ -220,13 +201,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
                 # print('removed model')
             self._model = value
             return
-
-        # if isinstance(value, Mesh) and value.mode == MeshModes.point:
-        #     from ursina.shaders.point_shader import point_shader
-        #     self.shader = point_shader
-        #     self.set_shader_input('render_points_in_3d', value.render_points_in_3d)
-        #     self.set_shader_input('thickness', value.thickness)
-
 
         if isinstance(value, NodePath): # pass procedural model
             if self.model and value != self.model:
@@ -265,7 +239,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
                 if hasattr(value, 'on_assign'):
                     value.on_assign(assigned_to=self)
 
-
     def color_getter(self):
         return getattr(self, '_color', color.white)
 
@@ -282,7 +255,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
             # print('SET COLOR TO', value, self.name)
             self.model.setColorScaleOff() # prevent inheriting color from parent
             self.model.setColorScale(value)
-
 
     def eternal_getter(self):
         return getattr(self, '_eternal', False)
@@ -302,11 +274,9 @@ class Entity(NodePath, metaclass=PostInitCaller):
 
             raise Exception(f'entity has been destroyed by: {destroy_source}. Entity name: {self.name}')
 
-
     def double_sided_setter(self, value):
         self._double_sided = value
         self.setTwoSided(value)
-
 
     def render_queue_getter(self):
         return getattr(self, '_render_queue', 0)
@@ -316,14 +286,11 @@ class Entity(NodePath, metaclass=PostInitCaller):
         if self.model:
             self.model.setBin('fixed', value)
 
-
     def parent_setter(self, value):
         if hasattr(self, '_parent') and self._parent and hasattr(self._parent, '_children') and self in self._parent._children:
             self._parent._children.remove(self)
-
         if hasattr(value, 'parent_target'):
             value = value.parent_target
-
         if hasattr(value, '_children') and self not in value._children:
             value._children.append(self)
 
@@ -331,10 +298,8 @@ class Entity(NodePath, metaclass=PostInitCaller):
         if value is None:
             self.enabled = False
             return
-        #     value = scene
         self.reparent_to(value)
         self.enabled = self.enabled   # parenting will undo the .stash() done when setting .enabled to False, so reapply it here
-
 
     def loose_parent_getter(self):
         return getattr(self, '_loose_parent', None)
@@ -348,7 +313,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
         value._loose_children.append(self)
 
         self._loose_parent = value
-
 
     def world_parent_getter(self):
         return getattr(self, '_parent', None)
@@ -364,12 +328,10 @@ class Entity(NodePath, metaclass=PostInitCaller):
         self.enabled = self._enabled   # parenting will undo the .stash() done when setting .enabled to False, so reapply it here
         self._parent = value
 
-
     @property
     def types(self): # get all class names including those this inherits from.
         from inspect import getmro
         return [c.__name__ for c in getmro(self.__class__)]
-
 
     def visible_getter(self):
         return getattr(self, '_visible', True)
@@ -392,7 +354,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
             self.model.show()
         else:
             self.model.hide()
-
 
     def collider_getter(self):
         return getattr(self, '_collider', None)
@@ -446,7 +407,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
             self._collider = MeshCollider(entity=self, mesh=m, center=-self.origin)
             self._collider.name = value
 
-
         self.collision = bool(self.collider)
         return
 
@@ -468,7 +428,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
             if self in scene.collidables:
                 scene.collidables.remove(self)
 
-
     def on_click_getter(self):
         return getattr(self, '_on_click', None)
 
@@ -483,7 +442,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
             raise TypeError(f'on_click must be a callabe, not {type(value)}')
         self._on_click = value
 
-
     def origin_getter(self):
         return getattr(self, '_origin', Vec3.zero)
 
@@ -497,7 +455,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
 
         if self.model:
             self.model.setPos(-value[0], -value[1], -value[2])
-
 
     def origin_x_getter(self):
         return self.origin[0]
@@ -764,7 +721,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
         self._ensure_is_not_destroyed()
         self.world_position, self.world_rotation, self.world_scale = value
 
-
     @property
     def forward(self): # get forward direction.
         return Vec3(*scene.getRelativeVector(self, (0, 0, 1)))
@@ -837,7 +793,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
 
         raise ValueError(f'{value} is not a Shader')
 
-
     def get_shader_input(self, name):
         return self._shader_inputs.get(name, None)
 
@@ -909,7 +864,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
         if self.model and value is not None:
             self.model.setTexture(value._texture, 1)
 
-
     def texture_scale_getter(self):
         if 'texture_scale' in self._shader_inputs:
             return self._shader_inputs['texture_scale']
@@ -945,7 +899,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
         self._tile_coordinate = value
         self.texture_offset = Vec2(value[0] / self.tileset_size[0], value[1] / self.tileset_size[1])
 
-
     def alpha_getter(self):
         return self.color[3]
 
@@ -954,19 +907,16 @@ class Entity(NodePath, metaclass=PostInitCaller):
             value = value / 255
         self.color = color.hsv(self.color.h, self.color.s, self.color.v, value)
 
-
     def always_on_top_setter(self, value):
         self._always_on_top = value
         self.set_bin("fixed", 0)
         self.set_depth_write(not value)
         self.set_depth_test(not value)
 
-
     def unlit_setter(self, value):  # set to True to ignore light and not cast shadows
         self._unlit = value
         self.setLightOff(value)
         self.cast_shadows = not value
-
 
     def cast_shadows_setter(self, value):
         self._cast_shadows = value
@@ -975,21 +925,17 @@ class Entity(NodePath, metaclass=PostInitCaller):
         else:
             self.hide(0b0001)
 
-
     def billboard_setter(self, value):  # set to True to make this Entity always face the camera.
         self._billboard = value
         if value:
             self.setBillboardPointEye(value)
 
-
     def wireframe_setter(self, value):  # set to True to render model as wireframe
         self._wireframe = value
         self.setRenderModeWireframe(value)
 
-
     def show_normals_getter(self):
         return self._show_normals
-
 
     def show_normals_setter(self, value):
         self._show_normals = value
@@ -1002,7 +948,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
 
         elif hasattr(self, "_original_shader") and self._original_shader:
             self.shader = self._original_shader
-
 
     def show_collider_getter(self):
         return self._show_collider
@@ -1019,34 +964,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
         elif hasattr(self, "_original_color") and self._original_color:
             self.color = self._original_color
 
-
-    # def generate_sphere_map(self, size=512, name=f'sphere_map_{len(scene.entities)}'):
-    #     from ursina import camera
-    #     _name = 'textures/' + name + '.jpg'
-    #     org_pos = camera.position
-    #     camera.position = self.position
-    #     application.base.saveSphereMap(_name, size=size)
-    #     camera.position = org_pos
-
-    #     # print('saved sphere map:', name)
-    #     self.model.setTexGen(TextureStage.getDefault(), TexGenAttrib.MEyeSphereMap)
-    #     self.reflection_map = name
-
-
-    # def generate_cube_map(self, size=512, name=f'cube_map_{len(scene.entities)}'):
-    #     from ursina import camera
-    #     _name = 'textures/' + name
-    #     org_pos = camera.position
-    #     camera.position = self.position
-    #     application.base.saveCubeMap(_name+'.jpg', size=size)
-    #     camera.position = org_pos
-
-    #     # print('saved cube map:', name + '.jpg')
-    #     self.model.setTexGen(TextureStage.getDefault(), TexGenAttrib.MWorldCubeMap)
-    #     self.reflection_map = _name + '#.jpg'
-    #     self.model.setTexture(builtins.loader.loadCubeMap(_name + '#.jpg'), 1)
-
-
     @property
     def model_bounds(self):
         if self.model:
@@ -1062,7 +979,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
 
         return None
 
-
     @property
     def bounds(self):
         _bounds = self.model_bounds
@@ -1070,21 +986,17 @@ class Entity(NodePath, metaclass=PostInitCaller):
             return None
         return Bounds(center=_bounds.center, size=_bounds.size*self.scale)
 
-
     def get_position(self, relative_to=scene):  # get position relative to on other Entity. In most cases, use .position instead.
         return Vec3(*self.getPos(relative_to))
 
-
     def set_position(self, value, relative_to=scene): # set position relative to on other Entity. In most cases, use .position instead.
         self.setPos(relative_to, Vec3(value[0], value[1], value[2]))
-
 
     def rotate(self, value, relative_to=None):  # rotate around local axis.
         if not relative_to:
             relative_to = self
 
         self.setHpr(relative_to, Vec3(value[1], value[0], value[2]) * Entity.rotation_directions)
-
 
     def add_script(self, class_instance):
         if isinstance(class_instance, object) and not isinstance(class_instance, str):
@@ -1096,7 +1008,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
             # print('added script:', camel_to_snake(name.__class__.__name__))
             return class_instance
 
-
     def combine(self, analyze=False, auto_destroy=True, ignore:list=None, ignore_disabled=True, include_normals=False):
         from ursina.scripts.combine import combine
 
@@ -1105,14 +1016,12 @@ class Entity(NodePath, metaclass=PostInitCaller):
         self.model = combine(self, analyze, auto_destroy, ignore, ignore_disabled, include_normals)
         return self.model
 
-
     def flipped_faces_setter(self, value):
         self._flipped_faces = value
         if value:
             self.setAttrib(CullFaceAttrib.make(CullFaceAttrib.MCullClockwise))
         else:
             self.setAttrib(CullFaceAttrib.make(CullFaceAttrib.MCullCounterClockwise))
-
 
     def look_at(self, target, axis=Vec3.forward):
         if isinstance(target, Entity):
@@ -1136,7 +1045,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
             axis = Vec3.left
 
         self.look_in_direction((target-self.world_position).normalized(), axis)
-
 
     def look_in_direction(self, direction, forward_axis=Vec3.forward):
         import math
@@ -1250,7 +1158,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
         new_rotation = quaternion_multiply(rotation_quat, previous_rotation)
         self.world_quaternion = new_rotation.normalized()
 
-
     def look_at_2d(self, target, axis='z', position_attr='world_position'):
         from math import atan2, degrees
         if isinstance(target, Entity):
@@ -1297,7 +1204,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
             descendants.extend(child.get_descendants(include_disabled))  # Recursive call
         return descendants
 
-
     def has_disabled_ancestor(self):
         return not self.get_stashed_ancestor().is_empty()
 
@@ -1309,7 +1215,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
 
     def loose_children_getter(self):
         return getattr(self, '_loose_children', [])
-
 
     @property
     def attributes(self): # attribute names. used by duplicate().
@@ -1344,7 +1249,7 @@ class Entity(NodePath, metaclass=PostInitCaller):
                 if '.' in attr:
                     attr = attr.split('.')[0]
 
-            # print('attr changed:', key, 'from:', target_class.default_values[key], 'to:', attr)
+           
             if key == 'color':
                 if isinstance(attr, str):
                     if not attr.startswith('#'):

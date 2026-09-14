@@ -174,12 +174,9 @@ class PhysicsEntity:
 
         entity_kwargs = {key : value for key, value in kwargs.items() if key not in __class__.rb_reserved_args}
         self.entity = Entity(**entity_kwargs)
-        # self.entity.wireframe = True
 
         # create an rb node next to the entity and reparent the entity to the rb node, since the rb node should control it.
         self.node = BulletRigidBodyNode('RigidBody')
-        # node_to_attach_to = self.entity.parent
-        # if node_to_attach_to == scene:
         kinematic = kinematic if kinematic is not None else (mass == 0)
         if kinematic:   # allow parenting
             self.rb = self.entity.parent.attachNewNode(self.node) # node path

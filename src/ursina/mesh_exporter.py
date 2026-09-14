@@ -3,11 +3,9 @@ from ursina import application
 from time import perf_counter
 from ursina.string_utilities import print_info
 
-
 def ursinamesh_to_obj(mesh, name='', out_path:Path=None, max_decimals=5, flip_faces=True):
     from ursina.string_utilities import camel_to_snake
     from ursina.array_tools import chunk_list
-
 
     if not name:
         name = camel_to_snake(mesh.__class__.__name__)
@@ -65,14 +63,10 @@ def ursinamesh_to_obj(mesh, name='', out_path:Path=None, max_decimals=5, flip_fa
 
     print_info(f'saved obj: {out_file}')
 
-
-
-
 def ursinamesh_to_dae(mesh, name, folder:Path=application.models_compressed_folder, texture_name=''):
     num_vertices = len(mesh.generated_vertices)
     vertices = ' '.join([f'{v[2]} {v[1]} {v[0]}' for v in mesh.generated_vertices])
 
-    # triangle_indices = ' '.join([f'{i} '*4 for i in range(num_vertices, 0, -1)])
     triangle_indices = ' '.join([f'{i} '*4 for i in range(num_vertices)])
     num_triangle_indices = num_vertices
 
@@ -83,7 +77,6 @@ def ursinamesh_to_dae(mesh, name, folder:Path=application.models_compressed_fold
     vertex_colors = ' '.join([f'{c[0]} {c[1]} {c[2]} {c[3]}' for c in mesh.colors])
 
     texture_name = texture_name.replace('.','_')
-    # print(vertices)
     text = f'''<?xml version="1.0" encoding="utf-8"?>
 <COLLADA xmlns="http://www.collada.org/2005/11/COLLADASchema" version="1.4.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <asset>

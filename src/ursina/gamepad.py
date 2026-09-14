@@ -46,7 +46,6 @@ def connect_all():
         for original_name, new_name in buttons.items():
             base.accept(f'{gamepad_name}-{original_name}', base.input, extraArgs=[f'{gamepad_name} {new_name}'])
             base.accept(f'{gamepad_name}-{original_name}-up', base.input, extraArgs=[f'{gamepad_name} {new_name} up'])
-            # print(original_name, new_name)
 
 def update():
     for i, gamepad in enumerate(input_handler.gamepads):
@@ -114,8 +113,5 @@ if __name__ == '__main__':
         if key == 'gamepad x':
             from ursina import gamepad
             gamepad.vibrate()
-                # input_handler.gamepads = [target_gamepad, ] + input_handler.gamepads
-                # target_gamepad = input_handler.gamepads.pop(i)
-                # input_handler.gamepad = input_handler.gamepads[i]
 
     app.run()

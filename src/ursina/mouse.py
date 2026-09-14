@@ -9,7 +9,6 @@ from ursina.hit_info import HitInfo
 from ursina.vec3 import Vec3
 from ursina.ursinamath import distance
 from pathlib import Path
-from panda3d.core import WindowProperties
 
 class Mouse:
     def __init__(self):
@@ -128,18 +127,17 @@ class Mouse:
         self._visible = value
         window.set_cursor_hidden(not value)
         if application.base:
-            # window.position = window.position
             application.base.win.requestProperties(window)
 
     @property
     def texture(self):
         return self._texture
+
     @texture.setter
     def texture(self, value:Path):      # give full path to .cur file
         self._texture = value
         window.setCursorFilename(value)
         base.win.requestProperties(window)
-
 
     def input(self, key):
         if not self.enabled:
@@ -148,7 +146,6 @@ class Mouse:
         if key.endswith('mouse down'):
             self.start_x = self.x
             self.start_y = self.y
-
         elif key.endswith('mouse up'):
             self.delta_drag = Vec3(self.x-self.start_x, self.y-self.start_y, 0)
 
@@ -179,7 +176,6 @@ class Mouse:
             self.prev_click_time = time.time()
             self.prev_click_pos = (self.x, self.y)
 
-
         if key == 'left mouse up':
             self.left = False
         if key == 'right mouse down':
@@ -190,8 +186,6 @@ class Mouse:
             self.middle = True
         if key == 'middle mouse up':
             self.middle = False
-
-
 
     def update(self):
         if application.window_type != 'onscreen':
@@ -219,7 +213,6 @@ class Mouse:
         self.prev_x = self.x
         self.prev_y = self.y
 
-
         self._i += 1
         if self._i < self.update_step:
             return
@@ -228,7 +221,6 @@ class Mouse:
         self._pickerRay.set_from_lens(camera._ui_lens_node, self.x * 2 / window.aspect_ratio, self.y * 2)
         self._picker.traverse(camera.ui)
         if self._pq.get_num_entries() > 0:
-            # print('collided with ui', self._pq.getNumEntries())
             self.find_collision()
             return
 
@@ -242,7 +234,6 @@ class Mouse:
             self.find_collision()
         else:
             self.collision = None
-            # print('mouse miss', base.render)
             # unhover all if it didn't hit anything
             for entity in scene.entities:
                 if hasattr(entity, 'hovered') and entity.hovered:
@@ -256,13 +247,13 @@ class Mouse:
 
     @property
     def normal(self): # returns the normal of the polygon, in local space.
-        if not self.collision is not None:
+        if self.collision is None:
             return None
         return Vec3(*self.collision.normal)
 
     @property
     def world_normal(self): # returns the normal of the polygon, in world space.
-        if not self.collision is not None:
+        if self.collision is None:
             return None
         return Vec3(*self.collision.world_normal)
 
@@ -281,7 +272,6 @@ class Mouse:
     @property
     def is_outside(self):
         return not self._mouse_watcher.has_mouse()
-
 
     def find_collision(self):
         self.collisions = []
@@ -321,8 +311,6 @@ class Mouse:
 
 
         self.unhover_everything_not_hit()
-
-
 
     def unhover_everything_not_hit(self):
         for e in scene.entities:

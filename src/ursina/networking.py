@@ -1,38 +1,28 @@
 from ursina.vec2 import Vec2
 from ursina.vec3 import Vec3
 from ursina.vec4 import Vec4
-
 import panda3d.core as p3d
-
 from direct.distributed.PyDatagram import PyDatagram
 from direct.distributed.PyDatagramIterator import PyDatagramIterator
-
 from enum import Enum, auto
-
 from collections import deque
 import queue
-
 import uuid
 import hashlib
-
 import types
 import typing
 import inspect
-
 import socket
 import ssl
 import select
 import errno
-
 import struct
-
 import time
-
 import atexit
 import signal
-
 import threading
 import asyncio
+
 
 # Used internally by Peer.
 class PeerEvent(Enum):

@@ -35,12 +35,10 @@ def play(track_name, fade_out_duration=2, start=0, track_group:Literal['music','
 
         prev_ambiance_track = current_ambiance_track
         current_ambiance_track = track_name
-        # print(f'change ambiance track: {prev_ambiance_track} --> {current_ambiance_track}')
 
     else:
         print_warning(f'Invalid audio group: {track_group}')
         return
-
 
     if track_name and track_name not in tracks:
         audio_group = track_group

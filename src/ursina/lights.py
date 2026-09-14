@@ -2,7 +2,6 @@ from panda3d.core import AmbientLight as PandaAmbientLight
 from panda3d.core import DirectionalLight as PandaDirectionalLight
 from panda3d.core import PointLight as PandaPointLight
 from panda3d.core import Spotlight as PandaSpotLight
-
 from ursina import Entity, Vec2, Vec3, color, scene
 from ursina.prefabs.sky import Sky
 from ursina.scripts.property_generator import generate_properties_for_class
@@ -41,8 +40,6 @@ class DirectionalLight(Light):
             self.update_bounds()
         else:
             self._light.set_shadow_caster(False)
-
-
 
     def update_bounds(self, entity=scene):  # update the shadow area to fit the bounds of target entity, defaulted to scene.
         # don't include skydome when calculating shadow bounds

@@ -29,7 +29,6 @@ def load_model(name, folder=None, file_types=('.bam', '.ursinamesh', '.obj', '.g
         file_types = ('.' + full_name.split('.',1)[1],)
 
     if name in imported_meshes:
-        # print('load cached model', name)
         try:
             if not use_deepcopy:
                 instance = copy(imported_meshes[name])
@@ -47,12 +46,10 @@ def load_model(name, folder=None, file_types=('.bam', '.ursinamesh', '.obj', '.g
         imported_meshes[name] = m
         return m  # type: ignore
 
-
     if folder is not None:
         if not isinstance(folder, Path):
             raise TypeError(f'folder must be a Path, not a {type(folder)}')
         _folders = (folder,)
-
     else:
         _folders = (application.models_compressed_folder, application.asset_folder, application.internal_models_compressed_folder)
 
@@ -63,7 +60,6 @@ def load_model(name, folder=None, file_types=('.bam', '.ursinamesh', '.obj', '.g
             # warning: glob is case-insensitive on windows, so m.path will be all lowercase
             for file_path in folder.glob(f'**/{name}{filetype}'):
                 if filetype == '.bam':
-                    # print_info('loading bam')
                     m = builtins.loader.loadModel(file_path)
                     imported_meshes[name] = m
                     return m  # type: ignore
@@ -87,9 +83,7 @@ def load_model(name, folder=None, file_types=('.bam', '.ursinamesh', '.obj', '.g
                     except Exception as e:
                         raise Exception('invalid ursinamesh file:', file_path, e)
 
-
                 if filetype == '.obj':
-                    # print('found obj', file_path)
                     m = obj_to_ursinamesh(folder=folder, name=name, return_mesh=True)
                     m.path = file_path
                     m.name = name
@@ -110,9 +104,8 @@ def load_model(name, folder=None, file_types=('.bam', '.ursinamesh', '.obj', '.g
                         imported_meshes[name] = m
                         if not use_deepcopy:
                             m.save(f'{name}.bam')
-
                         return m
-                        # return load_model(name, folder, use_deepcopy=use_deepcopy)
+
                 else:
                     try:
                         return builtins.loader.loadModel(file_path)  # type: ignore
@@ -165,7 +158,6 @@ def load_blender_scene(name, folder:Path=Func(getattr, application, 'asset_folde
         scenes_folder.mkdir()
 
     out_file_path = scenes_folder / f'{name}.ursina_blender_scene'
-    # print('loading:', out_file_path)
     if reload or not out_file_path.exists():
         print_info('reload:')
         blend_file = tuple(folder.glob(f'**/{name}.blend'))
@@ -192,7 +184,6 @@ def load_blender_scene(name, folder:Path=Func(getattr, application, 'asset_folde
         ]
 
         subprocess.run(args)
-
 
     with open(out_file_path) as f:
         file_content = f.read()
@@ -404,8 +395,6 @@ def obj_to_ursinamesh(folder=Func(getattr, application, 'models_compressed_folde
             return mesh
 
         out_path = (out_folder / file_path.stem).with_suffix('.ursinamesh')
-        # with open(out_path, 'w') as file:
-        #     file.write(meshstring)
         mesh.save(folder=out_folder, name=f'{file_path.stem}.ursinamesh')
 
         if delete_obj:

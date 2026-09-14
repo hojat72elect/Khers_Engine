@@ -74,8 +74,6 @@ class Keys(Enum):
     gamepad_right_shoulder = 'gamepad right shoulder'
     gamepad_right_shoulder_up = 'gamepad right shoulder up'
 
-
-
     def __hash__(self):
         return hash(self.value)
 
@@ -94,13 +92,11 @@ def bind(original_key, alternative_key):
 
     rebinds[original_key].add(alternative_key)
 
-
     if ' mouse ' in alternative_key:
         if not rebinds.get(f'{original_key} up'):
             rebinds[f'{original_key} up'] = {original_key, }
         rebinds[f'{original_key} up'].add(f'{alternative_key[:-5]} up')
         return
-
 
     if not rebinds.get(f'{original_key} hold'):
         rebinds[f'{original_key} hold'] = {f'{original_key} hold', }
@@ -109,9 +105,6 @@ def bind(original_key, alternative_key):
     if not rebinds.get(f'{original_key} up'):
         rebinds[f'{original_key} up'] = {f'{original_key} up', }
     rebinds[f'{original_key} up'].add(f'{alternative_key} up')
-
-    # rebinds[original_key + ' hold'] = alternative_key + ' hold'
-    # rebinds[original_key + ' up'] = alternative_key + ' up'
 
 def unbind(key):
     if key in rebinds:
