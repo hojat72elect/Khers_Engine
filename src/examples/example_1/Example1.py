@@ -6,7 +6,6 @@ class Example1:
 
     def __init__(self):
         self.app = Ursina()
-
         self.background = Entity(model='quad', scale=(16, 16), color=color.white, z=1)
         self.potato = Entity(model='quad', texture='assets/potato.png', scale=(0.5, 0.5), position=(-5, 0, 0), collider='box')
         self.target_section = Entity(model='quad', scale=(4, 7), position=(2, 2, 0), color=color.black, collider='box')

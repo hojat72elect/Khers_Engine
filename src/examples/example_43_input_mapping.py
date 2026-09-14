@@ -42,7 +42,6 @@ class Player(Entity):  # inherits Entity, our base class for most things. Like G
     def on_click(self):
         print('click')
 
-
 if __name__ == '__main__':
     app = Ursina()
     sky = Sky()
@@ -53,5 +52,4 @@ if __name__ == '__main__':
     button.tooltip = Tooltip('tooltip text')
     info_text = Text('''<black>This is just an <orange>example game \n<black>so it doesn't look that <red>great''', y=-3, )
     draggable = Draggable(scale=(.2, .1), texture='white_cube', color=color.tint(color.lime, -.5), text='drag & drop!')
-
     app.run()

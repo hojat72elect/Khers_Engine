@@ -3,7 +3,6 @@ from ursina import Ursina, window, color, Animation, camera, application, Entity
 
 app = Ursina()
 window.color = color.white
-
 dino = Animation("assets/dino", collider="box", x=-5)
 ground1 = Entity(model="quad", texture="assets/ground", scale=(50, 0.5, 1), z=1)
 ground2 = duplicate(ground1, x=50)

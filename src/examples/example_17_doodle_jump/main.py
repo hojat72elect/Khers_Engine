@@ -11,7 +11,6 @@ for i in range(5):
     p = duplicate(platform, y=platform.y + 5)
     plates.append(p)
 
-
 def input(key):
     if key == 'escape':
         application.quit()

@@ -31,7 +31,6 @@ class Inventory(Entity):
 
     def append(self, item, x=0, y=0):
         print(f"add item : {item}")
-
         if len(self.children) >= self.width * self.height:
             print("Inventory is full")
             error_message = Text("<red>Inventory is full!", origin=(0, -1.5), x=-0.5, scale=2)
@@ -52,7 +51,6 @@ class Inventory(Entity):
             z=-1
         )
         name: str = item.replace("_", " ").title()
-
         if random() < 0.25:
             icon.color = color.gold
             name = f"<orange>Rare {name}"
@@ -78,7 +76,6 @@ class Inventory(Entity):
             for child in self.children:
                 if child == icon:
                     continue
-
                 if child.x == icon.x and child.y == icon.y:
                     print("Swap positions")
                     child.position = icon.org_pos

@@ -48,6 +48,5 @@ def enemy_update():
     for e in enemies:
         e.position += e.up * enemy.speed * time.dt
 
-
 enemy_handler = Entity(update=enemy_update)
 app.run()

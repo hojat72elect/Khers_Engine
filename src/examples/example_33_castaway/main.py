@@ -9,29 +9,23 @@ level = load_blender_scene(name='castaway_island')
 t = time.time()
 level.mesh_collider.collider = 'mesh'
 level.mesh_collider.visible = False
-
 level.water.color = color.hsv(160, 1, .8, .5)
 level.water.enabled = False
 Entity(model='plane', position=level.water.position, scale=9999, color=color.hsv(160, 1, .8, .5), double_sided=True)
 scene.fog_color = color.hsv(6, .1, .85)
-
 level.chest.collider = 'box'
 level.chest_lid.collider = 'box'
 level.chest_lid.double_sided = True
-
 level.bow.parent = camera
 level.bow.position = (.5, 0, 1)
 level.bow.enabled = False
 level.bow.shader = colored_lights_shader
-
 level.gate.collider = 'box'
 level.gate_001.collider = 'box'
 level.gate_pattern.world_parent = level.gate
 level.gate_pattern_001.world_parent = level.gate_001
-
 level.eye_trigger.collider = 'box'
 level.goat.collider = 'mesh'
-
 player = FirstPersonController(position=level.start_point.position, speed=10)
 level.start_point.enabled = False
 
@@ -45,18 +39,14 @@ for e in level.children:
 
     if 'pebble' in e.name:
         e.position = raycast(e.position, Vec3(0, -1, 0)).world_point
-
     elif 'rock' in e.name:
         e.collider = 'box'
         e.flipped_faces = False
-
     elif e.name == 'ship':
         e.collider = 'mesh'
-
     elif 'tree' in e.name:
         e.collider = 'mesh'
         print(type(e.model))
-
 
 def open_chest():
     if distance_xz(player.position, level.chest.position) < 6:
@@ -73,6 +63,7 @@ player.original_speed = player.speed
 def input(key):
     if key == "escape":
         application.quit()
+
     if key == 'shift':
         player.speed = player.original_speed * 10
     elif key == 'shift up':

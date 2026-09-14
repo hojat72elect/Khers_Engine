@@ -3,7 +3,6 @@ from ursina import Ursina, Sky, Animation, camera, time, Entity, color, duplicat
 
 app = Ursina()
 Sky()
-
 bird = Animation("assets/img", collider="box", scale=(2, 2, 2), y=5)
 bird.velocity = 0
 camera.orthographic = True

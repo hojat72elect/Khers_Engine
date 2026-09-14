@@ -1,20 +1,18 @@
 from pathlib import Path
 from ursina import Ursina, window, color, Entity, duplicate, Animation, Sprite, input_handler, Audio, camera, SmoothFollow, application, mouse, floor, held_keys, raycast, clamp, lerp, scene, Draggable, time, invoke
+from triggers import UseTrigger, Teleporter, CableCar, NPC, TalkativeNPC, ObservatoryDoor, Altar, Sacrifice
 
 app = Ursina()
 window.title = 'Value of Life'
 window.color = color.black
 window.editor_ui.enabled = False
 window.fullscreen = True
-
 bg = Entity(model='quad', scale_x=16 / 9, texture='climb')
 bg.scale *= 2.0
 bg.aspect_ratio = bg.scale_x / bg.scale_y
-
 fg = duplicate(bg)
 fg.texture = 'climb_fg'
 fg.z = -2
-
 player = Entity(scale=.06)
 player.walk_animation = Animation('player_walk', parent=player, y=.5, fps=6, double_sided=True, enabled=False)
 player_idle = Sprite('player_idle', parent=player, y=.5, double_sided=True)
@@ -22,17 +20,7 @@ player.followers = list()
 player_grid_pos = (0, 0)
 player.speed = .001875
 
-collider = Entity(
-    parent=bg,
-    model='quad',
-    z=-.1,
-    color=color.clear,
-    origin=(-.5, -.5),
-    position=(-.5, -.5),
-    collider='box',
-    texture='climb_collision'
-)
-
+collider = Entity(parent=bg, model='quad', z=-.1, color=color.clear, origin=(-.5, -.5), position=(-.5, -.5), collider='box', texture='climb_collision')
 collider_size = (int(bg.texture.width / 16), int(bg.texture.height // 16))
 collider.texture.filtering = None
 collider.color = color.white66
@@ -75,12 +63,10 @@ def update():
 
     player_grid_pos = (int(player_grid_pos[0] * collider_size[0] / 1.5), int(player_grid_pos[1] * collider_size[1] / 1.5))
     free_above = int(collider.texture.get_pixel(player_grid_pos[0], player_grid_pos[1] + 1) != color.red)
-
     player.x += held_keys['d'] * player.speed * int(collider.texture.get_pixel(player_grid_pos[0] + 1, player_grid_pos[1] + free_above) != color.red)
     player.x -= held_keys['a'] * player.speed * int(collider.texture.get_pixel(player_grid_pos[0] - 1, player_grid_pos[1] + free_above) != color.red)
     player.y += held_keys['w'] * player.speed * free_above
     player.y -= held_keys['s'] * player.speed * int(collider.texture.get_pixel(player_grid_pos[0], player_grid_pos[1]) != color.red)
-
     player.moving = bool(held_keys['w'] + held_keys['a'] + held_keys['s'] + held_keys['d'] > 0)
     player.walk_animation.enabled = player.moving and player.speed != 0
     player_idle.enabled = not player.walk_animation.enabled
@@ -96,12 +82,9 @@ def update():
     camera_target.x = clamp(camera_target.x, -(max_fov - camera.fov) / 2 * bg.aspect_ratio, (max_fov - camera.fov) / 2 * bg.aspect_ratio)
     camera_target.y = clamp(
         camera_target.y,
-        # -((max_fov-camera.fov)/2) - camera.smooth_follow.offset[1],
-        # ((max_fov-camera.fov)/2) - camera.smooth_follow.offset[1]
         -((max_fov - camera.fov) / 2),
         ((max_fov - camera.fov) / 2)
     )
-
 
 def input(key):
     if key == 'escape':
@@ -111,7 +94,6 @@ def input(key):
 
     global target_fov
     global player
-
     if key == 'c':
         # just change the color so raycast will still hit it
         if not collider.color == color.clear:
@@ -122,7 +104,6 @@ def input(key):
     if held_keys['control'] and key == 's':
         print('trying to save:', application.asset_folder / 'climb_collision.png')
         collider.texture.save(application.asset_folder / 'climb_collision.png')
-
         print('trying to save positions:')
         with open('positions.txt', 'w') as f:
             print('opened')
@@ -132,7 +113,6 @@ def input(key):
                 if hasattr(e, 'following') and e.following:
                     print('skip:', e)
                     continue
-
                 print(f'{e.name}.position = ({e.x}, {e.y})')
                 f.write(f'{e.name}.position = ({e.x}, {e.y})\n')
 
@@ -144,38 +124,29 @@ def input(key):
     if key == 'tab up' or key == 'c up':
         camera_target.target = player
         target_fov = 1.5
-
     if key == 'shift':
         player.speed *= 10
     if key == 'shift up':
         player.speed /= 10
-
-
-from triggers import UseTrigger, Teleporter, CableCar, NPC, TalkativeNPC, ObservatoryDoor, Altar, Sacrifice
 
 player_start = UseTrigger(name='player_start')
 door0 = Teleporter(name='door0', player=player)
 door1 = Teleporter(name='door1', player=player)
 door0.target = door1
 door1.target = door0
-
 npc0 = NPC(name='npc0', player=player)
 npc1 = NPC(name='npc1', player=player)
 npc2 = TalkativeNPC(name='npc2', player=player)
-
 cable_car_0 = CableCar(name='cable_car_0', player=player)
 cable_car_1 = CableCar(name='cable_car_1', player=player)
 cable_car_0.target = cable_car_1
 cable_car_1.target = cable_car_0
 invoke(cable_car_0.use, delay=3)
-
 altar = Altar(name='altar', player=player)  # stop npcs
-
 door2 = Teleporter(name='door2', player=player)
 door3 = Teleporter(name='door3', player=player)
 door2.target = door3
 door3.target = door2
-
 sacrifice_trigger = Sacrifice(name='sacrifice_trigger', player=player, disabled=True)
 observatory_door = ObservatoryDoor(name='observatory_door', sacrifice_trigger=sacrifice_trigger, player=player)
 # import positions
@@ -186,7 +157,6 @@ with open(f, 'r') as f:
 player.position = player_start.position
 player.z = -1
 music = Audio('life_is_currency', pitch=1, loop=True)
-
 input_handler.bind('e', 'space')
 input_handler.bind('up arrow', 'w')
 input_handler.bind('left arrow', 'a')
@@ -197,11 +167,8 @@ if application.development_mode:  # add some cheat codes
     def cheat_input(key):
         if held_keys['shift'] and key in [str(i) for i in range(5)]:
             player.position = [npc0, npc1, npc2, altar, observatory_door][int(key) - 1].position
-
         if key == 'o':
             observatory_door.use()
-
-
     Entity(input=cheat_input)
 
 app.run()

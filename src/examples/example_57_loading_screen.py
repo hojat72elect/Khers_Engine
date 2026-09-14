@@ -8,11 +8,9 @@ class LoadingWheel(Entity):
         self.parent = camera.ui
         self.point = Entity(parent=self, model=Circle(24, mode='point', thickness=.03), color=color.light_gray, y=.75, scale=2, texture='circle')
         self.point2 = Entity(parent=self, model=Circle(12, mode='point', thickness=.03), color=color.light_gray, y=.75, scale=1, texture='circle')
-
         self.scale = .025
         self.text_entity = Text(world_parent=self, text='loading...', origin=(0, 1.5), color=color.light_gray)
         self.y = -.25
-
         self.bg = Entity(parent=self, model='quad', scale_x=camera.aspect_ratio, color=color.black, z=1)
         self.bg.scale *= 400
 
@@ -45,7 +43,6 @@ if __name__ == '__main__':
             loading_screen.enabled = True
             info_text.enabled = False
             t = time.time()
-
             try:
                 thread.start_new_thread(function=load_textures, args='')
             except Exception as e:

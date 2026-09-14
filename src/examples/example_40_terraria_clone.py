@@ -28,7 +28,6 @@ def input(key):
 camera.orthographic = True
 camera.fov = 10
 camera.position = (16, 18)
-
 # enable all tiles lower than 16 to make a ground
 for column in grid:
     for e in column:

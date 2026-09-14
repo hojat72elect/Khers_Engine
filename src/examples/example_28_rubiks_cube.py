@@ -1,29 +1,19 @@
 from random import choice
-
 from ursina import Ursina, color, Entity, Vec3, copy, mouse, curve, invoke, scene, Text, after, Button, EditorCamera, window
 
 app = Ursina()
-
-cube_colors = [
-    color.pink,
-    color.orange,
-    color.white,
-    color.yellow,
-    color.azure,
-    color.green,
-]
-
+cube_colors = [color.pink, color.orange, color.white, color.yellow, color.azure, color.green]
 combine_parent = Entity(enabled=False)
+
 for i, direction in enumerate((Vec3.right, Vec3.up, Vec3.forward)):
     entity = Entity(parent=combine_parent, model='plane', origin_y=-.5, texture='white_cube', color=cube_colors[i * 2])
     entity.look_at(direction, Vec3.up)
-
     entity_flipped = Entity(parent=combine_parent, model='plane', origin_y=-.5, texture='white_cube', color=cube_colors[(i * 2) + 1])
     entity_flipped.look_at(-direction, Vec3.up)
 
 combine_parent.combine()
-
 cubes = []
+
 for x in range(3):
     for y in range(3):
         for z in range(3):
@@ -33,7 +23,6 @@ for x in range(3):
 # rotate a side when we click on it
 collider = Entity(model='cube', scale=3, collider='box', visible=False)
 
-
 def collider_input(key):
     if mouse.hovered_entity == collider:
         if key == 'left mouse down':
@@ -41,11 +30,8 @@ def collider_input(key):
         elif key == 'right mouse down':
             rotate_side(mouse.normal, -1)
 
-
 collider.input = collider_input
-
 rotation_helper = Entity()
-
 
 def rotate_side(normal, direction=1, speed=1):
     if normal == Vec3(1, 0, 0):
@@ -54,14 +40,12 @@ def rotate_side(normal, direction=1, speed=1):
     elif normal == Vec3(-1, 0, 0):
         [setattr(e, 'world_parent', rotation_helper) for e in cubes if e.x < 0]
         rotation_helper.animate('rotation_x', -90 * direction, duration=.15 * speed, curve=curve.linear, interrupt='finish')
-
     elif normal == Vec3(0, 1, 0):
         [setattr(e, 'world_parent', rotation_helper) for e in cubes if e.y > 0]
         rotation_helper.animate('rotation_y', 90 * direction, duration=.15 * speed, curve=curve.linear, interrupt='finish')
     elif normal == Vec3(0, -1, 0):
         [setattr(e, 'world_parent', rotation_helper) for e in cubes if e.y < 0]
         rotation_helper.animate('rotation_y', -90 * direction, duration=.15 * speed, curve=curve.linear, interrupt='finish')
-
     elif normal == Vec3(0, 0, 1):
         [setattr(e, 'world_parent', rotation_helper) for e in cubes if e.z > 0]
         rotation_helper.animate('rotation_z', -90 * direction, duration=.15 * speed, curve=curve.linear, interrupt='finish')
@@ -73,20 +57,16 @@ def rotate_side(normal, direction=1, speed=1):
 
     if speed:
         collider.ignore_input = True
-
         @after(.25 * speed)
         def _():
             collider.ignore_input = False
             check_for_win()
 
-
 def reset_rotation_helper():
     [setattr(e, 'world_parent', scene) for e in cubes]
     rotation_helper.rotation = (0, 0, 0)
 
-
 win_text_entity = Text(y=.35, text='', color=color.green, origin=(0, 0), scale=3)
-
 
 def check_for_win():
     if {e.world_rotation for e in cubes} == {Vec3(0, 0, 0)}:
@@ -95,17 +75,13 @@ def check_for_win():
     else:
         win_text_entity.text = ''
 
-
 def randomize():
     faces = (Vec3(1, 0, 0), Vec3(0, 1, 0), Vec3(0, 0, 1), Vec3(-1, 0, 0), Vec3(0, -1, 0), Vec3(0, 0, -1))
     for i in range(20):
         rotate_side(normal=choice(faces), direction=choice((-1, 1)), speed=0)
 
-
 randomize_button = Button(text='randomize', color=color.azure, position=(.7, -.4), on_click=randomize)
 randomize_button.fit_to_text()
-
 window.color = color._16
 EditorCamera()
-
 app.run()

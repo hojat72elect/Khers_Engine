@@ -17,22 +17,18 @@ window.title = "Pixel Runner"
 window.borderless = False
 camera.orthographic = True
 camera.fov = 18
-
 game_active = False
 score = 0
 game_time = 0
 spawn_timer = 0
 obstacles = []
-
 sky = Entity(model='quad', texture='assets/graphics/Sky.png', scale=(55, 30), position=(0, 0, 10))
 ground = Entity(model='quad', texture='assets/graphics/ground.png', scale=(55, 15), position=(0, -7.5, 0))
-
 
 class Player(Entity):
 
     def __init__(self):
         super().__init__(model='quad', texture='assets/graphics/Player/player_walk_1.png', scale=(1.5, 2), position=(PLAYER_X, GROUND_Y, -1), collider='box')
-
         self.collider = BoxCollider(self, center=Vec3(0, 0, 0), size=Vec3(0.7, 0.85, 1))
         self.walk_frames = ['assets/graphics/Player/player_walk_1.png', 'assets/graphics/Player/player_walk_2.png']
         self.jump_frame = 'assets/graphics/Player/jump.png'
@@ -70,9 +66,7 @@ class Player(Entity):
                     self.animation_index = 0
                 self.texture = self.walk_frames[self.animation_index]
 
-
 player = Player()
-
 
 class Obstacle(Entity):
     def __init__(self, obstacle_type):
@@ -120,7 +114,6 @@ class Obstacle(Entity):
                 obstacles.remove(self)
             destroy(self)
 
-
 score_text = Text(text='Score: 0', origin=(0, 0), position=(0, 0.42), scale=1.5, color=color.rgb(64, 64, 64))
 title_text = Text(text='Pixel Runner', origin=(0, 0), position=(0, 0.25), scale=2, color=color.rgb(111, 196, 169))
 message_text = Text(text='Press SPACE to run', origin=(0, 0), position=(0, -0.35), scale=1.3, color=color.rgb(111, 196, 169))
@@ -143,7 +136,6 @@ try:
 except Exception as e:
     print("Could not load music:", e)
 
-
 def start_game():
     global game_active
     global score
@@ -154,7 +146,6 @@ def start_game():
     score = 0
     game_time = 0
     spawn_timer = 0
-
     player.position = (PLAYER_X, GROUND_Y, -1)
     player.velocity_y = 0
     player.is_grounded = True
@@ -175,11 +166,9 @@ def start_game():
     if music:
         music.play()
 
-
 def game_over():
     global game_active
     game_active = False
-
     if music:
         music.stop()
 
@@ -196,12 +185,10 @@ def game_over():
         destroy(obstacle)
     obstacles.clear()
 
-
 def spawn_obstacle():
     obstacle_type = choice(['fly', 'snail', 'snail', 'snail'])
     obstacle = Obstacle(obstacle_type)
     obstacles.append(obstacle)
-
 
 def _aabb_overlap(a, b):
     a_col = a.collider
@@ -210,21 +197,17 @@ def _aabb_overlap(a, b):
     a_hy = abs(a.scale_y * a_col.size.y) / 2
     b_hx = abs(b.scale_x * b_col.size.x) / 2
     b_hy = abs(b.scale_y * b_col.size.y) / 2
-
     ax = a.world_x + a_col.center.x * a.scale_x
     ay = a.world_y + a_col.center.y * a.scale_y
     bx = b.world_x + b_col.center.x * b.scale_x
     by = b.world_y + b_col.center.y * b.scale_y
-
     return abs(ax - bx) < (a_hx + b_hx) and abs(ay - by) < (a_hy + b_hy)
-
 
 def check_collision():
     for obstacle in obstacles:
         if _aabb_overlap(player, obstacle):
             return True
     return False
-
 
 def input(key):
     if key == 'space':
@@ -233,12 +216,10 @@ def input(key):
         else:
             player.jump()
 
-
 def update():
     global game_time
     global score
     global spawn_timer
-
     if not game_active:
         return
 
@@ -246,13 +227,11 @@ def update():
     score = int(game_time)
     score_text.text = f'Score: {score}'
     spawn_timer += time.dt
-
     if spawn_timer >= SPAWN_INTERVAL:
         spawn_timer = 0
         spawn_obstacle()
     if check_collision():
         game_over()
-
 
 score_text.enabled = False
 game_over_text.enabled = False
@@ -262,5 +241,4 @@ player_stand.enabled = True
 sky.enabled = False
 ground.enabled = False
 player.enabled = False
-
 app.run()

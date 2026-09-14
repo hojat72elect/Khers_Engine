@@ -46,15 +46,7 @@ BRICK_COLUMNS = 10
 BRICK_ROWS = 6
 BRICK_CELL_WIDTH = 64
 BRICK_CELL_HEIGHT = 32
-
-BRICK_TYPES = [
-    "blue1",
-    "red1",
-    "green1",
-    "yellow1",
-    "silver1",
-    "purple1",
-]
+BRICK_TYPES = ["blue1", "red1", "green1", "yellow1", "silver1", "purple1"]
 
 def create_bricks():
     global bricks
@@ -72,12 +64,7 @@ def create_ball():
 
 def create_paddle():
     global paddle
-    paddle = create_sprite(
-        "paddle1",
-        PADDLE_START_X,
-        PADDLE_Y,
-        z=2,
-    )
+    paddle = create_sprite("paddle1", PADDLE_START_X, PADDLE_Y, z=2)
 
 def width(entity):
     return entity.scale_x
@@ -174,10 +161,7 @@ def check_brick_collisions():
                 ball.y = (brick.y - (height(ball) + height(brick)) / 2)
         brick.enabled = False
 
-        if not any(
-                brick.enabled
-                for brick in bricks
-        ):
+        if not any(brick.enabled for brick in bricks):
             reset_level()
         break
 

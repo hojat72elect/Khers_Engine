@@ -4,7 +4,6 @@ from ursina.prefabs.first_person_controller import FirstPersonController
 app = Ursina()
 Sky(texture="sky_sunset")
 player = FirstPersonController()
-
 boxes = []
 for n in range(12):
     for k in range(12):

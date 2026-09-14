@@ -21,5 +21,4 @@ for i in range(20):
 
 combine_parent.combine()
 EditorCamera()
-
 app.run()

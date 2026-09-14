@@ -96,7 +96,6 @@ def update():
         if back_ray.hit and getattr(back_ray.entity, 'tag', None) == "npc":
             Entity(model="quad", texture="corpse", color=color.random_color(), scale=0.7, position=back_ray.entity.position)
             back_ray.entity.disable()
-
         if held_keys["w"]:
             car_speed += 0.02
             car_speed = min(10, car_speed)

@@ -1,16 +1,12 @@
 from ursina import Ursina, window, color, Entity, camera, application, duplicate, time, held_keys
 
 app = Ursina()
-
 window.color = color.olive
 table = Entity(model="cube", color=color.black, scale=(2, 1, 3), rotation=(90, 0, 0))
-
 ball = Entity(model="sphere", color=color.cyan, z=-1, scale=0.1, collider="box")
 player1 = Entity(model="cube", color=color.cyan, scale=(0.6, 0.1, 1), position=(0, -1.4, -1), collider="box")
 player2 = duplicate(player1, y=1.4)
-
 speed_x = speed_y = 0.2
-
 
 def update():
     global speed_x, speed_y
@@ -29,14 +25,11 @@ def update():
         speed_x *= 1.1
         speed_y *= 1.1
 
-
 camera.orthographic = True
 camera.fov = 4
-
 
 def input(key):
     if key == 'escape':
         application.quit()
-
 
 app.run()

@@ -11,7 +11,6 @@ SPAWN_INTERVAL = 1.5
 
 ground = Entity(model='quad', color=color.blue, scale=(30, 0.7), position=(0, -4.5))
 player = Player(ground)
-
 game_over = False
 obstacles = []
 spawn_timer = 0

@@ -2,7 +2,6 @@ from ursina import Ursina, Draggable, scene, Vec3, Entity, Cone, color, Grid, he
 
 if __name__ == '__main__':
     app = Ursina()
-
     draggable = Draggable(parent=scene, model="cube", plane_direction=Vec3.up)
     turret = Entity(model=Cone(), scale=Vec3(0.5, 1, 0.5), origin_y=-0.5, color=color.azure)
     turret.model.colorize()

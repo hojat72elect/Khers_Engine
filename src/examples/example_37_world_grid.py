@@ -1,8 +1,8 @@
 from ursina import Ursina, Entity, EditorCamera, color, Grid, duplicate, lerp
 
 app = Ursina()
-
 r = 8
+
 for i in range(1, r):
     t = i / r
     s = 4 * i

@@ -42,14 +42,7 @@ def play_sound(name, volume=1.0):
     sound.volume = volume
     sound.play()
 
-CARD_NAMES = [
-    "card-0",
-    "card-1",
-    "card-2",
-    "card-3",
-    "card-4",
-    "card-5",
-]
+CARD_NAMES = [ "card-0", "card-1", "card-2", "card-3", "card-4", "card-5"]
 
 CARD_WIDTH = 98
 CARD_HEIGHT = 128

@@ -1,14 +1,11 @@
 from ursina import Ursina, application, Entity, camera, color, time, curve, duplicate, invoke, Circle
 
 app = Ursina()
-
 background = Entity(model="quad", texture="assets/BG2", scale=55, z=10, y=15)
 player = Entity(model="quad", collider="box", texture="assets/square")
 ground = Entity(model="cube", color=color.yellow, y=-1, origin_y=.5, scale=(200, 15, 1), collider="box", texture="white_cube")
-
 camera.orthographic = True
 camera.fov = 18
-
 diam = []
 plates = []
 

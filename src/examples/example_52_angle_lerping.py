@@ -20,6 +20,5 @@ def update():
     graphics.position = player.position
     graphics.rotation_y = lerp_angle(graphics.rotation_y, player.rotation_y, time.dt * 5)
 
-
 EditorCamera()
 app.run()

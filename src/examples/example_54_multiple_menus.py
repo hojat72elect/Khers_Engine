@@ -5,15 +5,12 @@ from ursina import Ursina, Entity, Sprite, Text, ButtonList, Button, print_on_sc
 class MenuMenu(Entity):
     def __init__(self, **kwargs):
         super().__init__(parent=camera.ui, ignore_paused=True)
-
         # Create empty entities that will be parents of our menus content
         self.main_menu = Entity(parent=self, enabled=True)
         self.options_menu = Entity(parent=self, enabled=False)
         self.help_menu = Entity(parent=self, enabled=False)
-
         # Add a background. You can change 'shore' to a different texture of you'd like.
         self.background = Sprite('shore', color=color.dark_gray, z=1)
-
         # [MAIN MENU] WINDOW START
         # Title of our menu
         Text("MAIN MENU", parent=self.main_menu, y=0.4, x=0, origin=(0, 0))
@@ -30,11 +27,9 @@ class MenuMenu(Entity):
             "Exit": Func(lambda: application.quit())
         }, y=0, parent=self.main_menu)
         # [MAIN MENU] WINDOW END
-
         # [OPTIONS MENU] WINDOW START
         # Title of our menu
         Text("OPTIONS MENU", parent=self.options_menu, y=0.4, x=0, origin=(0, 0))
-
         # Button
         Button("Back", parent=self.options_menu, y=-0.3, scale=(0.1, 0.05), color=rgb(50, 50, 50),
                on_click=lambda: switch(self.main_menu, self.options_menu))
@@ -79,7 +74,6 @@ class MenuMenu(Entity):
     # what menu is currently enabled
     def update(self):
         pass
-
 
 # Init application
 app = Ursina(title='Main Menu Tutorial')

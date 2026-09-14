@@ -104,7 +104,6 @@ def update():
             for z, column in enumerate(terrain.model.height_values):
                 for x, row in enumerate(column):
                     terrain.model.vertices.append(Vec3(x / w, terrain.model.height_values[x][z], z / h) + Vec3(centering_offset.x, 0, centering_offset.y))
-                    # terrain.model.colors.append(hsv(0, 0, 1-(terrain.model.height_values[x][z]*1)))
                     y = int(terrain.model.height_values[x][z] * 16)
                     y = clamp(y, 0, 255)
                     terrain.model.colors.append(gradient[y])
@@ -116,18 +115,15 @@ def update():
         pos *= Vec3(w, 0, h)
         cursor.y = terrain.model.height_values[int(pos.x)][int(pos.z)]
         x, _, z = pos
-
         height_values = terrain.model.height_values
         point = height_values[int(floor(x))][int(floor(z))]
         point_e = height_values[int(min(w - 1, ceil(x)))][int(floor(z))]
         point_n = height_values[int(floor(x))][int(min(h - 1, ceil(z)))]
         point_ne = height_values[int(min(w - 1, ceil(x)))][int(min(h - 1, ceil(z)))]
-
         u0v0 = point * (ceil(x) - x) * (ceil(z) - z)  # interpolated (x0, z0)
         u1v0 = point_e * (x - floor(x)) * (ceil(z) - z)  # interpolated (x1, z0)
         u0v1 = point_n * (ceil(x) - x) * (z - floor(z))  # interpolated (x0, z1)
         u1v1 = point_ne * (x - floor(x)) * (z - floor(z))  # interpolated (x1, z1)
-
         _h = u0v0 + u1v0 + u0v1 + u1v1  # estimate
         cursor.y = _h * terrain.scale_y
 
