@@ -1,5 +1,5 @@
 from panda3d.core import NodePath, Fog
-from ursina import color
+from ursina import application, destroy, color
 
 class Scene(NodePath):
     def __init__(self):
@@ -16,13 +16,9 @@ class Scene(NodePath):
     def _set_up(self):
         self.reparent_to(render)
 
-
     def clear(self):
-        from ursina import application, destroy
-
         to_destroy = [e for e in self.entities if not e.eternal]
         to_keep = [e for e in self.entities if e.eternal]
-
         for d in to_destroy:
             try:
                 destroy(d)
@@ -32,10 +28,10 @@ class Scene(NodePath):
         self.entities = to_keep
         application.sequences.clear()
 
-
     @property
     def fog_color(self):
         return self._fog_color
+
     @fog_color.setter
     def fog_color(self, value):
         self._fog_color = value
@@ -52,7 +48,6 @@ class Scene(NodePath):
                 continue
             if e.shader and 'fog_color' in e.shader.default_input:
                 e.set_shader_input('fog_color', value)
-
 
     @property
     def fog_density(self):

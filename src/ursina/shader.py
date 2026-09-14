@@ -1,8 +1,9 @@
 from pathlib import Path
 from panda3d.core import Shader as Panda3dShader
 from ursina import application
+from textwrap import dedent
 
-default_vertex_shader = '''
+default_vertex_shader = """
 #version 430
 uniform mat4 p3d_ModelViewProjectionMatrix;
 in vec4 p3d_Vertex;
@@ -13,8 +14,8 @@ void main() {
   gl_Position = p3d_ModelViewProjectionMatrix * p3d_Vertex;
   uv = p3d_MultiTexCoord0;
 }
-'''
-default_fragment_shader='''
+"""
+default_fragment_shader = """
 #version 430
 
 uniform sampler2D tex;
@@ -26,7 +27,7 @@ void main() {
     color = vec4(rgb, 1.0);
 }
 
-'''
+"""
 imported_shaders = dict()
 
 def do_shader_includes(shader_source, included=None):
@@ -67,7 +68,6 @@ class Shader:
     SPIR_V = Panda3dShader.SL_SPIR_V
 
     def __init__(self, name='untitled_shader', language=GLSL, vertex=default_vertex_shader, fragment=default_fragment_shader, geometry='', **kwargs):
-
         if not ('__compiled__' in globals() and str(globals()['__compiled__'].__class__.__name__) == '__nuitka_version__'):
             from inspect import getframeinfo, stack
             _stack = stack()
@@ -85,10 +85,8 @@ class Shader:
         self.compiled = False
         if self not in imported_shaders:
             imported_shaders[self.name] = self
-
         for key, value in kwargs.items():
             setattr(self, key ,value)
-
 
     def compile(self, shader_includes=True):
         if shader_includes:
@@ -97,16 +95,13 @@ class Shader:
             self._shader = Panda3dShader.make(self.language, self.vertex, self.fragment, self.geometry)
         self.compiled = True
 
-
     @classmethod
     def load(cls, language=Panda3dShader.SL_GLSL, vertex=None, fragment=None, geometry=None, **kwargs):
         parts = {"vertex": vertex, "fragment": fragment, "geometry": geometry}
         parts = {k: v for k, v in parts.items() if v}
 
-        folders = (  # folder search order
-            application.asset_folder,
-        )
-
+        # folder search order
+        folders = application.asset_folder
         for sh, name in parts.items():
             for folder in folders:
                 for filename in folder.glob('**/' + name):
@@ -116,7 +111,6 @@ class Shader:
         parts.update(kwargs)
         return cls(language, **parts)
 
-
     def __setattr__(self, key, value):
         super().__setattr__(key, value)
         from ursina.scene import instance as scene
@@ -124,7 +118,6 @@ class Shader:
             print('setting global shader input:', key, value)
             for entity_with_this_shader in [e for e in scene.entities if e.shader == self]:
                 entity_with_this_shader.set_shader_input(key, value)
-
 
     def __add__(self, other):
         self_vertex_lines = self.vertex.split('\n')
@@ -135,10 +128,7 @@ class Shader:
         this_version, other_version = get_version(self.vertex), get_version(other.vertex)
         if this_version != other_version:
             raise Exception(f'Vertex shaders does not have matching versions: {this_version}, {other_version}')
-        # if get_version(self.fragment) != get_version(other.fragment):
-        #     raise Exception('Vertex shaders does not have mathcing versions.')
-
-        # inputs = set()
+        
         vertex_shader_input_self = [l for l in self.vertex.split('\n') if l.startswith('in ')]
         vertex_shader_input_other = [l for l in other.vertex.split('\n') if l.startswith('in ')]
         vertex_shader_uniforms_self = [l for l in self.vertex.split('\n') if l.startswith('uniform ')]
@@ -153,7 +143,6 @@ class Shader:
 
             for match in header_pattern.finditer(glsl):
                 start = match.start()
-
                 brace_pos = glsl.find('{', match.end() - 1)
                 depth = 1
                 i = brace_pos + 1
@@ -181,30 +170,17 @@ class Shader:
                 vertex_shader_functions[name] = func_data
                 continue
 
-            # if both shader have identical function name and return type
-
-            # if name == 'main':
-            #     original_function = vertex_shader_functions[name]
-            #     if len(original_function['returns'])
-
-        # print(vertex_shader_functions_self)
-
-        # vertex_functions_self = [l for l in self.vertex.split('\n') if l.startswith('uniform ') or l.startswith('in ') or l.startswith('out ')]
-        # vertex_functions_other = [l for l in self.vertex.split('\n') if l.startswith('uniform ') or l.startswith('in ') or l.startswith('out ')]
-        # combined_shader_input = set(vertex_shader_input_self, vertex_shader_input_other)
-
         combined_vertex_shader_input = set(vertex_shader_input_self + vertex_shader_input_other)
         combined_vertex_shader_uniforms = set(vertex_shader_uniforms_self + vertex_shader_uniforms_other)
         combined_vertex_shader_output = set(vertex_shader_output_self + vertex_shader_output_other)
 
-        from textwrap import dedent
-        combined_shader = dedent(f'''\
+        combined_shader = dedent(f"""\
 #version {this_version}
 // vertex in
-{'\n'.join(combined_vertex_shader_input)}
+{"\n".join(combined_vertex_shader_input)}
 // vertex uniform
-{'\n'.join(combined_vertex_shader_uniforms)}
+{"\n".join(combined_vertex_shader_uniforms)}
 // vertex out
-{'\n'.join(combined_vertex_shader_output)}
-''')
+{"\n".join(combined_vertex_shader_output)}
+""")
         print(combined_shader)

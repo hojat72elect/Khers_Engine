@@ -1,5 +1,6 @@
 import re
 import traceback
+from ursina import application
 
 def camel_to_snake(value):
     s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', value)
@@ -28,14 +29,12 @@ def multireplace(string, replacements, ignore_case=False):
     return pattern.sub(lambda match: replacements[match.group(0)], string)
 
 def printvar(var):
-     print(traceback.extract_stack(limit=2)[0][3][9:][:-1],"=", var)
+    print(traceback.extract_stack(limit=2)[0][3][9:][:-1], "=", var)
 
 def print_info(str, *args):
-    from ursina import application
     if application.print_info:
-        print('info:', str, *args)
+        print("info:", str, *args)
 
 def print_warning(str, *args):
-    from ursina import application
     if application.print_warnings:
-        print('\033[93mwarning:', str, *args, '\033[0m')
+        print("\033[93mwarning:", str, *args, "\033[0m")

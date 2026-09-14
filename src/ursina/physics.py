@@ -134,9 +134,7 @@ def raycast(origin, direction: Vec3 = Vec3(0, 0, 1), distance=9999,
 from ursina import Vec2, Default
 @generate_properties_for_class()
 class PhysicsEntity:
-    rb_reserved_args = ('mass', 'kinematic', 'friction', 'mask', 'world', 'lock_axis', 'lock_rotation', 'velocity',
-                # 'rotation', 'rotation_x', 'rotation_y', 'rotation_z',  # for some reason setting the rigidbody's rotation makes it choppy, so only do it for kinematic bodies..
-                )
+    rb_reserved_args = ('mass', 'kinematic', 'friction', 'mask', 'world', 'lock_axis', 'lock_rotation', 'velocity')
     # Copy animation functions from Entity
     animate = Entity.animate
 
@@ -187,10 +185,6 @@ class PhysicsEntity:
             self.rb = self.entity.parent.attachNewNode(self.node) # node path
         else:
             self.rb = scene.attachNewNode(self.node) # node path
-
-
-        # self.rb.setPythonTag('Entity', self.entity)
-        # self.hasPythonTag = self.rb.hasPythonTag
 
         self.collider = collider # set collider before resetting entity, since we need to get scale. we can't scale rb nodes
         if kinematic:
@@ -255,8 +249,6 @@ class PhysicsEntity:
         # remove all collision shapes (correct way)
         for i in reversed(range(self.node.getNumShapes())):
             self.node.removeShape(self.node.getShape(i))
-        # self.node.clearShapes()
-        # destroy visual entity
         if self.entity:
             destroy(self.entity)
         if self in scene.entities:
@@ -265,7 +257,6 @@ class PhysicsEntity:
         self.children.clear()
         self.scripts.clear()
         self.animations.clear()
-
 
     def parent_target_getter(self):
         return self.entity
@@ -276,7 +267,6 @@ class PhysicsEntity:
     def has_disabled_ancestor(self):
         return self.entity.has_disabled_ancestor()
 
-
     def parent_setter(self, value):
         self._parent = value
         self.rb.reparentTo(value)
@@ -284,17 +274,20 @@ class PhysicsEntity:
 
     def model_getter(self):
         return self.entity.model
+
     def model_setter(self, value):
         self.entity.model = value
 
     def origin_getter(self):
         return self.entity.origin
+
     def origin_setter(self, value):
         self.entity.origin = value
 
     def shader_getter(self): return self.entity.shader
     def shader_setter(self, value):
         self.entity.shader = value
+
     def set_shader_input(self, key, value):
         self.entity.set_shader_input(key, value)
 
@@ -304,42 +297,50 @@ class PhysicsEntity:
     # for rigidbody
     def position_getter(self):
         return Vec3(*self.rb.getPos())
+
     def position_setter(self, value):
         self.rb.setPos(Vec3(value))
 
     def world_position_getter(self):
         return Vec3(*self.rb.getPos(scene))
+
     def world_position_setter(self, value):
         self.rb.setPos(scene, Vec3(value[0], value[1], value[2]))
 
     def x_getter(self):
         return self.rb.getX()
+
     def x_setter(self, value):
         self.rb.setX(value)
 
     def y_getter(self):
         return self.rb.getY()
+
     def y_setter(self, value):
         self.rb.setY(value)
 
     def z_getter(self):
         return self.rb.getZ()
+
     def z_setter(self, value):
         self.rb.setZ(value)
 
     def rotation_getter(self):
         rotation = self.rb.getHpr()
         return Vec3(rotation[1], rotation[0], rotation[2])
+
     def rotation_setter(self, value):
         self.rb.setHpr(Vec3(-value[1], -value[0], value[2]))
 
     def quaternion_getter(self):
         return self.rb.getQuat()
+
     def quaternion_setter(self, value):
         self.rb.setQuat(value)
 
     def world_quaternion_getter(self):
         return self.entity.world_quaternion
+
     def world_quaternion_setter(self, value):
         self.entity.world_quaternion = value
 
@@ -347,12 +348,15 @@ class PhysicsEntity:
         new_value = self.rotation
         new_value[0] = value
         self.rotation = new_value
+
     def rotation_y_getter(self):
         return self.rotation.y
+
     def rotation_y_setter(self, value):
         new_value = self.rotation
         new_value[1] = value
         self.rotation = new_value
+
     def rotation_z_setter(self, value):
         new_value = self.rotation
         new_value[2] = value
@@ -384,26 +388,30 @@ class PhysicsEntity:
 
     def color_getter(self):
         return self.entity.color
+
     def color_setter(self, value):
         self.entity.color = value
 
     def alpha_getter(self):
         return self.entity.alpha
+
     def alpha_setter(self, value):
         self.entity.alpha = value
 
     def texture_getter(self):
         return self.entity.texture
+
     def texture_setter(self, value):
         self.entity.texture = value
 
     def scale_y_getter(self): return self.scale.y
+
     def scale_y_setter(self, value):
         self.scale = Vec3(self.scale.x, value, self.scale.z)
 
-
     def mass_getter(self):
         return self.node.getMass()
+
     def mass_setter(self, value):
         self.node.setMass(value)
 
@@ -423,9 +431,9 @@ class PhysicsEntity:
         self._lock_rotation = value
         self.node.setAngularFactor(Vec3(*[1-e for e in value]))
 
-
     def velocity_getter(self):
         return self.node.getLinearVelocity()
+
     def velocity_setter(self, value):
         return self.node.setLinearVelocity(value)
 
@@ -443,13 +451,10 @@ class PhysicsEntity:
         else:
             self.node.applyCentralImpulse(force)
 
-
     def collider_setter(self, value):   # set to 'box'/'sphere'/'capsule'/'mesh' for auto fitted collider.
-        # print('set rb colliderto:', value)
         if value is None and self.collider:
             self.rb.node.removeShape(value)
             self._collider = None
-            # self.collision = False
             return
         self._collider = None
         # destroy existing collider
@@ -461,14 +466,12 @@ class PhysicsEntity:
 
         if isinstance(value, str) and value not in ('box', 'sphere', 'capsule', 'mesh'):
             raise ValueError(f"Incorrect value for auto-fitted collider: {value}. Choose one of: 'box', 'sphere', 'capsule', 'mesh'")
-
         elif value == 'box' or value == 'plane':
             if self.entity.model:
                 _bounds = self.entity.model_bounds
                 self._collider = BoxCollider(center=_bounds.center-(_bounds.size*self.entity.origin), size=_bounds.size)
             else:
                 self._collider = BoxCollider()
-
         elif value == 'mesh':
             self._collider = MeshCollider(self.entity.model)
 
@@ -494,6 +497,7 @@ class PhysicsEntity:
 
     def enabled_getter(self):
         return getattr(self, '_enabled', True)
+
     def enabled_setter(self, value):
         self._enabled = value
         if hasattr(self, 'entity'):
@@ -504,24 +508,14 @@ class PhysicsEntity:
             else:
                 self.world.removeRigidBody(self.node)
 
-
     def intersects(self, other=None, ignore=None):
         if not other:
             result = self.world.contactTest(self.node)
         else:
             result = self.world.contactTestPair(self.node, other)
-        # print(result.getNumContacts())
         if not ignore:
             return result.getNumContacts() > 0
 
         contacts = [result.getContact(i).getNode0() for i in range(result.getNumContacts())]
         contacts = [e for e in contacts if e not in ignore]
         return contacts
-        # if not result.getNumContacts():
-        #     return HitInfo()
-
-        # for i in range(result.getNumContacts()):
-        #     contact = result.getContact(i)
-        #     node0 = contact.getNode0()
-        #     node1 = contact.getNode1()
-        #     if node

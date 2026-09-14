@@ -1,5 +1,4 @@
 import time
-
 from ursina import application
 
 Wait = float
@@ -34,13 +33,11 @@ class Sequence:
         self.loop = loop
         self.auto_destroy = auto_destroy
         self.started = started
-
         for key, value in kwargs.items():
             setattr(self, key, value)
 
         self.generate()
         application.sequences.append(self)
-
 
     def generate(self):
         self.duration = 0
@@ -57,7 +54,6 @@ class Sequence:
                 self.func_call_time.append(self.duration)
                 self.func_finished_statuses.append(False)
 
-        # print('-----------')
     def __str__(self):
         return '\n'.join([str(e) for e in zip(self.funcs, self.func_call_time, self.func_finished_statuses, strict=True)])
 
@@ -65,9 +61,7 @@ class Sequence:
         self.start()
         return self
 
-
     def append(self, arg, regenerate=True):
-        # print('---------------', arg, callable(arg))
         if not callable(arg) and not isinstance(arg, int | float):
             raise TypeError(f'Invalid type: {arg}. Must be callable, Func, Wait or float.')
 
@@ -110,18 +104,16 @@ class Sequence:
     def finished(self):
         return self.t >= self.duration
 
-
     def update(self):
         if not self.started:
             return
-
+        
         if self.ignore_paused is False and (self.paused or application.paused):
             return
-
+        
         if self.entity and (not self.entity.enabled or self.entity.ignore):
             return
-
-
+        
         if self.time_step is None:
             if not self.unscaled:
                 self.t += time.dt * self.time_scale
@@ -135,13 +127,12 @@ class Sequence:
                 f()
                 self.func_finished_statuses[i] = True
 
-
         if self.t >= self.duration:
             if self.loop:
                 for i, f in enumerate(self.funcs):
                     self.func_finished_statuses[i] = False
-
-                if time.dt > self.duration: # if delta time is too big, set t to 0 so it doesn't get stuck, but allow desync.
+                # if delta time is too big, set t to 0 so it doesn't get stuck, but allow desync.
+                if time.dt > self.duration:
                     self.t = 0
                 else:
                     self.t -= self.duration
