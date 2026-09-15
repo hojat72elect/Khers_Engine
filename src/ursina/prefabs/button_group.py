@@ -11,12 +11,10 @@ class ButtonGroup(Entity):
         super().__init__()
         self.buttons = []
         self.selected = []
-
         self.deselected_color =         Button.default_color
         self.highlight_color =          Button.default_highlight_color if Button.default_highlight_color is not None else Button.default_color.tint(.2)
         self.selected_color =           ButtonGroup.default_selected_color
         self.highlight_selected_color = ButtonGroup.default_highlight_selected_color
-
         self.min_selection = min_selection
         self.max_selection = max(min_selection, max_selection)
         self.origin = origin
@@ -27,10 +25,8 @@ class ButtonGroup(Entity):
             self.label = label
 
         self.options = options
-
         self.parent = camera.ui
         self.scale = Text.size * 2
-
 
         for key, value in kwargs.items():
             setattr(self, key, value)
@@ -42,11 +38,9 @@ class ButtonGroup(Entity):
             for i in range(min_selection):
                 self.select(self.buttons[i])
 
-
     def options_setter(self, value):
         self._options = value
         self.layout()
-
 
     def origin_setter(self, value):
         if not isinstance(value, Vec2):
@@ -66,12 +60,10 @@ class ButtonGroup(Entity):
     def value_setter(self, value):
         [self.select(b) for b in self.buttons if b.value in value]
 
-
     def label_setter(self, value):
         if not self.label_text_entity:
             self.label_text_entity = Text(parent=self, world_scale=25/2, origin=(0,-.5), position=(0,0,-1), color=color.text_color)
         self.label_text_entity.text = value
-
 
     def layout(self):
         [destroy(c) for c in self.buttons]
@@ -94,11 +86,9 @@ class ButtonGroup(Entity):
                 self.label_text_entity.x = -(width * min(len(self.buttons), self.max_x) * .5)
                 self.label_text_entity.origin = Vec2(.5,0)
 
-
     def input(self, key):
         if key == 'left mouse down' and mouse.hovered_entity in self.buttons:
             self.select(mouse.hovered_entity)
-
 
     def select(self, b):
         if b in self.selected and self.min_selection > 0 and len(self.selected) >= self.min_selection:
@@ -117,8 +107,6 @@ class ButtonGroup(Entity):
                 self.selected.pop(0)
 
         self.on_value_changed()
-
-
 
     def on_value_changed(self): # assign a function to this to make something happen when you change the ButtonGroup's value
         pass

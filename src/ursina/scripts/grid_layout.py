@@ -9,7 +9,6 @@ def grid_layout(l, max_x=8, spacing=(0,0), origin=(-.5,.5), offset=(0,0), use_ab
     origin = Vec2(*origin)
     offset = Vec2(*offset)
 
-
     dimensions = l[0].bounds.size if not use_abosulte_spacing else spacing
     direction = [-e*2 for e in origin]
     direction = Vec2(*[1 if e == 0 else e for e in direction])

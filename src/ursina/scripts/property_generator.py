@@ -7,7 +7,6 @@ def generate_properties_for_class(getter_suffix='_getter', setter_suffix='_sette
         setters = {}
         deleters = {}
 
-        # local_methods = dir(cls)
         local_methods = {x:y for x, y in cls.__dict__.items() if isinstance(y, FunctionType | classmethod | staticmethod)}
         for name in local_methods:
             if name.endswith(getter_suffix):
@@ -32,7 +31,6 @@ def generate_properties_for_class(getter_suffix='_getter', setter_suffix='_sette
             deleter = deleters.get(name, None)
 
             if not getter:
-                # print('make default getter for', cls, name, f'_{name}')
                 def default_getter(cls, name=name):
                     return getattr(cls, f'_{name}', None)
                 getter = default_getter

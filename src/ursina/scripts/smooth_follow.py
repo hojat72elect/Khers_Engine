@@ -8,7 +8,6 @@ class SmoothFollow:
         self.rotation_speed = rotation_speed
         self.rotation_offset = rotation_offset
 
-
     def update(self):
         if not self.target:
             return

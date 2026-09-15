@@ -7,8 +7,6 @@ from ursina.shaders.matcap_shader import matcap_shader
 from ursina.shaders.colored_lights_shader import colored_lights_shader
 from ursina.shaders.transition_shader import transition_shader
 
-
-
 # post processing effects
 from ursina.shaders.screenspace_shaders.camera_vertical_blur import camera_vertical_blur_shader
 from ursina.shaders.screenspace_shaders.camera_contrast import camera_contrast_shader

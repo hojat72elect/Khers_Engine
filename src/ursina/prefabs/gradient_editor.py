@@ -12,7 +12,6 @@ class GradientEditor(Entity):
 
         self.color_picker = ColorPicker(parent=self, scale=.75, enabled=False, show_exit_button=True)
         self.color_picker.exit_button.on_click = self.stop_editing_color
-
         self.resolution = resolution
         self.sliders = []
         for i in range(3):
@@ -33,7 +32,6 @@ class GradientEditor(Entity):
 
         self.gradient_renderer = Entity(parent=self, model=Plane((resolution,1)), rotation_x=-90, scale=Vec3(.5,1,.05), y=-.035)
         self.copy_button = Button(parent=self, scale=Vec2(.05,.025)*1, text='copy', text_size=.5, origin=(.5,-.5), x=-.25-.01, y=-.06, on_click=self.copy)
-
         self.on_value_changed = on_value_changed    # set this to a function you want to be called when the slider changes
         self.value = value
 
@@ -51,11 +49,9 @@ class GradientEditor(Entity):
             self.value = self.value
         self.color_picker.on_value_changed = _set_color
 
-
     def stop_editing_color(self):
         self.color_picker.enabled = False
         self.color_picker.on_value_changed = None
-
 
     def preview_gradient(self):
         self.gradient_renderer.model.colors = [self.gradient[int((v.x+.5)*self.resolution)] for v in self.gradient_renderer.model.vertices]
@@ -66,7 +62,6 @@ class GradientEditor(Entity):
         index_color_dict['0'] = min(self.sliders, key=lambda s:s.value).knob.color
         index_color_dict[str(self.resolution)] = max(self.sliders, key=lambda s:s.value).knob.color
         return make_gradient(index_color_dict)
-
 
     def value_getter(self):
         return {str(slider.value) : slider.knob.color for slider in self.sliders}

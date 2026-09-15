@@ -7,14 +7,12 @@ class FirstPersonController(Entity):
         self.speed = 5
         self.height = height
         self.camera_pivot = Entity(parent=self, y=self.height)
-
         camera.parent = self.camera_pivot
         camera.position = Vec3.zero
         camera.rotation = Vec3.zero
         camera.fov = 90
         mouse.locked = True
         self.mouse_sensitivity = Vec2(40, 40)
-
         self.gravity = 1
         self.grounded = False
         self.jump_height = 2
@@ -22,7 +20,6 @@ class FirstPersonController(Entity):
         self.fall_after = .35 # will interrupt jump up
         self.jumping = False
         self.air_time = 0
-
         self.traverse_target = scene     # by default, it will collide with everything. change this to change the raycasts' traverse targets.
         self.ignore_list = [self, ]
         self.on_destroy = self.on_disable
@@ -36,17 +33,13 @@ class FirstPersonController(Entity):
             if ray.hit:
                 self.y = ray.world_point.y
 
-
     def on_window_ready(self):
         camera.rotation = Vec3.zero
 
-
     def update(self):
         self.rotation_y += mouse.velocity[0] * self.mouse_sensitivity[1]
-
         self.camera_pivot.rotation_x -= mouse.velocity[1] * self.mouse_sensitivity[0]
         self.camera_pivot.rotation_x= clamp(self.camera_pivot.rotation_x, -90, 90)
-
         self.direction = Vec3(
             self.forward * (held_keys['w'] - held_keys['s'])
             + self.right * (held_keys['d'] - held_keys['a'])
@@ -67,9 +60,6 @@ class FirstPersonController(Entity):
                 move_amount[2] = max(move_amount[2], 0)
             self.position += move_amount
 
-            # self.position += self.direction * self.speed * time.dt
-
-
         if self.gravity:
             # gravity
             ray = raycast(self.world_position+(0,self.height,0), self.down, traverse_target=self.traverse_target, ignore=self.ignore_list)
@@ -89,7 +79,6 @@ class FirstPersonController(Entity):
             self.y -= min(self.air_time, ray.distance-.05) * time.dt * 100
             self.air_time += time.dt * .25 * self.gravity
 
-
     def input(self, key):
         if key == 'space':
             self.jump()
@@ -102,16 +91,13 @@ class FirstPersonController(Entity):
         self.animate_y(self.y+self.jump_height, self.jump_up_duration, resolution=int(1//time.dt), curve=curve.out_expo)
         invoke(self.start_fall, delay=self.fall_after)
 
-
     def start_fall(self):
         self.y_animator.pause()
         self.jumping = False
 
     def land(self):
-        # print('land')
         self.air_time = 0
         self.grounded = True
-
 
     def on_enable(self):
         mouse.locked = True
@@ -120,7 +106,6 @@ class FirstPersonController(Entity):
         if hasattr(self, 'camera_pivot') and hasattr(self, '_original_camera_transform'):
             camera.parent = self.camera_pivot
             camera.transform = self._original_camera_transform
-
 
     def on_disable(self):
         mouse.locked = False

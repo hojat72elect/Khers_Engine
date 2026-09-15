@@ -14,14 +14,12 @@ class ButtonList(Entity):
         self.highlight = Entity(parent=self.bg, model='quad', color=highlight_color, scale=(1,self.button_height), origin=(-.5,.5), z=-.01, add_to_scene_entities=False)
         self.selection_marker = Entity(parent=self.bg, model='quad', color=selected_color, scale=(1,self.button_height), origin=(-.5,.5), z=-.02, enabled=False, add_to_scene_entities=False)
         self.button_dict = button_dict
-
         self.popup = popup
         if self.popup:
             self.close_button = Entity(parent=self, scale=Vec3(100,100,.1), model='quad', collider='box', visible_self=False, on_click=self.disable)
 
         for key, value in kwargs.items():
             setattr(self, key, value)
-
 
     @property
     def button_dict(self):
@@ -32,7 +30,6 @@ class ButtonList(Entity):
         self._button_dict = value
         self.actions = list(self._button_dict.values())
         self.bg.scale_y = self.button_height * len(value) * Text.size
-        # self.bg.model='circle'
         self.bg.model = 'quad'
         self.bg.origin = self.bg.origin
 
@@ -62,14 +59,12 @@ class ButtonList(Entity):
         if key == 'left mouse down' and not self.bg.hovered and self.clear_selected_on_click_outside:
             self.selection_marker.enabled = False
 
-
     def update(self):
         self.highlight.enabled = mouse.hovered_entity == self.bg
         if mouse.hovered_entity == self.bg:
             y = floor(-mouse.point.y * len(self.button_dict))
             y = min(y, len(self.button_dict)-1)
             self.highlight.y = -y / len(self.button_dict)
-
 
     def on_disable(self):
         self.selection_marker.enabled = False
@@ -78,14 +73,12 @@ class ButtonList(Entity):
         if self.clear_selected_on_enable:
             self.selected = None
 
-
     @property
     def selected(self):
         if not self.selection_marker.enabled:
             return None
         index = int(-self.selection_marker.y * len(self.button_dict))
         return self.button_dict.items()[index]
-
 
     @selected.setter
     def selected(self, value):

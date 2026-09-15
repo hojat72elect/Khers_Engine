@@ -11,8 +11,6 @@ class EditorCamera(Entity):
         camera.editor_position = camera.position
         super().__init__(name='editor_camera', eternal=False)
 
-        # self.gizmo = Entity(parent=self, model='sphere', color=color.orange, scale=.025, add_to_scene_entities=False, enabled=False)
-
         self.rotation_speed = rotation_speed
         self.pan_speed = pan_speed
         self.move_speed = move_speed
@@ -21,7 +19,6 @@ class EditorCamera(Entity):
         self.zoom_smoothing = zoom_smoothing
         self.rotate_around_mouse_hit = rotate_around_mouse_hit
         self.ignore_scroll_on_ui = ignore_scroll_on_ui
-
         self.smoothing_helper = Entity(add_to_scene_entities=False)
         self.rotation_smoothing = rotation_smoothing
         self.look_at = self.smoothing_helper.look_at
@@ -37,7 +34,6 @@ class EditorCamera(Entity):
         self.on_destroy = self.on_disable
         self.shortcuts = {'toggle_orthographic':'shift+p', 'focus':'shift+f', 'reset_center':'alt+f'}
 
-
     def on_enable(self):
         self.org_cam_par = camera.parent
         self.org_cam_pos = camera.position
@@ -48,7 +44,6 @@ class EditorCamera(Entity):
         self.target_z = camera.z
         self.target_fov = camera.fov
 
-
     def on_disable(self):
         camera.editor_position = camera.position
 
@@ -58,10 +53,8 @@ class EditorCamera(Entity):
             camera.position = self.org_cam_pos
             camera.rotation = self.org_cam_rot
 
-
     def on_destroy(self):
         destroy(self.smoothing_helper)
-
 
     def input(self, key):
         combined_key = ''.join(e+'+' for e in ('control', 'shift', 'alt') if held_keys[e] and not e == key) + key
@@ -73,17 +66,11 @@ class EditorCamera(Entity):
             else:
                 self.perspective_fov = camera.fov
                 camera.fov = self.orthographic_fov
-
             camera.orthographic = not camera.orthographic
-
-
         elif combined_key == self.shortcuts['reset_center']:
             self.animate_position(self.start_position, duration=.1, curve=curve.linear)
-
         elif combined_key == self.shortcuts['focus'] and mouse.world_point:
             self.animate_position(mouse.world_point, duration=.1, curve=curve.linear)
-
-
         elif key == 'scroll up':
             if self.ignore_scroll_on_ui and mouse.hovered_entity and mouse.hovered_entity.has_ancestor(camera.ui):
                 return
@@ -94,41 +81,33 @@ class EditorCamera(Entity):
             else:
                 self.target_fov -= self.zoom_speed * (abs(self.target_fov)*.1)
                 self.target_fov = clamp(self.target_fov, 1, 200)
-
         elif key == 'scroll down':
             if self.ignore_scroll_on_ui and mouse.hovered_entity and mouse.hovered_entity.has_ancestor(camera.ui):
                 return
-
             if not camera.orthographic:
                 # camera.world_position += camera.back * self.zoom_speed * 100 * time.dt * (abs(camera.z)*.1)
                 self.target_z -= self.zoom_speed * (abs(self.target_z)*.1)
             else:
                 self.target_fov += self.zoom_speed * (abs(self.target_fov)*.1)
                 self.target_fov = clamp(self.target_fov, 1, 200)
-
         elif key == 'right mouse down' or key == 'middle mouse down':
             if mouse.hovered_entity and self.rotate_around_mouse_hit:
                 org_pos = camera.world_position
                 self.world_position = mouse.world_point
                 camera.world_position = org_pos
 
-
-
     def update(self):
         if held_keys['gamepad right stick y'] or held_keys['gamepad right stick x']:
             self.smoothing_helper.rotation_x -= held_keys['gamepad right stick y'] * self.rotation_speed / 100
             self.smoothing_helper.rotation_y += held_keys['gamepad right stick x'] * self.rotation_speed / 100
-
         elif held_keys[self.rotate_key]:
             self.smoothing_helper.rotation_x -= mouse.velocity[1] * self.rotation_speed
             self.smoothing_helper.rotation_y += mouse.velocity[0] * self.rotation_speed
-
             self.direction = Vec3(
                 self.forward * (held_keys['w'] - held_keys['s'])
                 + self.right * (held_keys['d'] - held_keys['a'])
                 + self.up    * (held_keys['e'] - held_keys['q'])
                 ).normalized()
-
             self.position += self.direction * (self.move_speed + (self.move_speed * held_keys['shift']) - (self.move_speed*.9 * held_keys['alt'])) * time.dt
 
             if self.target_z < 0:
@@ -148,10 +127,8 @@ class EditorCamera(Entity):
             self.position -= camera.up * mouse.velocity[1] * self.pan_speed[1] * zoom_compensation
 
         if not camera.orthographic:
-            # camera.z = lerp(camera.z, self.target_z, time.dt*self.zoom_smoothing)
             camera.z = lerp_exponential_decay(camera.z, self.target_z, time.dt*self.zoom_smoothing)
         else:
-            # camera.fov = lerp(camera.fov, self.target_fov, time.dt*self.zoom_smoothing)
             camera.fov = lerp_exponential_decay(camera.fov, self.target_fov, time.dt*self.zoom_smoothing/4)
 
         if self.rotation_smoothing == 0:
@@ -159,7 +136,6 @@ class EditorCamera(Entity):
         else:
             self.quaternion = slerp(self.quaternion, self.smoothing_helper.quaternion, time.dt*self.rotation_smoothing)
             camera.world_rotation_z = 0
-
 
     def __setattr__(self, name, value):
         super().__setattr__(name, value)

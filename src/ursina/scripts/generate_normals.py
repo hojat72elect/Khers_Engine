@@ -20,7 +20,6 @@ def generate_normals(vertices, triangles=None, smooth=True):
     else:
         new_tris = [(triangles[i], triangles[i+1], triangles[i+2]) for i in range(0, len(triangles), 3)]
 
-
     vertices = numpy.array(vertices)
     triangles = numpy.array(new_tris)
 
@@ -61,6 +60,5 @@ def generate_normals(vertices, triangles=None, smooth=True):
                 average_normal = sum(normals[e] for e in overlapping_verts_indices) / 3
                 for index in overlapping_verts_indices:
                     normals[index] = average_normal
-
 
     return normals

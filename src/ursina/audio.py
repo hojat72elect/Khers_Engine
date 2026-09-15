@@ -6,11 +6,10 @@ from ursina.destroy import destroy as _destroy
 from ursina.string_utilities import print_warning
 from ursina.scripts.property_generator import generate_properties_for_class
 from pathlib import Path
-
 from panda3d.core import Filename
 from panda3d.core import AudioManager
-
 from ursina.ursinastuff import DotDict
+
 audio_groups = DotDict(
     music=DotDict(volume_multiplier=1),
     ambient=DotDict(volume_multiplier=1),
@@ -28,7 +27,6 @@ class Audio(Entity):
 
     def __init__(self, sound_file_name='', volume=1, pitch=1, balance=0, loop=False, loops=1, autoplay=True, auto_destroy=False, group='sfx', **kwargs):
         super().__init__(**kwargs)
-        # printvar(sound_file_name)
         self.clip = sound_file_name
         self.group = group
         if not self.clip:
@@ -44,10 +42,8 @@ class Audio(Entity):
         self.autoplay = autoplay
         self.auto_destroy = auto_destroy
 
-
         if self.autoplay:
             self.play()
-
         if self.auto_destroy:
             invoke(self.stop, destroy=True, delay=self.length)
 
@@ -73,12 +69,8 @@ class Audio(Entity):
         self._clip.setLoopCount(value)
 
     def clip_setter(self, value):
-        # if value in audio_clip_cache:
-        #     self._clip = copy(audio_clip_cache[value])
-        #     return
-
         if isinstance(value, Path):
-            self._clip = _audio_manager.getSound(Filename.fromOsSpecific(str(value.resolve())))  # type: ignore
+            self._clip = _audio_manager.getSound(Filename.fromOsSpecific(str(value.resolve())))
             return
 
         if isinstance(value, str):
@@ -95,7 +87,6 @@ class Audio(Entity):
                         self.path = str(f.resolve())
                         self._clip = _audio_manager.getSound(Filename.fromOsSpecific(self.path))  # type: ignore
                         audio_clip_cache[value] = self._clip
-                        # print('...loaded audio clip:', p, self._clip)
                         return
 
             self._clip = None
@@ -132,7 +123,6 @@ class Audio(Entity):
             return
 
         if self.clip:
-            # print('play from:', start, self.clip)
             self.time = start
             self.clip.play()
         else:

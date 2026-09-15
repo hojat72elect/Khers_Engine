@@ -7,19 +7,14 @@ from pathlib import Path
 from shutil import copy
 from textwrap import dedent
 import platform as py_platform
-
-
 from ursina.cmd_tool_maker import auto_log_method_calls, auto_validate_input, make_command_line_app
-
 
 def ask_to_overwrite(path):
     msg = f'{path} already exists. \nProceed to delete and overwrite?'
     return input(f'{msg} (y/N) ').lower() == 'y'
 
-
 PROJECT_FOLDER = Path.cwd()
 SRC_FOLDER = PROJECT_FOLDER / PROJECT_FOLDER.name
-
 print('SRC_FOLDER:', SRC_FOLDER)
 
 @auto_validate_input
@@ -29,7 +24,6 @@ class UrsinaBuild:
     def __init__(self):
         self.ignore_folders = []
         self.ignore_filetypes = []
-
 
     def build(self,
             builds_folder='builds',
@@ -67,8 +61,6 @@ class UrsinaBuild:
 
         print('build complete! time elapsed:', time.time() - start_time)
 
-
-
     def build_engine(self, overwrite=False, builds_folder='builds', build_name='', platform='Windows', python_version='', use_cache=True): # copies python and modules into the 'python' folder
         build_name = build_name if build_name else PROJECT_FOLDER.name
         into = Path(f'{builds_folder}/{build_name}_{platform}/python/')
@@ -85,7 +77,6 @@ class UrsinaBuild:
         with open(Path(f'{builds_folder}/{build_name}_{platform}')/'.is_ursina_build', 'w') as f:
             f.write('# This file is just here to tell ursina this is a build. In builds, application.development_mode is False, which results in things like fps and entity counters being disabled, and the window starting in fullscreen.')
         return self
-
 
     def copy_python(self,
                     builds_folder='builds',
@@ -104,8 +95,6 @@ class UrsinaBuild:
 
         build_name = build_name if build_name else PROJECT_FOLDER.name
         into = Path(f'{builds_folder}/{build_name}_{platform}/python/')
-        # if not use_cache:
-        #     shutil.rmtree(str(cache_dir))
         into.mkdir(parents=True, exist_ok=True)
 
         if isinstance(cache_dir, str):
@@ -143,7 +132,6 @@ class UrsinaBuild:
 
         return self
 
-
     def copy_modules(self,
                     builds_folder='builds',
                     build_name='',
@@ -172,14 +160,11 @@ class UrsinaBuild:
         if not abi:
             abi = f'cp{major}{minor}'
 
-        # ensure requirements.txt exists
-        # if not (PROJECT_FOLDER / 'requirements.txt').exists():
         subprocess.run(['uv', 'pip', 'compile', 'pyproject.toml', '-o', 'requirements.txt'], capture_output=True, text=True)
 
         with open(PROJECT_FOLDER / 'requirements.txt') as f:
             packages = [line for line in f.read().split('\n') if line and not line.strip().startswith('#')]
         print('packages:', '\n'.join(packages))
-
 
         for pkg in packages:
 
@@ -209,7 +194,6 @@ class UrsinaBuild:
                     print("Failed building local wheel:", pkg)
 
                 continue
-
 
             # download package
             print("Downloading:", pkg)
@@ -266,8 +250,6 @@ class UrsinaBuild:
         print('✅ Module install complete (cached+extracted).')
         return self
 
-
-
     def build_game(self, builds_folder='builds', build_name='', platform='Windows', overwrite=False, compile_to_pyc=True, copy_assets=True):
         build_name = build_name if build_name else PROJECT_FOLDER.name
         into = Path(f'{builds_folder}/{build_name}_{platform}/{PROJECT_FOLDER.name}/')
@@ -294,7 +276,6 @@ class UrsinaBuild:
         self.make_bat_file(builds_folder=builds_folder, build_name=build_name, platform=platform, is_pyc=compile_to_pyc)
         return self
 
-
     def compile_to_pyc(self, builds_folder='builds', build_name='', platform='Windows', glob_pattern='**//*.py'):
         build_name = build_name if build_name else PROJECT_FOLDER.name
         into = Path(f'{builds_folder}/{build_name}_{platform}/{PROJECT_FOLDER.name}/')
@@ -315,7 +296,6 @@ class UrsinaBuild:
             if 'scenes' in parents:
                 continue
             py_compile.compile(f, into / f'{f.stem}.pyc')
-
 
     def copy_assets(self,
             builds_folder='builds',
@@ -343,7 +323,6 @@ class UrsinaBuild:
         if compressed_models_folder.exists():
             compressed_models = list(compressed_models_folder.glob('**/*.bam'))
             compressed_models = [f.stem for f in compressed_models if f.suffix not in ignore_filetypes]
-
 
         for f in SRC_FOLDER.rglob('*'):
             if f.is_dir():
@@ -402,15 +381,3 @@ class UrsinaBuild:
                 '''
             ))
         return self
-
-    # make exe
-    # import subprocess
-    # import importlib
-    # spec = importlib.util.find_spec('ursina')
-    # ursina_path = Path(spec.origin).parent
-    # subprocess.call([
-    #     f'{ursina_path}\\scripts\\_bat_to_exe.bat',
-    #     f'{build_folder}\\{project_name}.bat',
-    #     f'\\build\\{PROJECT_FOLDER.stem}.exe'
-    #     ])
-

@@ -22,7 +22,6 @@ _ray.setOrigin(Vec3(0, 0, 0))
 _ray.setDirection(Vec3(0, 0, 1))
 _raycaster._pickerNode.addSolid(_ray)
 
-
 def raycast(
     origin,
     direction: Vec3 = (0, 0, 1),

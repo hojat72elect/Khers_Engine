@@ -2,7 +2,6 @@ import bpy
 import os
 import sys
 
-
 blend_file_path = bpy.data.filepath
 filepath = sys.argv[-1]
 mtl_pattern = '*.mtl' if '--export_mtl' in sys.argv else ''

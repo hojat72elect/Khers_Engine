@@ -19,15 +19,9 @@ class ASCIIEditor(GridEditor):
         rotated_grid = rotate_2d_list(self.grid)
         self.text_entity.text = '\n'.join([''.join(reversed(line)) for line in reversed(rotated_grid)])
 
-
     def input(self, key):
         super().input(key)
         if held_keys['control'] and key == 'c':
             print(self.text_entity.text)
             pyperclip.copy(self.text_entity.text)
-        #
-        # if held_keys['control'] and key == 'v' and pyperclip.paste().count('\n') == (h-1):
-        #     t.text = pyperclip.paste()
-        #     undo_index += 1
-        #     undo_stack = undo_stack[:undo_index]
-        #     undo_stack.append(deepcopy(grid))
+        

@@ -1,7 +1,6 @@
 import sys
 import warnings
 
-
 # can removed when Python3.13 releases
 class deprecated:
     def __init__(self, message: str, /, *, category: type[Warning] | None = DeprecationWarning, stacklevel: int = 1, ) -> None:
@@ -78,7 +77,6 @@ class deprecated:
                 "@deprecated decorator with non-None category must be applied to "
                 f"a class or callable, not {arg!r}"
             )
-
 
 _DEPRECATED_MSG = "{name!r} is deprecated and slated for removal in Python {remove}"
 

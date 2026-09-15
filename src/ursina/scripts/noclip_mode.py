@@ -6,7 +6,6 @@ class NoclipMode:
         self.require_key = require_key
         self.ignore_paused = True
 
-
     def input(self, key):
         if key == 'shift':
             # turn of entity's update and input functions

@@ -105,12 +105,10 @@ class Array2D(list):
         result = '\n'+'\n'.join(lines)
         return result
 
-
     def map(self, func):
         for (x, y), value in enumerate_2d(self):
             self[x][y] = func(x, y, value)
         return self
-
 
     def reset(self):
         for x in range(self.width):
@@ -161,17 +159,14 @@ class Array2D(list):
             return default
         return self[x][y]
 
-
     def set(self, x, y, value):
         x, y = int(x), int(y)
         if x < 0 or x >= self.width or y < 0 or y >= self.height:
             return
         self[x][y] = value
 
-
     def get_area(self, start, end, allow_out_of_bounds=False):
         cropped_array = Array2D(width=end[0]-start[0], height=end[1]-start[1], default_value=self.default_value)
-        # print('original_size:', self.width, self.height, 'new_size:', end[0]-start[0], end[1]-start[1])
         if not allow_out_of_bounds:
             for (x, y), _ in enumerate_2d(cropped_array):
                 cropped_array[x][y] = self[int(x+start[0])][int(y+start[1])]
@@ -208,12 +203,10 @@ class Array3D(list):
             self.depth = int(depth)
             super().__init__([[[self.default_value for _ in range(self.depth)] for _ in range(self.height)] for _ in range(self.width)])
 
-
     @property
     def size(self):
         from ursina.vec3 import Vec3
         return Vec3(self.width, self.height, self.depth)
-
 
     @property
     def bounds(self):
@@ -237,7 +230,6 @@ class Array3D(list):
 
         return Bounds(start=Vec3(min_x, min_y, min_z), end=Vec3(max_x, max_y, max_z))
 
-
     def get(self, x, y, z, default=0):
         x, y, z = int(x), int(y), int(z)
         if x < 0 or y < 0 or z < 0:
@@ -247,18 +239,15 @@ class Array3D(list):
         except:
             return default
 
-
     def set(self, x, y, z, value):
         x, y, z = int(x), int(y), int(z)
         if x < 0 or x >= self.width or y < 0 or y >= self.height or z < 0 or z >= self.depth:
             return
         self[x][y][z] = value
 
-
     def reset(self):
         for x,y,z, _ in enumerate_3d(self):
             self[x][y][z] = self.default_value
-
 
     def paste(self, data, x, y, z, ignore=-1):
         for true_x in range(x, min(self.width, x+data.width)):

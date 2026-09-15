@@ -43,14 +43,11 @@ class Animation(Sprite):
         self.is_playing = False
         self.autoplay = autoplay
 
-
         for key, value in kwargs.items():
             setattr(self, key ,value)
 
-
         if self.autoplay:
             self.start()
-
 
     def start(self):
         if self.is_playing:

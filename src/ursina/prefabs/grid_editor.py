@@ -1,10 +1,8 @@
 import sys
 from copy import deepcopy
 from math import floor
-
 import pyperclip
 from PIL import Image
-
 from ursina import *
 from ursina.array_tools import Array2D, enumerate_2d
 from ursina.scripts.property_generator import generate_properties_for_class
@@ -22,11 +20,9 @@ class GridEditor(Entity):
             self.grid = Array2D(self.w, self.h, default_value=palette[0])
         self.brush_size = 1
         self.auto_render = True
-
         self.gizmo_parent = Entity(parent=self.canvas, scale=(1/self.w, 1/self.h))
         self.cursor = Entity(parent=self.gizmo_parent)
         self.cursor_graphics = Entity(parent=self.cursor, model=Quad(segments=0, mode='line', thickness=2), origin=(-.5,-.5), color=hsv(120,1,1,.5), z=-.02, shader=unlit_shader)
-
         self.selected_char = palette[1]
         self.palette = palette
         self.start_pos = None
@@ -336,14 +332,11 @@ class GridEditor(Entity):
             self.enter_paste_mode()
 
         elif self.is_in_paste_mode and combined_key in self.shortcuts['flip_pasted_horizontally']:
-            # for (x,y), colr in enumerate(self.pastedata):
-            #     self.paste_data[x][y] = self.paste_data[][]
             self.paste_data = Array2D(data=self.paste_data[::-1])
             self.update_paste_texture()
 
         elif combined_key in self.shortcuts['flip_horizontally']:
             self.flip_horizontally()
-
 
     def undo(self):
         self.undo_index -= 1
@@ -361,8 +354,6 @@ class GridEditor(Entity):
         self.undo_index += 1
         self.undo_stack = self.undo_stack[:self.undo_index]
         self.undo_stack.append(deepcopy(self.grid))
-        # print('-----', self.undo_index, len(self.undo_stack))
-
 
     def floodfill(self, matrix, x, y, first=True):
         if matrix.get(x, y, default=self.selected_char) == self.selected_char:
@@ -393,16 +384,10 @@ class GridEditor(Entity):
         # crop the matrix based on the boolean values
         start_x = min(rows)
         start_y = min(cols)
-        # end_x = max(rows) + 1
-        # end_y = max(cols) + 1
         selection_width =  (max(rows) + 1) - start_x
         selection_height = (max(cols) + 1) - start_y
-        # cropped_matrix = [[matrix[i][j] for j in range(start_y, max(cols) + 1)] for i in range(start_x, max(rows) + 1)]
-
         copy_data = [[tuple(self.grid[start_x+x][start_y+y]) if self.selection_matrix[start_x+x][start_y+y] else None for y in range(selection_height)] for x in range(selection_width)]
-
         copy_data = self.grid.get_area(Vec2(start_x, start_y).XY, Vec2(start_x+selection_width, start_y+selection_height).XY)
-        # pyperclip.copy(json.dumps(dict(data=copy_data)))
         for (x,y), colr in enumerate_2d(copy_data):
             copy_data[x][y] = color.rgb_to_hex(*colr)
 
@@ -416,7 +401,6 @@ class GridEditor(Entity):
                 if self.selection_matrix[x][y]:
                     self.grid[x][y] = color.white
         self.render()
-
 
     def enter_paste_mode(self):
         self.is_in_paste_mode = True
@@ -436,7 +420,6 @@ class GridEditor(Entity):
 
         w = self.paste_data.width
         h = self.paste_data.height
-
         self.temp_paste_layer.enabled = True
         self.temp_paste_layer.scale = (w, h)
 
@@ -444,12 +427,10 @@ class GridEditor(Entity):
             self.temp_paste_layer.texture = Texture(Image.new(mode='RGBA', size=(w,h), color=(0,0,0,0)))
         self.update_paste_texture()
 
-
     def update_paste_texture(self):
         for (x,y), colr in enumerate_2d(self.paste_data):
             self.temp_paste_layer.texture.set_pixel(x, y, colr)
         self.temp_paste_layer.texture.apply()
-
 
     def paste(self, discard=False, record_undo=True):
         self.is_in_paste_mode = False
@@ -458,21 +439,17 @@ class GridEditor(Entity):
             return
 
         self.grid.paste(self.paste_data, self.cursor.X, self.cursor.Y, ignore=color.clear)
-
         self.clear_selection()
         self.render()
-
 
     def flip_horizontally(self):
         self.grid = self.grid[::-1]
         self.render()
 
-
     def clear_selection(self):
         self.selection_matrix = [[0 for y in range(self.h)] for x in range(self.w)]
         self.selection_renderer.model.clear()
         print('clear selection')
-
 
     def render_selection(self):
         self.selection_renderer.model.clear(False)
@@ -488,7 +465,6 @@ class GridEditor(Entity):
                         verts.extend((Vec3(x,y,0), Vec3(x+1,y,0)))
                     if y >= self.h-1 or not self.selection_matrix[x][y+1]:
                         verts.extend((Vec3(x,y+1,0), Vec3(x+1,y+1,0)))
-
         self.selection_renderer.model.vertices = [v+Vec3(-.5,-.5,0) for v in verts]
         self.selection_renderer.model.triangles = [(i, i+1) for i in range(0, len(verts), 2)]
         self.selection_renderer.model.generate()
@@ -502,13 +478,10 @@ class PixelEditor(GridEditor):
         self.canvas.texture = texture
         self.w, self.h = int(texture.width), int(texture.height)
         self.canvas.scale_x = self.canvas.scale_y * self.w / self.h
-
-        # pixels = texture.pixels
         self.grid = Array2D(width=texture.width, height=texture.height)
         for (x,y), _ in enumerate_2d(self.grid):
             self.grid[x][y] = texture.get_pixel(x,y)
         self.canvas.texture.filtering = None
-
         self.gizmo_parent.scale = Vec2(1/self.w, 1/self.h)
         self.help_icon.scale = self.help_icon.target_scale
         self.clear_selection()
@@ -521,7 +494,6 @@ class PixelEditor(GridEditor):
         if render:
             self.render()
 
-
     def draw(self, x, y):
         for _y in range(max(y,0), min(y+self.brush_size, self.h)):
             for _x in range(max(x,0), min(x+self.brush_size, self.w)):
@@ -530,18 +502,15 @@ class PixelEditor(GridEditor):
 
         self.canvas.texture.apply()
 
-
     def render(self):
         for (x,y), value in enumerate_2d(self.grid):
             self.canvas.texture.set_pixel(x, y, value)
 
         self.canvas.texture.apply()
 
-
     def save(self):
         if self.canvas.texture.path:
             self.canvas.texture.save(self.canvas.texture.path)
-            # print('saved:', self.canvas.texture.path)
 
     @property
     def texture(self):

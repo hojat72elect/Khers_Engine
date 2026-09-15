@@ -4,8 +4,6 @@ from ursina.shader import Shader
 from ursina.vec2 import Vec2
 from ursina.vec3 import Vec3
 from ursina import color
-# from ursina.camera import instance as camera
-# from ursina.scene import instance as scene
 
 unlit_shader = Shader(name='unlit_shader', language=Shader.GLSL, vertex = '''#version 140
 

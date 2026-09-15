@@ -10,7 +10,6 @@ class FileButton(Button):
         self.original_color = self.color
         self.selected = False
 
-
     def on_click(self):
         if len([e for e in self.parent.children if e.selected]) >= self.load_menu.selection_limit and not self.selected:
             for e in self.parent.children:  # clear selection
@@ -22,14 +21,12 @@ class FileButton(Button):
         else:
             self.load_menu.address_bar.text_entity.text = '<light_gray>' + str(self.load_menu.path.resolve())
 
-
     def on_double_click(self):
         if self.path.is_dir():
             self.load_menu.path = self.path
         else:
             self.selected = True
             self.load_menu.open()
-
 
     def selected_setter(self, value):
         self._selected = value
@@ -59,31 +56,23 @@ class FileBrowser(Entity):
         self.return_folders = False
         self.selection_limit = selection_limit
         self.max_buttons = 24
-
         self.title_bar = Button(parent=self, scale=(.9,.035), text='<gray>Open', color=color.dark_gray, highlight_color=color.dark_gray)
         self.address_bar = Button(parent=self, scale=(.8,.035), text='//', text_origin=(-.5,0), y=-.05, highlight_color=color.black, text_size=.75)
-        # self.address_bar.text_entity.scale *= .75
         self.address_bar.text_entity.x = -.5 + Text.get_width(' ')
         self.address_bar.text_entity.color = color.red
-
         self.folder_up_button = Button(parent=self, scale=(.035,.035), texture='arrow_down', rotation_z=180, position=(-.42,-.05,-1), color=color.white, highlight_color=color.azure, on_click=self.folder_up)
         self.button_parent = Entity(parent=self)
         self.back_panel = Entity(parent=self, model='quad', collider='box', origin_y=.5, scale=(.9,(self.max_buttons*.025)+.19), color=color._32, z=.1)
         self.bg = Button(parent=self, z=1, scale=(999,999), color=color.black66, highlight_color=color.black66, pressed_color=color.black66)
-
         self.cancel_button = Button(parent=self, scale=(.875*.24, .05), y=(-self.max_buttons*.025)-.15, origin_x=-.5, x=-.875/2, text='Cancel', on_click=self.close)
         self.open_button = Button(parent=self, scale=(.875*.74, .05), y=(-self.max_buttons*.025)-.15, origin_x=.5, x=.875/2, text='Open', color=color.dark_gray, on_click=self.open)
-
         self.cancel_button_2 = Button(parent=self.title_bar, model=Circle(), world_scale=self.title_bar.world_scale_y*.75, origin_x=.5, x=.495, z=-.1, text='<gray>x', on_click=self.close)
         self.cancel_button_2.text_entity.scale *= .75
-
         self.can_scroll_up_indicator = Entity(parent=self, model='quad', texture='arrow_down', rotation_z=180, scale=(.05,.05), y=-.0765, z=-.1, color=color.dark_gray, enabled=False, add_to_scene_entities=False)
         self.can_scroll_down_indicator = Entity(parent=self, model='quad', texture='arrow_down', scale=(.05,.05), y=(-self.max_buttons*.025)-.104, z=-.1, color=color.dark_gray, enabled=False, add_to_scene_entities=False)
 
         for key, value in kwargs.items():
             setattr(self, key ,value)
-
-
 
     def input(self, key):
         if key == 'scroll down':
@@ -93,7 +82,6 @@ class FileBrowser(Entity):
         if key == 'scroll up':
             if self.scroll > 0:
                 self.scroll -= 1
-
 
     def scroll_setter(self, value):
         self._scroll = value
@@ -108,14 +96,12 @@ class FileBrowser(Entity):
         self.can_scroll_up_indicator.enabled = value > 0
         self.can_scroll_down_indicator.enabled = value + self.max_buttons != len(self.button_parent.children)
 
-
     def path_setter(self, value):
         if not value:
             value = self.start_path
 
         self._path = value
         self.address_bar.text_entity.text = '<light_gray>' + str(value.resolve())
-
         files = [e for e in value.iterdir() if e.is_dir() or e.suffix in self.file_types or '.*' in self.file_types]
         files.sort(key=lambda x : x.name)
         files.sort(key=lambda x : x.is_file())  # directories first. sort is stable, so both directories and files are still sorted by name
@@ -126,24 +112,16 @@ class FileBrowser(Entity):
 
         for i, f in enumerate(files):
             prefix = ' <light_gray>'
-            # if f.is_dir():
-            #     prefix = '<gray> <image:folder>   <light_gray>'
-            # else:
-            #     prefix = ' <light_gray> <image:file_icon>   <default>'
             if i < len(self.button_parent.children):
                 # just update button name and path
                 self.button_parent.children[i].text_entity.text = prefix + f.name
                 self.button_parent.children[i].path = f
-
             else:
-                # print('create new:', i)
                 b = self.file_button_class(parent=self.button_parent, path=f, text_origin=(-.5,0), text=prefix+f.name, y=-i*.025 -.09, load_menu=self)
-
+        
         self.scroll = 0
 
-
     def on_enable(self):
-        # print('-------------', 'start path:', self.start_path)
         if not hasattr(self, 'path'):
             self.path = self.start_path
             self.scroll = 0
@@ -153,28 +131,22 @@ class FileBrowser(Entity):
         self.button_parent.y = 0
         self.scroll = 0
 
-
     def close(self):
         self.enabled = False
-
 
     def folder_up(self):
         self.path = self.path.parent
 
-
     def open(self, path=None):
         if not self.selection:
             return
-
         if not self.return_folders and self.selection[0].is_dir():
             self.path = self.selection[0]
             return
-
         if hasattr(self, 'on_submit'):
             self.on_submit(self.selection)
 
         self.close()
-
 
     def selection_getter(self):
         return [c.path for c in self.button_parent.children if c.selected == True]

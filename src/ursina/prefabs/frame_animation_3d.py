@@ -16,7 +16,6 @@ class FrameAnimation3d(Entity):
 
         self.frames = [Entity(parent=self, model=e.stem, enabled=False) for e in model_names]
         self.frames[0].enabled = True
-
         self.sequence = Sequence(loop=loop, auto_destroy=auto_destroy)
         for i, _frame in enumerate(self.frames):
             self.sequence.append(Func(setattr, self.frames[i-1], 'enabled', False))
@@ -28,7 +27,6 @@ class FrameAnimation3d(Entity):
                 self.sequence.append(Func(setattr, self.frames[i], 'enabled', False))
                 self.sequence.append(Func(setattr, self.frames[i-1], 'enabled', True))
                 self.sequence.append(Wait(1/fps))
-
         if auto_destroy:
             self.sequence.append(Func(destroy, self))
 
@@ -36,10 +34,8 @@ class FrameAnimation3d(Entity):
 
         for key, value in kwargs.items():
             setattr(self, key ,value)
-
         if self.autoplay:
             self.start()
-
 
     def start(self):
         if not self.sequence.finished:
@@ -49,7 +45,7 @@ class FrameAnimation3d(Entity):
     def pause(self):
         self.sequence.pause()
         self.is_playing = False
-
+        
     def resume(self):
         self.sequence.resume()
         self.is_playing = True
@@ -57,11 +53,9 @@ class FrameAnimation3d(Entity):
     def finish(self):
         self.sequence.finish()
 
-
     @property
     def duration(self):
         return self.sequence.duration
-
 
     @property
     def current_frame(self):
@@ -69,12 +63,10 @@ class FrameAnimation3d(Entity):
             if e.enabled:
                 return e
 
-
     def __setattr__(self, name, value):
         if hasattr(self, 'frames') and name in ('shader', 'color', 'origin', 'texture', 'texture_scale', 'texture_offset'):
             for f in self.frames:
                 setattr(f, name, value)
-
         if name == 'loop':
             self.sequence.loop = value
 

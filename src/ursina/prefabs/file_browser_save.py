@@ -10,7 +10,6 @@ class FileButtonSave(FileButton):
         self.selected = True
         self.load_menu.file_name_field.text = str(self.path.name)
 
-
     def on_double_click(self):
         if self.path.is_dir():
             self.load_menu.path = self.path
@@ -44,11 +43,9 @@ class FileBrowserSave(FileBrowser):
         for key, value in kwargs.items():
             setattr(self, key ,value)
 
-
     def file_type_setter(self, value):
         self._file_type = value
         self.file_types = (value, )
-
 
     def on_enable(self):
         super().on_enable()
@@ -57,23 +54,19 @@ class FileBrowserSave(FileBrowser):
     def on_disable(self):
         self.file_name_field.active = False
 
-
     def _save(self):
         file_name = self.file_name_field.text_field.text
         if not file_name.endswith(self.file_type):
             file_name += self.file_type
 
         path = self.path / file_name
-        # print('save:', path)
         if path.exists() and not self.overwrite_prompt.enabled:
-            # print('overwrite file?')
             self.overwrite_prompt.enabled = True
 
         self.last_saved_file = path
         self.overwrite_prompt.enabled = False
         self.close()
         self.on_submit(path)
-
 
     def on_submit(self, path):  # implement .on_submit to handle saving
         print('save to path:', path, 'please implement .on_submit to handle saving')

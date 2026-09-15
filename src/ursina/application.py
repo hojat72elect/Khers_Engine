@@ -61,14 +61,12 @@ def resume():
 def quit():
     sys.exit()
 
-
 def load_settings(path=asset_folder / 'ursina_settings.py'):
     if path.exists():
         with open(path) as f:
             try:
                 d = dict(locals(), **globals())
                 exec(f.read(), d, d)
-                # exec('from ursina import *\n' + f.read())
                 string_utilities.print_info('loaded settings from ursina_settings.py successfully')
             except Exception as e:
                 string_utilities.print_warning('warning: ursina_settings.py error:', e)

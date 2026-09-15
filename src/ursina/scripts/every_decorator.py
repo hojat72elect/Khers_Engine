@@ -14,12 +14,10 @@ class every:
     decorated_methods = []  # store decorated methods here
 
     def __init__(self, interval):
-        # print('asdlkjasldkasjdlkj')
         self.interval = interval
 
     def __call__(self, func):
         def wrapper(*args, **kwargs):
-            # print(f"-----------Calling {func.__name__} every {self.interval} seconds")
             return func(*args, **kwargs)
 
         wrapper._every = self  # add _every attribute to the decorated method

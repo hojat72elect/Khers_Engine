@@ -8,10 +8,8 @@ class Checkbox(Button):
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-
     def on_click(self):
         self.value = not self.value
-
 
     @property
     def value(self):

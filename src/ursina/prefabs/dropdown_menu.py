@@ -6,7 +6,6 @@ class DropdownMenuButton(Button):
 
         if self.text_entity:
             self.text_entity.x = .05
-            # self.text_entity.scale *= .8
 
 class DropdownMenu(DropdownMenuButton):
     def __init__(self, text='', buttons:list=None, **kwargs):
@@ -39,7 +38,6 @@ class DropdownMenu(DropdownMenuButton):
     def close(self):
         for i, b in enumerate(reversed(self.buttons)):
             b.enabled = False
-
 
     def on_mouse_enter(self):
         super().on_mouse_enter()

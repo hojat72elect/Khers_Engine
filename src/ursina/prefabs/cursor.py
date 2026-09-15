@@ -14,6 +14,5 @@ class Cursor(Entity):
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-
     def update(self):
         self.position = Vec3(mouse.x, mouse.y, -100)

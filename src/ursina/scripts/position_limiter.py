@@ -1,7 +1,5 @@
 import math
-
 from ursina import *
-
 
 class PositionLimiter:
     def __init__(self, min_x=-math.inf, max_x=math.inf, min_y=-math.inf, max_y=math.inf, min_z=-math.inf, max_z=math.inf):

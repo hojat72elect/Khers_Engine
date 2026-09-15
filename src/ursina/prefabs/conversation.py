@@ -1,5 +1,4 @@
 from copy import copy
-
 from ursina import *
 
 class _ConversationNode:
@@ -40,10 +39,7 @@ class Conversation(Entity):
         self.button_appear_sequence = None
         self.started = False
 
-
-
     def ask(self, node, question_part=0):
-        # print(node)
         self.current_node = node
         self.question_part = question_part
         self.question.text = node.content[question_part]
@@ -68,7 +64,6 @@ class Conversation(Entity):
         # multi page question
         if len(node.content) > 1 and self.question_part < len(node.content)-1:
             if self.question_part < len(node.content): # question not finished, so don't show answer buttons
-                # print('question not finished')
                 self.question_appear_sequence.append(Func(setattr, self.more_indicator, 'enabled', True))
                 return
 
@@ -187,6 +182,4 @@ class Conversation(Entity):
                     nodes[j].children.append(n)
                     break
 
-
         return nodes
-

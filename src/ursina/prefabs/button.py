@@ -88,11 +88,8 @@ class Button(Entity):
         self.text_entity.origin = value
         self.text_entity.world_parent = self.model
         self.text_entity.position = value
-        # self.text_entity.x += self.model.radius * self.scale_y/self.scale_x * (-value[0]*2)
-        # self.text_entity.y += self.model.radius * self.scale_y/self.scale_x * (-value[1]*2)
         self.text_entity.origin = value
         self.text_entity.world_parent = self
-
 
     def text_color_setter(self, value, temp=False):
         if not temp:
@@ -137,7 +134,6 @@ class Button(Entity):
         if self.text_entity:
             self.text_entity.world_scale = Vec3(value * 20)
 
-
     def origin_getter(self):
         return getattr(self, '_origin', Vec3.zero)
 
@@ -151,8 +147,6 @@ class Button(Entity):
 
         if isinstance(self.collider, BoxCollider):    # update collider position by making a new one
             self.collider = 'box'
-
-
 
     def input(self, key):
         if self.disabled or not self.model:
@@ -176,7 +170,6 @@ class Button(Entity):
                 self.model.setColorScale(self.color)
                 self.model.setScale(Vec3(1,1,1))
 
-
     def on_mouse_enter(self):   # Handles color tinting, scale change, audio and Tooltip when hovering the Button
         if not self.disabled:
             if self.model:
@@ -197,7 +190,6 @@ class Button(Entity):
 
         if hasattr(self, 'tooltip') and self.tooltip:
             self.tooltip.enabled = True
-
 
     def on_mouse_exit(self):    # Handles color tinting, scale change, audio and Tooltip when unhovering the Button
         if not self.disabled:
@@ -223,7 +215,6 @@ class Button(Entity):
         self.original_parent = self.parent
         self.parent = self.text_entity
         self.scale = Vec2(self.text_entity.width*self.text_entity.world_scale_x, self.text_entity.height*self.text_entity.world_scale_y) * Text.size * 2
-        # self.scale = Vec2(self.text_entity.width, self.text_entity.height) * Text.size * 2
         self.scale += Vec2(*padding)
         self.position += self.text_origin * self.scale.xy * .5
 

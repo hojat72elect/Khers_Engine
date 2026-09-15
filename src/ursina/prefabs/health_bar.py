@@ -9,7 +9,6 @@ class HealthBar(Button):
 
         self.bar = Entity(parent=self, model=Quad(radius=roundness), origin=origin, z=-.005, color=bar_color, highlight_color=highlight_color, ignore=True, ignore_paused=ignore_paused)
         self.lines = Entity(parent=self.bar, y=-1, color=color.black33, ignore=True, enabled=show_lines, z=-.05)
-
         self.max_value = max_value
         self.clamp = True
         self.roundness = roundness
@@ -17,12 +16,10 @@ class HealthBar(Button):
         self.show_lines = show_lines
         self.show_text = show_text
         self.value = self.max_value if value == Default else value
-
         for key, value in kwargs.items():
             setattr(self, key, value)
 
         self.text_entity.enabled = show_text
-
 
     def value_setter(self, n):
         if self.clamp:
@@ -44,24 +41,23 @@ class HealthBar(Button):
             self.bar.model = 'quad'
         self.bar.origin = self.bar.origin
 
-
-
     def show_text_getter(self):
         return self.text_entity.enabled
+    
     def show_text_setter(self, value):
         self.text_entity.enabled = value
 
     def show_lines_getter(self):
         return self.lines.enabled
+    
     def show_lines_setter(self, value):
         self.lines.enabled = value
 
     def bar_color_getter(self):
         return self.bar.color
+    
     def bar_color_setter(self, value):
         self.bar.color = value
-
-
 
     def __setattr__(self, name, value):
         if name == 'scale' and hasattr(self, 'model') and self.model:  # update rounded corners of background when scaling

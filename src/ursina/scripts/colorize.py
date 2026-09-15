@@ -1,5 +1,4 @@
 import math
-
 from ursina import *
 from ursina import color
 from ursina.vec3 import Vec3
@@ -49,7 +48,6 @@ def colorize(model, left=color.white, right=color.blue, down=color.red, up=color
             cols.append(c)
         else:
             cols.append(prev_col)
-
 
     model.colors = cols
     model.generate()

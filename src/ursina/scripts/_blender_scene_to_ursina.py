@@ -5,17 +5,11 @@ from pathlib import Path
 from math import degrees
 import bmesh
 
-
-# print('starteddddddddddddddddddd')
-# for i, arg in enumerate(sys.argv):
-#     print('aaaaaaaaaaarg:', arg)
-
 blender_executable, blend_file = sys.argv[:2]
 script_file = sys.argv[4]
 out_file_path = sys.argv[5]
 decimals = int([e for e in sys.argv if e.startswith('--decimals=')][0][len('--decimals='):])
 TRIANGULATE = '--triangulate' in sys.argv
-
 
 print('-----------------------', 'decimals:', decimals, 'triangulate:', TRIANGULATE)
 
@@ -49,7 +43,6 @@ unique_objects = {}
 for ob in objects:
     unique_objects[ob.data.name] = ob
 
-
 for key, ob in unique_objects.items():
     polygons =[]
     verts = []
@@ -59,8 +52,6 @@ for key, ob in unique_objects.items():
     indices = []
 
     mesh = ob.evaluated_get(dg).data
-    # for poly in mesh.polygons:
-    #     print('---------------poly:', [int(e) for e in poly.vertices])
     if TRIANGULATE:
         # triangulate mesh
         bm = bmesh.new()
@@ -71,9 +62,7 @@ for key, ob in unique_objects.items():
         bm.free()
     else:
         for poly in mesh.polygons:
-            # print('---------------poly:', [int(e) for e in poly.vertices])
             polygons.append([int(e) for e in poly.vertices])
-
 
     for poly in mesh.polygons:
         indices.extend(poly.vertices)
@@ -106,7 +95,6 @@ for key, ob in unique_objects.items():
                 sharp_normals.append(averaged_normal)
 
         normals = sharp_normals
-
 
     if '--uvs' in sys.argv:
         uv_layer = mesh.uv_layers.active
@@ -156,7 +144,6 @@ scene_parent.{ob.name.replace('.', '_')} = Entity(
     '''
 
         code += f'''model=copy(meshes['{ob.data.name}']),'''
-        # code += f'''model='cube','''
 
         if ob.active_material:
             color = ob.active_material.diffuse_color

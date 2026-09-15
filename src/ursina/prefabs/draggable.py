@@ -28,7 +28,6 @@ class Draggable(Button):
             Draggable._z_plane.collider = Mesh(vertices=((-0.5, -0.5, 0.0), (0.5, -0.5, 0.0), (0.5, 0.5, 0.0), (-0.5, 0.5, 0.0)), triangles=((0,1,2,3),), mode='triangle')
             Draggable._z_plane.color = color.clear
 
-
         for key, value in kwargs.items():
             if key == 'collider' and value == 'sphere' and self.has_ancestor(camera.ui):
                 raise Exception('error: sphere colliders are not supported on Draggables in ui space.')
@@ -38,7 +37,6 @@ class Draggable(Button):
 
             setattr(self, key, value)
 
-
     def input(self, key):
         if self.hovered and key == 'left mouse down':
             if self.require_key == None or held_keys[self.require_key]:
@@ -47,14 +45,12 @@ class Draggable(Button):
         if self.dragging and key == 'left mouse up':
             self.stop_dragging()
 
-
     def start_dragging(self):
         point = Vec3(0,0,0)
         if mouse.world_point:
             point = mouse.world_point
 
         Draggable._z_plane.world_position = point
-        # Draggable._z_plane.world_position = self.world_position
         Draggable._z_plane.look_at(Draggable._z_plane.position - Vec3(*self.plane_direction))
         if self.has_ancestor(camera.ui):
             Draggable._z_plane.world_parent = camera.ui
@@ -71,7 +67,6 @@ class Draggable(Button):
         if hasattr(self, 'drag'):
             self.drag()
 
-
     def stop_dragging(self):
         self.dragging = False
         self.delta_drag = self.world_position - self.start_pos
@@ -84,12 +79,6 @@ class Draggable(Button):
 
         if hasattr(self, 'drop'):
             self.drop()
-
-    # def drag(self):
-    #     print('start drag test')
-    #
-    # def drop(self):
-    #     print('drop test')
 
     def update(self):
         if self.dragging:
@@ -116,7 +105,6 @@ class Draggable(Button):
             clamp(self.y, self.min_y, self.max_y),
             clamp(self.z, self.min_z, self.max_z)
             )
-
 
     @property
     def step(self):

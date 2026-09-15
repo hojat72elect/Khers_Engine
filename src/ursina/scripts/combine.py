@@ -91,9 +91,6 @@ def combine(combine_parent, analyze=False, auto_destroy=True, ignore=[], ignore_
 
     combine_parent.model = Mesh(vertices=verts, triangles=tris, normals=norms, uvs=uvs, colors=cols, mode='triangle')
     combine_parent.texture = original_texture
-    # print('combined')
-    # entity.model = Mesh(vertices=verts,  mode='triangle')
-    # entity.flatten_strong()
     if analyze:
         render.analyze()
     return combine_parent.model

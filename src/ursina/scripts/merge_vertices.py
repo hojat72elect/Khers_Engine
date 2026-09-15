@@ -21,7 +21,6 @@ def merge_overlapping_vertices(vertices, triangles=None, max_distance=.1):
                 for k, t in enumerate(triangles):
                     if t == i:
                         triangles[k] = j
-                        # for v in verts
 
         unique.append(v)
 

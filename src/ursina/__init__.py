@@ -83,9 +83,4 @@ from ursina.prefabs.button_group import ButtonGroup
 from ursina.prefabs.window_panel import WindowPanel, Space
 from ursina.prefabs.button_list import ButtonList
 from ursina.prefabs.checkbox import Checkbox
-# from ursina.prefabs.file_browser import FileBrowser
-# from ursina.prefabs import primitives
-
-# from ursina.prefabs.debug_menu import DebugMenu
 from ursina.prefabs.editor_camera import EditorCamera
-# from ursina.prefabs.hot_reloader import HotReloader

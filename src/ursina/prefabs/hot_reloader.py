@@ -1,10 +1,8 @@
 # this will clear the scene and try to execute the main.py code without
 # restarting the program
-
 import ast
 import time
 from pathlib import Path
-
 from ursina import Entity, application, camera, mesh_importer, print_on_screen, scene, texture_importer, window
 from ursina.mesh_importer import load_model
 
@@ -13,7 +11,6 @@ def is_valid_python(code):
        ast.parse(code)
    except Exception as e:
        return False, e
-
    return True
 
 def make_code_reload_safe(code):
@@ -30,14 +27,9 @@ def make_code_reload_safe(code):
             continue
         if line and line[0] != ' ':
             dedent_next = False
-
         if line.strip().startswith('#'):
             newtext += '\n'
             continue
-        # if line.strip().startswith('EditorCamera(') and not 'eternal=False' in line: # EditorCamera is eternal, so don't create multiple ones
-        #     newtext += '\n'
-        #     continue
-
         if dedent_next:
             newtext += line[4:] + '\n'
         else:
@@ -56,7 +48,6 @@ class HotReloader(Entity):
         self.path = Path(self.path)
         self.hotreload = False   # toggle with f9
         self._original_source_code_content = ''
-        # self.text_editor = InGameTextEditor(path=self.path, enabled=False)
         self._i = 0
         self.hotkeys = {
             'ctrl+r' : self.reload_code,
@@ -69,16 +60,9 @@ class HotReloader(Entity):
 
         self.hotreload_window_settings = dict(size=(window.size[0]/2,window.size[1]/2), always_on_top=True, position=(window.fullscreen_size[0]-window.size[0]/22, 0))
 
-
     def input(self, key):
         if key in self.hotkeys:
             self.hotkeys[key]()
-
-        # if key == '|':
-        #     if not self.text_editor.enabled:
-        #         invoke(setattr, self.text_editor, 'enabled', not self.text_editor.enabled, delay=.1)
-        #     else:
-        #         self.text_editor.enabled = not self.text_editor.enabled
 
     def update(self):
         if self.hotreload:
@@ -97,7 +81,6 @@ class HotReloader(Entity):
             text = file.read()
         return text
 
-
     def toggle_hotreloading(self):
         self.hotreload = not self.hotreload
         print_on_screen(f'<azure>hotreloading: {self.hotreload}')
@@ -105,18 +88,14 @@ class HotReloader(Entity):
             for key, value in self.hotreload_window_settings.items():
                 setattr(window, key, value)
 
-
-
     def reload_code(self, reset_camera=True):
         if not self.path.exists:
             print('trying to reload, but path does not exist:', self.path)
             return
 
-
         with open(self.path, encoding='utf8') as file:
             text = file.read()
             text = make_code_reload_safe(text)
-
 
         if not is_valid_python(text):
             print('invalid python code')
@@ -145,7 +124,6 @@ class HotReloader(Entity):
 
         print('reloaded in:', time.time() - t)
 
-
     def reload_textures(self):
         textured_entities = [e for e in scene.entities if e.texture]
         reloaded_textures = list()
@@ -168,7 +146,6 @@ class HotReloader(Entity):
         print('reloading models...')
         entities = [e for e in scene.entities if e.model]
         unique_names = list(set(e.model.name.split('.')[0] for e in entities))
-        # print(unique_names)
         changed_models = []
 
         for base_name in unique_names:
