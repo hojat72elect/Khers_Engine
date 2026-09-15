@@ -19,5 +19,5 @@ class PauseMenu(Entity):
             else:
                 mouse.locked = self.lock_mouse_on_resume
 
-            application.paused = not application.paused # Pause/unpause the game.
-            self.menu.enabled = application.paused     # Also toggle "PAUSED" graphic.
+            application.paused = not application.paused  # Pause/unpause the game.
+            self.menu.enabled = application.paused  # Also toggle "PAUSED" graphic.

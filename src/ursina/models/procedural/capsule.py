@@ -5,5 +5,4 @@ class Capsule(Mesh):
         # make a capsule by stretching a sphere
         sphere_mesh = load_model('sphere', application.internal_models_compressed_folder, use_deepcopy=True)
         vertices = [Vec3(*v) + (Vec3(0,height-1,0) * (int(v[1] > 0)-.5)) for v in sphere_mesh.vertices]
-
         super().__init__(vertices=vertices, triangles=sphere_mesh.triangles, uvs=sphere_mesh.uvs, normals=sphere_mesh.normals, colors=sphere_mesh.colors, **kwargs)

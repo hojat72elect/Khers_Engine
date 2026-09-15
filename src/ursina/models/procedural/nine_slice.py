@@ -39,10 +39,8 @@ class NineSlice(Mesh):
             *((Vec2(.5,.5),) * 4),
             )]
 
-
         if entity_scale.x > entity_scale.y:
             aspect_ratio = (entity_scale.x / entity_scale.y)
-            # print('aspect_ratio', aspect_ratio, entity_scale)
             for idx in (1,2,9,10):
                 verts[idx].x += radius / aspect_ratio
             for idx in (4,7,12,15):
@@ -61,7 +59,6 @@ class NineSlice(Mesh):
                     verts[idx].y -= outset
                 for idx in (11,10,15,14):
                     verts[idx].y += outset
-
 
         else:
             aspect_ratio = (entity_scale.y / entity_scale.x)
@@ -83,7 +80,6 @@ class NineSlice(Mesh):
                     verts[idx].y -= outset / aspect_ratio
                 for idx in (11,10,15,14):
                     verts[idx].y += outset / aspect_ratio
-
 
         super().__init__(
             vertices=[Vec3(*p,0) for p in verts],

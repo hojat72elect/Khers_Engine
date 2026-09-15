@@ -26,7 +26,6 @@ class Pipe(Mesh):
         super().__init__(mode=mode, **kwargs)
         self.generate()
 
-
     def generate(self):
         # make the base shape and rotate it
         if not self.prev:
@@ -66,11 +65,6 @@ class Pipe(Mesh):
 
                 if i == len(self.path)-1 and len(self.path) > 2 and self.path[0] == self.path[-1]: # if the first and last point are the same, make the end math the rotation of the start.
                     self.curr.look_at(self.path[2])
-
-            # for debugging sections
-            # clone = duplicate(e)
-            # clone.color=color.brown
-            # clone.scale *= 1.1
 
             try:
                 self.curr.scale = self.thicknesses[i]
@@ -129,5 +123,3 @@ class Pipe(Mesh):
 
         self.vertices = verts
         super().generate()
-        # destroy(b)
-        # destroy(e)

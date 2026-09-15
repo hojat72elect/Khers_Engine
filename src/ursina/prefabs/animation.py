@@ -2,7 +2,6 @@ from ursina import *
 
 class Animation(Sprite):
     def __init__(self, name, fps=12, loop=True, autoplay=True, frame_times=None, **kwargs):
-
         if isinstance(name, Path):
             texture = load_texture(name.name, name.parent)
         else:
@@ -65,11 +64,9 @@ class Animation(Sprite):
         self.sequence.finish()
         self.is_playing = False
 
-
     @property
     def duration(self):     # get the duration of the animation. you can't set it. to do so, change the fps instead.
         return self.sequence.duration
-
 
     def __setattr__(self, name, value):
         if hasattr(self, 'frames') and name in ('color', 'origin'):

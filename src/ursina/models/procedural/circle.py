@@ -7,7 +7,6 @@ class Circle(Mesh):
         key = (resolution, radius, mode, thickness)
         if key in cls._cache:
             try:
-                # print('using cached Circle:', key)
                 return deepcopy(cls._cache[key])
             except:     # deepcopy can fail if the model has been destroyed
                 pass

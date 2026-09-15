@@ -141,7 +141,6 @@ class HotReloader(Entity):
 
         return reloaded_textures
 
-
     def reload_models(self):
         print('reloading models...')
         entities = [e for e in scene.entities if e.model]
@@ -152,61 +151,25 @@ class HotReloader(Entity):
             m = load_model(f'{base_name}.blend')
             if m:
                 changed_models.append(base_name)
-            # m.save()
             if not m:
                 m = load_model(f'{base_name}.obj', use_deepcopy=True)
                 if m:
                     m.save(f'{base_name}.bam')
                     changed_models.append(base_name)
-            # matches = [e for e in application.asset_folder.glob(f'**/{name}.blend')]
-
-            # if not matches or not application.blender_paths:    # reload bam files converted from obj
-            #     matches = [e for e in application.asset_folder.glob(f'**/{name}.obj')]
-            #     if matches:
-            #         m = mesh_importer.load_model(f'{matches[0]}.obj')
-            #         if m:
-            #             print('-----------------update bam:', f'{matches[0]}.obj --> {matches[0]}.bam')
-            #             m.save(f'{matches[0]}.bam')
-            #             mesh_importer.imported_meshes[name] = m
-            #             changed_models.append(name)
-            #             continue
-
-            # if not matches:
-            #     continue
-
-            # model_path = matches[0]
-            # # ignore internal models
-            # if model_path.parent == application.internal_models_folder or '/build/' in str(model_path):
-            #     continue
-
-            # if name in mesh_importer.imported_meshes:
-            #     mesh_importer.imported_meshes.pop(name, None)
-
-            # # print('model is made from .blend file:', model_path)
-            # mesh_importer.blend_to_obj(model_path)
-            # mesh_importer.obj_to_ursinamesh(application.models_compressed_folder, application.models_compressed_folder, return_mesh=True, save_to_file=False, delete_obj=True).save(f'{name}.bam')
-            # # print(f'compressed {name}.blend sucessfully')
-            # changed_models.append(name)
-
 
         for e in entities:
             if e.model:
                 name = e.model.name.split('.')[0]
-                # print(name, changed_models, name in changed_models)
                 if name in changed_models:
                     e.model = None
                     e.model = name
                     e.origin = e.origin
                     print('reloaded model:', name)
 
-
     def reload_shaders(self):
         import ursina
 
         for shader in ursina.shader.imported_shaders.values():
-            # print(shader, shader.path)
-            # TODO: check if file has changed
-
             with open(shader.path, encoding='utf8') as f:
                 try:
                     print('trying to reload:', shader.path.name)
@@ -228,7 +191,6 @@ class HotReloader(Entity):
                     if vert:
                         shader.vertex = vert
                     shader.fragment = frag
-
                     shader.compile()
 
                     for e in scene.entities:

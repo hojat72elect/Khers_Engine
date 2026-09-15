@@ -6,18 +6,14 @@ from ursina.scripts.property_generator import generate_properties_for_class
 class PokeShape(Entity):
     default_values = Entity.default_values | dict(
         name='poke_shape',
-        # make_wall=True,
         wall_height=1.0,
-        # wall_thickness=.1,
         subdivisions=0,
         smoothing_distance=.1,
         points=[Vec3(-.5,0,-.5), Vec3(.5,0,-.5), Vec3(.5,0,.5), Vec3(-.5,0,.5)],
         collider_type='None',
         texture='grass',
         texture_scale=Vec2(.125, .125),
-        # shader_inputs={'side_texture':Func(load_texture, 'grass'), }
-
-    ) # combine dicts
+    )  # combine dicts
 
     gizmo_color = color.violet
 
@@ -30,7 +26,6 @@ class PokeShape(Entity):
         self.original_parent = LEVEL_EDITOR
         self.selectable = True
         self.highlight_color = color.blue
-        # self._point_gizmos = LoopingList([Entity(parent=self, original_parent=self, position=e, selectable=False, name='PokeShape_point', is_gizmo=True) for e in kwargs['points']])
         self.model = Mesh()
         self.add_new_point_renderer = Entity(model=Mesh(mode='point', vertices=[], thickness=.075), color=color.white, alpha=.5, texture='circle', unlit=True, is_gizmo=True, selectable=False, enabled=False, always_on_top=True)
         self.add_collider = False
@@ -46,16 +41,13 @@ class PokeShape(Entity):
             self.points = points
 
         self.texture = kwargs['texture']
-
         self.position = kwargs['position']
         for key in Entity.default_values.keys():
             if key == 'model':
                 continue
             setattr(self, key, kwargs[key])
 
-        # if edit_mode:
         self.edit_mode = edit_mode
-
         self.generate()
         self.ready = True
 
@@ -63,10 +55,7 @@ class PokeShape(Entity):
         return {'edit_mode': bool, 'wall_height': float, 'subdivisions':int, 'smoothing_distance':float}
 
     def generate(self):
-        # print('--------------', self.texture_scale)
         import tripy
-        # if not self.model:
-        #     return
         self._point_gizmos = LoopingList([e for e in self._point_gizmos if e])   # ensure deleted points are removed
         polygon = LoopingList(Vec2(*e.get_position(relative_to=self).xz) for e in self._point_gizmos)
 
@@ -87,23 +76,14 @@ class PokeShape(Entity):
         self.model.uvs = [Vec2(v[0],v[2])*1 for v in self.model.vertices]
         self.model.normals = [Vec3(0,1,0) for i in range(len(self.model.vertices))]
         self.model.generate()
-        # self.texture = 'grass'
-        # [destroy(e) for e in self.wall_parent.children]
-        # print('-------------', self.make_wall, self.wall_parent)
         if self._wall_parent:
-            # print('destroy old wall parent')
             destroy(self._wall_parent)
             self._wall_parent = None
 
         if self.wall_height:
             if not self._wall_parent:
-                # print('make new wall parent')
                 self._wall_parent = Entity(parent=self, model=Mesh(), color=color.dark_gray, add_to_scene_entities=False, shader=colored_lights_shader)
 
-            # polygon_3d = [Vec3(e[0], 0, e[1]) for e in polygon]
-            # polygon_3d.append(polygon_3d[0])
-            # self.wall_parent.model = Pipe(base_shape=Quad(scale=(self.wall_thickness, self.wall_height)), path=polygon_3d)
-            # self.wall_parent.model = Pipe(polygon_3d, path=[Vec3(0,0,0), Vec3(0,-10,0)])
             wall_verts = []
             for i, vert in enumerate(polygon):
                 vert = Vec3(vert[0], 0, vert[1])
@@ -118,30 +98,20 @@ class PokeShape(Entity):
                     vert + Vec3(0,-self.wall_height,0),
                     next_vert + Vec3(0,-self.wall_height,0),
                 ))
-            #     # wall = Entity(model='cube', origin_x=-.5, scale=.1, position=vert, scale_x=distance(vert, next_vert), color=color.blue, parent=self._wall_parent, add_to_scene_entities=False)
-            #     # wall.look_at(next_vert, 'right')
-            #
             self._wall_parent.model.vertices = wall_verts
             self._wall_parent.model.generate_normals(False)
             self._wall_parent.model.generate()
-
-
-        # if self.add_collider:
-        #     self.collider = self.model
 
         if self.edit_mode:
             self.add_new_point_renderer.model.vertices = []
             for i, e in enumerate(self._point_gizmos):
                 self.add_new_point_renderer.model.vertices.append(lerp(self._point_gizmos[i].world_position, self._point_gizmos[i+1].world_position, .5))
-                # self.add_new_point_renderer.model.vertices.append(self._point_gizmos[i].world_position)
             self.add_new_point_renderer.model.generate()
 
     def __deepcopy__(self, memo):
         changes = self.get_changes(__class__)
-
         _copy = __class__(texture_scale = self.texture_scale, **changes)
         _copy.texture_scale = self.texture_scale
-        # print('---------------', _copy.texture_scale)
         return _copy
 
     def points_getter(self):
@@ -218,22 +188,8 @@ class PokeShape(Entity):
             if key == 'd':
                 LEVEL_EDITOR.quick_grabber.input('d')
 
-
         elif key == 'space':
             self.generate()
 
-        # elif key == 'double click' and LEVEL_EDITOR.selector.get_hovered_entity() == self:
-        #     self.edit_mode = True
-        #
-        # elif key == 'double click' and not LEVEL_EDITOR.selector.get_hovered_entity():
-        #     self.edit_mode = False
-
         elif self.edit_mode and key.endswith(' up'):
             invoke(self.generate, delay=3/60)
-
-    # def __setattr__(self, name, value):
-    #     if name == 'model' and hasattr(self, 'model') and self.model and not isinstance(value, Mesh):
-    #         print_info('can\'t set model of PokeShape')
-    #         return
-    #
-    #     super().__setattr__(name, value)

@@ -1,7 +1,6 @@
 from ursina import *
 
 class Sprite(Entity):
-
     ppu = 100
 
     def __init__(self, texture=None, ppu:int=None, **kwargs):
@@ -15,8 +14,7 @@ class Sprite(Entity):
 
         self.update_scale()
 
-
-    def update_scale(self):     # get called automatically on __init__, but if you change the texture or ppu, you can call this to update the scale.
+    def update_scale(self):  # get called automatically on __init__, but if you change the texture or ppu, you can call this to update the scale.
         if not self.texture:
             return
 

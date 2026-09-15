@@ -12,20 +12,20 @@ class Slider(Entity):
         if default is None:
             default = min
         self.default = default
-        self.step = 0                   # for example, setting .step to 1, would make the slider snap to the closest integer.
+        self.step = 0  # for example, setting .step to 1, would make the slider snap to the closest integer.
         self.height = height
 
-        self.on_value_changed = None    # set this to a function you want to be called when the slider changes
-        self.setattr = None             # set this to (object, 'attrname') to set that value when the slider changes
+        self.on_value_changed = None  # set this to a function you want to be called when the slider changes
+        self.setattr = None  # set this to (object, 'attrname') to set that value when the slider changes
 
         self.label = Text(parent=self, origin=(0.5, 0), x=-0.025, text=text)
 
         self.bg = Entity(parent=self, model=Quad(scale=(.525, height), radius=radius, segments=3),
-            origin_x=-0.25, collider='box', color=bar_color)
+                         origin_x=-0.25, collider='box', color=bar_color)
 
         self.knob = Draggable(parent=self, min_x=0, max_x=.5, min_y=0, max_y=.5, step=self.step,
-            model=Quad(radius=Text.size/2, scale=(Text.size, height)), collider='box', color=color.light_gray,
-            text='0', text_origin=(0, -.55), z=-.1)
+                              model=Quad(radius=Text.size / 2, scale=(Text.size, height)), collider='box', color=color.light_gray,
+                              text='0', text_origin=(0, -.55), z=-.1)
 
         def bg_click():
             self.knob.x = mouse.point[0]
@@ -43,15 +43,11 @@ class Slider(Entity):
             if self.on_value_changed:
                 self.on_value_changed()
 
-
         self.knob.drop = drop
         self._prev_value = self.default
         self.value = self.default
         self.dynamic = dynamic    # if set to True, will call on_value_changed() while dragging. if set to False, will only call on_value_changed() after dragging.
-
-
         self.knob.text_entity.text = str(round(self.default, 2))
-
         for key, value in kwargs.items():
             setattr(self, key, value)
 
@@ -66,18 +62,15 @@ class Slider(Entity):
 
         scene.entities.append(self)
 
-
     def value_getter(self):
         val = lerp(self.min, self.max, self.knob.x * 2)
         if isinstance(self.step, int) and not self.step == 0:
             val = int(round(val, 0))
-
         return val
 
     def value_setter(self, value, call_on_value_changed=True):
         self.knob.x = (value - self.min) / (self.max - self.min) / 2
         self.slide(call_on_value_changed=call_on_value_changed)
-
 
     def step_setter(self, value):
         self._step = value
@@ -108,7 +101,6 @@ class Slider(Entity):
 
     def _update_text(self):
             self.knob.text_entity.text = str(round(self.value, 2))
-
 
     def __setattr__(self, name, value):
         if name == 'eternal':

@@ -6,7 +6,6 @@ class Animator:
 
         self.animations = animations    # dict
         self.pause_disabled = pause_disabled
-
         if not start_state and self.animations:
             start_state = list(self.animations.keys())[0]
 
@@ -30,7 +29,6 @@ class Animator:
             if entity:
                 if hasattr(entity, 'start') and callable(entity.start):
                     entity.start()
-
                 if hasattr(entity, 'animations'):
                     [anim.start() for anim in entity.animations]
 

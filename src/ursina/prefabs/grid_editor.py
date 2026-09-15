@@ -29,7 +29,6 @@ class GridEditor(Entity):
         self.prev_draw = None
         self.lock_axis = None
         self.outline = Entity(parent=self.canvas, model=Quad(segments=0, mode='line', thickness=2), color=color.cyan, z=.01, origin=(-.5,-.5))
-
         self.selection_renderer = Entity(parent=self.gizmo_parent, model=Mesh(mode='line', thickness=2), color=color.lime, alpha=.5, z=-.01, origin=(-.5,-.5))
         self.rect_selection = [Vec2(0,0), Vec2(0,0)]
         self.rect_tool = Entity(parent=self.gizmo_parent, model=Quad(0, mode='line', thickness=2), color=color.cyan, z=-.01, origin=(-.5,-.5), start=Vec2(0,0), end=Vec2(0,0), enabled=False)
@@ -37,7 +36,6 @@ class GridEditor(Entity):
         self.temp_paste_layer = Entity(parent=self.cursor, model='quad', origin=(-.5,-.5), z=-.02, enabled=False)
         Entity(parent=self.temp_paste_layer, model='wireframe_quad', origin=self.temp_paste_layer.origin, color=color.black)
         self.is_in_paste_mode = False
-
         self.undo_stack = []
         self.undo_stack.append(deepcopy(self.grid))
         self.undo_index = 0
@@ -156,16 +154,15 @@ class GridEditor(Entity):
                                 if diff_x > 0 and diff_y > 0:   # /
                                     for i in range(abs(diff_x)):
                                         self.draw(int(self.prev_draw[0]+i), int(self.prev_draw[1]+i))
-                                elif diff_x > 0 and diff_y < 0: # \
+                                elif diff_x > 0 > diff_y:  # \
                                     for i in range(abs(diff_x)):
                                         self.draw(int(self.prev_draw[0]+i), int(self.prev_draw[1]-i))
                                 elif diff_x < 0 and diff_y < 0: # /
                                     for i in range(abs(diff_x)):
                                         self.draw(int(self.prev_draw[0]-i), int(self.prev_draw[1]-i))
-                                elif diff_x < 0 and diff_y > 0: # \
+                                elif diff_x < 0 < diff_y:  # \
                                     for i in range(abs(diff_x)):
                                         self.draw(int(self.prev_draw[0]-i), int(self.prev_draw[1]+i))
-
 
                             self.draw(x, y)
                             self.prev_draw = (x,y)
@@ -174,9 +171,8 @@ class GridEditor(Entity):
                         self.draw(x, y)
                         self.prev_draw = (x,y)
 
-                else:   # sample color
+                else:  # sample color
                     self.sample(x, y)
-
 
         if held_keys[self.shortcuts['select']]:     # selection
             self.rect_selection[1] = self.get_cursor_position()
@@ -187,7 +183,7 @@ class GridEditor(Entity):
                 return
 
             self.rect_tool.start = Vec2(min(self.rect_selection[0].x, self.rect_selection[1].x), min(self.rect_selection[0].y, self.rect_selection[1].y))
-            self.rect_tool.end =   Vec2(max(self.rect_selection[0].x, self.rect_selection[1].x)+1, max(self.rect_selection[0].y, self.rect_selection[1].y)+1)
+            self.rect_tool.end = Vec2(max(self.rect_selection[0].x, self.rect_selection[1].x) + 1, max(self.rect_selection[0].y, self.rect_selection[1].y) + 1)
             self.rect_tool.start.x = clamp(self.rect_tool.start.x, 0, self.w)
             self.rect_tool.start.y = clamp(self.rect_tool.start.y, 0, self.h)
             self.rect_tool.end.x = clamp(self.rect_tool.end.x, 0, self.w)
@@ -195,7 +191,6 @@ class GridEditor(Entity):
             self.rect_tool.enabled = True
             self.rect_tool.position = self.rect_tool.start
             self.rect_tool.scale = (self.rect_tool.end - self.rect_tool.start)
-
 
         if hasattr(self, 'line_preview'):
             self.line_preview.enabled = held_keys['control']
@@ -207,12 +202,10 @@ class GridEditor(Entity):
             self.line_preview.look_at_2d(self.cursor)
             self.line_preview.scale_y = distance_2d(self.line_preview, self.cursor)
 
-
     def get_cursor_position(self):
         y = int(round(self.cursor.y))
         x = int(round(self.cursor.x))
         return Vec2(x,y)
-
 
     def draw(self, x, y):
         for _y in range(y, y + self.brush_size):
@@ -222,32 +215,24 @@ class GridEditor(Entity):
         if self.auto_render:
             self.render()
 
-
     def render(self):
         print_warning('render() not implemented. GridEditor is a base class you can inherit, but doesn\'t implement a render function itself.')
 
-
     def sample(self, x, y):
-        if x >= 0 and x < self.grid.width and y >= 0 and y < self.grid.height:
+        if 0 <= x < self.grid.width and 0 <= y < self.grid.height:
             self.selected_char = self.grid[x][y]
-
 
     def input(self, key):
         combined_key = input_handler.get_combined_key(key)
-
         if key in self.shortcuts['toggle_edit_mode']:
             self.edit_mode = not self.edit_mode
-
         if not self.edit_mode:
             return
-
         if key in self.shortcuts['apply_pasted'] and self.is_in_paste_mode:
             self.paste()
             return  # prevent drawing right after pasting if draw and apply_pasted keys are the same
-
         if key in self.shortcuts['discard_pasted'] and self.is_in_paste_mode:
             self.paste(discard=True)
-
 
         if (key == self.shortcuts['draw']+' down' or key == self.shortcuts['draw']) and self.canvas_collider.hovered and not self.is_in_paste_mode:
             self.start_pos = self.get_cursor_position()
@@ -282,7 +267,6 @@ class GridEditor(Entity):
                     self.selection_matrix[x][y] = new_value
 
             self.render_selection()
-
 
         elif key in self.shortcuts['lock_axis_modifier']+' up':
             self._lock_origin = None
@@ -384,7 +368,7 @@ class GridEditor(Entity):
         # crop the matrix based on the boolean values
         start_x = min(rows)
         start_y = min(cols)
-        selection_width =  (max(rows) + 1) - start_x
+        selection_width = (max(rows) + 1) - start_x
         selection_height = (max(cols) + 1) - start_y
         copy_data = [[tuple(self.grid[start_x+x][start_y+y]) if self.selection_matrix[start_x+x][start_y+y] else None for y in range(selection_height)] for x in range(selection_width)]
         copy_data = self.grid.get_area(Vec2(start_x, start_y).XY, Vec2(start_x+selection_width, start_y+selection_height).XY)

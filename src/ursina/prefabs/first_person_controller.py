@@ -17,10 +17,10 @@ class FirstPersonController(Entity):
         self.grounded = False
         self.jump_height = 2
         self.jump_up_duration = .5
-        self.fall_after = .35 # will interrupt jump up
+        self.fall_after = .35  # will interrupt jump up
         self.jumping = False
         self.air_time = 0
-        self.traverse_target = scene     # by default, it will collide with everything. change this to change the raycasts' traverse targets.
+        self.traverse_target = scene  # by default, it will collide with everything. change this to change the raycasts' traverse targets.
         self.ignore_list = [self, ]
         self.on_destroy = self.on_disable
 
@@ -39,7 +39,7 @@ class FirstPersonController(Entity):
     def update(self):
         self.rotation_y += mouse.velocity[0] * self.mouse_sensitivity[1]
         self.camera_pivot.rotation_x -= mouse.velocity[1] * self.mouse_sensitivity[0]
-        self.camera_pivot.rotation_x= clamp(self.camera_pivot.rotation_x, -90, 90)
+        self.camera_pivot.rotation_x = clamp(self.camera_pivot.rotation_x, -90, 90)
         self.direction = Vec3(
             self.forward * (held_keys['w'] - held_keys['s'])
             + self.right * (held_keys['d'] - held_keys['a'])

@@ -57,7 +57,6 @@ class Quad(Mesh):
             Quad._corner_maker.rotation_z = -90 / _segments / 2
             Quad._corner_maker.position = Vec3(0, 0, 0)
             Quad._point_placer.position = Vec3(-radius, 0, 0)
-
             corrections = [Vec3(radius, radius, 0), Vec3(-radius, radius, 0),
                            Vec3(-radius, -radius, 0), Vec3(radius, -radius, 0)]
 
@@ -88,7 +87,6 @@ class Quad(Mesh):
         # center mesh
         offset = sum(self.vertices) / len(self.vertices)
         self.vertices = [(v[0] - offset[0], v[1] - offset[1], v[2] - offset[2]) for v in self.vertices]
-
         if for_button:
             self.uvs = [Vec2((v[0]*aspect)+.5, v[1]+.5) for v in self.vertices]
 

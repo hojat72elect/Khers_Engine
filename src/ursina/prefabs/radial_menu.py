@@ -28,8 +28,6 @@ class RadialMenu(Entity):
         for key, value in kwargs.items():
             setattr(self, key, value)
 
-
-
     def on_enable(self):
         if not hasattr(self, 'bg'):
             return
@@ -47,7 +45,6 @@ class RadialMenu(Entity):
             c.scale = 0
             c.animate_scale(original_scales[i], duration=self.open_duration, delay=i*delay_step, curve=curve.linear)
 
-
     def input(self, key):
         if key == 'left mouse down' and mouse.hovered_entity in [c for c in self.children if isinstance(c, Button)]:
             invoke(setattr, self, 'enabled', False, delay=.1)
@@ -57,7 +54,6 @@ class RadialMenu(Entity):
 class RadialMenuButton(Button):
     def __init__(self, **kwargs):
         super().__init__(model='sphere', scale=1.3, highlight_scale=1.2, pressed_color=color.azure)
-
 
         for key, value in kwargs.items():
             setattr(self, key, value)

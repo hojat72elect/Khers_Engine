@@ -17,7 +17,8 @@ class GradientEditor(Entity):
         for i in range(3):
             slider = ThinSlider(parent=self, x=-.25, step=1, min=0, max=resolution-1, default=lerp(0,resolution,i/(3-1)), dynamic=True)
             self.sliders.append(slider)
-            slider.knob.color=color.random_color()
+            slider.knob.color = color.random_color()
+
             def _set_value():
                 self.preview_gradient()
                 if self.on_value_changed:
@@ -34,7 +35,6 @@ class GradientEditor(Entity):
         self.copy_button = Button(parent=self, scale=Vec2(.05,.025)*1, text='copy', text_size=.5, origin=(.5,-.5), x=-.25-.01, y=-.06, on_click=self.copy)
         self.on_value_changed = on_value_changed    # set this to a function you want to be called when the slider changes
         self.value = value
-
 
     def start_editing_color(self, slider):
         if self.color_picker.enabled:

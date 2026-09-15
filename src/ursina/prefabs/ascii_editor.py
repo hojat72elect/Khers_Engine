@@ -9,7 +9,6 @@ class ASCIIEditor(GridEditor):
         text = '\n'.join([''.join(reversed(line)) for line in reversed(rotated_grid)])
 
         self.text_entity = Text(parent=self.parent, text=text, x=-.0, y=.5, line_height=line_height, font=font)
-
         self.scale = (self.text_entity.width, self.text_entity.height)
         self.canvas.scale = 1
         self.text_entity.world_parent = self

@@ -11,9 +11,9 @@ class ButtonGroup(Entity):
         super().__init__()
         self.buttons = []
         self.selected = []
-        self.deselected_color =         Button.default_color
-        self.highlight_color =          Button.default_highlight_color if Button.default_highlight_color is not None else Button.default_color.tint(.2)
-        self.selected_color =           ButtonGroup.default_selected_color
+        self.deselected_color = Button.default_color
+        self.highlight_color = Button.default_highlight_color if Button.default_highlight_color is not None else Button.default_color.tint(.2)
+        self.selected_color = ButtonGroup.default_selected_color
         self.highlight_selected_color = ButtonGroup.default_highlight_selected_color
         self.min_selection = min_selection
         self.max_selection = max(min_selection, max_selection)
@@ -91,7 +91,7 @@ class ButtonGroup(Entity):
             self.select(mouse.hovered_entity)
 
     def select(self, b):
-        if b in self.selected and self.min_selection > 0 and len(self.selected) >= self.min_selection:
+        if b in self.selected and 0 < self.min_selection <= len(self.selected):
             return
 
         # add

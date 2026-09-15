@@ -8,7 +8,6 @@ class ButtonList(Entity):
         self.button_height = button_height
         self.width = width
         super().__init__(parent=camera.ui, position=(-(width/2), .45))
-
         self.text_entity = Text(parent=self, font=font, origin=(-.5,.5), text='empty', world_scale=20, z=-.1, x=.01, y=-(button_height*.25*Text.size), line_height=button_height)
         self.bg = Entity(parent=self, model='quad', origin=(-.5,.5), scale=width, color=color, collider='box')
         self.highlight = Entity(parent=self.bg, model='quad', color=highlight_color, scale=(1,self.button_height), origin=(-.5,.5), z=-.01, add_to_scene_entities=False)
@@ -39,7 +38,6 @@ class ButtonList(Entity):
             self.highlight.scale_y = 1 / len(value)
             self.selection_marker.scale_y = 1 / len(value)
 
-
     def input(self, key):
         # handle click here instead of in on_click so you can assign a custom on_click function
         if key == 'left mouse down' and self.bg.hovered:
@@ -52,7 +50,6 @@ class ButtonList(Entity):
 
             if callable(action):
                 action()
-
             if self.popup:
                 self.disable()
 
@@ -85,7 +82,6 @@ class ButtonList(Entity):
         self._selected = value
         if not hasattr(self, 'selection_marker'):
             return
-
         if not value:
             self.selection_marker.enabled = False
             return

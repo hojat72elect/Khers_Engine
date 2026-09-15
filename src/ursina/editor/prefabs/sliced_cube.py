@@ -21,9 +21,6 @@ def stretch_model(mesh, scale, limit=.25, scale_multiplier=1, regenerate=False):
     mesh.vertices = verts
     print('----', mesh.vertices)
 
-    # if mesh.uvs:
-
-
     if regenerate:
         mesh.generate()
 

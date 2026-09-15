@@ -3,11 +3,11 @@ from ursina import Entity, Vec2, Vec3, camera, clamp, curve, destroy, held_keys,
 class EditorCamera(Entity):
 
     def __init__(self,
-        rotation_speed=200, pan_speed=Vec2(5,5), move_speed=10,
-        zoom_speed=1.25, zoom_smoothing=8, ignore_scroll_on_ui=True,
-        rotation_smoothing=0, rotate_key='right mouse', rotate_around_mouse_hit=False,
-        **kwargs
-        ):
+                 rotation_speed=200, pan_speed=Vec2(5, 5), move_speed=10,
+                 zoom_speed=1.25, zoom_smoothing=8, ignore_scroll_on_ui=True,
+                 rotation_smoothing=0, rotate_key='right mouse', rotate_around_mouse_hit=False,
+                 **kwargs
+                 ):
         camera.editor_position = camera.position
         super().__init__(name='editor_camera', eternal=False)
 
@@ -106,8 +106,8 @@ class EditorCamera(Entity):
             self.direction = Vec3(
                 self.forward * (held_keys['w'] - held_keys['s'])
                 + self.right * (held_keys['d'] - held_keys['a'])
-                + self.up    * (held_keys['e'] - held_keys['q'])
-                ).normalized()
+                + self.up * (held_keys['e'] - held_keys['q'])
+            ).normalized()
             self.position += self.direction * (self.move_speed + (self.move_speed * held_keys['shift']) - (self.move_speed*.9 * held_keys['alt'])) * time.dt
 
             if self.target_z < 0:

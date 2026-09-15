@@ -10,21 +10,17 @@ class PipeEditor(Entity):
         self.add_collider = False
         self.generate()
 
-
     def generate(self):
         self.model = Pipe(
             path = [e.get_position(relative_to=self) for e in self._point_gizmos],
             thicknesses = [e.scale.xz for e in self._point_gizmos]
         )
         self.texture = 'grass'
-
         if self.add_collider:
             self.collider = self.model
 
-
     def __deepcopy__(self, memo):
         return eval(repr(self))
-
 
     @property
     def points(self):
@@ -36,7 +32,6 @@ class PipeEditor(Entity):
 
     @edit_mode.setter
     def edit_mode(self, value):
-        # print('set edit mode', value)
         self._edit_mode = value
         if value:
             [setattr(e, 'selectable', False) for e in LEVEL_EDITOR.entities if not e == self]
@@ -52,7 +47,6 @@ class PipeEditor(Entity):
                 LEVEL_EDITOR.selection = [self, ]
 
         LEVEL_EDITOR.render_selection()
-
 
     def input(self, key):
         combined_key = input_handler.get_combined_key(key)

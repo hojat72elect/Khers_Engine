@@ -13,7 +13,6 @@ class InputField(Button):
         if not 'scale' in kwargs and not 'scale_y' in kwargs:
             kwargs['scale'] = (kwargs.get('scale_x', .5), Text.size*2*max_lines)
 
-
         super().__init__(highlight_scale=1, pressed_scale=1, highlight_color=color.black, **kwargs)
         for key, value in kwargs.items():
             if 'scale' in key:
@@ -22,12 +21,10 @@ class InputField(Button):
         self.default_value = default_value
         self.limit_content_to = None
         self.hide_content = False   # if set to True, will display content as '*'. can also be set to character instead of True.
-
         self.next_field = None
         self.submit_on = []   # for example: self.submit_on = ['enter', ] will call self.on_submit when you press enter.
         self.on_submit = None   # function to be called when you press self.submit_on.
         self.on_value_changed = None
-
         self.text_field = TextField(world_parent=self, x=-.45, y=.25, z=-.1, max_lines=max_lines, character_limit=character_limit, text=text, register_mouse_input=True, highlight_color=hsv(200,1,1,.5))
         destroy(self.text_field.bg)
         self.text_field.bg = self
@@ -52,13 +49,11 @@ class InputField(Button):
             self.text_field.text_entity.text = self.text_field.text
 
         self.text_field.render = render
-
         self.text_field.scale *= 1.25
         self.text_field.text = default_value
         self.text_field.render()
         self.text_field.shortcuts['indent'] = ('')
         self.text_field.shortcuts['dedent'] = ('')
-
         self.active = active
 
         if label:
@@ -67,7 +62,6 @@ class InputField(Button):
 
         for key, value in kwargs.items():
             setattr(self, key, value)
-
 
     def input(self, key):
         if key == 'tab' and self.text_field.cursor.y >= self.text_field.max_lines-1 and self.active:
@@ -80,18 +74,6 @@ class InputField(Button):
             self.on_submit()
             self.active = False
 
-        # if self.active:
-        #     self.text_field.input(key)
-        #     return True # eat input when entering text to prevent unwanted actions while typing.
-
-
-    # def text_input(self, key):
-    #     if self.active:
-    #         self.text_field.text_input(key)
-            # return True
-
-
-
     def text_getter(self):
         return self.text_field.text
 
@@ -101,17 +83,15 @@ class InputField(Button):
         self.text_field.add_text(value, move_cursor=True)
         self.text_field.render()
 
-
     def text_color_getter(self):
         return self.text_field.text_entity.color
+
     def text_color_setter(self, value, temp=False):
         if hasattr(self, 'text_color'):
             self.text_field.text_entity.color = value
 
     def active_getter(self):
         return self.text_field.active
+
     def active_setter(self, value):
         self.text_field.active = value
-
-    # def text_origin_setter(self, value):
-    #     self.text_field.text_entity.text_origin = value

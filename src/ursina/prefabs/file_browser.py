@@ -109,7 +109,6 @@ class FileBrowser(Entity):
         for i in range(len(self.button_parent.children) - len(files)):
             destroy(self.button_parent.children.pop())
 
-
         for i, f in enumerate(files):
             prefix = ' <light_gray>'
             if i < len(self.button_parent.children):

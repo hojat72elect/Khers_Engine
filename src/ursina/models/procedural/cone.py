@@ -3,6 +3,7 @@ from copy import deepcopy
 
 class Cone(Mesh):
     _cache = {}
+
     def __new__(cls, resolution=4, radius=.5, height=1, add_bottom=True, mode='triangle'):
         key = (resolution, radius, height, add_bottom, mode)
         cached_mesh = cls._cache.get(key, None)
@@ -10,7 +11,6 @@ class Cone(Mesh):
             return deepcopy(cls._cache[key])
 
         instance = super().__new__(cls)
-
         instance.eternal = True
         cls._cache[key] = instance
         return instance
@@ -34,6 +34,5 @@ class Cone(Mesh):
                 verts.append(Vec3(0,-(height/2),0))
                 v = rotate_around_point_2d(v, origin, -degrees_to_rotate)
                 verts.append(Vec3(v[0], -(height/2), v[1]))
-
 
         super().__init__(vertices=verts, uvs=[e.xy for e in verts], mode=mode, **kwargs)

@@ -2,7 +2,6 @@ from ursina import Entity, Text, camera, color, mouse, BoxCollider, Sequence, Fu
 from ursina import color as color_module
 from ursina.models.procedural.quad import Quad
 from ursina.shaders.unlit_shader import unlit_shader
-
 from ursina.scripts.property_generator import generate_properties_for_class
 
 @generate_properties_for_class()
@@ -27,12 +26,9 @@ class Button(Entity):
 
         self.radius = Button.default_radius if radius is Default else radius
         self.model = Button.default_model if model is Default else model
-
         self.origin = origin
-
         self.texture = Button.default_texture if texture is Default else texture
         self.color = color = Button.default_color if color is Default else color
-
         self.highlight_color = self.color.tint(.2) if Button.default_highlight_color is None else Button.default_highlight_color
         self.pressed_color = self.color.tint(-.2)
         self.highlight_scale = highlight_scale    # multiplier
@@ -42,7 +38,6 @@ class Button(Entity):
         self.highlight_text_size = highlight_text_size
         self.collider = collider
         self.disabled = disabled    # Used for temporary deactivating buttons without making them invisible, and still have collision.
-
         self.text_entity = None
         self.text_origin = text_origin
         text_color = text_color if text_color is not Default else color_module.text_color
@@ -54,7 +49,6 @@ class Button(Entity):
 
         for key, value in kwargs.items():
             setattr(self, key, value)
-
 
     def text_getter(self):
         if self.text_entity:
@@ -69,15 +63,12 @@ class Button(Entity):
             self.text_entity = Text(text=value, parent=self.model, position=Vec3(self.text_origin[0],self.text_origin[1],-.01), origin=self.text_origin, add_to_scene_entities=False)
             self.text_entity.world_parent = self
             self.text_entity.world_scale = Vec3(20 * self.text_size)
-
         else:
             self.text_entity.text = value
-
 
     def text_origin_getter(self):
         if self.text_entity:
             return self.text_entity.origin
-
         return getattr(self, '_text_origin', (0,0))
 
     def text_origin_setter(self, value):
@@ -217,7 +208,6 @@ class Button(Entity):
         self.scale = Vec2(self.text_entity.width*self.text_entity.world_scale_x, self.text_entity.height*self.text_entity.world_scale_y) * Text.size * 2
         self.scale += Vec2(*padding)
         self.position += self.text_origin * self.scale.xy * .5
-
         self.model = self.model.__class__
         self.parent = self.original_parent
         self.text_entity.world_parent = self

@@ -28,10 +28,8 @@ class Terrain(Mesh):
 
         if heightmap:
             self.height_values = texture_to_height_values(heightmap, skip)
-
         elif height_values is not None:
             self.height_values = height_values
-
 
         self.width = len(self.height_values)
         self.depth = len(self.height_values[0])
@@ -39,7 +37,6 @@ class Terrain(Mesh):
         self.gradient = gradient
         super().__init__()
         self.generate()
-
 
     def generate(self):
         # copy this from Plane to avoid unnecessary init
@@ -66,13 +63,12 @@ class Terrain(Mesh):
                     self.triangles.append((i, i-1, i-w-1, i-w-0))
 
                 # normals
-                if x > 0 and z > 0 and x < w-1 and z < h-1:
-                    rl =  (_height_values[x+1][z] - _height_values[x-1][z]) / (2*dx)
-                    fb =  (_height_values[x][z+1] - _height_values[x][z-1]) / (2*dz)
+                if 0 < x < w - 1 and 0 < z < h - 1:
+                    rl = (_height_values[x + 1][z] - _height_values[x - 1][z]) / (2 * dx)
+                    fb = (_height_values[x][z + 1] - _height_values[x][z - 1]) / (2 * dz)
                     self.normals.append(Vec3(-rl, 1, -fb).normalized())
                 else:
                     self.normals.append(Vec3(0,1,0))
-
                 i += 1
 
         if self.gradient:
@@ -80,6 +76,5 @@ class Terrain(Mesh):
             for (x,z), y in enumerate_2d(self.height_values):
                 y = int(clamp(y, 0, 255))
                 self.colors.append(self.gradient[y])
-
 
         super().generate()

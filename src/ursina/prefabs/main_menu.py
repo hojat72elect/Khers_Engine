@@ -8,12 +8,10 @@ class MainMenu(Entity):
             setattr(self, key, value)
 
         button_spacing = .075 * 1.25
-
         self.menu_parent = Entity(parent=self, y=.15)
         self.main_menu = Entity(parent=self.menu_parent)
         self.load_menu = Entity(parent=self.menu_parent)
         self.options_menu = Entity(parent=self.menu_parent)
-
         self.state_handler = Animator({
             'main_menu': self.main_menu,
             'load_menu': self.load_menu,
@@ -21,10 +19,10 @@ class MainMenu(Entity):
         })
 
         self.main_menu.buttons = DotDict(
-            new = button_class(text='new game', scale=button_size, on_click=Func(print_on_screen, 'Assign MainMenu().main_menu.buttons.new.on_click', origin=(0,0), position=(0,.1,-1), color=color.red)),
-            load = button_class(text='load', scale=button_size, on_click=Func(setattr, self.state_handler, 'state', 'load_menu')),
-            options = button_class(text='options', scale=button_size, on_click=Func(setattr, self.state_handler, 'state', 'options_menu')),
-            quit = button_class(text='quit', scale=button_size, on_click=Sequence(Wait(.01), Func(application.quit))),
+            new=button_class(text='new game', scale=button_size, on_click=Func(print_on_screen, 'Assign MainMenu().main_menu.buttons.new.on_click', origin=(0, 0), position=(0, .1, -1), color=color.red)),
+            load=button_class(text='load', scale=button_size, on_click=Func(setattr, self.state_handler, 'state', 'load_menu')),
+            options=button_class(text='options', scale=button_size, on_click=Func(setattr, self.state_handler, 'state', 'options_menu')),
+            quit=button_class(text='quit', scale=button_size, on_click=Sequence(Wait(.01), Func(application.quit))),
         )
 
         for i, (name, button) in enumerate(self.main_menu.buttons.items()):
@@ -37,10 +35,8 @@ class MainMenu(Entity):
             self.main_menu.buttons.load.buttons.append(b)
 
         button_class(parent=self.load_menu, scale=button_size, text='back', y=-5 * button_spacing, on_click=Func(setattr, self.state_handler, 'state', 'main_menu'))
-
         preview = Text(parent=self.options_menu, x=.275, y=.25, text='Preview text', origin=(-.5, 0))
         preview.original_scale = preview.scale
-
         text_scale_slider = Slider(0, 2, default=1, step=.1, dynamic=True, text='Text Size:', parent=self.options_menu, x=-.25)
 
         def set_text_scale():

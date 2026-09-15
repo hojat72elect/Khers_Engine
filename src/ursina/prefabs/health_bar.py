@@ -1,6 +1,6 @@
 from ursina import *
-
 from ursina.scripts.property_generator import generate_properties_for_class
+
 @generate_properties_for_class()
 class HealthBar(Button):
 

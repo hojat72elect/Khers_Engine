@@ -110,12 +110,9 @@ class Conversation(Entity):
 
             self.buttons[i].on_click = on_click
 
-
-
     def input(self, key):
         if key == 'left mouse down' or key == 'space' and not mouse.hovered_entity in self.buttons:
             self.next()
-
 
     def next(self):
         if not self.started:
@@ -130,13 +127,10 @@ class Conversation(Entity):
         if self.question_part < len(self.current_node.content)-1:
             self.ask(self.current_node, self.question_part+1)
 
-
     def start_conversation(self, conversation):
         self.conversation_nodes = self.parse_conversation(conversation)
         self.ask(self.conversation_nodes[0])
         self.started = True
-
-
 
     def parse_conversation(self, convo):
         convo = convo.strip()
@@ -156,7 +150,6 @@ class Conversation(Entity):
                 content = content.strip()
                 code = code[:-1]
                 is_answer = content.startswith('* ')
-                # print('code:', codeK)
 
             if prev_node and prev_node.indent_level == indent_level:
                 prev_node.content.append(content)

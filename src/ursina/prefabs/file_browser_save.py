@@ -6,7 +6,6 @@ class FileButtonSave(FileButton):
         if len([e for e in self.parent.children if e.selected]) >= self.load_menu.selection_limit and not self.selected:
             for e in self.parent.children:  # clear selection
                 e.selected = False
-
         self.selected = True
         self.load_menu.file_name_field.text = str(self.path.name)
 
@@ -30,16 +29,9 @@ class FileBrowserSave(FileBrowser):
         self.save_button.y -= .075
         self.cancel_button.y -= .075
         self.file_name_field.text_field.text = ''
-        self.file_type = '' # to save as
-
-        self.last_saved_file = None     # gets set when you save a file
-        self.overwrite_prompt = WindowPanel(
-            content=(
-                Text('Overwrite?'),
-                Button('Yes', color=color.azure, on_click=self._save),
-                Button('Cancel')
-            ), z=-1, popup=True, enabled=False)
-
+        self.file_type = ''  # to save as
+        self.last_saved_file = None  # gets set when you save a file
+        self.overwrite_prompt = WindowPanel(content=(Text('Overwrite?'), Button('Yes', color=color.azure, on_click=self._save), Button('Cancel')), z=-1, popup=True, enabled=False)
         for key, value in kwargs.items():
             setattr(self, key ,value)
 

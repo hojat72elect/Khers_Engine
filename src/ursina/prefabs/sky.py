@@ -7,11 +7,8 @@ class Sky(Entity):
 
     def __init__(self, **kwargs):
         super().__init__(**(__class__.default_values | kwargs))
-
-        # self.setDepthWrite(False)
         __class__.instances.append(self)
         self.setBin('background', 0)
-
 
     def update(self):
         self.world_rotation = Vec3(0,0,0)
