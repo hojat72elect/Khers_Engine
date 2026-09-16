@@ -1,4 +1,4 @@
-'''Translated from https://github.com/AndrewRayCode/easing-utils/blob/master/src/easing.js'''
+"""Translated from https://github.com/AndrewRayCode/easing-utils/blob/master/src/easing.js"""
 from math import asin, cos, floor, pi, sin, sqrt
 
 def linear(t):

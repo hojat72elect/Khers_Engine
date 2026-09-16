@@ -7,10 +7,8 @@ def duplicate(entity, copy_children=True, *args, **kwargs): # use a for loop ins
     else:
         e = entity.__class__(*args, **kwargs)
 
-
     if hasattr(entity, 'model') and entity.model:
         e.model = copy(entity.model)
-
 
     for name in entity.attributes:
         if name == 'model':
@@ -41,13 +39,10 @@ def duplicate(entity, copy_children=True, *args, **kwargs): # use a for loop ins
         e.loop = entity.loop
         e.loops = entity.loops
         e.autoplay = entity.autoplay
-
         e.clip = entity.clip
-
 
     if hasattr(entity, 'text'):
         e.text = entity.text
-
 
     for key, value in kwargs.items():
         setattr(e, key ,value)

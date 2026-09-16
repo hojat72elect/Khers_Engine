@@ -342,7 +342,6 @@ class UrsinaBuild:
 
             if f.stem in compressed_textures and f.parent != compressed_textures_folder:
                 continue
-            # print(f.name, f.parent, f.stem in compressed_models)
             if f.stem in compressed_models and f.parent != compressed_models_folder:
                 continue
 
@@ -351,7 +350,6 @@ class UrsinaBuild:
 
             print('copy:', rel, '->', dest)
             shutil.copy2(f, dest)
-
 
     def make_bat_file(self, entry_point='__main__.py', name='launch', builds_folder='builds', build_name='', platform='Windows', is_pyc=False):
         build_name = build_name if build_name else PROJECT_FOLDER.name

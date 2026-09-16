@@ -8,19 +8,13 @@ def destroy(entity, delay=0, unscaled=True, ignore_paused=False, force_destroy=F
     if application.development_mode:
         # get the calling function and the file it's from, so we can give a better error message if we try to use it after destroy
         entity.destroy_source = f'caller: {sys._getframe(1).f_code.co_name} file: {sys._getframe(1).f_code.co_filename}'
-
     if delay == 0:
         _destroy(entity, force_destroy=force_destroy)
         return True
 
     return invoke(_destroy, entity, delay=delay, unscaled=unscaled, ignore_paused=ignore_paused, force_destroy=force_destroy)
-    # return Sequence(Wait(delay), Func(_destroy, entity), auto_destroy=True, started=True)
 
 def _destroy(entity, force_destroy=False):
-    # from ursina import camera
-    # if not entity or entity == camera:
-    #     return
-
     if entity.eternal and not force_destroy:
         return
 
@@ -70,11 +64,3 @@ def _destroy(entity, force_destroy=False):
         entity.clearPythonTag("Entity")
 
     entity.removeNode()
-
-    # if hasattr(entity.__class__, 'instances') and entity in entity.__class__.instances:
-    #     entity.__class__.instances.remove(entity)
-    #unload texture
-    # if hasattr(entity, 'texture') and entity.texture != None:
-    #     entity.texture.releaseAll()
-
-    # del entity

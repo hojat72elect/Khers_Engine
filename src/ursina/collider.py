@@ -17,14 +17,11 @@ class Collider(NodePath):
         else:
             self.node_path.node().addSolid(self.shape)
 
-
     def remove(self):
         if self.node_path is not None:
             self.node_path.node().clearSolids()
             self.node_path.removeNode()
             self.node_path = None
-            # print('remove  collider')
-
 
     @property
     def visible(self):
@@ -66,7 +63,6 @@ class MeshCollider(Collider):
         center = Vec3(center)
         if mesh is None and entity.model:
             mesh = entity.model
-            # print('''auto generating mesh collider from entity's mesh''')
 
         self.collision_polygons = []
 
@@ -91,7 +87,6 @@ class MeshCollider(Collider):
             else:
                 print('error: mesh collider does not support', mesh.mode, 'mode')
                 return None
-
 
         elif isinstance(mesh, NodePath):
             from panda3d.core import GeomVertexReader
@@ -120,7 +115,6 @@ class MeshCollider(Collider):
                 self.collision_polygons.append(p)
 
         super().__init__(entity, self.collision_polygons)
-
 
     def remove(self):
         self.node_path.node().clearSolids()
