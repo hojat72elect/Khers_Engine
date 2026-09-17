@@ -12,6 +12,7 @@ dependencies = [
     "psd-tools>=1.19.0",
     "psutil>=7.2.2",
     "thumbhash>=0.1.2",
+    "ursinanetworking>=2.1.5",
 ]
 
 [dependency-groups]
