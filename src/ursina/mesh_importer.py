@@ -377,13 +377,17 @@ def obj_to_ursinamesh(folder=Func(getattr, application, 'models_compressed_folde
                 if material_name in mtl_dict:
                     current_color = mtl_dict[material_name]
 
-
-        if norms: # make sure we have normals and not just normal indices (weird edge case).
+        if norms:  # make sure we have normals and not just normal indices (weird edge case).
             normals = [(-norms[nid][0], norms[nid][1], norms[nid][2]) for nid in norm_indices]
 
         if return_mesh:
+            mesh_vertices = [verts[t] for t in tris]
+            # Fix the vertex color mismatch by padding with white if colors array is shorter than usual (a weird edge case that happened in "Rally" example game)
+            if len(vertex_colors) < len(mesh_vertices):
+                vertex_colors.extend([color.white] * (len(mesh_vertices) - len(vertex_colors)))
+
             return Mesh(
-                vertices=[verts[t] for t in tris],
+                vertices=mesh_vertices,
                 normals=normals,
                 uvs=[uvs[uid] for uid in uv_indices],
                 colors=vertex_colors
