@@ -129,9 +129,6 @@ class Entity(NodePath, metaclass=PostInitCaller):
         on_enable()
         on_disable()
         on_destroy()
-        
-
-
     """
     rotation_directions = (-1, -1, 1)
     default_shader = unlit_with_fog_shader

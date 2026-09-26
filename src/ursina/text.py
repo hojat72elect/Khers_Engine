@@ -31,6 +31,53 @@ def _search_for_file(name, folders, file_types=None): # prioritizes based on fil
 
 @generate_properties_for_class()
 class Text(Entity):
+    """
+    You can set the `.scale` or `.world_scale` for changing the size of a Text.
+    For example:
+    .. code-block:: python
+        text_entity = Text('hello', world_scale=2)
+        
+    You can even change the default text size globally, like this:
+    .. code-block:: python
+        Text.size = 0.05 # make all the text double as big (default: 0.025).
+
+    Moreover, you can change the text size of a non-uniformly scaled button, like this: 
+    .. code-block:: python
+        button = Button(scale=(0.2,0.1), text='Start')
+        button.text_entity.world_scale = 2  # make the text_entity twice as big.
+
+    **Font and Resolution**
+
+    For one text entity, change the font and resolution like this : 
+    .. code-block:: python
+        text = Text(font='VeraMono.ttf', resolution=100*Text.size)
+        text.text = descr
+
+    But if you wanna change them for all texts inside your game, you would do it like this:
+    .. code-block:: python
+        Text.default_font = 'VeraMono.ttf'
+        Text.default_resolution = 100 * Text.size
+
+    Keep in mind you **don't have to** change the resolution, but for pixel fonts for example, you
+    might want a higher resolution in order for it not to appear blurry.
+
+    :ivar origin: you can use this field of a Text object for changing the text alignment. For example: 
+    .. code-block:: python
+        Text('Hello\nWorld!', origin=(-.5,.5))  # the default. text starts in the upper left like normal.
+        Text('Hello\nWorld!', origin=(0,0))     # text is centered both horizontally and vertically.
+  
+    :ivar color:
+    We use this field to color the whole text, like this: 
+    .. code-block:: python
+        t = Text('This is some text', color=color.blue)
+
+    But in order to color just some parts of the text, we use tags: 
+    .. code-block:: python
+        t = Text('This is some <pink>colored text. <default>Reset color back to default.', color=color.blue)
+
+    **We have lots of prefabs in our engine which have Text on them. You can access their `.text_entity` field for playing with their text.**
+     
+    """
     size = .025
     default_font = 'OpenSans-Regular.ttf'
     default_monospace_font = 'VeraMono.ttf'
@@ -45,7 +92,7 @@ class Text(Entity):
         self.setColorScaleOff()
         self.text_nodes = []
         self.images = []
-        self.origin = (-.5, .5)
+        self.origin = (-0.5, 0.5)
         self.raw_text = text
         self.font = Text.default_font
         self.shader = text_shader
