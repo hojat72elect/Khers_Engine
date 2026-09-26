@@ -173,7 +173,37 @@ class Ursina(ShowBase):
 
 
     def _update(self, task=None):
-        """Internal task that runs every frame. Updates time, mouse, sequences and entities."""
+        """
+        Internal task that runs every frame. Updates time, mouse, sequences and entities.
+        
+        Each entity's 'update' function will be called automatically (every frame).
+        In fact, there are 3 different ways of calling 'update' function: 
+        .. rubric:: 1 - By assigning update to an entity
+        
+        .. code-block:: python            
+            e = Entity()
+            def my_update():
+                e.x += 1 * time.dt # dt is short for delta time, the duration since the last frame.
+            
+            e.update = my_update
+        
+        .. rubric:: 2 - By inheriting the Entity class
+        
+        .. code-block:: python
+            class Player(Entity):
+                def update(self):
+                    self.x += 1 * time.dt
+        
+        .. rubric:: 3 - By having an update function in __main__ (starting script)
+        
+        The third option is to put a function called `update` in __main__, the starting script.
+        You'll see this in a lot of examples since it's convenient for small scripts.
+        Keep in mind this won't work if you import a module with an update function defined at module level.
+        
+        .. code-block:: python            
+            def update():
+                print('update')
+        """
         if application.calculate_dt:
             time.dt_unscaled = globalClock.getDt()
             time.dt = time.dt_unscaled * application.time_scale          # time between frames
@@ -240,8 +270,20 @@ class Ursina(ShowBase):
         key += ' hold'
         self.input(key)
 
-    def input(self, key, is_raw=False): # internal method for handling input
-        """Built-in input handler. Propagates the input to all entities and the input function of the main script. Main use case for this it to simulate input though code, like: app.input('a').
+    def input(self, key, is_raw=False):
+        """
+        The built-in input handler function. Propagates the input to all entities and the input function of the main script. Main use case for this is to simulate input through code, like: app.input('a').
+        The `input` function is pretty much like `update` since it runs on every frame, and also the ways it can be defined are pretty much like `update`.
+        
+        .. code-block:: python
+            class Player(Entity):
+                def input(self, key):
+                    if key == 'w' :
+                        self.position += self.forward
+                    if key == 'd' :
+                        self.animate('rotation_y' , self.rotation_y + 90 , duration = 0.1)
+                    if key == 'a' :
+                        self.animate('rotation_y' , self.rotation_y - 90 , duration = 0.1)
 
         Args:
             key (Any): The input key.

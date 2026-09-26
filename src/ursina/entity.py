@@ -33,6 +33,106 @@ from ursina.scripts.property_generator import generate_properties_for_class
 
 @generate_properties_for_class()
 class Entity(NodePath, metaclass=PostInitCaller):
+    """
+    An entity is a thing in the world, and is the "god class" in ursina.
+    It's like a GameObject in Unity or an Actor in Unreal.
+
+    It can have a position, rotation, and scale.
+    It can have a model, texture, and color.
+    It can have an update function, input function, and scripts.
+
+    :ivar model:  There are several included models like 'quad', 'plane', 'cube', and 'sphere',
+                    but you can also use your own.
+                    To do that simply give the base name of your model, and it will glob/search for
+                    the model and take the first one it finds.
+                    Supported file types are:
+                    * obj
+                    * bam (binary format)
+                    * blend (gets auto converted to an obj)
+                    * ursinamesh (custom human-readable format identical to how you'd make a Mesh in code)
+
+                    Example
+                    ----------
+
+    .. code-block:: python
+     Entity(model='name_of_your_model')
+    :vartype model: str
+
+    :ivar texture: Setting a texture is similar to setting a model. Just give it a name in this case as well:
+    .. code-block:: python
+        e1 = Entity(model='cube', texture='texture_name')
+
+        # other ways are:
+        e2 = Entity(model='cube', texture=e1.texture) # or set it to another Texture
+        e3 = Entity(model='cube', texture=Texture(PIL.Image.new(mode="RGBA", size=(854,480)))) # set a PIL texture
+        e4 = Entity(model='cube', texture='movie_name.mp4') # set video texture
+
+    For 2d graphics, you can also use the Sprite class, which is simply an Entity with a
+    'quad' model and scale set to automatically fit the size and aspect ratio of the texture:
+
+    .. code-block:: python
+        s = Sprite('texture_name')
+        print(s.aspect_ratio)
+    :vartype texture: str
+
+    :ivar position: You can set the position of this entity, relative to its parent, by setting .position:
+    .. code-block:: python
+        e = Entity()
+        e.position = Vec3(0,0,0)
+        e.position = Vec2(0,0)
+        e.position = (0,0,0)
+        e.position = (0,0)
+
+    You can also set 'x', 'y', 'z' for setting the position on a specific axis:
+    .. code-block:: python
+        e = Entity(position=Vec3(1,1,1))
+        e.x = 0
+        print(position)
+        # the result : Vec3(0,1,1)
+
+    To set the position of the entity relative to the scene (ignoring the position of any parents) just set the .world_position:
+    .. code-block:: python
+        parent_entity = Entity(position=Vec3(0,2,0))
+        e = Entity(parent=parent_entity, position=Vec3(0,2,0))
+        print(e.position)
+        # the result : Vec3(0,2,0)
+        print(e.world_position)
+        # the result : Vec3(0,4,0)
+
+        e.world_position = Vec3(0,0,0)
+        print(e.position)
+        # the result : Vec3(0,-2,0)
+
+    As with position, there's shortcuts for setting world position on individual axes too:
+    world_x, world_y and world_z
+    :vartype position: Vec3
+
+    :ivar rotation: Working with rotation of an entity and changing it is very easy. For example:
+     .. code-block:: python
+        e.rotation = (0,0,0)
+        e.rotation_y = 90
+
+    You can also use the look_at() function for pointing an entity at something. For example:
+    .. code-block:: python
+        other_entity = Entity(position=(10,1,8))
+        e.look_at(other_entity) # make z-axis(forward) point at other_entity
+        e.look_at(other_entity, axis='up') # optionally define which axis
+    :vartype rotation: Vec3
+
+    :ivar scale: Change the size of the entity by setting the scale attribute. For example:
+    .. code-block:: python
+        e = Entity(model='cube', scale=(3,1,1))
+    :vartype scale: Vec3
+
+    Sometimes you want side effects when you enable/disable an entity, like play an animation or something.
+    .. code-block:: python            
+        on_enable()
+        on_disable()
+        on_destroy()
+        
+
+
+    """
     rotation_directions = (-1, -1, 1)
     default_shader = unlit_with_fog_shader
     ignore_paused = False
@@ -74,7 +174,12 @@ class Entity(NodePath, metaclass=PostInitCaller):
         self.setPythonTag('Entity', self)   # for the raycast to get the Entity and not just the NodePath
         self.scripts = []   # add with add_script(class_instance). will assign an 'entity' variable to the script.
         self.animations = []
-        self.hovered = False    # will return True if mouse hovers entity.
+        
+        #: bool: Will return True if mouse hovers over the entity.
+        #: In fact, we use this function to check if an entity with a collider is hovered by the mouse.
+        #: .. code-block:: python
+        #:     print(my_entity.hovered)
+        self.hovered = False
 
         self.parent = parent     # default parent is scene, which means it's in 3d space. to use UI space, set the parent to camera.ui instead.
         self.position = position

@@ -140,6 +140,36 @@ class Mouse:
         base.win.requestProperties(window)
 
     def input(self, key):
+        """
+        Entities can react to the mouse as long as they have a collider.
+        Buttons will have a collider by default, but you can also assign one to them.
+        
+        To get the entity currently under the mouse:
+        .. code-block:: python            
+            print(mouse.hovered_entity)
+        
+        There are also functions for handling mouse clicks and hover/unhover.
+        These only work if the Entity has a collider and the function/callable is assigned.
+        .. code-block:: python
+            on_click()
+            on_double_click()
+            on_mouse_enter()
+            on_mouse_exit()
+            
+        Example using `on_click`:
+        .. code-block:: python
+            def action():
+                print('Ow! That hurt!')
+            Entity(model = 'quad', parent = camera.ui, scale = 0.1, collider = 'box', on_click = action)
+            # on_click should be a function/callable/Func/Sequence
+        
+        Example using `on_mouse_enter` and `on_mouse_exit`:
+        .. code-block:: python
+            b = Button(scale = (0.5, 0.25), text = 'zzz')
+            b.on_mouse_enter = Func(setattr, b, 'text', 'Hi, friend :D')
+            b.on_mouse_exit = Func(setattr, b, 'text', ' ''No! Don't leave me ;-;'' ')
+        
+        """
         if not self.enabled:
             return
 

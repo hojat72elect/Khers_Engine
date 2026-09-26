@@ -7,6 +7,21 @@ from ursina.vec4 import Vec4
 
 @generate_properties_for_class()
 class Color(Vec4):
+    """
+    We mostly just use instances of the Color class to apply color to an entity.
+    Some examples of how you can change the color to an entity:
+
+    .. code-block:: python
+        e.color = color.red # set it to a color in the color module
+        e.color = hsv(120, .5, .5) # hsv color
+        e.color = rgb(.8, .1, 0) # rgb color
+        e.color = rgb32(16, 128, 255) # rgb color
+        e.color = '#aabbcc' # hex color
+        e.color = e.color.tint(.1) # tint the color
+        e.color = color.random_color() # set it to a random color
+        e.color = lerp(color.red, color.green, .5) # set it to a color half way between red and green
+
+    """
     def __init__(self,*p):
         super().__init__(*p)
 
