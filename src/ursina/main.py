@@ -21,6 +21,26 @@ keyboard_keys = '1234567890qwertyuiopasdfghjklzxcvbnm'
 from ursina.scripts.singleton_decorator import singleton
 @singleton
 class Ursina(ShowBase):
+    """
+    Initializing this class will be like this : 
+    .. code-block:: python
+        Ursina(
+        title='ursina', 
+        icon='textures/ursina.ico', 
+        borderless: bool=False, 
+        fullscreen: bool=None, 
+        size=None, 
+        forced_aspect_ratio=None, 
+        position=None, 
+        vsync=True, 
+        editor_ui_enabled: bool=None, 
+        window_type='onscreen', 
+        development_mode: bool=None, 
+        render_mode=None, 
+        show_ursina_splash=False, 
+        use_ingame_console=False
+    )
+    """
     def __init__(self, title='ursina', icon='textures/ursina.ico', borderless:bool=False, fullscreen:bool=None, size=None, forced_aspect_ratio=None, position=None, vsync=True, editor_ui_enabled:bool=None, window_type='onscreen', development_mode:bool=None, render_mode=None, show_ursina_splash=False, use_ingame_console=False, **kwargs):
         """The main class of Ursina. This class is a singleton, so you can only have one instance of it.
 
@@ -171,7 +191,6 @@ class Ursina(ShowBase):
             return Task.cont
         self.taskMgr.add(_wait_for_window_open, 'wait_for_window')
 
-
     def _update(self, task=None):
         """
         Internal task that runs every frame. Updates time, mouse, sequences and entities.
@@ -249,7 +268,13 @@ class Ursina(ShowBase):
 
         return Task.cont
 
-    def input_up(self, key, is_raw=False): # internal method for key release
+    def input_up(self, key, is_raw=False):
+        """
+        internal function for key release.
+        For example:
+        .. code-block:: python
+            input_up(key=None, is_raw=False)
+        """
         if not is_raw and key in keyboard_keys:
             return
 
@@ -259,7 +284,13 @@ class Ursina(ShowBase):
         key += ' up'
         self.input(key)
 
-    def input_hold(self, key, is_raw=False):   # internal method for handling repeating input that occurs when you hold the key
+    def input_hold(self, key, is_raw=False): 
+        """
+            Internal function for handling repeating input that occurs when you hold the key.
+            For example: 
+            .. code-block:: python
+                input_hold(key=None, is_raw=False)
+        """
         key = key.replace('control-', '')
         key = key.replace('shift-', '')
         key = key.replace('alt-', '')
@@ -272,6 +303,10 @@ class Ursina(ShowBase):
 
     def input(self, key, is_raw=False):
         """
+        The internal function for handling input.
+        .. code-block:: python
+            input(key=None, is_raw=False)
+        
         The built-in input handler function. Propagates the input to all entities and the input function of the main script. Main use case for this is to simulate input through code, like: app.input('a').
         The `input` function is pretty much like `update` since it runs on every frame, and also the ways it can be defined are pretty much like `update`.
         
@@ -353,7 +388,13 @@ class Ursina(ShowBase):
         for key in bound_keys:
             mouse.input(key)
 
-    def text_input(self, key):  # internal method for handling text input
+    def text_input(self, key):
+        """ 
+            Internal function for handling text input.
+            Example: 
+            .. code-block:: python
+                text_input(key=None)
+        """
         key_code = ord(key)
         if key_code < 32 or (key_code >= 127 and key_code <= 160):
             return
@@ -379,10 +420,17 @@ class Ursina(ShowBase):
                     if script.enabled and hasattr(script, 'text_input') and callable(script.text_input):
                         script.text_input(key)
 
-    def step(self): # use this control the update loop yourself. call app.step() in a while loop for example, instead of app.run()
+    def step(self):
+        """ 
+            Use this function to control the update loop yourself. call app.step() in a while loop for example, instead of app.run()
+        """
         self.taskMgr.step()
 
     def run(self, info=True):
+        """ 
+            .. code-block:: python
+                run(info=True)
+        """
         if application.show_ursina_splash:
             from ursina.prefabs.splash_screen import UrsinaSplashScreen
             application.ursina_splash = UrsinaSplashScreen()
