@@ -1,0 +1,40 @@
+# Frequently Asked Questions 
+
+### How should I structure my project?
+
+```
+project_folder/         # create a new folder for each project
+    enemies.py
+    level.py
+    main.py             # the starting script
+    player.py
+    player_sprite.png
+    textures/           # assets can be placed alongside the scripts or in a folder below
+        enemy_1.png
+        enemy_2.png
+```
+
+### How do I move the camera?
+
+The camera is an Entity, so you can move and rotate it just like everything else:
+
+``` py
+camera.position = Vec3(1,1,0)
+```
+
+### Why should I use Python for game development. Isn't it slow?
+
+**Not really**. The most performance critical parts are written in C++ or shader code.
+Python can make you more productive as a developer and thus make it easier
+to structure your project in a good way, rather than micro-optimize.
+
+### How do I call a function with a delay?
+
+``` py
+invoke(some_function, arg1, kwarg1='some kwarg', delay=2)
+```
+
+### How can I use panda3d alongside ursina?
+
+What you need to know is that Entity is a NodePath and Ursina is a ShowBase.
+You can also write custom shaders, see panda3d's shader documentation for that.
