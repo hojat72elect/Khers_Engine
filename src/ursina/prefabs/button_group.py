@@ -108,5 +108,5 @@ class ButtonGroup(Entity):
 
         self.on_value_changed()
 
-    def on_value_changed(self): # assign a function to this to make something happen when you change the ButtonGroup's value
+    def on_value_changed(self):  # assign a function to this to make something happen when you change the ButtonGroup's value
         pass
