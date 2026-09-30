@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.boxcast import boxcast
 
 sign = lambda x: -1 if x < 0 else (1 if x > 0 else 0)
 
@@ -34,9 +35,9 @@ class Enemy(Entity):
         
         hill_ray = raycast(self.position, self.down, distance = 2, ignore = [self, ])
 
-        if self.follow.enabled == True:
+        if self.follow.enabled:
             if hill_ray.entity and hill_ray.entity.tag == "sornhill" or hill_ray.entity and hill_ray.entity.tag == "sorntop":
-                y_ray = boxcast(origin = self.world_position, direction = self.direction, distance = self.scale_y + abs(y_movement))
+                y_ray = boxcast(origin=self.world_position, direction=self.direction, distance=self.scale_y + abs(y_movement))
 
                 if y_ray.hit:
                     self.velocity_y = 0

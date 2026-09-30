@@ -1,4 +1,5 @@
-from ursina import Entity, Vec3, BoxCollider, camera, mouse, time, raycast, held_keys, boxcast, Vec2
+from ursina import Entity, Vec3, BoxCollider, camera, mouse, time, raycast, held_keys, Vec2
+from ursina.boxcast import boxcast
 from ursina.text import Text
 import math
 
@@ -21,7 +22,7 @@ class Player(Entity):
     ):
         super().__init__(model="cube", position=position, scale=(1, 1, 1), visible_self=False)
 
-        self.collider = BoxCollider(self, center = Vec3(0, 1, 0), size = Vec3(1, 2, 1))
+        self.collider = BoxCollider(self, center=Vec3(0, 1, 0), size=Vec3(1, 2, 1))
         mouse.locked = True
         camera.parent = self
         camera.position = (0, 2, 0)

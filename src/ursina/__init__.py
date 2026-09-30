@@ -30,7 +30,6 @@ from ursina import curve
 from ursina.entity import Entity
 from ursina.collider import *
 from ursina.raycast import raycast
-from ursina.boxcast import boxcast
 from ursina.audio import Audio
 from ursina import music_system
 from ursina.duplicate import duplicate

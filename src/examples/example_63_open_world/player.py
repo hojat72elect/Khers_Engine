@@ -1,7 +1,7 @@
 from ursina import *
+from ursina.boxcast import boxcast
 from terraincast import terraincast
 import math
-
 from weapons.sword import Sword
 from weapons.shield import Shield
 from weapons.bow import Bow

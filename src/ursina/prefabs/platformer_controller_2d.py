@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.boxcast import boxcast
 
 class PlatformerController2d(Entity):
     def __init__(self, **kwargs):
@@ -84,7 +85,6 @@ class PlatformerController2d(Entity):
 
         # if in jump and hit the ceiling, fall
         if self.jumping:
-            # if boxcast(self.position+(0,.2,0), self.up, distance=self.scale_y, thickness=.95, ignore=self.ignore_list, traverse_target=self.traverse_target).hit:
             hit_above = raycast(self.world_position+Vec3(0,self.scale_y/2,0), self.up, distance=self.jump_height-(self.scale_y/2), traverse_target=self.traverse_target, ignore=self.ignore_list)
             hit_above_left = raycast(self.world_position+Vec3(-self.scale_x*.49,self.scale_y/2,0), self.up, distance=self.jump_height-(self.scale_y/2), traverse_target=self.traverse_target, ignore=self.ignore_list)
             hit_above_right = raycast(self.world_position+Vec3(self.scale_x*.49,self.scale_y/2,0), self.up, distance=self.jump_height-(self.scale_y/2), traverse_target=self.traverse_target, ignore=self.ignore_list)
