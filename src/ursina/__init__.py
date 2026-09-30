@@ -31,7 +31,6 @@ from ursina.entity import Entity
 from ursina.collider import *
 from ursina.raycast import raycast
 from ursina.audio import Audio
-from ursina import music_system
 from ursina.duplicate import duplicate
 from panda3d.core import Quat
 from ursina.vec2 import Vec2
