@@ -1,4 +1,5 @@
-from ursina import Ursina, dedent, window, Text, Sky, color, EditorCamera
+from ursina import Ursina, dedent, window, Sky, color, EditorCamera
+from ursina.text import Text
 
 if __name__ == "__main__":
     app = Ursina()

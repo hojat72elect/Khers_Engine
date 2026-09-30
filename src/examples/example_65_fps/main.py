@@ -1,13 +1,10 @@
 from ursina import *
+from ursina.text import Text
 from direct.stdpy import thread
-
 from player import Player
 from enemy import Enemy, BigEnemy
-
 from mainmenu import MainMenu
-
 from maps import FloatingIslands, DesertedSands, MountainousValley
-
 from scene_lighting import SceneLighting
 
 Text.default_font = "./assets/Roboto.ttf"

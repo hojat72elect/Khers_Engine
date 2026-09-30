@@ -1,4 +1,5 @@
-from ursina import Entity, held_keys, Text, Sky, Button, Tooltip, Draggable, color, scene, Ursina
+from ursina import Entity, held_keys, Sky, Button, Tooltip, Draggable, color, scene, Ursina
+from ursina.text import Text
 
 class Player(Entity):  # inherits Entity, our base class for most things. Like GameObject in Unity
     def __init__(self):

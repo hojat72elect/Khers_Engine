@@ -1,4 +1,5 @@
-from ursina import application, Button, Text, Ursina
+from ursina import application, Button, Ursina
+from ursina.text import Text
 from pathlib import Path
 
 if __name__ == '__main__':

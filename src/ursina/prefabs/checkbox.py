@@ -1,4 +1,5 @@
-from ursina import Button, Text, Quad
+from ursina import Button, Quad
+from ursina.text import Text
 
 class Checkbox(Button):
     def __init__(self, start_value=False, **kwargs):

@@ -1,16 +1,12 @@
 from ursina import *
+from ursina.text import Text
 from direct.stdpy import thread
-
 from car import Car
 from ai import AICar
-
 from multiplayer import Multiplayer
 from main_menu import MainMenu
-
 from sun import SunLight
-
 from achievements import RallyAchievements
-
 from tracks.sand_track import SandTrack
 from tracks.grass_track import GrassTrack
 from tracks.snow_track import SnowTrack

@@ -111,7 +111,8 @@ class Window(WindowProperties):
         self.position = Vec2(x,y)
 
     def make_editor_gui(self):     # called by main after setting up camera and application.development_mode
-        from ursina import Entity, camera, input_handler, Button, Text, Tooltip, ButtonList, Func, color
+        from ursina import Entity, camera, input_handler, Button, Tooltip, ButtonList, Func, color
+        from ursina.text import Text
         self.editor_ui = Entity(parent=camera.ui, eternal=True, enabled=self.editor_ui_enabled)
 
         def window_input(key):
@@ -274,7 +275,7 @@ class Window(WindowProperties):
             e.x /= self.prev_aspect_ratio / self.aspect_ratio
 
         if camera.orthographic:
-            camera.orthographic_lens.set_film_size(camera.fov * window.aspect_ratio, camera.fov)
+            camera.orthographic_lens.set_film_size(camera.fov * self.aspect_ratio, camera.fov)
             base.cam.node().set_lens(camera.orthographic_lens)
 
     @property
@@ -371,7 +372,8 @@ class Window(WindowProperties):
         self.render_mode = self.render_modes[i]
 
     def toggle_editor_camera(self):
-        from ursina import EditorCamera, Text, camera, color
+        from ursina import EditorCamera, camera, color
+        from ursina.text import Text
         if not application.development_mode:
             print('window.toggle_editor_camera() is only available in development_mode')
             return

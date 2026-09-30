@@ -1,4 +1,5 @@
-from ursina import window, Text, Button, color
+from ursina import window, Button, color
+from ursina.text import Text
 
 window.fullscreen = True
 window.color = color.black

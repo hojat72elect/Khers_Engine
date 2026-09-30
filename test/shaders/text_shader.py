@@ -1,4 +1,5 @@
-from ursina import Ursina, Text, EditorCamera, scene
+from ursina import Ursina, EditorCamera, scene
+from ursina.text import Text
 from ursina.shaders.text_shader import text_shader
 
 if __name__ == "__main__":

@@ -7,7 +7,8 @@ from panda3d.core import InputDevice, InputDeviceManager
 main_gamepad_index = 0
 
 if __name__ == '__main__':
-    from ursina import Ursina, Text, time, color, window
+    from ursina import Ursina, time, color, window
+    from ursina.text import Text
     app = Ursina()
     window.color = color.black
 

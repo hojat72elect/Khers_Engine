@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.text import Text
 
 class PauseMenu(Entity):
     def __init__(self, **kwargs):

@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.text import Text
 from ursina.ursinastuff import DotDict
 
 class MainMenu(Entity):

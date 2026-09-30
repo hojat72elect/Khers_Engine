@@ -1,4 +1,5 @@
-from ursina import Ursina, Text
+from ursina import Ursina
+from ursina.text import Text
 from ursina.prefabs.file_browser import FileBrowser
 
 if __name__ == "__main__":

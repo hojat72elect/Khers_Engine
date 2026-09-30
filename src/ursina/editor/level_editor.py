@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.text import Text
 from ursina.shaders import unlit_shader, lit_with_shadows_shader, matcap_shader, triplanar_shader, normals_shader
 from time import perf_counter
 import csv

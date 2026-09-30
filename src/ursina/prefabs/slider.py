@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.text import Text
 
 @generate_properties_for_class()
 class Slider(Entity):

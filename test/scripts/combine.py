@@ -1,4 +1,5 @@
-from ursina import Ursina, Entity, color, Text, window, EditorCamera, Vec3, Vec2
+from ursina import Ursina, Entity, color, window, EditorCamera, Vec3, Vec2
+from ursina.text import Text
 from ursina.shaders.lit_with_shadows_shader import lit_with_shadows_shader
 from ursina.lights import DirectionalLight
 

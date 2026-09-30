@@ -1,5 +1,6 @@
 from ursina.prefabs.grid_editor import GridEditor
-from ursina import color, held_keys, Text, rotate_2d_list
+from ursina import color, held_keys, rotate_2d_list
+from ursina.text import Text
 import pyperclip
 
 class ASCIIEditor(GridEditor):

@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.text import Text
 
 def ursfx(volume_curve, volume=.75, wave='sine', pitch=0, pitch_change=0, speed=1, pitch_curve=curve.linear, ignore_paused=False):  # play a retro style sound effect
     a = Audio(wave, loop=True, pitch=pow(1 / 1.05946309436, -pitch), volume=volume_curve[0][1] * volume, ignore_paused=ignore_paused)

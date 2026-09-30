@@ -1,4 +1,5 @@
-from ursina import Ursina, EditorCamera, camera, Text, Vec2, window, scene
+from ursina import Ursina, EditorCamera, camera, Vec2, window, scene
+from ursina.text import Text
 from ursina.prefabs.tilemap import Tilemap
 
 if __name__ == '__main__':

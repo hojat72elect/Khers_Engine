@@ -1,13 +1,10 @@
 from ursina import *
-
+from ursina.text import Text
 from player import Player
-
 from enemy import Enemy
-
 from springs import Spring
 from map import Map
 from mainmenu import MainMenu
-
 from tasks.task_01 import Task1_FindSword
 
 app = Ursina()
@@ -79,30 +76,30 @@ def update():
     if held_keys["p"]:
         print(player.position)
 
-    if debug == True:
+    if debug:
         player.disable()
         player.sword.disable(); player.bow.disable(); player.shield.disable()
         EditorCamera()
 
     health_text.text = str(player.health)
 
-    if held_keys["1"] and player.sword.equipped == True and player.bow.equipped == True:
-        if player.shield.equipped == True:
+    if held_keys["1"] and player.sword.equipped and player.bow.equipped:
+        if player.shield.equipped:
             player.shield.enable()
 
         player.bow.disable()
         player.arrow.disable()
         player.sword.enable()
 
-    if held_keys["2"] and player.sword.equipped == True and player.bow.equipped == True:
-        if player.shield.equipped == True and player.shield.enabled == True:
+    if held_keys["2"] and player.sword.equipped and player.bow.equipped:
+        if player.shield.equipped and player.shield.enabled:
             player.shield.disable()
             
         player.bow.enable()
         player.arrow.enable()
         player.sword.disable()
 
-    if player.sword.enabled == True and player.sword.equipped == True:
+    if player.sword.enabled and player.sword.equipped:
         movement = spring.update(time.dt)
         spring.shove(Vec3(mouse.y,mouse.x, 0))
         player.sword.position = (movement.y * 2, movement.x * 2, movement.z * 2) + (1.5, -2.2, 1.8)
@@ -110,12 +107,12 @@ def update():
     if player.bow.enabled == True and player.bow.equipped == True:
         movement = spring.update(time.dt)
         spring.shove(Vec3(mouse.y, mouse.x, 0))
-        if player.bow.loaded == False:
+        if not player.bow.loaded:
             player.bow.position = (movement.y * 0.5, movement.x * 0.5, movement.z * 0.5) + (0.5, 0, 1)
-        elif player.bow.loaded == True:
+        elif player.bow.loaded:
             player.bow.position = (movement.y * 0.1, movement.x * 0.1, movement.z * 0.1) + (0.5, 0, 1)
 
-    if player.shield.enabled == True and player.shield.equipped == True:
+    if player.shield.enabled and player.shield.equipped:
         movement = spring.update(time.dt)
         spring.shove(Vec3(mouse.y, mouse.x, 0))
         player.shield.position = (movement.y * 0.2, movement.x * 0.2, movement.z * 0.2) + (-1, -1, 1)
@@ -125,7 +122,7 @@ def update():
     ###############################
 
     if mainmenu.story:
-        while player.sword.equipped == False:
+        while not player.sword.equipped:
             task_1.find_sword()
             player.sword.enable()
             player.sword.position = (2012, 130, 97)

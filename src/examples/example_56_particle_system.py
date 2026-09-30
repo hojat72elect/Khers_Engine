@@ -1,6 +1,7 @@
 import random
 import numpy
-from ursina import Vec3, copy, Entity, Mesh, destroy, time, floor, Ursina, color, window, Text, EditorCamera, curve
+from ursina import Vec3, copy, Entity, Mesh, destroy, time, floor, Ursina, color, window, EditorCamera, curve
+from ursina.text import Text
 
 number_of_particles = 1000  # keep this as low as possible
 points = numpy.array([Vec3(0, 0, 0) for i in range(number_of_particles)])

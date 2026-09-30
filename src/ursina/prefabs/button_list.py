@@ -1,4 +1,5 @@
-from ursina import Entity, Text, camera, Button, color, mouse, Vec3
+from ursina import Entity, camera, Button, color, mouse, Vec3
+from ursina.text import Text
 from math import floor
 
 class ButtonList(Entity):

@@ -1,5 +1,6 @@
 from direct.stdpy import thread
-from ursina import Entity, camera, Circle, Text, color, load_texture, Ursina, window, time
+from ursina import Entity, camera, Circle, color, load_texture, Ursina, window, time
+from ursina.text import Text
 from ursina.prefabs.health_bar import HealthBar
 
 class LoadingWheel(Entity):

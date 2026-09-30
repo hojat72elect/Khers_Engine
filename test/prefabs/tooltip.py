@@ -1,4 +1,5 @@
-from ursina import Ursina, Tooltip, NineSlice, Vec2, Text, color
+from ursina import Ursina, Tooltip, NineSlice, Vec2, color
+from ursina.text import Text
 
 if __name__ == "__main__":
     app = Ursina()

@@ -1,4 +1,5 @@
-from ursina import Entity, Text, color, application, Ursina, camera
+from ursina import Entity, color, application, Ursina, camera
+from ursina.text import Text
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 # Make a simple game so we have something to test with

@@ -1,4 +1,5 @@
-from ursina import Button, Slider, Text, color, WindowPanel, InputField
+from ursina import Button, Slider, color, WindowPanel, InputField
+from ursina.text import Text
 
 if __name__ == '__main__':
     '''

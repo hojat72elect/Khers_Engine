@@ -1,4 +1,5 @@
-from ursina import Entity, Vec3, BoxCollider, camera, mouse, time, raycast, Text, held_keys, boxcast, Vec2
+from ursina import Entity, Vec3, BoxCollider, camera, mouse, time, raycast, held_keys, boxcast, Vec2
+from ursina.text import Text
 import math
 
 sign = lambda x: -1 if x < 0 else (1 if x > 0 else 0)

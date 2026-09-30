@@ -1,4 +1,5 @@
-from ursina import Ursina,Entity, Text, Slider, ThinSlider, color
+from ursina import Ursina,Entity, Slider, ThinSlider, color
+from ursina.text import Text
 
 if __name__ == "__main__":
     app = Ursina()

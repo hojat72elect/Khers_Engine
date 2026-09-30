@@ -1,4 +1,5 @@
-from ursina import Ursina, window, color, camera, Entity, duplicate, Text, time, held_keys, curve, destroy, invoke
+from ursina import Ursina, window, color, camera, Entity, duplicate, time, held_keys, curve, destroy, invoke
+from ursina.text import Text
 
 app = Ursina()
 window.color = color.black

@@ -1,7 +1,8 @@
 import math
 import os
 import psutil
-from ursina import Text, Vec2, camera, window
+from ursina import Vec2, camera, window
+from ursina.text import Text
 
 def size(size_bytes):
     if size_bytes == 0:

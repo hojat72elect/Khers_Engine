@@ -1,4 +1,5 @@
-from ursina import music_system, Ursina, ButtonGroup, Text
+from ursina import music_system, Ursina, ButtonGroup
+from ursina.text import Text
 
 if __name__ == '__main__':
     app = Ursina()

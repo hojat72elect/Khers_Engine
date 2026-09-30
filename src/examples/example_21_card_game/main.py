@@ -1,5 +1,6 @@
 from random import uniform, random
-from ursina import Ursina, window, color, camera, Texture, invoke, Audio, time, Vec3, Entity, lerp, curve, Text, Func, mouse, application
+from ursina import Ursina, window, color, camera, Texture, invoke, Audio, time, Vec3, Entity, lerp, curve, Func, mouse, application
+from ursina.text import Text
 
 GAME_WIDTH = 549
 GAME_HEIGHT = 480

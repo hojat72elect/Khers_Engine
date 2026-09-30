@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.text import Text
 from ursina import curve
 
 colourH = color.rgba(18, 152, 255, 180)

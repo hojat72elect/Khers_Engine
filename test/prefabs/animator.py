@@ -1,4 +1,5 @@
-from ursina import Ursina, Animation, Entity, color, Text, Animator
+from ursina import Ursina, Animation, Entity, color, Animator
+from ursina.text import Text
 
 if __name__ == '__main__':
     app = Ursina()

@@ -1,4 +1,5 @@
-from ursina import Entity, Mesh, Text, Ursina, camera, color, curve, window, floor, EditorCamera, Vec3
+from ursina import Entity, Mesh, Ursina, camera, color, curve, window, floor, EditorCamera, Vec3
+from ursina.text import Text
 from ursina.curve import CubicBezier,combine, linear, reverse, in_expo
 
 if __name__ == '__main__':

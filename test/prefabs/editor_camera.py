@@ -1,4 +1,5 @@
-from ursina import Ursina, Sky, load_model, color, Text, window, Button, Entity, EditorCamera
+from ursina import Ursina, Sky, load_model, color, window, Button, Entity, EditorCamera
+from ursina.text import Text
 
 if __name__ == '__main__':
     """

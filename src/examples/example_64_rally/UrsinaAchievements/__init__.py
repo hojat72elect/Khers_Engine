@@ -1,9 +1,8 @@
 """
-Author: TheAssasin71 or megat69
-Repo: https://github.com/megat69/UrsinaAchievements
 Init file for UrsinaAchievements, a system allowing users in Ursina engine to receive achievements.
 """
 from ursina import *
+from ursina.text import Text
 import json
 import os
 from direct.stdpy import thread

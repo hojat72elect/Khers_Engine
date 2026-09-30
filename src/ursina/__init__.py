@@ -41,7 +41,6 @@ from ursina.vec4 import Vec4
 from ursina.shader import Shader
 from ursina.lights import *
 
-from ursina.text import Text
 from ursina.mesh import Mesh, MeshModes
 from ursina.models.procedural.nine_slice import NineSlice
 

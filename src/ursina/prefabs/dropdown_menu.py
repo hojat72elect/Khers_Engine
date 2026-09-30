@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.text import Text
 
 class DropdownMenuButton(Button):
     def __init__(self, text='', **kwargs):

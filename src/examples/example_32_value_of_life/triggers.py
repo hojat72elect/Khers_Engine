@@ -1,4 +1,5 @@
-from ursina import Draggable, color, scene, Entity, distance_2d, invoke, camera, Animation, Sprite, lerp, Vec3, held_keys, time, Text, Sequence, Func, Wait, window, application, Ursina
+from ursina import Draggable, color, scene, Entity, distance_2d, invoke, camera, Animation, Sprite, lerp, Vec3, held_keys, time, Sequence, Func, Wait, window, application, Ursina
+from ursina.text import Text
 
 class UseTrigger(Draggable):
     use_key = 'space'

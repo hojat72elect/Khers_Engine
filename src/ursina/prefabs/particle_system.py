@@ -438,7 +438,7 @@ class ParticleSystem(Entity):
 class ParticleSystemUI(Entity):
     def __init__(self, asset_file, particle_system_container):
         super().__init__(parent=camera.ui)
-        from ursina import Text
+        from ursina.text import Text
         from ursina.prefabs.window_panel import WindowPanel
 
         self.asset_file = asset_file

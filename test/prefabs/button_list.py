@@ -1,4 +1,5 @@
-from ursina import Ursina, Func, Text, ButtonList
+from ursina import Ursina, Func, ButtonList
+from ursina.text import Text
 
 if __name__ == '__main__':    
     app = Ursina()

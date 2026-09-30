@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.text import Text
 from ursina import curve
 from server import Server
 import os

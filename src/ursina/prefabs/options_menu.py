@@ -1,4 +1,5 @@
-from ursina import Animator, Audio, Button, Entity, Slider, Text, audio, camera, color, window, scene
+from ursina import Animator, Audio, Button, Entity, Slider, audio, camera, color, window, scene
+from ursina.text import Text
 from ursina.prefabs.button_group import ButtonGroup
 
 class MenuButton(Button):

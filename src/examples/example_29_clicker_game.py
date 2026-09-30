@@ -1,4 +1,5 @@
-from ursina import Ursina, color, window, Text, Button, Tooltip, invoke
+from ursina import Ursina, color, window, Button, Tooltip, invoke
+from ursina.text import Text
 
 app = Ursina()
 window.color = color._20

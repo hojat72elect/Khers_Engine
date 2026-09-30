@@ -1,5 +1,6 @@
 from random import random
-from ursina import Entity, camera, Quad, color, Text, destroy, Draggable, Tooltip
+from ursina import Entity, camera, Quad, color, destroy, Draggable, Tooltip
+from ursina.text import Text
 
 class Inventory(Entity):
     def __init__(self, width=5, height=8, **kwargs):

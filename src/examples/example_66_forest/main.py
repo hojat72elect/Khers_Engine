@@ -1,6 +1,6 @@
 from ursina import *
 from direct.stdpy import thread
-
+from ursina.text import Text
 from player import Player
 from tree import Tree
 from sun import SunLight

@@ -1,4 +1,5 @@
-from ursina import Ursina, Text, scene, EditorCamera, Vec2
+from ursina import Ursina, scene, EditorCamera, Vec2
+from ursina.text import Text
 from ursina.shaders.text_with_shadows_shader import text_with_shadows_shader
 
 if __name__ == "__main__":

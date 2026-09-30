@@ -1,8 +1,7 @@
 from ursina import *
 from ursina import curve
-
 from ursina.prefabs.health_bar import HealthBar
-
+from ursina.text import Text
 from guns import *
 from abilities import *
 

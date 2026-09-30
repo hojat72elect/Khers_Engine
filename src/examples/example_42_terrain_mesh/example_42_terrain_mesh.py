@@ -1,4 +1,5 @@
-from ursina import Entity, Terrain, Sky, window, mouse, camera, scene, Text, invoke, Ursina, color, EditorCamera
+from ursina import Entity, Terrain, Sky, window, mouse, camera, scene, invoke, Ursina, color, EditorCamera
+from ursina.text import Text
 from ursina.shaders import camera_vertical_blur_shader
 
 app = Ursina()
