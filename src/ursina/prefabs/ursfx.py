@@ -1,4 +1,5 @@
 from ursina import *
+from ursina import curve
 from ursina.text import Text
 
 def ursfx(volume_curve, volume=.75, wave='sine', pitch=0, pitch_change=0, speed=1, pitch_curve=curve.linear, ignore_paused=False):  # play a retro style sound effect
@@ -22,7 +23,6 @@ class UrsfxGUI(Entity):
         self.wave_panel = Entity(parent=self, scale=.35, x=-0)
         self.waveform = Entity(parent=self.wave_panel, scale_y=.75)
         self.waveform_bg = Entity(parent=self.waveform, model='quad', origin=(-.5,-.5), z=.01, color=color.black66)
-        # self.bg_2 = Entity(parent=self.waveform, model='quad', origin=(-.5,-.5), z=.01, color=color._16)
         self.volume_slider = Slider(parent=self.wave_panel, x=-.05, vertical=True, scale=1.95, min=.05, max=1, default=.75, step=.01, on_value_changed=self.play)
 
         self.wave_selector = ButtonGroup(('sine', 'triangle', 'square', 'noise'), parent=self.wave_panel, scale=.11, y=-.075)
@@ -85,7 +85,6 @@ class UrsfxGUI(Entity):
             if e.has_ancestor(self):
                 e.ignore_paused = ignore_paused
 
-
     def update(self):
         for e in self.knobs:
             e.world_scale = .25
@@ -94,17 +93,14 @@ class UrsfxGUI(Entity):
 
         self.draw()
 
-
     def input(self, key):
         if held_keys['control'] and key == 'v' and self.wave_panel.enabled:
             self.paste_code()
-
 
     def copy_code(self):
         print(self.recipe)
         import pyperclip
         pyperclip.copy(self.recipe)
-
 
     def paste_code(self, code=""):
         import pyperclip
@@ -144,7 +140,6 @@ class UrsfxGUI(Entity):
             self.pitch_slider.value = pitch
             print('--------pitch', pitch)
 
-
             pitch_change = 0
             if 'pitch_change=' in code:
                 pitch_change = code.split('pitch_change=')[1]
@@ -166,7 +161,6 @@ class UrsfxGUI(Entity):
                 speed = eval(speed)
             self.speed_slider.value = speed
             print('--------speed')
-
 
             print(curve, volume, wave, pitch, pitch_change, speed)
             self.draw()
@@ -191,19 +185,12 @@ class UrsfxGUI(Entity):
 
         return f"ursfx({str(self.volume_curve)}, volume={round(self.volume_slider.value,3)}, wave='{self.wave_selector.value}'{pitch_code}{pitch_change_code}{speed_code})"
 
-
-
-
-
-
     def draw(self):
-        # self.bg.scale_x = self.knobs[4].x
         self.waveform_bg.scale_x = self.knobs[4].x
         self.bg.scale_x = self.knobs[4].x
 
         for e in self.knobs:
             e.position = (round(e.x,2), round(e.y,2))
-
 
         self.line.model.vertices = [e.get_position(relative_to=self.waveform) for e in self.knobs]
         self.line.model.generate()
@@ -212,17 +199,9 @@ class UrsfxGUI(Entity):
         self.volume_curve = [(round(e[0],2), round(e[1],2)) for e in self.volume_curve]
 
         self.waveform.scale_y = self.volume_slider.value
-        # self.code_text.text = f"ursfx({str(self.volume_curve)}, {round(self.volume_slider.value,3)}, wave='{self.wave_selector.value}', pitch={self.pitch_slider.value}, end_pitch={self.pitch_slider.value+self.pitch_change_slider.value})"
-
 
     def play(self):
         self.draw()
-        # ursfx([(0.0, 0.0), (0.02, 0.89), (0.08, 0.63), (0.15, 0.27), (0.19, 0.0)], volume=0.75, wave='noise', pitch=-12, pitch_change=-9)
-        # select = ursfx([(0.0, 0.0), (0.03, 0.9), (0.04, 0.75), (0.08, 0.25), (0.2, 0.0)], volume=0.75, wave='triangle', pitch=2, pitch_change=12)
-        # select_2 = ursfx([(0.0, 0.0), (0.03, 0.9), (0.04, 0.75), (0.07, 0.18), (0.25, 0.0)], volume=0.86, wave='triangle', pitch=1, pitch_change=7)
-        # hurt = ursfx([(0.0, 0.0), (0.03, 0.9), (0.04, 0.75), (0.06, 0.25), (0.22, 0.0)], volume=0.9, wave='noise', pitch=-12, pitch_change=-12)
-        # heal = ursfx([(0.0, 0.0), (0.04, 0.9), (0.08, 0.04), (0.13, 0.66), (0.45, 0.0)], volume=1.0, wave='sine', pitch=-2, pitch_change=4)
-        # coind = ursfx([(0.0, 1.0), (0.07, 0.5), (0.25, 0.5), (0.39, 0.5), (1.0, 0.0)], volume=0.75, wave='sine', pitch=24, speed=2.7)
         ursfx(
             [e.get_position(relative_to=self.waveform) for e in self.knobs],
             volume=self.volume_slider.value,

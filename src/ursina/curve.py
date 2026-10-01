@@ -120,7 +120,7 @@ def in_out_back(t, magnitude=1.70158):
             scaledTime2 * scaledTime2 * ((s + 1) * scaledTime2 + s) + 2
     )
 
-def in_elastic(t, magnitude=.7):
+def in_elastic(t, magnitude=0.7):
     if t == 0 or t == 1:
         return t
     scaledTime = t / 1
@@ -133,7 +133,7 @@ def in_elastic(t, magnitude=.7):
             sin((scaledTime1 - s) * (2 * pi) / p)
     )
 
-def out_elastic(t, magnitude=.7):
+def out_elastic(t, magnitude=0.7):
     p = 1 - magnitude
     scaledTime = t * 2
 

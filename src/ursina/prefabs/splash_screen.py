@@ -1,5 +1,6 @@
 from ursina import *
 from ursina.text import Text
+from ursina import curve
 from ursina.ursinamath import sample_gradient
 from ursina.prefabs.particle_system import play_particle_system
 
