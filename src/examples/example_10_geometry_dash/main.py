@@ -1,4 +1,5 @@
-from ursina import Ursina, application, Entity, camera, color, time, curve, duplicate, invoke, Circle
+from ursina import Ursina, application, Entity, camera, color, time, curve, invoke, Circle
+from ursina.duplicate import duplicate
 
 app = Ursina()
 background = Entity(model="quad", texture="assets/BG2", scale=55, z=10, y=15)

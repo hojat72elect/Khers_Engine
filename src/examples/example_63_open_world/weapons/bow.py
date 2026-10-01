@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.duplicate import duplicate
 from ursina import curve
 from terraincast import terraincast
 

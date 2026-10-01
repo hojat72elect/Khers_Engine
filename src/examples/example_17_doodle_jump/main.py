@@ -1,5 +1,6 @@
 from random import randint
-from ursina import Ursina, Sky, Animation, color, camera, SmoothFollow, application, held_keys, time, Entity, duplicate, curve, destroy, invoke
+from ursina import Ursina, Sky, Animation, color, camera, SmoothFollow, application, held_keys, time, Entity, curve, destroy, invoke
+from ursina.duplicate import duplicate
 from ursina.text import Text
 
 app = Ursina()

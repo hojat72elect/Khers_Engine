@@ -1,4 +1,5 @@
-from ursina import Ursina, Animation, Sky, camera, application, Entity, held_keys, time, curve, invoke, destroy, duplicate
+from ursina import Ursina, Animation, Sky, camera, application, Entity, held_keys, time, curve, invoke, destroy
+from ursina.duplicate import duplicate
 
 app = Ursina()
 me = Animation("assets/player", collider="box", y=5)

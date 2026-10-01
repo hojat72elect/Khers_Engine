@@ -1,4 +1,5 @@
-from ursina import Ursina, Button, Entity, window, color, scene, camera, Vec3, duplicate, Func, destroy, curve, application
+from ursina import Ursina, Button, Entity, window, color, scene, camera, Vec3, Func, destroy, curve, application
+from ursina.duplicate import duplicate
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 if __name__ == '__main__':
