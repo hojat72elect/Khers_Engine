@@ -2,6 +2,7 @@
 Init file for UrsinaAchievements, a system allowing users in Ursina engine to receive achievements.
 """
 from ursina import *
+from ursina.audio import Audio
 from ursina.text import Text
 import json
 import os

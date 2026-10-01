@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.audio import Audio
 from particles import Particles
 from guns import Bullet
 

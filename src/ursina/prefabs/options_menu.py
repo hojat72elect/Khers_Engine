@@ -1,5 +1,6 @@
-from ursina import Animator, Audio, Button, Entity, Slider, audio, camera, color, window, scene
+from ursina import Animator, Button, Entity, Slider, camera, color, window, scene
 from ursina.text import Text
+from ursina.audio import Audio, audio_groups
 from ursina.prefabs.button_group import ButtonGroup
 
 class MenuButton(Button):
@@ -45,11 +46,11 @@ class OptionsMenu(Entity):
             update_volume_for_currently_playing()
         volume_slider.on_value_changed = set_volume
 
-        for name, audio_group in audio.audio_groups.items():
+        for name, audio_group in audio_groups.items():
             volume_slider = Slider(0, 1, default=audio_group.volume_multiplier, step=.1, text=f'{name.title()} Volume', parent=self.audio_settings_menu, x=-.25, dynamic=True)
 
             def set_volume(name=name, slider=volume_slider):
-                audio.audio_groups[name].volume_multiplier = slider.value
+                audio_groups[name].volume_multiplier = slider.value
                 update_volume_for_currently_playing()
             volume_slider.on_value_changed = set_volume
 

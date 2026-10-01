@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.audio import Audio
 from ursina import curve
 from trail_renderer import TrailRenderer
 

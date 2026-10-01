@@ -1,5 +1,6 @@
-from random import uniform, random
-from ursina import Ursina, window, color, camera, Texture, invoke, Audio, time, Vec3, Entity, lerp, curve, Func, mouse, application
+from random import uniform, random, shuffle
+from ursina import Ursina, window, color, camera, Texture, invoke, time, Vec3, Entity, lerp, curve, Func, mouse, application
+from ursina.audio import Audio
 from ursina.text import Text
 
 GAME_WIDTH = 549
@@ -250,7 +251,7 @@ def create_hearts():
 def create_grid_cards():
     global cards
     shuffled_names = CARD_NAMES + CARD_NAMES
-    random.shuffle(shuffled_names)
+    shuffle(shuffled_names)
     cards = []
     for index, name in enumerate(shuffled_names):
         column = index % 4

@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.audio import Audio
 from ursina import curve
 
 class Ability(Entity):

@@ -3,7 +3,6 @@ from enum import Enum
 from textwrap import dedent
 import numbers
 import array
-
 from ursina import application
 from ursina import color
 from ursina.color import Color
@@ -14,7 +13,6 @@ from ursina.array_tools import LoopingList
 from ursina.vec3 import Vec3
 from ursina.vec2 import Vec2
 from ursina.sequence import Func
-
 import panda3d.core as p3d
 
 try:

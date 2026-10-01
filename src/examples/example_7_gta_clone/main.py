@@ -1,6 +1,7 @@
 import math
 import random
-from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow, distance, mouse, color, curve, invoke, destroy, raycast, Audio, Circle
+from ursina import Ursina, Entity, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow, distance, mouse, color, curve, invoke, destroy, raycast, Circle
+from ursina.audio import Audio
 
 app = Ursina()
 camera.orthographic = True

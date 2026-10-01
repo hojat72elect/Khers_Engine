@@ -1,4 +1,5 @@
-from ursina import Audio, Ursina
+from ursina import Ursina
+from ursina.audio import Audio
 import random
 
 if __name__ == "__main__":

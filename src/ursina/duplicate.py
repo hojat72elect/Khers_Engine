@@ -1,4 +1,4 @@
-from ursina import Audio
+from ursina.audio import Audio
 from ursina.entity import Entity
 from copy import copy
 

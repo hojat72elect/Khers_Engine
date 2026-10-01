@@ -27,7 +27,6 @@ from ursina.color import Color, hsv, rgb
 from ursina.sequence import Sequence, Func, Wait
 from ursina.collider import *
 from ursina.raycast import raycast
-from ursina.audio import Audio
 from ursina.duplicate import duplicate
 from panda3d.core import Quat
 from ursina.vec2 import Vec2

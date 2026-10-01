@@ -1,5 +1,6 @@
 from typing import Final
-from ursina import Entity, color, Audio, Ursina, held_keys, time, mouse
+from ursina import Entity, color, Ursina, held_keys, time, mouse
+from ursina.audio import Audio
 from ursina.text import Text
 
 class Example1:

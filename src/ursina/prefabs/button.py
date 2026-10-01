@@ -1,4 +1,5 @@
-from ursina import Entity, camera, color, mouse, BoxCollider, Sequence, Func, Vec2, Vec3, scene, Default, Audio
+from ursina import Entity, camera, color, mouse, BoxCollider, Sequence, Func, Vec2, Vec3, scene, Default
+from ursina.audio import Audio
 from ursina.text import Text
 from ursina import color as color_module
 from ursina.models.procedural.quad import Quad
