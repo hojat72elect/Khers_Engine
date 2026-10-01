@@ -17,7 +17,6 @@ from ursina.ursinamath import *
 from ursina.destroy import destroy
 from ursina.ursinastuff import *
 from ursina.array_tools import *
-from ursina import input_handler
 from ursina.input_handler import held_keys, Keys
 from ursina.string_utilities import *
 from ursina.mesh_importer import load_model, load_blender_scene

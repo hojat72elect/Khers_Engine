@@ -1,4 +1,5 @@
 from ursina.editor.level_editor import *
+from ursina import input_handler
 
 class PipeEditor(Entity):
     def __init__(self, points=[Vec3(0,0,0), Vec3(0,1,0)], **kwargs):
@@ -12,8 +13,8 @@ class PipeEditor(Entity):
 
     def generate(self):
         self.model = Pipe(
-            path = [e.get_position(relative_to=self) for e in self._point_gizmos],
-            thicknesses = [e.scale.xz for e in self._point_gizmos]
+            path=[e.get_position(relative_to=self) for e in self._point_gizmos],
+            thicknesses=[e.scale.xz for e in self._point_gizmos],
         )
         self.texture = 'grass'
         if self.add_collider:

@@ -1,4 +1,5 @@
 from ursina import *
+from ursina import input_handler
 from ursina.text import Text
 from ursina.shaders import unlit_shader, lit_with_shadows_shader, matcap_shader, triplanar_shader, normals_shader
 from time import perf_counter
@@ -2044,7 +2045,6 @@ class Duplicator(Entity):
                 if self.axis_lock == 2:
                     self.dragger.x = self.start_position.x
 
-
     def input(self, key):
         combined_key = input_handler.get_combined_key(key)
         if combined_key == 'shift+d' and LEVEL_EDITOR.selection:
@@ -2082,7 +2082,6 @@ class Duplicator(Entity):
 
             for e in LEVEL_EDITOR.selection:
                 e.world_parent = self.dragger
-
 
         elif self.plane.enabled and key == 'left mouse up':
             for e in self.clones:
