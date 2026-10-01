@@ -1,4 +1,5 @@
-from ursina import Entity, Audio
+from ursina import Audio
+from ursina.entity import Entity
 from copy import copy
 
 def duplicate(entity, copy_children=True, *args, **kwargs): # use a for loop instead of duplicate() if you can.

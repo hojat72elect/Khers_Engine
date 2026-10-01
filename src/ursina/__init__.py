@@ -25,7 +25,6 @@ from ursina.texture_importer import load_texture
 from ursina import color
 from ursina.color import Color, hsv, rgb
 from ursina.sequence import Sequence, Func, Wait
-from ursina.entity import Entity
 from ursina.collider import *
 from ursina.raycast import raycast
 from ursina.audio import Audio

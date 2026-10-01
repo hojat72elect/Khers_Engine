@@ -1,4 +1,5 @@
 from ursina import Ursina, EditorCamera, Entity, Sky, color, scene, camera
+
 from ursina.shaders.unlit_with_fog_shader import unlit_with_fog_shader
 
 if __name__ == "__main__":

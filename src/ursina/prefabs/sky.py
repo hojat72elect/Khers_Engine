@@ -1,4 +1,5 @@
-from ursina import *
+from ursina import camera, Vec3
+from ursina.entity import Entity
 from ursina.shaders import unlit_shader
 
 class Sky(Entity):
