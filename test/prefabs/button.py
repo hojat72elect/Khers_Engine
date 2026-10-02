@@ -1,5 +1,7 @@
-from ursina import Ursina, Button, color, NineSlice, Func, Wait, Sequence, camera, application, Tooltip, Entity, Audio, scene, Sky
+from ursina import Ursina, Button, color, NineSlice, Func, Wait, Sequence, camera, application, Tooltip, scene, Sky
 from ursina.text import Text
+from ursina.entity import Entity
+from ursina.audio import Audio
 
 if __name__ == "__main__":
     app = Ursina()

@@ -1,4 +1,6 @@
-from ursina import EditorCamera, Entity, Plane, Ursina, color, duplicate
+from ursina import EditorCamera, Plane, Ursina, color
+from ursina.duplicate import duplicate
+from ursina.entity import Entity
 
 if __name__ == "__main__":
     app = Ursina()

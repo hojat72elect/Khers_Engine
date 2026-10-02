@@ -1,5 +1,6 @@
 from ursina import *
 from ursina.text import Text
+from ursina.audio import Audio
 from ursina.ursinastuff import DotDict
 
 class MainMenu(Entity):
