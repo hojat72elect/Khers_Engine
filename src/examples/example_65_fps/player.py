@@ -1,5 +1,5 @@
 from ursina import *
-from ursina.raycast import raycast
+import ursina.raycast
 from ursina import curve
 from ursina.prefabs.health_bar import HealthBar
 from ursina.text import Text
@@ -9,7 +9,6 @@ from abilities import *
 import json
 
 sign = lambda x: -1 if x < 0 else (1 if x > 0 else 0)
-y_dir = lambda y: -1 if y < 0 else(1 if y > 0 else -1)
 
 class Player(Entity):
     def __init__(self, position, speed = 5, jump_height = 14):
@@ -132,7 +131,7 @@ class Player(Entity):
         direction = (0, sign(movementY), 0)
 
         # Main raycast for collision
-        y_ray = raycast(origin = self.world_position, direction = (0, y_dir(self.velocity_y), 0), traverse_target = self.map, ignore = [self, ])
+        y_ray = ursina.raycast.raycast(origin = self.world_position, direction = (0, -1 if self.velocity_y < 0 else (1 if self.velocity_y > 0 else -1), 0), traverse_target = self.map, ignore = [self, ])
             
         if y_ray.distance <= self.scale_y * 1.5 + abs(movementY):
             if not self.grounded:
@@ -141,7 +140,7 @@ class Player(Entity):
                 self.fall_sound.play()
 
             # Check if hitting a wall or steep slope
-            if y_dir(self.velocity_y) == -1:
+            if (-1 if self.velocity_y < 0 else (1 if self.velocity_y > 0 else -1)) == -1:
                 if y_ray.world_normal.y > 0.7 and y_ray.world_point.y - self.world_y < 0.5:
                     # Set the y value to the ground's y value
                     if not held_keys["space"]:
@@ -160,7 +159,7 @@ class Player(Entity):
         if self.sliding:
             camera.y = 0
             if y_ray.distance <= 2:
-                slide_ray = raycast(self.world_position + self.forward, self.forward, distance = 8, traverse_target = self.map, ignore = [self, ])
+                slide_ray = ursina.raycast.raycast(self.world_position + self.forward, self.forward, distance = 8, traverse_target = self.map, ignore = [self, ])
                 if not slide_ray.hit:
                     if hasattr(y_ray.world_point, "y"):
                         self.y = y_ray.world_point.y + 1.4
@@ -232,14 +231,14 @@ class Player(Entity):
         # Collision Detection
         if self.movementX != 0:
             direction = (sign(self.movementX), 0, 0)
-            x_ray = raycast(origin = self.world_position, direction = direction, traverse_target = self.map, ignore = [self, ])
+            x_ray = ursina.raycast.raycast(origin = self.world_position, direction = direction, traverse_target = self.map, ignore = [self, ])
 
             if x_ray.distance > self.scale_x / 2 + abs(self.movementX):
                 self.x += self.movementX
 
         if self.movementZ != 0:
             direction = (0, 0, sign(self.movementZ))
-            z_ray = raycast(origin = self.world_position, direction = direction, traverse_target = self.map, ignore = [self, ])
+            z_ray = ursina.raycast.raycast(origin = self.world_position, direction = direction, traverse_target = self.map, ignore = [self, ])
 
             if z_ray.distance > self.scale_z / 2 + abs(self.movementZ):
                 self.z += self.movementZ
