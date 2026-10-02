@@ -1,5 +1,7 @@
 from random import seed, randint
-from ursina import Ursina, window, color, camera, Entity, raycast, SmoothFollow, input_handler, application
+from ursina.raycast import raycast
+from ursina.entity import Entity
+from ursina import Ursina, window, color, camera, SmoothFollow, input_handler, application
 from ursina.prefabs.platformer_controller_2d import PlatformerController2d
 from ursina.scripts.noclip_mode import NoclipMode2d
 

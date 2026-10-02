@@ -1,4 +1,6 @@
-from ursina import Entity, Vec3, BoxCollider, camera, mouse, time, raycast, held_keys, Vec2
+from ursina import Vec3, BoxCollider, camera, mouse, time, held_keys, Vec2
+from ursina.entity import Entity
+from ursina.raycast import raycast
 from ursina.boxcast import boxcast
 from ursina.text import Text
 import math

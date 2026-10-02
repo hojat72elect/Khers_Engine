@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.raycast import raycast
 
 class FirstPersonController(Entity):
     def __init__(self, height=2, **kwargs):

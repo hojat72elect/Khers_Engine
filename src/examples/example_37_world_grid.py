@@ -1,4 +1,6 @@
-from ursina import Ursina, Entity, EditorCamera, color, Grid, duplicate, lerp
+from ursina import Ursina, EditorCamera, color, Grid, lerp
+from ursina.duplicate import duplicate
+from ursina.entity import Entity
 
 app = Ursina()
 r = 8

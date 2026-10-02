@@ -1,8 +1,10 @@
 import random
 
-from ursina import Ursina, Entity, EditorCamera, BoxCollider, color, mouse, camera, Vec3, held_keys, invoke, distance_xz, time, destroy, raycast, application, DirectionalLight, Sky
+from ursina import Ursina, EditorCamera, BoxCollider, color, mouse, camera, Vec3, held_keys, invoke, distance_xz, time, destroy, application, DirectionalLight, Sky
 from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.shaders import lit_with_shadows_shader
+from ursina.entity import Entity
+from ursina.raycast import raycast
 
 app = Ursina()
 
@@ -74,7 +76,6 @@ class Enemy(Entity):
 
         self.look_at_2d(player.position, 'y')
         hit_info = raycast(self.world_position + Vec3(0, 1, 0), self.forward, 30, ignore=(self,))
-        # print(hit_info.entity)
         if hit_info.entity == player:
             if dist > 2:
                 self.position += self.forward * time.dt * 5

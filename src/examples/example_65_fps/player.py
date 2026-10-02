@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.raycast import raycast
 from ursina import curve
 from ursina.prefabs.health_bar import HealthBar
 from ursina.text import Text

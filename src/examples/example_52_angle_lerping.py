@@ -1,4 +1,6 @@
-from ursina import Ursina, Entity, color, Cone, duplicate, lerp_angle, time, EditorCamera, scene
+from ursina import Ursina, color, Cone, lerp_angle, time, EditorCamera, scene
+from ursina.duplicate import duplicate
+from ursina.entity import Entity
 
 app = Ursina()
 player = Entity(model='wireframe_cube', color=color.lime)

@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.raycast import raycast
 import sys
 sys.path.append('../Parkour/')
 from block import *
@@ -168,7 +169,7 @@ class Level03(Entity):
             self.player.count = 0.0
 
         # What entity the player hits
-        hit = raycast(self.player.position, self.player.down, distance = 2, ignore = [self.player, ])
+        hit = raycast(self.player.position, self.player.down, distance=2, ignore=[self.player, ])
 
         if hit.entity == self.mountain:
             self.player.jump_height = 0.3

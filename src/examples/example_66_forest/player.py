@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.raycast import raycast
 from ursina import curve
 
 sign = lambda x: -1 if x < 0 else (1 if x > 0 else 0)

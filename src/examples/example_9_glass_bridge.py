@@ -1,5 +1,7 @@
 from random import randint
-from ursina import Ursina, Entity, application, color, duplicate, invoke, destroy
+from ursina.duplicate import duplicate
+from ursina.entity import Entity
+from ursina import Ursina, application, color, invoke, destroy
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 app = Ursina()

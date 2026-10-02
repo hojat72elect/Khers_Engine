@@ -1,5 +1,5 @@
 from ursina.mesh import Mesh
-from ursina import print_warning, scene, load_model, Vec3, Color, render
+from ursina import print_warning, scene, load_model, Vec3, Color
 
 def combine(combine_parent, analyze=False, auto_destroy=True, ignore=[], ignore_disabled=True, include_normals=False):
     if not combine_parent.children:

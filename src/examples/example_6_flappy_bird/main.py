@@ -1,5 +1,7 @@
 import random
-from ursina import Ursina, Sky, Animation, camera, time, Entity, color, duplicate, invoke
+from ursina import Ursina, Sky, Animation, camera, time, color, invoke
+from ursina.duplicate import duplicate
+from ursina.entity import Entity
 
 app = Ursina()
 Sky()

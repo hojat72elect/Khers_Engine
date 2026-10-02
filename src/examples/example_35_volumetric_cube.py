@@ -1,6 +1,8 @@
 import math
 import random
-from ursina import Ursina, color, window, Entity, scene, duplicate, EditorCamera, curve
+from ursina import Ursina, color, window, scene, EditorCamera, curve
+from ursina.duplicate import duplicate
+from ursina.entity import Entity
 
 app = Ursina()
 window.color = color.black
