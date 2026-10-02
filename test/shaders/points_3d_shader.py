@@ -1,5 +1,7 @@
 import random
-from ursina import EditorCamera, Entity, Mesh, MeshModes, Ursina, Vec3, camera, color
+from ursina import EditorCamera, Ursina, Vec3, camera, color
+from ursina.entity import Entity
+from ursina.mesh import Mesh, MeshModes
 from ursina.prefabs.primitives import ThinSlider
 from ursina.shaders.points_3d_shader import unlit_points_shader
 

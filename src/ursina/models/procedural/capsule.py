@@ -1,4 +1,5 @@
-from ursina import *
+from ursina import load_model, application, Vec3
+from ursina.mesh import Mesh
 
 class Capsule(Mesh):
     def __init__(self, height=2, radius=.5, **kwargs):

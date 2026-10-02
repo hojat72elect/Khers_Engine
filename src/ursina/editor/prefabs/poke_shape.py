@@ -1,4 +1,5 @@
 from ursina.editor.level_editor import *
+from ursina.mesh import Mesh
 from ursina.shaders import colored_lights_shader
 from ursina.scripts.property_generator import generate_properties_for_class
 

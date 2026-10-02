@@ -1,4 +1,5 @@
-from ursina import *
+from ursina.mesh import Mesh
+from ursina import print_warning, scene, load_model, Vec3, Color, render
 
 def combine(combine_parent, analyze=False, auto_destroy=True, ignore=[], ignore_disabled=True, include_normals=False):
     if not combine_parent.children:
@@ -80,7 +81,6 @@ def combine(combine_parent, analyze=False, auto_destroy=True, ignore=[], ignore_
                     norms.extend([Vec3(*normal_to_world_matrix.xform(Vec3(*n)))for n in e.model.normals])
                 else:
                     norms.extend((Vec3.up, ) * len(e.model.vertices))
-
 
             if auto_destroy and e != combine_parent:
                 to_destroy.append(e)

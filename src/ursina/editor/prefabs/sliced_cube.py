@@ -35,14 +35,11 @@ class SlicedCube(Entity):
         kwargs = __class__.default_values | kwargs
 
         if isinstance(stretchable_mesh, str):
-            # Entity(model=stretchable_mesh)
             stretchable_mesh = load_model(stretchable_mesh, use_deepcopy=True)
             print('--------------------', 'asdasdølaksdjkljload:', stretchable_mesh)
         self.stretchable_mesh = stretchable_mesh
-        # self.original_vertices = model.vertices
         super().__init__(**__class__.default_values | kwargs)
         self.model = deepcopy(self.stretchable_mesh)
-        # self.model = Mesh(vertices=self.stretchable_mesh.vertices, uvs=self.stretchable_mesh.uvs)
         self.model.name = 'cube'
         self.scale_multiplier = kwargs['scale_multiplier']
         self.scale = kwargs['scale']
