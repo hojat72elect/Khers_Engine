@@ -1,5 +1,6 @@
 from player import Player
 from ursina import *
+from ursina.raycast import raycast
 import sys
 sys.path.append('../Parkour/')
 from block import *

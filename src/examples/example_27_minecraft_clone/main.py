@@ -1,6 +1,7 @@
 from examples.example_27_minecraft_clone.Voxel import Voxel
-from ursina import Ursina, application, raycast, camera, mouse, destroy, Sky
+from ursina import Ursina, application, camera, mouse, destroy, Sky
 from ursina.prefabs.first_person_controller import FirstPersonController
+from ursina.raycast import raycast
 
 if __name__ == '__main__':
     app = Ursina()

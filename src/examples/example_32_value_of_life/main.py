@@ -1,5 +1,6 @@
 from pathlib import Path
-from ursina import Ursina, window, color, Entity, Animation, Sprite, input_handler, camera, SmoothFollow, application, mouse, floor, held_keys, raycast, clamp, lerp, scene, Draggable, time, invoke
+from ursina import Ursina, window, color, Entity, Animation, Sprite, input_handler, camera, SmoothFollow, application, mouse, floor, held_keys, clamp, lerp, scene, Draggable, time, invoke
+from ursina.raycast import raycast
 from ursina.duplicate import duplicate
 from ursina.audio import Audio
 from triggers import UseTrigger, Teleporter, CableCar, NPC, TalkativeNPC, ObservatoryDoor, Altar, Sacrifice

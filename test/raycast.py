@@ -1,4 +1,6 @@
-from ursina import Ursina, Entity, held_keys, time, duplicate, camera, EditorCamera, Vec3, color, raycast
+from ursina import Ursina, Entity, held_keys, time, camera, EditorCamera, Vec3, color
+from ursina.duplicate import duplicate
+from ursina.raycast import raycast
 
 if __name__ == '__main__':
     app = Ursina()
