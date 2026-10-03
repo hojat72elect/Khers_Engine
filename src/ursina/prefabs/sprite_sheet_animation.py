@@ -1,4 +1,5 @@
-from ursina import Entity, Sequence, Func, Wait
+from ursina import Entity
+from ursina.sequence import Sequence, Func, Wait
 
 class SpriteSheetAnimation(Entity):
     def __init__(self, texture, animations, tileset_size=[4,1], fps=12, model='quad', autoplay=True, **kwargs):

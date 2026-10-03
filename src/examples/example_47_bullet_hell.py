@@ -1,4 +1,5 @@
-from ursina import Entity, Circle, color, time, Vec2, Vec3, Mesh, EditorCamera, Sequence, Func, Wait, distance_2d, destroy, Ursina, held_keys, scene
+from ursina import Entity, Circle, color, time, Vec2, Vec3, Mesh, EditorCamera, distance_2d, destroy, Ursina, held_keys, scene
+from ursina.sequence import Sequence, Func, Wait
 
 app = Ursina(forced_aspect_ratio=.6)
 bg = Entity(model='quad', scale=(30, 50), texture='grass', color=color.hsv(0, 0, .2))

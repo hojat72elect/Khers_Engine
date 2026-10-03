@@ -1,4 +1,5 @@
-from ursina import Entity, Ursina, Sequence, Func, Wait
+from ursina import Entity, Ursina
+from ursina.sequence import Sequence, Func, Wait
 
 if __name__ == '__main__':
     app = Ursina()
