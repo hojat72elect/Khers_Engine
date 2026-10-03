@@ -1,7 +1,8 @@
 import math
 import os
 import psutil
-from ursina import Vec2, camera, window
+from ursina import camera, window
+from ursina.vec2 import Vec2
 from ursina.text import Text
 
 def size(size_bytes):

@@ -1,8 +1,8 @@
-from ursina import Vec2, Vec3
 from ursina.shader import Shader
+from ursina.vec2 import Vec2
 
 vertex_animation_shader = Shader(
-vertex='''
+    vertex="""
 #version 330 core
 
 uniform mat4 p3d_ModelViewProjectionMatrix;
@@ -33,9 +33,8 @@ void main() {
     vertex_color = texture(frame_texture, vec2((gl_VertexID/num_verts) + ((1./num_verts)*.5) +.5, (frame_index/total_frames) + (frame_height*.5)));
 }
 
-''',
-
-fragment='''
+""",
+    fragment="""
 #version 330 core
 
 uniform sampler2D p3d_Texture0;
@@ -50,11 +49,10 @@ void main() {
     fragColor = color.rgba;
 }
 
-''',
-default_input = {
-    'texture_scale' : Vec2(1,1),
-    'texture_offset' : Vec2(0.0, 0.0),
-
-    'frame_index': 0,
-}
+""",
+    default_input={
+        "texture_scale": Vec2(1, 1),
+        "texture_offset": Vec2(0.0, 0.0),
+        "frame_index": 0,
+    },
 )

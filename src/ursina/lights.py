@@ -2,7 +2,9 @@ from panda3d.core import AmbientLight as PandaAmbientLight
 from panda3d.core import DirectionalLight as PandaDirectionalLight
 from panda3d.core import PointLight as PandaPointLight
 from panda3d.core import Spotlight as PandaSpotLight
-from ursina import Vec2, Vec3, color, scene
+from ursina import color, scene
+from ursina.vec2 import Vec2
+from ursina.vec3 import Vec3
 from ursina.entity import Entity
 from ursina.prefabs.sky import Sky
 from ursina.scripts.property_generator import generate_properties_for_class

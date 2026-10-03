@@ -1,5 +1,6 @@
 import math
-from ursina import Vec2, Vec3
+from ursina.vec2 import Vec2
+from ursina.vec3 import Vec3
 
 class TestVec3:
     def test_multiplying_single_vec3(self):

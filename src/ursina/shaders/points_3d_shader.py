@@ -1,11 +1,12 @@
-from ursina import camera, color, window
+from ursina import window
 from ursina.shader import Shader
 from ursina.ursinastuff import Func
 from ursina.vec2 import Vec2
-from ursina.vec3 import Vec3
 
-unlit_points_shader = Shader(name='unlit_points_shader', language=Shader.GLSL,
-vertex='''
+unlit_points_shader = Shader(
+    name="unlit_points_shader",
+    language=Shader.GLSL,
+    vertex="""
 #version 330 core
 
 layout(location = 0) in vec4 p3d_Vertex;
@@ -42,9 +43,8 @@ void main() {
     texCoord = p3d_MultiTexCoord0;
 }
 
-''',
-
-geometry='''
+""",
+    geometry="""
 #version 330 core
 layout(points) in;
 layout(triangle_strip, max_vertices = 4) out;
@@ -96,10 +96,8 @@ void main() {
 
     EndPrimitive();
 }
-''',
-
-
-fragment='''
+""",
+    fragment="""
 #version 330 core
 
 in vec4 vert_col;
@@ -112,15 +110,14 @@ void main() {
     fragColor = texColor * vert_col;
 }
 
-''',
-default_input={
-    'texture_scale' : Vec2(1,1),
-    'texture_offset' : Vec2(0.0, 0.0),
-    'point_size' : 1.0,
-
-    'perspective_scaling': True,
-},
-continuous_input = {
-    'window_size': Func(getattr, window, 'size'),
-    }
+""",
+    default_input={
+        "texture_scale": Vec2(1, 1),
+        "texture_offset": Vec2(0.0, 0.0),
+        "point_size": 1.0,
+        "perspective_scaling": True,
+    },
+    continuous_input={
+        "window_size": Func(getattr, window, "size"),
+    },
 )

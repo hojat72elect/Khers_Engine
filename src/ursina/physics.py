@@ -131,7 +131,7 @@ def raycast(origin, direction: Vec3 = Vec3(0, 0, 1), distance=9999,
         entities=None
     )
 
-from ursina import Vec2, Default
+from ursina.vec2 import Vec2
 @generate_properties_for_class()
 class PhysicsEntity:
     rb_reserved_args = ('mass', 'kinematic', 'friction', 'mask', 'world', 'lock_axis', 'lock_rotation', 'velocity')

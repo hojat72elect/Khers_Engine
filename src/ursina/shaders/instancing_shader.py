@@ -1,5 +1,7 @@
-from ursina import Vec2, Vec3, Vec4
 from ursina.shader import Shader
+from ursina.vec2 import Vec2
+from ursina.vec3 import Vec3
+from ursina.vec4 import Vec4
 
 instancing_shader = Shader(
     name="instancing_shader",

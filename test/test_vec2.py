@@ -1,4 +1,4 @@
-from ursina import Vec2
+from ursina.vec2 import Vec2
 
 class TestVec2:
     def test_general_behavior(self):
