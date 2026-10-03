@@ -1,4 +1,4 @@
-from ursina import *
+from ursina.shader import Shader
 
 empty_shader = Shader(
 vertex='''

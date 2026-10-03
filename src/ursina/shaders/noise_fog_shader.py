@@ -1,6 +1,10 @@
-from ursina import Shader, color
+from ursina import color
+from ursina.shader import Shader
 
-noise_fog_shader = Shader(name='noise_fog_shader', language=Shader.GLSL, fragment='''
+noise_fog_shader = Shader(
+    name="noise_fog_shader",
+    language=Shader.GLSL,
+    fragment="""
 #version 130
 
 uniform vec4 p3d_ColorScale;
@@ -24,9 +28,9 @@ void main() {
     result = mix(dark_color, light_color, result.r);
 }
 
-''',  # noqa: I001
-default_input = {
-  'dark_color' : color.black,
-  'light_color' : color.white,
-}
+""",
+    default_input={
+        "dark_color": color.black,
+        "light_color": color.white,
+    },
 )

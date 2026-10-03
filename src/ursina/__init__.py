@@ -27,7 +27,6 @@ from panda3d.core import Quat
 from ursina.vec2 import Vec2
 from ursina.vec3 import Vec3
 from ursina.vec4 import Vec4
-from ursina.shader import Shader
 from ursina.lights import *
 
 from ursina.models.procedural.nine_slice import NineSlice

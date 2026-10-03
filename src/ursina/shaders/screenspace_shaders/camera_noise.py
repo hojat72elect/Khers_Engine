@@ -1,4 +1,4 @@
-from ursina import Shader
+from ursina.shader import Shader
 
 camera_noise_shader = Shader(
 fragment='''

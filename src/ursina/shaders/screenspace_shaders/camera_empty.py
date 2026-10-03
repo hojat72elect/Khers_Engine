@@ -1,4 +1,4 @@
-from ursina import Shader
+from ursina.shader import Shader
 
 camera_empty_shader = Shader(
 vertex='''

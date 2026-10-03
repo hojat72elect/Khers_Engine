@@ -1,6 +1,10 @@
-from ursina import Quat, Shader, Vec2, Vec3, Vec4
+from ursina import Vec2, Vec3, Vec4
+from ursina.shader import Shader
 
-instancing_shader = Shader(name='instancing_shader', language=Shader.GLSL, vertex='''#version 140
+instancing_shader = Shader(
+    name="instancing_shader",
+    language=Shader.GLSL,
+    vertex="""#version 140
 
 uniform mat4 p3d_ModelViewProjectionMatrix;
 in vec4 p3d_Vertex;
@@ -24,9 +28,8 @@ void main() {
     texcoords = (p3d_MultiTexCoord0 * texture_scale) + texture_offset;
     vertex_color = p3d_Color;
 }
-''',
-
-fragment='''#version 140
+""",
+    fragment="""#version 140
 
 uniform sampler2D p3d_Texture0;
 uniform vec4 p3d_ColorScale;
@@ -38,13 +41,12 @@ void main() {
     vec4 color = texture(p3d_Texture0, texcoords) * p3d_ColorScale * vertex_color;
     fragColor = color.rgba;
 }
-''',
-
-default_input={
-    'texture_scale': Vec2(1, 1),
-    'texture_offset': Vec2(0.0, 0.0),
-    'position_offsets': [Vec3(i, 0, 0) for i in range(256)],
-    'rotation_offsets': [Vec4(0) for i in range(256)],
-    'scale_multipliers': [Vec3(1) for i in range(256)],
-}
+""",
+    default_input={
+        "texture_scale": Vec2(1, 1),
+        "texture_offset": Vec2(0.0, 0.0),
+        "position_offsets": [Vec3(i, 0, 0) for i in range(256)],
+        "rotation_offsets": [Vec4(0) for i in range(256)],
+        "scale_multipliers": [Vec3(1) for i in range(256)],
+    },
 )

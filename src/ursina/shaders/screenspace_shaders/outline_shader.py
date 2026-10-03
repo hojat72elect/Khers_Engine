@@ -1,4 +1,6 @@
-from ursina import Func, Shader, camera, color, window
+from ursina import camera, color, window
+from ursina.sequence import Func
+from ursina.shader import Shader
 
 outline_shader = Shader(fragment='''
 #version 430

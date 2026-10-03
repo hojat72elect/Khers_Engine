@@ -1,4 +1,5 @@
-from ursina import Shader, Vec2, Vec3
+from ursina import Vec2, Vec3
+from ursina.shader import Shader
 
 vertex_animation_shader = Shader(
 vertex='''

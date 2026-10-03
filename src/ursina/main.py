@@ -10,7 +10,6 @@ from ursina.scene import instance as scene
 from ursina.camera import instance as camera
 from ursina.mouse import instance as mouse
 from ursina import entity
-from ursina import shader
 from ursina.audio import _audio_manager
 import __main__
 

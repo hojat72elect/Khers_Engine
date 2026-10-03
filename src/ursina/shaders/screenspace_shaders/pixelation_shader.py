@@ -1,4 +1,4 @@
-from ursina import Shader
+from ursina.shader import Shader
 
 pixelation_shader = Shader(
 fragment='''
