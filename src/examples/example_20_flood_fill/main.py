@@ -1,6 +1,7 @@
 import random as py_random
 from ursina import Ursina, Entity, camera, window, color, Texture, mouse, time, destroy, invoke, Vec3, curve
 from ursina.text import Text
+import math
 
 GAME_WIDTH = 800
 GAME_HEIGHT = 600
@@ -437,7 +438,7 @@ def update():
     global monster_bounce
     if arrow.enabled:
         arrow_time += time.dt
-        arrow.x = px(arrow_base_x + 12 + 12 * __import__("math").sin(arrow_time * 3.5))
+        arrow.x = px(arrow_base_x + 12 + 12 * math.sin(arrow_time * 3.5))
 
     if monster_bounce is not None:
         monster_bounce_time += time.dt
@@ -448,10 +449,7 @@ def update():
                 if data["monster"] is monster_bounce
             )
         )
-        monster_bounce.y = (
-                base_y
-                + 12 * __import__("math").sin(monster_bounce_time * 7)
-        )
+        monster_bounce.y = base_y + 12 * math.sin(monster_bounce_time * 7)
 
     for particle in particles.copy():
         particle.update_particle()
