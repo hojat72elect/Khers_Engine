@@ -1,4 +1,7 @@
-from ursina import Entity, camera, color, mouse, BoxCollider, Vec2, Vec3, scene, Default
+from ursina import camera, color, mouse, BoxCollider, scene, Default
+from ursina.entity import Entity
+from ursina.vec2 import Vec2
+from ursina.vec3 import Vec3
 from ursina.audio import Audio
 from ursina.text import Text
 from ursina import color as color_module

@@ -23,7 +23,6 @@ from ursina.texture import Texture
 from ursina.texture_importer import load_texture
 from ursina.collider import *
 from panda3d.core import Quat
-from ursina.vec3 import Vec3
 from ursina.vec4 import Vec4
 from ursina.lights import *
 

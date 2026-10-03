@@ -1,4 +1,6 @@
-from ursina import Entity, Vec3, ceil, floor
+from math import floor, ceil
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
 
 helper = None
 
