@@ -1,4 +1,5 @@
-from ursina import Ursina, window, color, Entity, hsv, time, Sprite
+from ursina import Ursina, window, color, Entity, time, Sprite
+from ursina.color import hsv
 from ursina.shaders.noise_fog_shader import noise_fog_shader
 
 if __name__ == "__main__":

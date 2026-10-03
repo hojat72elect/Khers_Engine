@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.color import hsv
 from ursina.text import Text
 from ursina import curve
 from ursina.ursinamath import sample_gradient

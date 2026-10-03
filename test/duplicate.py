@@ -1,4 +1,5 @@
-from ursina import Ursina, Button, scene, EditorCamera, Entity, duplicate, color, Vec2, shaders
+from ursina import Ursina, Button, scene, EditorCamera, Entity, color, Vec2, shaders
+from ursina.duplicate import duplicate
 
 if __name__ == '__main__':
     app = Ursina()

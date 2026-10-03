@@ -1,5 +1,4 @@
 import random
-
 from ursina import Ursina, EditorCamera, BoxCollider, color, mouse, camera, Vec3, held_keys, invoke, distance_xz, time, destroy, application, DirectionalLight, Sky
 from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.shaders import lit_with_shadows_shader

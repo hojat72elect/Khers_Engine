@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.color import hsv
 from ursina.duplicate import duplicate
 from ursina import input_handler
 from ursina.text import Text

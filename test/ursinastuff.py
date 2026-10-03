@@ -1,4 +1,5 @@
-from ursina import Ursina, Audio, destroy
+from ursina import Ursina, destroy
+from ursina.audio import Audio
 
 if __name__ == '__main__':
     app = Ursina()

@@ -1,9 +1,9 @@
-from ursina import Button, Ursina, window, NineSlice, color, hsv, Entity, camera
+from ursina import Button, Ursina, window, NineSlice, color, Entity, camera
 from ursina.prefabs.options_menu import OptionsMenu
 
 if __name__ == "__main__":
     app = Ursina()
-    window.color = hsv(0, 0, 10 / 255)
+    window.color = color.hsv(0, 0, 10 / 255)
     Button.default_color = color._24
     Button.default_highlight_color = color._32
     NineSlice.outset = 0.4

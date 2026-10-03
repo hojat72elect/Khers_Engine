@@ -1,4 +1,5 @@
-from ursina import Ursina, Vec2, Capsule, lerp_exponential_decay, Sequence, time, held_keys, raycast, EditorCamera, Entity, Vec3, color, camera, scene, destroy
+from ursina import Ursina, Vec2, Capsule, lerp_exponential_decay, Sequence, time, held_keys, EditorCamera, Entity, Vec3, color, camera, scene, destroy
+from ursina.raycast import raycast
 from ursina.physics import PhysicsEntity, physics_handler, CapsuleCollider
 
 if __name__ == '__main__':

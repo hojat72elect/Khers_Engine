@@ -1,4 +1,4 @@
-from ursina import Ursina, Entity, Sprite, ButtonList, Button, print_on_screen, rgb, application, camera, color, Func
+from ursina import Ursina, Entity, Sprite, ButtonList, Button, print_on_screen, application, camera, color, Func
 from ursina.text import Text
 
 # Main Menu Example, or it can be any kind of menu, like Inventory, Quest journal, etc.
@@ -32,7 +32,7 @@ class MenuMenu(Entity):
         # Title of our menu
         Text("OPTIONS MENU", parent=self.options_menu, y=0.4, x=0, origin=(0, 0))
         # Button
-        Button("Back", parent=self.options_menu, y=-0.3, scale=(0.1, 0.05), color=rgb(50, 50, 50),
+        Button("Back", parent=self.options_menu, y=-0.3, scale=(0.1, 0.05), color=color.rgb(50, 50, 50),
                on_click=lambda: switch(self.main_menu, self.options_menu))
 
         # [OPTIONS MENU] WINDOW END

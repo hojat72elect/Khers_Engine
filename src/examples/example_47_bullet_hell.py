@@ -1,7 +1,7 @@
-from ursina import Entity, Circle, color, hsv, time, Vec2, Vec3, Mesh, EditorCamera, Sequence, Func, Wait, distance_2d, destroy, Ursina, held_keys, scene
+from ursina import Entity, Circle, color, time, Vec2, Vec3, Mesh, EditorCamera, Sequence, Func, Wait, distance_2d, destroy, Ursina, held_keys, scene
 
 app = Ursina(forced_aspect_ratio=.6)
-bg = Entity(model='quad', scale=(30, 50), texture='grass', color=hsv(0, 0, .2))
+bg = Entity(model='quad', scale=(30, 50), texture='grass', color=color.hsv(0, 0, .2))
 player = Entity(model=Circle(3), color=color.azure, speed=8, y=-.4, z=-1)
 player.bullet_renderer = Entity(model=Mesh(mode='point', thickness=.2), texture='circle', color=color.yellow)
 scene.fog_density = (10, 50)

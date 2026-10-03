@@ -1,4 +1,4 @@
-from ursina import Ursina, Entity, color, Vec3, window, EditorCamera, curve, hsv, held_keys, scene, time, Path, Vec2
+from ursina import Ursina, Entity, color, Vec3, window, EditorCamera, curve, held_keys, scene, time, Path, Vec2
 from ursina.prefabs.particle_system import ParticleSystem, ParticleSystemContainer, ParticleSystemUI
 import random
 
@@ -38,10 +38,10 @@ if __name__ == '__main__':
                 move_directions="up",
                 mesh="cube",
                 start_color=[
-                    hsv(200 + (i * 10), 1 - (i * 0.1), 1) for i in range(12 * 2)
+                    color.hsv(200 + (i * 10), 1 - (i * 0.1), 1) for i in range(12 * 2)
                 ],
                 end_color=[
-                    hsv(200 + 20 + (i * 10), 0.5, 1 - (i * 0.15)) for i in range(12 * 2)
+                    color.hsv(200 + 20 + (i * 10), 0.5, 1 - (i * 0.15)) for i in range(12 * 2)
                 ],
                 color_curve=curve.linear,
                 color_sample_function="sequential",

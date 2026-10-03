@@ -4,6 +4,7 @@ from math import floor
 import pyperclip
 from PIL import Image
 from ursina import *
+from ursina.color import hsv
 from ursina.array_tools import Array2D, enumerate_2d
 from ursina.scripts.property_generator import generate_properties_for_class
 from ursina.shaders import unlit_shader

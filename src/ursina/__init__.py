@@ -22,7 +22,6 @@ from ursina.string_utilities import *
 from ursina.mesh_importer import load_model, load_blender_scene
 from ursina.texture import Texture
 from ursina.texture_importer import load_texture
-from ursina.color import Color, hsv, rgb
 from ursina.sequence import Sequence, Func, Wait
 from ursina.collider import *
 from panda3d.core import Quat

@@ -1,4 +1,5 @@
-from ursina import EditorCamera, Entity, Sky, Ursina, color, hsv, shaders, window
+from ursina import EditorCamera, Entity, Sky, Ursina, color, shaders, window
+from ursina.color import hsv
 from ursina.prefabs.primitives import GrayPlane
 
 if __name__ == "__main__":
