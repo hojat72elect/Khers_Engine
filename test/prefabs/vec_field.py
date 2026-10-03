@@ -1,4 +1,5 @@
-from ursina import Ursina, Sprite, color,Vec4
+from ursina import Ursina, Sprite, color
+from ursina.vec4 import Vec4
 from ursina.prefabs.vec_field import VecField
 
 if __name__ == '__main__':
