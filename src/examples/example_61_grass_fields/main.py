@@ -9,7 +9,6 @@ from ursina import (
     load_model,
     deepcopy,
     scene,
-    terraincast,
     Vec3,
     Capsule,
     EditorCamera,
@@ -20,6 +19,7 @@ from ursina import (
     DirectionalLight,
     time
 )
+from ursina.terraincast import terraincast
 from ursina.shaders import lit_with_shadows_shader
 import random
 

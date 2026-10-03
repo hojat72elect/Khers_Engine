@@ -1,4 +1,5 @@
-from ursina import Ursina, Entity, Terrain, EditorCamera, camera, Sky, held_keys, Vec3, time, terraincast, color
+from ursina import Ursina, Entity, Terrain, EditorCamera, camera, Sky, held_keys, Vec3, time, color
+from ursina.terraincast import terraincast
 from ursina.shaders.normals_shader import normals_shader
 import random
 

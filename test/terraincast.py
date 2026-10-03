@@ -1,4 +1,5 @@
-from ursina import Ursina, Entity, Vec3, time, held_keys, terraincast, Terrain, color, EditorCamera, Sky
+from ursina import Ursina, Entity, Vec3, time, held_keys, Terrain, color, EditorCamera, Sky
+from ursina.terraincast import terraincast
 
 if __name__ == '__main__':
     app = Ursina()
