@@ -1,9 +1,15 @@
 from random import choice, randint
-from ursina import Ursina, window, camera, color, time, destroy, BoxCollider
+from ursina import color
+from ursina.window import instance as window
+from ursina.camera import instance as camera
+from ursina.collider import BoxCollider
+from ursina.main import Ursina
+from ursina.destroy import destroy
 from ursina.vec3 import Vec3
 from ursina.entity import Entity
 from ursina.audio import Audio
 from ursina.text import Text
+import time
 
 GAME_WIDTH = 800
 GAME_HEIGHT = 400
