@@ -1,8 +1,12 @@
 from typing import Final
-from ursina import color, Ursina, held_keys, time, mouse
+from ursina import color
+from ursina.main import Ursina
+from ursina.mouse import instance as mouse
+from ursina.input_handler import held_keys
 from ursina.entity import Entity
 from ursina.audio import Audio
 from ursina.text import Text
+import time
 
 class Example1:
     MOVEMENT_SPEED: Final[int] = 5
