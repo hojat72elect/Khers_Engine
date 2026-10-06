@@ -1,4 +1,8 @@
-from ursina import Ursina, Entity, color, Vec3, window, EditorCamera, curve, held_keys, scene, time, Path, Vec2
+from ursina import Ursina, color, window, EditorCamera, curve, scene, time, Path
+from ursina.entity import Entity
+from ursina.input_handler import held_keys
+from ursina.vec2 import Vec2
+from ursina.vec3 import Vec3
 from ursina.prefabs.particle_system import ParticleSystem, ParticleSystemContainer, ParticleSystemUI
 import random
 

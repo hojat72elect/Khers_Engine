@@ -1,18 +1,19 @@
-from ursina import *
+from ursina.entity import Entity
 from ursina.raycast import raycast
-from ursina import curve
+from ursina.input_handler import held_keys
+from ursina import mouse, camera, lerp, time, clamp
 
 sign = lambda x: -1 if x < 0 else (1 if x > 0 else 0)
 y_dir = lambda y: -1 if y < 0 else(1 if y > 0 else -1)
 
 class Player(Entity):
-    def __init__(self, position, speed = 5, jump_height = 14):
+    def __init__(self, position, speed=5, jump_height=14):
         super().__init__(
-            model = "cube", 
-            position = position,
-            scale = (1.3, 1, 1.3), 
-            visible_self = False,
-            rotation_y = -270
+            model="cube",
+            position=position,
+            scale=(1.3, 1, 1.3),
+            visible_self=False,
+            rotation_y=-270,
         )
 
         # Camera

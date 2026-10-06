@@ -1,18 +1,24 @@
-from ursina import *
+from ursina import color, time, invoke
+from ursina.vec3 import Vec3
+from ursina.raycast import raycast
+from ursina.entity import Entity
 from ursina.boxcast import boxcast
+from ursina.terraincast import terraincast
+import math
+
 
 sign = lambda x: -1 if x < 0 else (1 if x > 0 else 0)
 
 class Enemy(Entity):
     def __init__(self, position = (16, 5, 14), terrain = None):
         super().__init__(
-            model = "cube", 
-            color = color.gray, 
-            texture = "white_cube", 
-            scale = (1, 2.5, 1), 
-            collider = "box", 
-            position = position,
-            tag = "enemy"
+            model="cube",
+            color=color.gray,
+            texture="white_cube",
+            scale=(1, 2.5, 1),
+            collider="box",
+            position=position,
+            tag="enemy",
         )
 
         self.follow = None
@@ -28,7 +34,6 @@ class Enemy(Entity):
         y_movement = self.velocity_y * time.dt
 
         self.direction = Vec3(self.forward + self.right)
-
         self.direction = (0, sign(y_movement), 0)
         
         movement = ((self.follow.position - self.position).normalized() * self.speed * time.dt)

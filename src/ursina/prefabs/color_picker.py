@@ -1,4 +1,8 @@
-from ursina import Entity, Slider, color, Button, camera, Quad, copy, Color
+from ursina import color, camera, Quad, Color
+from ursina.entity import Entity
+from ursina.prefabs.slider import Slider
+from ursina.prefabs.button import Button
+from copy import copy
 
 class ColorPicker(Entity):
     default_values = dict(parent=camera.ui)

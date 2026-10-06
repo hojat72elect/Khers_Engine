@@ -1,4 +1,7 @@
-from ursina import Ursina, window, color, Entity, camera, Sky, EditorCamera
+from ursina import Ursina, window, color, camera
+from ursina.entity import Entity
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.prefabs.sky import Sky
 from ursina.shaders.screenspace_shaders.fxaa import fxaa_shader
 
 if __name__ == '__main__':

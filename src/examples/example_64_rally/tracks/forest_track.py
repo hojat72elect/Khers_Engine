@@ -1,14 +1,15 @@
-from ursina import *
+from ursina.entity import Entity
+from ursina import invoke
 
 class ForestTrack(Entity):
     def __init__(self, car):
         super().__init__(
-            model = "forest_track.obj", 
-            texture = "forest_track.png", 
-            position = (0, -50, 0), 
-            rotation = (0, 270, 0), 
-            scale = (12, 12, 12), 
-            collider = "mesh"
+            model="forest_track.obj",
+            texture="forest_track.png",
+            position=(0, -50, 0),
+            rotation=(0, 270, 0),
+            scale=(12, 12, 12),
+            collider="mesh",
         )
 
         self.car = car

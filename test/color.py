@@ -1,4 +1,5 @@
-from ursina import Button, Entity, Quad, Ursina, color, grid_layout
+from ursina import Button, Quad, Ursina, color, grid_layout
+from ursina.entity import Entity
 
 if __name__ == "__main__":
     app = Ursina()

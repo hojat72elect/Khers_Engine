@@ -1,5 +1,8 @@
-from ursina import Ursina, Entity, Sprite, ButtonList, Button, print_on_screen, application, camera, color, Func
+from ursina import Ursina, Sprite, ButtonList, Button, application, camera, color
 from ursina.text import Text
+from ursina.ursinastuff import print_on_screen
+from ursina.entity import Entity
+from ursina.sequence import Func
 
 # Main Menu Example, or it can be any kind of menu, like Inventory, Quest journal, etc.
 # Class of game menu

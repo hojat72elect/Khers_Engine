@@ -1,4 +1,6 @@
-from ursina import Entity, camera, Vec2, mouse, color, floor, clamp, time, held_keys, destroy, curve
+from ursina import camera, mouse, color, floor, clamp, time, held_keys, destroy, curve
+from ursina.vec2 import Vec2
+from ursina.entity import Entity
 from ursina.text import Text
 import pyperclip
 from ursina.string_utilities import multireplace

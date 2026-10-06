@@ -1,4 +1,5 @@
-from ursina import EditorCamera, Entity, Ursina
+from ursina import EditorCamera, Ursina
+from ursina.entity import Entity
 from ursina.scripts.project_uvs import project_uvs
 
 if __name__ == '__main__':

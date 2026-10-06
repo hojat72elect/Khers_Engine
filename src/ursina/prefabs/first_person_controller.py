@@ -1,4 +1,7 @@
-from ursina import *
+from ursina import camera, color, mouse, scene, clamp, held_keys, time, invoke, curve
+from ursina.vec3 import Vec3
+from ursina.vec2 import Vec2
+from ursina.entity import Entity
 from ursina.raycast import raycast
 
 class FirstPersonController(Entity):

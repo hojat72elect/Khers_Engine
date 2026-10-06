@@ -1,4 +1,10 @@
-from ursina import Ursina, Entity, Mesh, Vec3, Vec2, color, lerp, floor, ceil, distance_2d, Sky, EditorCamera, mouse, held_keys, clamp, time
+from ursina import Ursina, Mesh, color, floor, ceil, Sky, EditorCamera, mouse, clamp, time
+from ursina.entity import Entity
+from ursina.vec2 import Vec2
+from ursina.vec3 import Vec3
+from ursina.input_handler import held_keys
+from ursina.ursinamath import lerp, distance_2d
+
 
 app = Ursina()
 hit_plane = Entity(model='plane', collider='box', scale=100, alpha=.2, visible=False)

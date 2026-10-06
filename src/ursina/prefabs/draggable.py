@@ -1,4 +1,6 @@
-from ursina import *
+from ursina import Button, Mesh, color, camera, mouse, scene, clamp, held_keys, inf
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
 
 class Draggable(Button):
     _z_plane = None

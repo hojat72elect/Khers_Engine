@@ -1,5 +1,6 @@
 from panda3d.core import WindowProperties, FrameBufferProperties, GraphicsPipe, Texture, GraphicsOutput, SamplerState, OrthographicLens, Shader, Camera, NodePath, PandaNode, PNMImage
-from ursina import Entity, camera
+from ursina import camera
+from ursina.entity import Entity
 from math import sqrt
 from random import random
 

@@ -1,4 +1,8 @@
-from ursina import Entity, Vec2, Vec3, camera, clamp, curve, destroy, held_keys, lerp, mouse, slerp, time, lerp_exponential_decay
+from ursina import camera, clamp, curve, held_keys, lerp, mouse, slerp, time, lerp_exponential_decay
+from ursina.entity import Entity
+from ursina.destroy import destroy
+from ursina.vec2 import Vec2
+from ursina.vec3 import Vec3
 
 class EditorCamera(Entity):
 

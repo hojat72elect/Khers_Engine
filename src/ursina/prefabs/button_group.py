@@ -1,4 +1,6 @@
-from ursina import Entity, Button, camera, color, window, mouse, destroy, Vec2
+from ursina import Button, camera, color, mouse, destroy
+from ursina.vec2 import Vec2
+from ursina.entity import Entity
 from ursina.text import Text
 from ursina.scripts.grid_layout import grid_layout
 from ursina.scripts.property_generator import generate_properties_for_class

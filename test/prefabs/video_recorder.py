@@ -1,7 +1,9 @@
 from ursina.prefabs.first_person_controller import FirstPersonController
 from ursina.prefabs.video_recorder import VideoRecorder
 from ursina.shaders import lit_with_shadows_shader
-from ursina import Ursina, window, Entity, EditorCamera, BoxCollider, Vec3, camera, color, mouse, DirectionalLight, Sky, application
+from ursina.lights import DirectionalLight
+from ursina.entity import Entity
+from ursina import Ursina, window, EditorCamera, BoxCollider, Vec3, camera, color, mouse, Sky, application
 import random
 
 if __name__ == '__main__':

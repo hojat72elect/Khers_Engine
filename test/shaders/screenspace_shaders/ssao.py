@@ -1,4 +1,9 @@
-from ursina import Ursina, Entity, Sky, Button, EditorCamera, color, camera, Vec3
+from ursina import Ursina, color, camera
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.prefabs.button import Button
+from ursina.prefabs.sky import Sky
 from ursina.shaders.screenspace_shaders.ssao import ssao_shader
 import random
 

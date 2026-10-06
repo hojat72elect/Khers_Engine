@@ -1,5 +1,7 @@
-from ursina import Ursina, EditorCamera, Entity, Sky, color, scene, camera
-
+from ursina import Ursina, color, scene, camera
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.prefabs.sky import Sky
+from ursina.entity import Entity
 from ursina.shaders.unlit_with_fog_shader import unlit_with_fog_shader
 
 if __name__ == "__main__":

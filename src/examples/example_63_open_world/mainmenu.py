@@ -1,10 +1,10 @@
-from ursina import *
+from ursina.entity import Entity
+from ursina.sequence import Func
+from ursina import mouse, camera, Button, color, application
 
 class MainMenu(Entity):
     def __init__(self, player):
-        super().__init__(
-            parent = camera.ui
-        )
+        super().__init__(parent=camera.ui)
 
         self.main_menu = Entity(parent = self, enabled = True)
         self.player = player
@@ -29,9 +29,9 @@ class MainMenu(Entity):
             self.player.shield.equip()
             self.player.bow.equip()
 
-        story_button = Button(text = "S t o r y", color = color.black, scale_y = 0.1, scale_x = 0.3, y = 0.02, parent = self.main_menu)
-        explore_button = Button(text = "E x p l o r e", color = color.black, scale_y = 0.1, scale_x = 0.3, y = -0.1, parent = self.main_menu)
-        quit_button = Button(text = "Q u i t", color = color.black, scale_y = 0.1, scale_x = 0.3, y = -0.22, parent = self.main_menu)
+        story_button = Button(text="S t o r y", color=color.black, scale_y=0.1, scale_x=0.3, y=0.02, parent=self.main_menu)
+        explore_button = Button(text="E x p l o r e", color=color.black, scale_y=0.1, scale_x=0.3, y=-0.1, parent=self.main_menu)
+        quit_button = Button(text="Q u i t", color=color.black, scale_y=0.1, scale_x = 0.3, y=-0.22, parent=self.main_menu)
         quit_button.on_click = application.quit
         story_button.on_click = Func(story)
         explore_button.on_click = Func(explore)

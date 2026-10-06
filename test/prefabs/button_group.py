@@ -1,4 +1,7 @@
-from ursina import Ursina, color, window, ButtonGroup, camera, Entity, Tooltip, Func, Button, Vec2
+from ursina import Ursina, color, window, ButtonGroup, camera, Tooltip, Button
+from ursina.entity import Entity
+from ursina.sequence import Func
+from ursina.vec2 import Vec2
 
 if __name__ == '__main__':
     app = Ursina()

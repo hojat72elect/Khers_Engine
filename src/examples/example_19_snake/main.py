@@ -1,5 +1,6 @@
 import random
-from ursina import Ursina, camera, window, color, Entity, Texture, held_keys, time
+from ursina import Ursina, camera, window, color, Texture, held_keys, time
+from ursina.entity import Entity
 
 GAME_WIDTH = 640
 GAME_HEIGHT = 480

@@ -1,5 +1,6 @@
 from direct.stdpy import thread
-from ursina import Entity, camera, Circle, color, load_texture, Ursina, window, time
+from ursina import camera, Circle, color, load_texture, Ursina, window, time
+from ursina.entity import Entity
 from ursina.text import Text
 from ursina.prefabs.health_bar import HealthBar
 

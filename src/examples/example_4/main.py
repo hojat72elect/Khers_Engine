@@ -1,5 +1,7 @@
 from random import uniform
-from ursina import Ursina, camera, Entity, color, time, destroy, application
+from ursina.entity import Entity
+from ursina.destroy import destroy
+from ursina import Ursina, camera, color, time, application
 from ursina.text import Text
 from Player import Player
 

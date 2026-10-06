@@ -1,4 +1,7 @@
-from ursina import Ursina, Entity, texture, load_texture, color, Texture, EditorCamera, mouse, held_keys, Vec3
+from ursina import Ursina, load_texture, color, Texture, EditorCamera, mouse
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
+from ursina.input_handler import held_keys
 from ursina.shaders.texture_blend_shader import texture_blend_shader
 
 if __name__ == "__main__":

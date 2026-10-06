@@ -1,6 +1,6 @@
 import shutil
 import subprocess
-
+from ursina.entity import Entity
 from ursina import *
 
 class VideoRecorder(Entity):

@@ -1,4 +1,6 @@
-from ursina import Button, Draggable, Entity, Quad, Slider, Vec3, color
+from ursina import Button, Draggable, Quad, Slider, color
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
 from ursina.text import Text
 from ursina.prefabs.input_field import InputField
 

@@ -1,4 +1,6 @@
-from ursina import Entity, camera, Button, color, mouse, Vec3
+from ursina import camera, Button, color, mouse
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
 from ursina.text import Text
 from math import floor
 

@@ -1,9 +1,14 @@
 """
 Init file for UrsinaAchievements, a system allowing users in Ursina engine to receive achievements.
 """
-from ursina import *
+from ursina import invoke, color, camera, window, Ursina, curve
+from ursina.prefabs.sky import Sky
+from ursina.destroy import destroy
+from ursina.vec2 import Vec2
+from ursina.entity import Entity
 from ursina.audio import Audio
 from ursina.text import Text
+import sys
 import json
 import os
 from direct.stdpy import thread
@@ -22,19 +27,17 @@ except FileNotFoundError:
 
 
 def create_achievement(name:str, unlock_condition, icon:str=None, ringtone:str="clicking", importance:int=1):
-	"""
-	Creates a new achievement for the game.
-	:param name: The name of the achievement.
-	:param unlock_condition: A callback function representing whether the achievement should be unlocked.
-		Unlocks the achievement if the return value is True, passes if it is either False or None.
-	:param icon: The path to the image file being represented with the text, optional.
-	:param ringtone: The name of the ringtone to be used to signal the achievement get ; can be "clicking",
-		"subtle", "uplifting", or the path to a wav/ogg file. It can also be None, and thus won't produce a sound.
-	:param importance: The higher the number is, the longer the achievement will stay on screen. Default is 1.
-	"""
-	_achievements_list.append(
-		(name, unlock_condition, icon, ringtone, importance)
-	)
+    """
+    Creates a new achievement for the game.
+    :param name: The name of the achievement.
+    :param unlock_condition: A callback function representing whether the achievement should be unlocked.
+            Unlocks the achievement if the return value is True, passes if it is either False or None.
+    :param icon: The path to the image file being represented with the text, optional.
+    :param ringtone: The name of the ringtone to be used to signal the achievement get ; can be "clicking",
+            "subtle", "uplifting", or the path to a wav/ogg file. It can also be None, and thus won't produce a sound.
+    :param importance: The higher the number is, the longer the achievement will stay on screen. Default is 1.
+    """
+    _achievements_list.append((name, unlock_condition, icon, ringtone, importance))
 
 
 def _save_achievements():

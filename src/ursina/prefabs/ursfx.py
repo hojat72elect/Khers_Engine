@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.entity import Entity
 from ursina.mesh import Mesh
 from ursina.audio import Audio
 from ursina import curve

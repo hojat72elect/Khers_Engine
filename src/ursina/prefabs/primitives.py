@@ -1,4 +1,5 @@
-from ursina import *
+from ursina import color, dedent
+from ursina.entity import Entity  # Never remove this line
 
 model_names = ('quad', 'cube', 'sphere', 'plane')
 

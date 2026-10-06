@@ -1,4 +1,5 @@
-from ursina import Ursina, Entity, EditorCamera, Mesh
+from ursina import Ursina, EditorCamera, Mesh
+from ursina.entity import Entity
 from ursina.scripts.merge_vertices import merge_overlapping_vertices
 
 if __name__ == '__main__':

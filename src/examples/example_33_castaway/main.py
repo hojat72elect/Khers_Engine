@@ -1,6 +1,11 @@
-from ursina import window, Ursina, load_blender_scene, time, color, scene, Entity, camera, distance_xz, invoke, Func, application, destroy, held_keys, mouse, Vec3, Sky, curve
+from ursina import window, Ursina, load_blender_scene, time, color, scene, camera, distance_xz, invoke, application, mouse, Sky, curve
 from ursina.raycast import raycast
+from ursina.entity import Entity
+from ursina.destroy import destroy
+from ursina.input_handler import held_keys
+from ursina.sequence import Func
 from ursina.duplicate import duplicate
+from ursina.vec3 import Vec3
 from ursina.shaders import colored_lights_shader
 from ursina.shaders import ssao_shader
 from ursina.prefabs.first_person_controller import FirstPersonController

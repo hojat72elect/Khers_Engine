@@ -1,9 +1,11 @@
-from ursina import Entity, camera, distance, distance_xz
+from ursina import camera
+from ursina.ursinamath import distance, distance_xz
+from ursina.entity import Entity
 from ursina.text import Text
 
 class Task1_FindSword(Entity):
     def __init__(self, player):
-        super().__init__(parent = camera.ui)
+        super().__init__(parent=camera.ui)
         self.tasks = Entity(parent=self, enabled=True)
         self.player = player
         self.task_text = Text(text="Sword: " + str(round(distance(self.player, self.player.sword))), origin=(0, 0), size=0.05, position=(0, 0.4))

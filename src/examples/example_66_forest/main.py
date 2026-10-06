@@ -1,9 +1,15 @@
-from ursina import *
+from ursina.entity import Entity
 from direct.stdpy import thread
 from ursina.text import Text
+from ursina import window, Ursina, load_model, load_texture, color, scene, application
+from ursina.ursinamath import distance
+from ursina.vec2 import Vec2
+from ursina.vec4 import Vec4
+from ursina.lights import AmbientLight
 from player import Player
 from tree import Tree
 from sun import SunLight
+import sys
 
 Text.default_resolution = Text.size * 1080
 

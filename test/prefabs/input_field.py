@@ -1,4 +1,7 @@
-from ursina import Ursina, Entity, InputField, color, Button, camera
+from ursina import Ursina, color, camera
+from ursina.entity import Entity
+from ursina.prefabs.input_field import InputField
+from ursina.prefabs.button import Button
 
 if __name__ == '__main__':
     app = Ursina()

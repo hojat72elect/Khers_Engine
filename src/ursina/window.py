@@ -111,7 +111,9 @@ class Window(WindowProperties):
         self.position = Vec2(x,y)
 
     def make_editor_gui(self):     # called by main after setting up camera and application.development_mode
-        from ursina import Entity, camera, input_handler, Button, Tooltip, ButtonList, Func, color
+        from ursina import camera, input_handler, Button, Tooltip, ButtonList, color
+        from ursina.entity import Entity
+        from ursina.sequence import Func
         from ursina.text import Text
         self.editor_ui = Entity(parent=camera.ui, eternal=True, enabled=self.editor_ui_enabled)
 

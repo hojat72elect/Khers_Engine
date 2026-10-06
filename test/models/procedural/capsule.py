@@ -1,5 +1,6 @@
-from ursina import Ursina, Entity, color, EditorCamera
+from ursina import Ursina, color, EditorCamera
 from ursina.models.procedural.capsule import Capsule
+from ursina.entity import Entity
 
 if __name__ == '__main__':
     app = Ursina()

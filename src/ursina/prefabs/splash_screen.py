@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.entity import Entity
 from ursina.color import hsv
 from ursina.text import Text
 from ursina import curve

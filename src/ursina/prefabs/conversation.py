@@ -1,5 +1,7 @@
 from copy import copy
-from ursina import *
+from ursina.entity import Entity
+from ursina.sequence import Func, Sequence, Wait
+from ursina import Circle, Button, camera, Quad, color, invoke, curve, mouse
 
 class _ConversationNode:
     __slots__ = ['index', 'indent_level', 'content', 'code', 'children', 'is_answer']

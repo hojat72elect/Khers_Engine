@@ -1,4 +1,6 @@
-from ursina import Entity, Ursina, destroy
+from ursina import Ursina
+from ursina.destroy import destroy
+from ursina.entity import Entity
 
 if __name__ == '__main__':
     class E(Entity):

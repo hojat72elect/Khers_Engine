@@ -1,5 +1,8 @@
 import random as py_random
-from ursina import Ursina, Entity, camera, window, color, Texture, mouse, time, destroy, invoke, Vec3, curve
+from ursina import Ursina, camera, window, color, Texture, mouse, time, invoke, curve
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
+from ursina.destroy import destroy
 from ursina.text import Text
 import math
 

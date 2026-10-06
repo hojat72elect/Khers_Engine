@@ -1,17 +1,21 @@
-from ursina import *
+from ursina.entity import Entity
 from ursina.raycast import raycast
+from ursina.vec3 import Vec3
+from ursina import distance, time, invoke, lerp
 from particles import Particles
+import random
+from math import sqrt
 
 sign = lambda x: -1 if x < 0 else (1 if x > 0 else 0)
 
 class AICar(Entity):
     def __init__(self, car, ai_list, sand_track, grass_track, snow_track, forest_track, savannah_track, lake_track):
         super().__init__(
-            model = "sports-car.obj",
-            texture = "sports-red.png",
-            collider = "box",
-            position = (0, 0, 0),
-            rotation = (0, 0, 0),
+            model="sports-car.obj",
+            texture="sports-red.png",
+            collider="box",
+            position=(0, 0, 0),
+            rotation=(0, 0, 0),
         )
 
         # Rotation parent
@@ -465,11 +469,11 @@ class AICar(Entity):
 class PathObject(Entity):
     def __init__(self, position = (0, 0, 0), rotation_y = 0):
         super().__init__(
-            model = "cube",
-            position = position,
-            rotation_y = rotation_y,
-            texture = "white_cube",
-            scale = (1, 20, 20),
-            visible = False,
-            alpha = 50,
+            model="cube",
+            position=position,
+            rotation_y=rotation_y,
+            texture="white_cube",
+            scale=(1, 20, 20),
+            visible=False,
+            alpha=50,
         )

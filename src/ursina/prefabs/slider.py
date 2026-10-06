@@ -1,4 +1,5 @@
-from ursina import *
+from ursina import generate_properties_for_class, camera, Quad, mouse, Draggable, color, lerp, scene, invoke
+from ursina.entity import Entity
 from ursina.text import Text
 
 @generate_properties_for_class()

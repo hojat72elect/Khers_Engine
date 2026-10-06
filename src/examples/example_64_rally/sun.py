@@ -1,5 +1,5 @@
 from panda3d.core import DirectionalLight
-from ursina import Entity
+from ursina.entity import Entity
 
 class SunLight(Entity):
     def __init__(self, direction, resolution, car):

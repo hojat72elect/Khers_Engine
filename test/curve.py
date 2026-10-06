@@ -1,4 +1,7 @@
-from ursina import Entity, Mesh, Ursina, camera, color, curve, window, floor, EditorCamera, Vec3
+from ursina import Mesh, Ursina, camera, color, curve, window, floor
+from ursina.vec3 import Vec3
+from ursina.entity import Entity
+from ursina.prefabs.editor_camera import EditorCamera
 from ursina.text import Text
 from ursina.curve import CubicBezier,combine, linear, reverse, in_expo
 

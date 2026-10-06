@@ -1,5 +1,6 @@
 from random import randint
-from ursina import Ursina, window, color, Animation, camera, application, Entity, time, invoke, curve
+from ursina import Ursina, window, color, Animation, camera, application, time, invoke, curve
+from ursina.entity import Entity
 from ursina.duplicate import duplicate
 from ursina.audio import Audio
 from ursina.text import Text

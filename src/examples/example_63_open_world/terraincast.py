@@ -1,23 +1,21 @@
-
-
-from ursina import *
-from ursina import distance as ursina_distance
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
+from ursina.prefabs.sky import Sky
+from ursina import distance as ursina_distance, color, floor, Mesh, Ursina, EditorCamera, camera, time, Terrain
 from math import inf
 from ursina.hit_info import HitInfo
 
-
-
 def prepare_terrain(terrain, debug=False, calculate_normals=True):
-
     #does calculations that are needed for every terraincast check, and sets up the entities that manage transofrmations
     #has the option to calculate all face normals for the terrain (quicker while running, but takes time to initiate)
-
-    terrain._cast = Entity(parent=terrain,
-                           model='sphere',
-                           color=color.orange,
-                           world_scale=0.1,
-                           position=(0, 1, 0),
-                           visible=debug,)
+    terrain._cast = Entity(
+        parent=terrain,
+        model="sphere",
+        color=color.orange,
+        world_scale=0.1,
+        position=(0, 1, 0),
+        visible=debug,
+    )
     if debug:
         terrain._cast.bound = Entity(parent=terrain,
                                      model='cube',
@@ -54,7 +52,7 @@ def prepare_terrain(terrain, debug=False, calculate_normals=True):
 
 
 def _terraincast_get_plane(terrain, scan_x, scan_z, sub_face):
-    #gets details needed for each plane that makes up the terrain
+    # gets details needed for each plane that makes up the terrain
     from numpy import cross
     height_values = terrain.model.height_values
     if scan_z == len(height_values[0]) - 1 and scan_x == len(height_values) - 1:
@@ -66,7 +64,6 @@ def _terraincast_get_plane(terrain, scan_x, scan_z, sub_face):
         start = Vec3(scan_x, height_values[scan_x][scan_z], scan_z)
         right = Vec3(scan_x, height_values[scan_x][scan_z], scan_z + 1)
         left = Vec3(scan_x + 1, height_values[scan_x + 1][scan_z], scan_z + 1)
-        # print('edge')
 
     elif scan_x == len(height_values) - 1:
         start = Vec3(scan_x, height_values[scan_x][scan_z], scan_z)

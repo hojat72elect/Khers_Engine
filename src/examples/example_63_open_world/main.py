@@ -1,5 +1,10 @@
-from ursina import *
+from ursina import Ursina, window, mouse, scene, camera, color, EditorCamera, time
+from ursina.prefabs.sky import Sky
+from ursina.vec3 import Vec3
+from ursina.lights import PointLight, AmbientLight
+from ursina.input_handler import held_keys
 from ursina.text import Text
+from ursina.entity import Entity
 from player import Player
 from enemy import Enemy
 from springs import Spring
@@ -16,10 +21,10 @@ scene.fog_density = 0.001
 
 map = Map()
 
-Sky(texture = "sky")
+Sky(texture="sky")
 
-PointLight(parent = camera, color = color.white, position = (0, 10, -1.5))
-AmbientLight(color = color.rgba(100, 100, 100, 0.1))
+PointLight(parent=camera, color=color.white, position=(0, 10, -1.5))
+AmbientLight(color=color.rgba(100, 100, 100, 0.1))
 
 player = Player((0, 0, 0), map)
 player.jump_height = 0.3
@@ -116,10 +121,6 @@ def update():
         movement = spring.update(time.dt)
         spring.shove(Vec3(mouse.y, mouse.x, 0))
         player.shield.position = (movement.y * 0.2, movement.x * 0.2, movement.z * 0.2) + (-1, -1, 1)
-
-    ###############################
-    # STORY
-    ###############################
 
     if mainmenu.story:
         while not player.sword.equipped:

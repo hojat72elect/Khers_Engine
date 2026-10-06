@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.entity import Entity
 
 class RadialMenu(Entity):
     def __init__(self, buttons=list(), **kwargs):

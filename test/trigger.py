@@ -1,4 +1,7 @@
-from ursina import Ursina, Entity, color, held_keys, time, Func
+from ursina import Ursina, color, time
+from ursina.sequence import Func
+from ursina.input_handler import held_keys
+from ursina.entity import Entity
 from ursina.trigger import Trigger
 
 if __name__ == '__main__':

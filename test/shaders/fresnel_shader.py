@@ -1,4 +1,7 @@
-from ursina import Ursina, Entity, Quad, color, camera, curve, load_texture, EditorCamera, Vec2
+from ursina import Ursina, Quad, color, camera, curve, load_texture
+from ursina.entity import Entity
+from ursina.vec2 import Vec2
+from ursina.prefabs.editor_camera import EditorCamera
 from ursina.shaders.fresnel_shader import fresnel_shader
 
 if __name__ == "__main__":

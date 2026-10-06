@@ -1,4 +1,7 @@
-from ursina import Ursina, camera, EditorCamera, ThinSlider, window, color, Entity, mouse
+from ursina import Ursina, camera, window, color, mouse
+from ursina.entity import Entity
+from ursina.prefabs.slider import ThinSlider
+from ursina.prefabs.editor_camera import EditorCamera
 from ursina.shaders.screenspace_shaders.camera_vertical_blur import camera_vertical_blur_shader
 
 if __name__ == '__main__':

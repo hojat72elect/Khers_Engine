@@ -1,4 +1,6 @@
-from ursina import Ursina, Entity, camera, EditorCamera, ThinSlider
+from ursina import Ursina, camera, EditorCamera
+from ursina.entity import Entity
+from ursina.prefabs.slider import ThinSlider
 from ursina.shaders.screenspace_shaders.camera_contrast import camera_contrast_shader
 
 if __name__ == '__main__':

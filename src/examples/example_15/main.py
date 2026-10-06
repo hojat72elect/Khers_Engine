@@ -1,4 +1,8 @@
-from ursina import Ursina, Animation, Sky, camera, application, Entity, held_keys, time, curve, invoke, destroy
+from ursina import Ursina, Animation, camera, application, time, curve, invoke
+from ursina.prefabs.sky import Sky
+from ursina.entity import Entity
+from ursina.input_handler import held_keys
+from ursina.destroy import destroy
 from ursina.duplicate import duplicate
 
 app = Ursina()

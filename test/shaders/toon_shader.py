@@ -1,4 +1,7 @@
-from ursina import Ursina, Entity, EditorCamera, held_keys, color
+from ursina import Ursina, color
+from ursina.entity import Entity
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.input_handler import held_keys
 from ursina.shaders.toon_shader import toon_shader
 
 if __name__ == "__main__":

@@ -1,5 +1,7 @@
 import random
-from ursina import Entity, Sky, Ursina, application, camera
+from ursina.entity import Entity
+from ursina.prefabs.sky import Sky
+from ursina import Ursina, application, camera
 from ursina.shaders.sky_fade_shader import sky_fade_shader
 from ursina.prefabs.first_person_controller import FirstPersonController
 

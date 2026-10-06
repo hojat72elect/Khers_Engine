@@ -1,4 +1,6 @@
-from ursina import Entity, held_keys, color, Ursina, camera, Sprite
+from ursina import color, Ursina, camera, Sprite
+from ursina.entity import Entity
+from ursina.input_handler import held_keys
 
 class Player(Entity):  # inherits Entity, Ursina's 'god class'
     def __init__(self):

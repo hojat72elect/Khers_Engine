@@ -1,4 +1,7 @@
-from ursina import Ursina, Entity, camera, EditorCamera, color, Vec3
+from ursina import Ursina, camera, color
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
+from ursina.prefabs.editor_camera import EditorCamera
 from ursina.shaders.screenspace_shaders.curvature_shader import curvature_shader
 import random
 

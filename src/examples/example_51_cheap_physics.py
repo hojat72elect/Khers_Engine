@@ -1,4 +1,8 @@
-from ursina import Ursina, Entity, Vec3, time, lerp, DirectionalLight, color, Vec2, Sky, application, camera
+from ursina import Ursina, time, lerp, color, Sky, application, camera
+from ursina.entity import Entity
+from ursina.vec2 import Vec2
+from ursina.vec3 import Vec3
+from ursina.lights import DirectionalLight
 from ursina.shaders import lit_with_shadows_shader
 from ursina.prefabs.first_person_controller import FirstPersonController
 

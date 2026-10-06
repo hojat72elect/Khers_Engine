@@ -1,4 +1,5 @@
-from ursina import Ursina, Entity, color, Pipe, Circle, EditorCamera
+from ursina import Ursina, color, Pipe, Circle, EditorCamera
+from ursina.entity import Entity
 
 if __name__ == '__main__':
     app = Ursina()

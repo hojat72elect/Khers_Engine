@@ -1,24 +1,22 @@
-from ursina import *
+from ursina.entity import Entity
 from ursina.raycast import raycast
 from ursina.audio import Audio
-from ursina import curve
+from ursina.input_handler import held_keys
+from ursina.vec3 import Vec3
+from ursina.destroy import destroy
+from ursina import curve, camera, time, mouse, distance, invoke, color, scene
 from trail_renderer import TrailRenderer
-
+from panda3d.core import LVector3f
+import random
 from particles import Particles
 
 class Gun(Entity):
-    def __init__(self, player, equipped = True, **kwargs):
-        super().__init__(
-            parent = camera,
-            scale = 0.3,
-            position = (0.5, -0.75, 1.7),
-            **kwargs
-        )
+    def __init__(self, player, equipped=True, **kwargs):
+        super().__init__(parent=camera, scale=0.3, position=(0.5, -0.75, 1.7), **kwargs)
         
         self.player = player
         self.map = self.player.map
         self.tip = Entity(parent = self, position = (-0.5, 1.3, 1.5))
-
         self.pos_x = 0.5
         self.pos_y = -0.75
 

@@ -3,7 +3,8 @@
 import ast
 import time
 from pathlib import Path
-from ursina import Entity, application, camera, mesh_importer, print_on_screen, scene, texture_importer, window
+from ursina import application, camera, print_on_screen, scene, texture_importer, window
+from ursina.entity import Entity
 from ursina.mesh_importer import load_model
 
 def is_valid_python(code):

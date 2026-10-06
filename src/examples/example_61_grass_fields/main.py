@@ -1,6 +1,5 @@
 from ursina import (
     Ursina,
-    Entity,
     Texture,
     color,
     Terrain,
@@ -16,9 +15,10 @@ from ursina import (
     camera,
     held_keys,
     Sky,
-    DirectionalLight,
     time
 )
+from ursina.entity import Entity
+from ursina.lights import DirectionalLight
 from ursina.terraincast import terraincast
 from ursina.shaders import lit_with_shadows_shader
 import random

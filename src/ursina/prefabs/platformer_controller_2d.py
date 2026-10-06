@@ -1,6 +1,10 @@
-from ursina import *
+from ursina.entity import Entity
 from ursina.raycast import raycast
 from ursina.boxcast import boxcast
+from ursina import color, Animator, scene, invoke, time, curve, Circle
+from ursina.vec3 import Vec3
+from ursina.destroy import destroy
+from ursina.input_handler import held_keys
 
 class PlatformerController2d(Entity):
     def __init__(self, **kwargs):
@@ -80,7 +84,6 @@ class PlatformerController2d(Entity):
 
         # if not on ground and not on way up in jump, fall
         if not self.grounded and not self.jumping:
-            # print(self.air_time)
             self.y -= min(self.air_time * self.gravity, ray.distance-.1)
             self.air_time += time.dt*4 * self.gravity   # fall faster and faster the long we've stayed in the air
 

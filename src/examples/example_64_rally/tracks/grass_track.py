@@ -1,14 +1,15 @@
-from ursina import *
+from ursina.entity import Entity
+from ursina import invoke
 
 class GrassTrack(Entity):
     def __init__(self, car):
         super().__init__(
-            model = "grass_track.obj", 
-            texture = "grass_track.png", 
-            position = (0, -50, 0), 
-            rotation = (0, 270, 0), 
-            scale = (25, 25, 25), 
-            collider = "mesh"
+            model="grass_track.obj",
+            texture="grass_track.png",
+            position=(0, -50, 0),
+            rotation=(0, 270, 0),
+            scale=(25, 25, 25),
+            collider="mesh",
         )
 
         self.car = car
@@ -52,7 +53,7 @@ class GrassTrack(Entity):
                 self.car.timer_running = True
                 self.car.anti_cheat = 0
                 if self.car.gamemode != "drift":
-                    invoke(self.car.reset_timer, delay = 3)
+                    invoke(self.car.reset_timer, delay=3)
 
                 self.car.check_highscore()
 
@@ -71,3 +72,4 @@ class GrassTrack(Entity):
         if self.car.simple_intersects(self.wall_trigger_ramp):
             if self.car.anti_cheat == 0.5:
                 self.car.anti_cheat = 1
+                

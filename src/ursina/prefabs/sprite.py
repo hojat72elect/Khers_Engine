@@ -1,4 +1,4 @@
-from ursina import *
+from ursina.entity import Entity
 
 class Sprite(Entity):
     ppu = 100

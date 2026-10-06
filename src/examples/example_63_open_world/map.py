@@ -1,5 +1,4 @@
-from ursina import *
-from village import Village
+from ursina.entity import Entity
 from terrain import Terrain
 
 class Map(object):

@@ -1,4 +1,6 @@
-from ursina import Entity, TextureScroller, Ursina, Vec2
+from ursina import TextureScroller, Ursina
+from ursina.entity import Entity
+from ursina.vec2 import Vec2
 
 if __name__ == "__main__":
     app = Ursina()

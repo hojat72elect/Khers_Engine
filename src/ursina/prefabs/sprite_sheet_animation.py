@@ -1,4 +1,4 @@
-from ursina import Entity
+from ursina.entity import Entity
 from ursina.sequence import Sequence, Func, Wait
 
 class SpriteSheetAnimation(Entity):

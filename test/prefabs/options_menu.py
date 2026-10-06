@@ -1,4 +1,5 @@
-from ursina import Button, Ursina, window, NineSlice, color, Entity, camera
+from ursina import Button, Ursina, window, NineSlice, color, camera
+from ursina.entity import Entity
 from ursina.prefabs.options_menu import OptionsMenu
 
 if __name__ == "__main__":

@@ -1,4 +1,6 @@
-from ursina import EditorCamera, Entity, Ursina, camera, color, shaders
+from ursina import Ursina, camera, color, shaders
+from ursina.entity import Entity
+from ursina.prefabs.editor_camera import EditorCamera
 
 if __name__ == '__main__':
     app = Ursina()

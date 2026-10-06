@@ -1,10 +1,15 @@
-from ursina import *
 from ursina.raycast import raycast
 from ursina.audio import Audio
 from ursina.text import Text
-from ursina import curve
+from ursina.entity import Entity
+from ursina.input_handler import held_keys
+from ursina.vec3 import Vec3
+from ursina import curve, color, camera, lerp, time, scene, invoke
 from particles import Particles, TrailRenderer
 import json
+import sys
+import os
+import random
 
 sign = lambda x: -1 if x < 0 else (1 if x > 0 else 0)
 Text.default_resolution = 1080 * Text.size * 2
@@ -12,11 +17,11 @@ Text.default_resolution = 1080 * Text.size * 2
 class Car(Entity):
     def __init__(self, position = (0, 0, 4), rotation = (0, 0, 0), topspeed = 30, acceleration = 0.35, braking_strength = 30, friction = 0.6, camera_speed = 8, drift_speed = 35):
         super().__init__(
-            model = "sports-car.obj",
-            texture = "sports-red.png",
-            collider = "box",
-            position = position,
-            rotation = rotation,
+            model="sports-car.obj",
+            texture="sports-red.png",
+            collider="box",
+            position=position,
+            rotation=rotation,
         )
 
         # Rotation parent
@@ -50,7 +55,7 @@ class Car(Entity):
         self.camera_follow = False
         self.change_camera = False
         self.c_pivot = Entity()
-        self.camera_pivot = Entity(parent = self.c_pivot, position = self.camera_offset)
+        self.camera_pivot = Entity(parent=self.c_pivot, position=self.camera_offset)
 
         # Pivot for drifting
         self.pivot = Entity()

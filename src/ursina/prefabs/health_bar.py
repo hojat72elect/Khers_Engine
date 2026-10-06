@@ -1,5 +1,6 @@
-from ursina import *
 from ursina.scripts.property_generator import generate_properties_for_class
+from ursina import Button, Quad, color, window, Default, Grid, curve, clamp
+from ursina.entity import Entity
 
 @generate_properties_for_class()
 class HealthBar(Button):
@@ -71,4 +72,3 @@ class HealthBar(Button):
                 self.text_entity.world_scale = 25 * self.text_size
 
         super().__setattr__(name, value)
-

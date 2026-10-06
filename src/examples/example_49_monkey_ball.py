@@ -1,4 +1,6 @@
-from ursina import Entity, Ursina, EditorCamera, held_keys, time
+from ursina import Ursina, EditorCamera, time
+from ursina.entity import Entity
+from ursina.input_handler import held_keys
 
 app = Ursina()
 rotation_resetter = Entity()

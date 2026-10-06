@@ -1,4 +1,5 @@
-from ursina import Ursina, Entity, load_model, application, Sky, color, EditorCamera
+from ursina import Ursina, load_model, application, Sky, color, EditorCamera
+from ursina.entity import Entity
 import random
 
 if __name__ == '__main__':

@@ -1,4 +1,5 @@
-from ursina import Ursina, camera, Entity, color, EditorCamera, SmoothFollow
+from ursina import Ursina, camera, color, EditorCamera, SmoothFollow
+from ursina.entity import Entity
 from ursina.prefabs.platformer_controller_2d import PlatformerController2d
 
 if __name__ == '__main__':

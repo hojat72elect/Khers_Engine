@@ -1,4 +1,6 @@
-from ursina import Ursina, Entity, color, EditorCamera, destroy, Cone
+from ursina import Ursina, color, EditorCamera, Cone
+from ursina.entity import Entity
+from ursina.destroy import destroy
 
 if __name__ == '__main__':
     app = Ursina()

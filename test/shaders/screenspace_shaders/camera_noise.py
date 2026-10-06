@@ -1,4 +1,6 @@
-from ursina import Ursina, Entity, camera, Sky, EditorCamera, color, Vec3
+from ursina import Ursina, camera, Sky, EditorCamera, color
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
 from ursina.shaders.screenspace_shaders.camera_noise import camera_noise_shader
 import random
 

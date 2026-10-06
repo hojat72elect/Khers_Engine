@@ -1,4 +1,6 @@
-from ursina import Ursina, Entity, camera, EditorCamera, color
+from ursina import Ursina, camera, color
+from ursina.entity import Entity
+from ursina.prefabs.editor_camera import EditorCamera
 from ursina.shaders.screenspace_shaders.pixelation_shader import pixelation_shader
 
 if __name__ == '__main__':

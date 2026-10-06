@@ -1,4 +1,6 @@
-from ursina import Ursina,Entity, Slider, ThinSlider, color
+from ursina import Ursina, color
+from ursina.prefabs.slider import Slider, ThinSlider
+from ursina.entity import Entity
 from ursina.text import Text
 
 if __name__ == "__main__":

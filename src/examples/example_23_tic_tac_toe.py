@@ -1,4 +1,5 @@
-from ursina import Ursina, camera, Entity, color, Tooltip, scene, mouse, Button, Panel
+from ursina import Ursina, camera, color, Tooltip, scene, mouse, Button, Panel
+from ursina.entity import Entity
 from ursina.text import Text
 
 app = Ursina()

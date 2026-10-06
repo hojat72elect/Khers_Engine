@@ -1,4 +1,6 @@
-from ursina import Ursina, Sky, Button, color, scene, application, Entity, camera, held_keys, mouse, destroy
+from ursina import Ursina, Sky, Button, color, scene, application, camera, held_keys, mouse
+from ursina.entity import Entity
+from ursina.destroy import destroy
 from ursina.prefabs.first_person_controller import FirstPersonController
 
 app = Ursina()

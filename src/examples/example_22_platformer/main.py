@@ -1,6 +1,8 @@
 from math import sin
 from random import uniform, choice
-from ursina import Entity, Vec2, time, load_texture, held_keys, clamp, color, window, Ursina, camera
+from ursina.entity import Entity
+from ursina.vec2 import Vec2
+from ursina import time, load_texture, held_keys, clamp, color, window, Ursina, camera
 from ursina.text import Text
 
 GAME_WIDTH = 800

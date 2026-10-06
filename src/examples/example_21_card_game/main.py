@@ -1,5 +1,8 @@
 from random import uniform, random, shuffle
-from ursina import Ursina, window, color, camera, Texture, invoke, time, Vec3, Entity, lerp, curve, Func, mouse, application
+from ursina import Ursina, window, color, camera, Texture, invoke, time, lerp, curve, mouse, application
+from ursina.sequence import Func
+from ursina.vec3 import Vec3
+from ursina.entity import Entity
 from ursina.audio import Audio
 from ursina.text import Text
 

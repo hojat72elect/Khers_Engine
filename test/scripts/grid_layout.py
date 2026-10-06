@@ -1,4 +1,10 @@
-from ursina import Ursina, Entity, color, Button, camera, time, EditorCamera, grid_layout, window, Vec2, Tooltip, Circle, Func
+from ursina import Ursina, color, Button, camera, time, grid_layout, window, Circle
+from ursina.entity import Entity
+from ursina.sequence import Func
+from ursina.vec2 import Vec2
+from ursina.prefabs.tooltip import Tooltip
+from ursina.prefabs.editor_camera import EditorCamera
+
 
 if __name__ == '__main__':
     app = Ursina()

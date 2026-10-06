@@ -1,4 +1,5 @@
 from ursina.scripts.property_generator import generate_properties_for_class
+from ursina.ursinamath import clamp
 
 def flatten_list(target_list):
     import itertools

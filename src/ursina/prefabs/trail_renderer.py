@@ -1,4 +1,7 @@
-from ursina import *
+from ursina.entity import Entity
+from ursina import Pipe, Quad, distance, time, color, lerp
+from ursina.destroy import destroy
+from ursina.vec3 import Vec3
 
 class TrailRenderer(Entity):
     def __init__(self, size=[1,.01], segments=8, min_spacing=.05, fade_speed=0, color_gradient=[color.white, color.clear], **kwargs):

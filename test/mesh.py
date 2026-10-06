@@ -1,4 +1,7 @@
-from ursina import Ursina, Entity, Mesh, Vec3, color,copy, deepcopy, window, EditorCamera
+from ursina import Ursina, Mesh, color, copy, deepcopy, window
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
 from ursina.text import Text
 from ursina.shaders.unlit_shader import unlit_shader
 

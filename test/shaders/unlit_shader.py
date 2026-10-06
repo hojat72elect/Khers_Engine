@@ -1,4 +1,7 @@
-from ursina import EditorCamera, Entity, Ursina, color, Vec2
+from ursina import Ursina, color
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.entity import Entity
+from ursina.vec2 import Vec2
 from ursina.shaders.unlit_shader import unlit_shader
 
 if __name__ == '__main__':

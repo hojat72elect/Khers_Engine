@@ -1,4 +1,5 @@
-from ursina import Ursina, window, color, Entity, time, Sprite
+from ursina import Ursina, window, color, time, Sprite
+from ursina.entity import Entity
 from ursina.color import hsv
 from ursina.shaders.noise_fog_shader import noise_fog_shader
 

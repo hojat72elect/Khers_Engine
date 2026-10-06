@@ -1,15 +1,15 @@
-from ursina import *
+from ursina.entity import Entity
 
 class House(Entity):
-    def __init__(self, position = (0, 0, 0), rotation = (0, 0, 0)):
+    def __init__(self, position=(0, 0, 0), rotation=(0, 0, 0)):
         super().__init__(
-            model = "house",
-            texture = "house",
-            collider = "mesh",
-            position = position,
-            rotation = rotation,
-            scale = (2, 2, 2),
-            tag = "house"
+            model="house",
+            texture="house",
+            collider="mesh",
+            position=position,
+            rotation=rotation,
+            scale=(2, 2, 2),
+            tag="house",
         )
 
 class Village(Entity):

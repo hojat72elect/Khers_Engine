@@ -1,4 +1,5 @@
-from ursina import *
+from ursina import Mesh, deepcopy, destroy
+from ursina.entity import Entity
 
 class Circle(Mesh):
     _cache = {}

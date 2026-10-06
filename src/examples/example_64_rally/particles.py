@@ -1,13 +1,16 @@
-from ursina import *
-from ursina import curve
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
+from ursina.destroy import destroy
+from ursina import curve, time, Mesh, color
+import random
 
 class Particles(Entity):
     def __init__(self, car, position):
         super().__init__(
-            model = "particles.obj",
-            scale = 0.1,
-            position = position, 
-            rotation_y = random.random() * 360
+            model="particles.obj",
+            scale=0.1,
+            position=position,
+            rotation_y=random.random() * 360,
         )
         
         self.car = car
@@ -36,13 +39,13 @@ class Particles(Entity):
                 self.scale_x += 0.1 * time.dt
                 self.scale_y += 0.1 * time.dt
 
-    def destroy(self, delay = 1):
-        self.fade_out(duration = 0.2, delay = 0.7, curve = curve.linear)
+    def destroy(self, delay=1):
+        self.fade_out(duration=0.2, delay=0.7, curve=curve.linear)
         destroy(self, delay)
         del self
 
 class TrailRenderer(Entity):
-    def __init__(self, thickness = 10, length = 6, **kwargs):
+    def __init__(self, thickness=10, length=6, **kwargs):
         super().__init__(**kwargs)
         self.thickness = thickness
         self.length = length
@@ -62,42 +65,20 @@ class TrailRenderer(Entity):
 
     def start_trail(self):
         self.trailing = True
-        self.renderer = Entity(model = Mesh(
-            vertices = [self.world_position for i in range(self.length)],
-            mode = "line",
-            thickness = self.thickness,
-            static = False,
-        ), color = color.rgba(10, 10, 10, 90))
-    
-    def end_trail(self, now = False):
+        self.renderer = Entity(
+            model=Mesh(
+                vertices=[self.world_position for i in range(self.length)],
+                mode="line",
+                thickness=self.thickness,
+                static=False,
+            ),
+            color=color.rgba(10, 10, 10, 90),
+        )
+
+    def end_trail(self, now=False):
         if not now:
             self.renderer.fade_out(duration = 1, delay = 8, curve = curve.linear)
             destroy(self.renderer, 10)
         else:
             destroy(self.renderer)
         self.trailing = False
-
-# class Smoke(Entity):
-#     def __init__(self, position, rotation_y, amount_of_smoke):
-#         super().__init__(
-#             model = "smoke.obj",
-#             texture = "smoke.png", 
-#             scale = 3,
-#             position = position,
-#             rotation_y = rotation_y,
-#         )
-
-#         self.amount_of_smoke = amount_of_smoke
-#         if self.amount_of_smoke >= 0.1:
-#             self.amount_of_smoke = 0.1
-#         elif self.amount_of_smoke <= 0.05:
-#             self.amount_of_smoke = 0.05
-#         self.direction = Vec3(random.random(), random.random(), random.random()) * self.amount_of_smoke
-
-#     def update(self):
-#         self.position += self.direction * 120 * time.dt
-
-#         if self.amount_of_smoke >= 0.1:
-#             self.amount_of_smoke = 0.1
-#         elif self.amount_of_smoke <= 0.05:
-#             self.amount_of_smoke = 0.05

@@ -1,14 +1,15 @@
-from ursina import *
+from ursina.entity import Entity
+from ursina import invoke
 
 class SnowTrack(Entity):
     def __init__(self, car):
         super().__init__(
-            model = "snow_track.obj",
-            texture = "snow_track.png",
-            position = (0, -50, 0),
-            rotation = (0, 90, 0),
-            collider = "mesh",
-            scale = (8, 8, 8)
+            model="snow_track.obj",
+            texture="snow_track.png",
+            position=(0, -50, 0),
+            rotation=(0, 90, 0),
+            collider="mesh",
+            scale=(8, 8, 8),
         )
 
         self.car = car

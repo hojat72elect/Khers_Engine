@@ -1,4 +1,8 @@
-from ursina import *
+from ursina import Ursina, window, load_model, load_texture, Sky, invoke, time
+from ursina.vec2 import Vec2
+from ursina.vec4 import Vec4
+from ursina.lights import AmbientLight
+import sys
 from ursina.text import Text
 from direct.stdpy import thread
 from car import Car

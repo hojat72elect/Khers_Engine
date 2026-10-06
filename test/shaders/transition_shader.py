@@ -1,4 +1,7 @@
-from ursina import Ursina, window, Texture, Entity, color, load_texture, Slider, EditorCamera, curve
+from ursina import Ursina, window, Texture, color, load_texture, curve
+from ursina.entity import Entity
+from ursina.prefabs.slider import Slider
+from ursina.prefabs.editor_camera import EditorCamera
 from ursina.shaders.transition_shader import transition_shader
 
 if __name__ == "__main__":

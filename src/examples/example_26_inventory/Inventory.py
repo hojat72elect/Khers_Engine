@@ -1,5 +1,9 @@
 from random import random
-from ursina import Entity, camera, Quad, color, destroy, Draggable, Tooltip
+from ursina import camera, Quad, color
+from ursina.prefabs.draggable import Draggable
+from ursina.prefabs.tooltip import Tooltip
+from ursina.entity import Entity
+from ursina.destroy import destroy
 from ursina.text import Text
 
 class Inventory(Entity):

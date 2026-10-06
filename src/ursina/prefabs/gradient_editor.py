@@ -1,5 +1,11 @@
-from ursina import Button, Entity, Func, Mesh, Plane, ThinSlider, Vec2, Vec3, camera, color, copy, generate_properties_for_class, make_gradient, lerp
+from ursina import Button, Mesh, Plane, camera, color, copy, generate_properties_for_class
+from ursina.ursinamath import lerp, make_gradient
+from ursina.prefabs.slider import ThinSlider
 from ursina.prefabs.color_picker import ColorPicker
+from ursina.sequence import Func
+from ursina.entity import Entity
+from ursina.vec2 import Vec2
+from ursina.vec3 import Vec3
 
 gradient_editor_arrow = Mesh(vertices=[(v+Vec3(0,-.4,0))*Vec3(.0175,.025,1) for v in (Vec3(0,0,0),Vec3(-.5,.5,0),Vec3(.5,.5,0),Vec3(-.5,.75,0),Vec3(.5,.75,0))], triangles=(0,2,1,1,2,4,4,3,1))
 

@@ -1,4 +1,5 @@
-from ursina import *
+from ursina.entity import Entity
+from ursina.ursinamath import distance
 
 class FloatingIslands(Entity):
     def __init__(self, player, **kwargs):
@@ -28,12 +29,12 @@ class DesertedSands(Entity):
 class MountainousValley(Entity):
     def __init__(self, player, **kwargs):
         super().__init__(
-            model = "mountainous_valley.obj", 
-            texture = "level.png", 
-            collider = "mesh",
-            scale = 3,
-            y = -200,
-            **kwargs
+            model="mountainous_valley.obj",
+            texture="level.png",
+            collider="mesh",
+            scale=3,
+            y=-200,
+            **kwargs,
         )
 
         self.jumppad1 = JumpPad(player, jump_height = 100, position = (-6, 26, -44), level = self, rotation_y = -40, scale = 5, model = None)
@@ -57,13 +58,7 @@ class MountainousValley(Entity):
 
 class JumpPad(Entity):
     def __init__(self, player, jump_height = 100, model = "jumppad.obj", position = (0, 0, 0), level = None, scale = 6, **kwargs):
-        super().__init__(
-            model = model,
-            texture = "level",
-            position = position,
-            scale = scale,
-            **kwargs
-        )
+        super().__init__(model=model, texture="level", position=position, scale=scale, **kwargs)
 
         self.player = player
         self.jump_height = jump_height

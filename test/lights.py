@@ -1,4 +1,8 @@
-from ursina import EditorCamera, Ursina, Vec3, color, Entity, DirectionalLight, Sky, shaders
+from ursina import Ursina, color, Sky, shaders
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.lights import DirectionalLight
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
 
 if __name__ == '__main__':
     app = Ursina()

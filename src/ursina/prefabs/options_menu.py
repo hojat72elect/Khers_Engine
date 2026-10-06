@@ -1,4 +1,5 @@
-from ursina import Animator, Button, Entity, Slider, camera, color, window, scene
+from ursina import Animator, Button, Slider, camera, color, window, scene
+from ursina.entity import Entity
 from ursina.text import Text
 from ursina.audio import Audio, audio_groups
 from ursina.prefabs.button_group import ButtonGroup

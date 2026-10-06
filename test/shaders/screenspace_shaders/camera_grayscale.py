@@ -1,4 +1,5 @@
-from ursina import Ursina, Entity, camera, color, EditorCamera, Sky
+from ursina import Ursina, camera, color, EditorCamera, Sky
+from ursina.entity import Entity
 from ursina.shaders.screenspace_shaders.camera_grayscale import camera_grayscale_shader
 
 if __name__ == '__main__':

@@ -1,4 +1,5 @@
-from ursina import Ursina, window, mouse, color, Entity, lerp, EditorCamera, Grid, destroy, time
+from ursina import Ursina, window, mouse, color, lerp, EditorCamera, Grid, destroy, time
+from ursina.entity import Entity
 from ursina.prefabs.trail_renderer import TrailRenderer
 
 if __name__ == '__main__':

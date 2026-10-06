@@ -1,4 +1,8 @@
-from ursina import Ursina, Entity, Draggable, EditorCamera, scene, Func, color
+from ursina import Ursina, scene, color
+from ursina.prefabs.draggable import Draggable
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.entity import Entity
+from ursina.sequence import Func
 
 if __name__ == '__main__':
     app = Ursina()

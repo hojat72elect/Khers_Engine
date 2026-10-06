@@ -1,6 +1,7 @@
 from random import choice
 from examples.example_26_inventory.Inventory import Inventory
-from ursina import Ursina, Button, color, Tooltip, Entity, camera, Cursor, mouse
+from ursina import Ursina, Button, color, Tooltip, camera, Cursor, mouse
+from ursina.entity import Entity
 
 if __name__ == '__main__':
     app = Ursina()

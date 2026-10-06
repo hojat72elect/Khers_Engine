@@ -1,4 +1,5 @@
-from ursina import Ursina, Entity, SpriteSheetAnimation
+from ursina import Ursina, SpriteSheetAnimation
+from ursina.entity import Entity
 
 if __name__ == '__main__':
     '''

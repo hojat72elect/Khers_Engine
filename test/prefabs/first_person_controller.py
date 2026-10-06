@@ -1,4 +1,8 @@
-from ursina import Ursina, Button, Entity, window, color, scene, camera, Vec3, Func, destroy, curve, application
+from ursina import Ursina, Button, window, color, scene, camera, curve, application
+from ursina.destroy import destroy
+from ursina.sequence import Func
+from ursina.vec3 import Vec3
+from ursina.entity import Entity
 from ursina.duplicate import duplicate
 from ursina.prefabs.first_person_controller import FirstPersonController
 

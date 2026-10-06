@@ -1,4 +1,5 @@
-from ursina import Ursina, application, Entity, camera, color, time, curve, invoke, Circle
+from ursina import Ursina, application, camera, color, time, curve, invoke, Circle
+from ursina.entity import Entity
 from ursina.duplicate import duplicate
 
 app = Ursina()

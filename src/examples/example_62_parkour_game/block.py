@@ -1,4 +1,5 @@
-from ursina import Entity, Vec3
+from ursina.vec3 import Vec3
+from ursina.entity import Entity
 
 # Normal Block Class
 class NormalBlock(Entity):

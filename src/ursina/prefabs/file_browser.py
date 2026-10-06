@@ -1,5 +1,7 @@
-from ursina import *
+from ursina.entity import Entity
 from ursina.text import Text
+from ursina.destroy import destroy
+from ursina import Button, color, Path, camera, Circle
 from ursina.scripts.property_generator import generate_properties_for_class
 
 @generate_properties_for_class()

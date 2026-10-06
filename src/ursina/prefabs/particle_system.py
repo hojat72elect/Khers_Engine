@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.entity import Entity
 from ursina.mesh import Mesh
 from ursina.scripts.property_generator import generate_properties_for_class
 from ursina.shaders.unlit_shader import unlit_shader

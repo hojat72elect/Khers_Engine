@@ -1,4 +1,6 @@
-from ursina import Ursina, color, window, Entity, Circle, camera, Mesh, Vec3, clamp
+from ursina import Ursina, color, window, Circle, camera, Mesh, clamp
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
 from ursina.text import Text
 
 app = Ursina()

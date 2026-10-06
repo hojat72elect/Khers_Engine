@@ -1,4 +1,5 @@
-from ursina import Ursina, application, window, mouse, Sky, PointLight, camera, AmbientLight, color
+from ursina import Ursina, application, window, mouse, Sky, camera, color
+from ursina.lights import AmbientLight, PointLight
 from ursina.raycast import raycast
 from player import Player
 from Levels.level01 import Level01

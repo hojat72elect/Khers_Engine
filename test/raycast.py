@@ -1,4 +1,8 @@
-from ursina import Ursina, Entity, held_keys, time, camera, EditorCamera, Vec3, color
+from ursina import Ursina, time, camera, color
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.vec3 import Vec3
+from ursina.input_handler import held_keys
+from ursina.entity import Entity
 from ursina.duplicate import duplicate
 from ursina.raycast import raycast
 

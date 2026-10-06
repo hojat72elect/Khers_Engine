@@ -1,12 +1,14 @@
-from ursina import *
+from ursina.entity import Entity
+from ursina.ursinamath import distance
+import random
 
 class Tree(Entity):
     def __init__(self, tent):
         super().__init__(
-            model = "tree.obj",
-            texture = "trees",
-            scale = 5,
-            position = (random.randint(-500, 500), 2, random.randint(-500, 500))
+            model="tree.obj",
+            texture="trees",
+            scale=5,
+            position=(random.randint(-500, 500), 2, random.randint(-500, 500)),
         )
 
         self.tent = tent

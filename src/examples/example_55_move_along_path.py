@@ -1,4 +1,8 @@
-from ursina import Ursina, Entity, Mesh, Vec3, color, LoopingList, Draggable, distance_2d, lerp, time, Button, curve, invoke, scene
+from ursina import Ursina, Mesh, color, LoopingList, Draggable, time, Button, curve, scene
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
+from ursina.ursinastuff import invoke
+from ursina.ursinamath import distance_2d, lerp
 
 app = Ursina()
 points = LoopingList([Draggable(parent=scene, model='circle', scale=.25, x=-4 + (i * 1)) for i in range(6)])

@@ -1,4 +1,8 @@
-from ursina import Ursina, Entity, Vec3, scene, Sky, color, EditorCamera, held_keys, time
+from ursina import Ursina, scene, color, held_keys, time
+from ursina.prefabs.sky import Sky
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.vec3 import Vec3
+from ursina.entity import Entity
 from ursina.shaders.lit_with_shadows_shader import lit_with_shadows_shader
 from ursina.lights import DirectionalLight
 

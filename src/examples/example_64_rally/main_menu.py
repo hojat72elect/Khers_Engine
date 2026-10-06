@@ -1,9 +1,13 @@
-from ursina import *
+from ursina.entity import Entity
 from ursina.audio import Audio
 from ursina.text import Text
-from ursina import curve
+from ursina.sequence import Func
+from ursina.input_handler import held_keys
+from ursina.vec2 import Vec2
+from ursina import curve, camera, application, Button, color, window, mouse, lerp, InputField, time, Slider, invoke
 from server import Server
 import os
+import random
 
 Text.default_resolution = 1080 * Text.size * 2
 
@@ -14,24 +18,24 @@ class MainMenu(Entity):
         )
 
         # The different menus
-        self.start_menu = Entity(parent = self, enabled = True)
-        self.host_menu = Entity(parent = self, enabled = False)
-        self.created_server_menu = Entity(parent = self, enabled = False)
-        self.server_menu = Entity(parent = self, enabled = False)
-        self.main_menu = Entity(parent = self, enabled = False)
-        self.race_menu = Entity(parent = self, enabled = False)
-        self.maps_menu = Entity(parent = self, enabled = False)
-        self.settings_menu = Entity(parent = self, enabled = False)
-        self.video_menu = Entity(parent = self, enabled = False)
-        self.gameplay_menu = Entity(parent = self, enabled = False)
-        self.audio_menu = Entity(parent = self, enabled = False)
-        self.controls_menu = Entity(parent = self, enabled = False)
-        self.garage_menu = Entity(parent = self, enabled = False)
-        self.cars_menu = Entity(parent = self.garage_menu, enabled = False)
-        self.colours_menu = Entity(parent = self.garage_menu, enabled = False)
-        self.cosmetics_menu = Entity(parent = self.garage_menu, enabled = False)
-        self.pause_menu = Entity(parent = self, enabled = False)
-        self.quit_menu = Entity(parent = self, enabled = False)
+        self.start_menu = Entity(parent=self, enabled=True)
+        self.host_menu = Entity(parent=self, enabled=False)
+        self.created_server_menu = Entity(parent=self, enabled=False)
+        self.server_menu = Entity(parent=self, enabled=False)
+        self.main_menu = Entity(parent=self, enabled=False)
+        self.race_menu = Entity(parent=self, enabled=False)
+        self.maps_menu = Entity(parent=self, enabled=False)
+        self.settings_menu = Entity(parent=self, enabled=False)
+        self.video_menu = Entity(parent=self, enabled=False)
+        self.gameplay_menu = Entity(parent=self, enabled=False)
+        self.audio_menu = Entity(parent=self, enabled=False)
+        self.controls_menu = Entity(parent=self, enabled=False)
+        self.garage_menu = Entity(parent=self, enabled=False)
+        self.cars_menu = Entity(parent=self.garage_menu, enabled=False)
+        self.colours_menu = Entity(parent=self.garage_menu, enabled=False)
+        self.cosmetics_menu = Entity(parent=self.garage_menu, enabled=False)
+        self.pause_menu = Entity(parent=self, enabled=False)
+        self.quit_menu = Entity(parent=self, enabled=False)
 
         self.menus = [
             self.start_menu, self.host_menu, self.created_server_menu, self.server_menu,

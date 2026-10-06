@@ -150,7 +150,8 @@ class Ursina(ShowBase):
             window.make_editor_gui()
             if use_ingame_console:
                 import builtins
-                from ursina import Entity, TextField, color
+                from ursina import TextField, color
+                from ursina.entity import Entity
                 window.console = Entity(parent=window.editor_ui, position=window.top_left, z=-999, eternal=True)
                 window.console.text_field = TextField(parent=window.console, scale=.75, max_lines=20, position=(0,0), register_mouse_input=True, text_input=None, eternal=True)
                 window.console.text_field.bg.color = color.black66

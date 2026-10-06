@@ -1,4 +1,5 @@
-from ursina import Entity, Vec3, camera, color, mouse
+from ursina import Vec3, camera, color, mouse
+from ursina.entity import Entity
 
 class Cursor(Entity):
     def __init__(self, **kwargs):

@@ -1,4 +1,8 @@
-from ursina import Ursina, Sky, load_model, color, window, Button, Entity, EditorCamera
+from ursina import Ursina, color, window, Button
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.mesh_importer import load_model
+from ursina.prefabs.sky import Sky
+from ursina.entity import Entity
 from ursina.text import Text
 
 if __name__ == '__main__':

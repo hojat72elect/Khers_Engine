@@ -1,4 +1,7 @@
-from ursina import EditorCamera, Entity, Sky, Ursina, color, shaders, window
+from ursina import Ursina, color, shaders, window
+from ursina.entity import Entity
+from ursina.prefabs.sky import Sky
+from ursina.prefabs.editor_camera import EditorCamera
 from ursina.color import hsv
 from ursina.prefabs.primitives import GrayPlane
 

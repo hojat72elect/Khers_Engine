@@ -1,4 +1,8 @@
-from ursina import EditorCamera, Entity, Ursina, load_texture, Vec3
+from ursina import Ursina
+from ursina.vec3 import Vec3
+from ursina.entity import Entity
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.texture_importer import load_texture
 from ursina.shaders.vertex_animation_shader import vertex_animation_shader
 
 if __name__ == '__main__':

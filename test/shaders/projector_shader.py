@@ -1,4 +1,8 @@
-from ursina import Ursina, Entity, EditorCamera, held_keys, time, load_texture, color, scene, application
+from ursina import Ursina, time, color, scene, application
+from ursina.entity import Entity
+from ursina.texture_importer import load_texture
+from ursina.input_handler import held_keys
+from ursina.prefabs.editor_camera import EditorCamera
 from ursina.shaders.projector_shader import projector_shader
 import random
 

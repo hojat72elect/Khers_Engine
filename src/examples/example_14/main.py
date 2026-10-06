@@ -1,5 +1,7 @@
 from random import uniform
-from ursina import Ursina, camera, Entity, application, held_keys, time, color, invoke, destroy
+from ursina import Ursina, camera, application, held_keys, time, color, invoke
+from ursina.entity import Entity
+from ursina.destroy import destroy
 from ursina.duplicate import duplicate
 
 app = Ursina()

@@ -1,17 +1,21 @@
-from ursina import *
+from ursina import scene, distance, camera, time, mouse, curve
+from ursina.destroy import destroy
+from ursina.raycast import raycast
+from ursina.input_handler import held_keys
+from ursina.entity import Entity
 from ursina.duplicate import duplicate
-from ursina import curve
+from ursina.vec3 import Vec3
 from terraincast import terraincast
 
 class Bow(Entity):
     def __init__(self, model = "bow.obj", terrain = None):
         super().__init__(
-            model = model,
-            texture = "bow",
-            tag = "bow",
-            parent = scene,
-            position = (-588, 21, 144),
-            rotation = (0, 90, 90)
+            model=model,
+            texture="bow",
+            tag="bow",
+            parent=scene,
+            position=(-588, 21, 144),
+            rotation=(0, 90, 90),
         )
 
         self.loaded = False
@@ -81,9 +85,9 @@ class Bow(Entity):
 
             if ray.entity and ray.entity.tag == "enemy":
                 ray.entity.hit()
-                destroy(self.player.arrow, delay = 0.07)
-            
-            destroy(self.player.arrow, delay = 1)
+                destroy(self.player.arrow, delay=0.07)
+
+            destroy(self.player.arrow, delay=1)
 
     def equip(self):
         self.equipped = True
@@ -93,8 +97,9 @@ class Bow(Entity):
         self.rotation = (0, 0, 0)
         self.shield.disable()
 
-        if self.sword.equipped == True:
+        if self.sword.equipped:
             self.sword.disable()
             self.arrow.enable() 
-        if self.shield.equipped == True:
+        if self.shield.equipped:
             self.shield.disable()
+            

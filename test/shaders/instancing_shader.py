@@ -1,5 +1,8 @@
 import random
-from ursina import Cone, EditorCamera, Entity, Quat, Ursina, Vec3, application, color, window
+from ursina import Cone, Quat, Ursina, application, color, window
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.vec3 import Vec3
+from ursina.entity import Entity
 from ursina.shaders.instancing_shader import instancing_shader
 
 if __name__ == "__main__":

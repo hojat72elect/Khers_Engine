@@ -1,9 +1,7 @@
 from math import sqrt, sin, acos, pi, cos, floor, exp
-from math import hypot
 from panda3d.core import Vec4, LVector3f
 from ursina.vec2 import Vec2
 from ursina.vec3 import Vec3
-from ursina import color
 from ursina.color import Color
 
 _sum = sum

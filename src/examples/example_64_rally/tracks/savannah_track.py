@@ -1,14 +1,15 @@
-from ursina import *
+from ursina.entity import Entity
+from ursina import invoke
 
 class SavannahTrack(Entity):
     def __init__(self, car):
         super().__init__(
-            model = "savannah_track.obj", 
-            texture = "savannah_track.png", 
-            position = (0, -50, 0), 
-            rotation = (0, 270, 0), 
-            scale = (27, 27, 27), 
-            collider = "mesh"
+            model="savannah_track.obj",
+            texture="savannah_track.png",
+            position=(0, -50, 0),
+            rotation=(0, 270, 0),
+            scale=(27, 27, 27),
+            collider="mesh",
         )
 
         self.car = car

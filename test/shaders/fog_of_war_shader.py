@@ -1,4 +1,7 @@
-from ursina import Ursina, Entity, color, window, EditorCamera, held_keys, scene, camera
+from ursina import Ursina, color, window, scene, camera
+from ursina.entity import Entity
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.input_handler import held_keys
 import random
 from ursina.shaders.fog_of_war_shader import fog_of_war_shader
 

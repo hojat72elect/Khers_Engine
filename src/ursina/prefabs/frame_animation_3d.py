@@ -1,4 +1,6 @@
-from ursina import *
+from ursina.entity import Entity
+from ursina.sequence import Sequence, Func, Wait
+from ursina import application,find_sequence, destroy
 
 class FrameAnimation3d(Entity):
     def __init__(self, name, fps=12, loop=True, autoplay=True, frame_times=None, auto_destroy=False, **kwargs):

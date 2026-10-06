@@ -1,4 +1,7 @@
-from ursina import EditorCamera, Entity, Grid, Mesh, Terrain, Ursina, Vec2, Vec3, color, flatten_list, enumerate_2d
+from ursina import EditorCamera, Grid, Mesh, Terrain, Ursina, color, flatten_list, enumerate_2d
+from ursina.entity import Entity
+from ursina.vec2 import Vec2
+from ursina.vec3 import Vec3
 from ursina.scripts.chunk_mesh import chunk_mesh
 
 if __name__ == "__main__":

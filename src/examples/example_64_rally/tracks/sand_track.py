@@ -1,4 +1,5 @@
-from ursina import *
+from ursina import invoke
+from ursina.entity import Entity
 
 class SandTrack(Entity):
     def __init__(self, car):

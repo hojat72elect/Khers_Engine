@@ -1,4 +1,6 @@
-from ursina import Ursina, Entity, every, destroy
+from ursina import Ursina, every
+from ursina.entity import Entity
+from ursina.destroy import destroy
 
 app = Ursina()
 

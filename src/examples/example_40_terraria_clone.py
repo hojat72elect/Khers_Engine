@@ -1,4 +1,6 @@
-from ursina import Ursina, Entity, Quad, color, camera, time, mouse, held_keys
+from ursina import Ursina, Quad, color, camera, time, mouse
+from ursina.entity import Entity
+from ursina.input_handler import held_keys
 
 app = Ursina()
 size = 32

@@ -1,4 +1,8 @@
-from ursina import *
+from ursina import BoxCollider, camera, color, EditorCamera, time, mouse
+from ursina.raycast import raycast
+from ursina.input_handler import held_keys
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
 from ursina.boxcast import boxcast
 from terraincast import terraincast
 import math
@@ -12,16 +16,15 @@ sign = lambda x: -1 if x < 0 else (1 if x > 0 else 0)
 class Player(Entity):
     def __init__(self, position, map, speed = 2, jump_height = 0.3, controls = "wasd"):
         super().__init__(
-            model = "cube", 
-            position = position,
-            scale = (1.3, 1, 1.3), 
-            visible_self = False,
-            tag = "player",
-            collider = "box"
+            model="cube",
+            position=position,
+            scale=(1.3, 1, 1.3),
+            visible_self=False,
+            tag="player",
+            collider="box",
         )
 
-        self.collider = BoxCollider(self, center = Vec3(0, 1, 0), size = Vec3(1, 1, 1))
-        # mouse.locked = True
+        self.collider = BoxCollider(self, center=Vec3(0, 1, 0), size=Vec3(1, 1, 1))
         camera.parent = self
         camera.position = (0, 2, 0)
         camera.rotation = (0, 0, 0)

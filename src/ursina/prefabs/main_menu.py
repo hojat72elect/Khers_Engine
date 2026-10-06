@@ -1,4 +1,7 @@
-from ursina import *
+from ursina.entity import Entity
+from ursina import camera, Button, Animator, print_on_screen, application, scene, Slider, color, curve
+from ursina.sequence import Func, Wait, Sequence
+from ursina.vec2 import Vec2
 from ursina.text import Text
 from ursina.audio import Audio
 from ursina.ursinastuff import DotDict

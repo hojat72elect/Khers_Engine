@@ -1,16 +1,20 @@
-from ursina import *
+from ursina.entity import Entity
 from ursina.audio import Audio
+from ursina.vec3 import Vec3
+from ursina.ursinamath import distance, distance_xz
+from ursina import time, color
 from particles import Particles
 from guns import Bullet
+import random
 
 class Enemy(Entity):
-    def __init__(self, player, move_speed = 20, position = (0, 0, 0), **kwargs):
+    def __init__(self, player, move_speed=20, position=(0, 0, 0), **kwargs):
         super().__init__(
-            model = "enemy.obj",
-            texture = "level.png",
-            position = position,
-            collider = "box",
-            **kwargs
+            model="enemy.obj",
+            texture="level.png",
+            position=position,
+            collider="box",
+            **kwargs,
         )
 
         self.player = player

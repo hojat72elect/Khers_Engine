@@ -1,22 +1,20 @@
-from ursina import *
+from ursina.entity import Entity
 from ursina.audio import Audio
-from ursina import curve
+from ursina.input_handler import held_keys
+from ursina import curve, Mesh, time, lerp, distance, color, camera, invoke, application
+from ursina.raycast import raycast
+import random
 
 class Ability(Entity):
-    def __init__(self, player, ability_enabled = True):
-        super().__init__(
-            parent = player
-        )
-
+    def __init__(self, player, ability_enabled=True):
+        super().__init__(parent=player)
         self.player = player
         self.ability_enabled = ability_enabled
         self.shift_count = 0
 
 class Rope(Ability):
-    def __init__(self, player, enabled = True):
-        super().__init__(
-            player, enabled
-        )
+    def __init__(self, player, enabled=True):
+        super().__init__(player, enabled)
 
         self.rope_pivot = Entity()
         self.rope = Entity(model = Mesh(vertices = [self.world_position, self.rope_pivot.world_position], mode = "line", thickness = 15, colors = [color.hex("#ff8b00"), color.hex("#ff8b00")]), texture = "rope.png", enabled = False)

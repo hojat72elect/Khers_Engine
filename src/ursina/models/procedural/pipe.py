@@ -1,4 +1,5 @@
 from ursina import *
+from ursina.entity import Entity
 from ursina.duplicate import duplicate
 from ursina.ursinamath import sample_gradient
 

@@ -1,15 +1,17 @@
-from ursina import *
+from ursina.entity import Entity
+from ursina.destroy import destroy
+from ursina import Mesh, lerp, time, Ursina, window, color, mouse
 
 class TrailRenderer(Entity):
     def __init__(self, thickness=10, color=color.white, end_color=color.clear, length=6, **kwargs):
         super().__init__(**kwargs)
         self.renderer = Entity(
-            model = Mesh(
-            vertices=[self.world_position for i in range(length)],
-            colors=[lerp(end_color, color, i/length*2) for i in range(length)],
-            mode='line',
-            thickness=thickness,
-            static=False
+            model=Mesh(
+                vertices=[self.world_position for i in range(length)],
+                colors=[lerp(end_color, color, i / length * 2) for i in range(length)],
+                mode="line",
+                thickness=thickness,
+                static=False,
             )
         )
         self._t = 0
@@ -45,7 +47,6 @@ if __name__ == '__main__':
 
     def update():
         player.position = lerp(player.position, mouse.position*10, time.dt*4)
-
         if pivot:
             pivot.rotation_z -= 3
             pivot.rotation_x -= 2
@@ -53,6 +54,5 @@ if __name__ == '__main__':
     def input(key):
         if key == 'space':
             destroy(pivot)
-
 
     app.run()

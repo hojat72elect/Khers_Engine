@@ -2,6 +2,8 @@ from ursina import *
 from ursina.color import hsv
 from ursina.duplicate import duplicate
 from ursina import input_handler
+from ursina.entity import Entity
+from ursina.lights import DirectionalLight
 from ursina.text import Text
 from ursina.shaders import unlit_shader, lit_with_shadows_shader, matcap_shader, triplanar_shader, normals_shader
 from ursina.mesh import Mesh

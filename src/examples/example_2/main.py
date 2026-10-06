@@ -1,5 +1,7 @@
 from random import choice, randint
-from ursina import (Ursina, window, camera, color, Entity, time, destroy, BoxCollider, Vec3)
+from ursina import Ursina, window, camera, color, time, destroy, BoxCollider
+from ursina.vec3 import Vec3
+from ursina.entity import Entity
 from ursina.audio import Audio
 from ursina.text import Text
 

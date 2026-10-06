@@ -1,4 +1,6 @@
-from ursina import EditorCamera, Entity, Ursina, color, held_keys
+from ursina import EditorCamera, Ursina, color
+from ursina.entity import Entity
+from ursina.input_handler import held_keys
 from ursina.scripts.smooth_follow import SmoothFollow
 
 if __name__ == "__main__":

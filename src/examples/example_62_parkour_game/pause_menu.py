@@ -1,4 +1,5 @@
-from ursina import Entity, camera, mouse, Button, Func, color, application
+from ursina import camera, mouse, Button, Func, color, application
+from ursina.entity import Entity
 
 class PauseMenu(Entity):
     def __init__(self):

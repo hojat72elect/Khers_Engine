@@ -1,4 +1,5 @@
-from ursina import Ursina, every, Entity
+from ursina import Ursina, every
+from ursina.entity import Entity
 
 if __name__ == '__main__':
     app = Ursina()

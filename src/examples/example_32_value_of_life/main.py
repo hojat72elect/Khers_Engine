@@ -1,5 +1,7 @@
 from pathlib import Path
-from ursina import Ursina, window, color, Entity, Animation, Sprite, input_handler, camera, SmoothFollow, application, mouse, floor, held_keys, clamp, lerp, scene, Draggable, time, invoke
+from ursina import Ursina, window, color, Animation, Sprite, camera, SmoothFollow, application, mouse, floor, clamp, lerp, scene, Draggable, time, invoke
+from ursina.entity import Entity
+from ursina.input_handler import held_keys, bind
 from ursina.raycast import raycast
 from ursina.duplicate import duplicate
 from ursina.audio import Audio
@@ -160,11 +162,11 @@ with open(f, 'r') as f:
 player.position = player_start.position
 player.z = -1
 music = Audio('life_is_currency', pitch=1, loop=True)
-input_handler.bind('e', 'space')
-input_handler.bind('up arrow', 'w')
-input_handler.bind('left arrow', 'a')
-input_handler.bind('down arrow', 's')
-input_handler.bind('right arrow', 'd')
+bind('e', 'space')
+bind('up arrow', 'w')
+bind('left arrow', 'a')
+bind('down arrow', 's')
+bind('right arrow', 'd')
 
 if application.development_mode:  # add some cheat codes
     def cheat_input(key):

@@ -1,4 +1,7 @@
-from ursina import Ursina, Button, scene, EditorCamera, Entity, color, Vec2, shaders
+from ursina import Ursina, Button, scene, color, shaders
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.entity import Entity
+from ursina.vec2 import Vec2
 from ursina.duplicate import duplicate
 
 if __name__ == '__main__':

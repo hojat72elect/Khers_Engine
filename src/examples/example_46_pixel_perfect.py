@@ -1,4 +1,5 @@
-from ursina import Sprite, Ursina, camera, held_keys
+from ursina import Sprite, Ursina, camera
+from ursina.input_handler import held_keys
 
 app = Ursina(size=(1280, 720))
 camera.orthographic = True  # remove perspective

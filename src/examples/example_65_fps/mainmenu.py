@@ -1,6 +1,7 @@
-from ursina import *
+from ursina.entity import Entity
 from ursina.text import Text
-from ursina import curve
+from ursina.input_handler import held_keys
+from ursina import curve, camera, color, Button, invoke, application, window
 
 colourH = color.rgba(18, 152, 255, 180)
 colourN = color.rgba(0, 0, 0, 0.7)

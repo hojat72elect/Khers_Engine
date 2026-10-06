@@ -1,6 +1,13 @@
-from ursina import Ursina, Vec2, Capsule, lerp_exponential_decay, time, held_keys, EditorCamera, Entity, Vec3, color, camera, scene, destroy
+from ursina import Ursina, Capsule, time, color, camera, scene
+from ursina.ursinamath import lerp_exponential_decay
+from ursina.vec2 import Vec2
+from ursina.vec3 import Vec3
+from ursina.destroy import destroy
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.entity import Entity
 from ursina.sequence import Sequence
 from ursina.raycast import raycast
+from ursina.input_handler import held_keys
 from ursina.physics import PhysicsEntity, physics_handler, CapsuleCollider
 
 if __name__ == '__main__':

@@ -1,4 +1,9 @@
-from ursina import Ursina, Entity, Vec3, time, held_keys, Terrain, color, EditorCamera, Sky
+from ursina import Ursina, time, Terrain, color
+from ursina.prefabs.sky import Sky
+from ursina.input_handler import held_keys
+from ursina.vec3 import Vec3
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.entity import Entity
 from ursina.terraincast import terraincast
 
 if __name__ == '__main__':

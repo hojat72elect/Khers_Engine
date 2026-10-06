@@ -1,4 +1,9 @@
-from ursina import Entity, Grid, Draggable, ButtonGroup, color, window, held_keys, Vec3, mouse, time, invoke, copy, DirectionalLight, EditorCamera, Ursina
+from ursina import Grid, Draggable, ButtonGroup, color, window, mouse, time, copy, EditorCamera, Ursina
+from ursina.vec3 import Vec3
+from ursina.ursinastuff import invoke
+from ursina.input_handler import held_keys
+from ursina.lights import DirectionalLight
+from ursina.entity import Entity
 from ursina.shaders import lit_with_shadows_shader
 
 class LevelEditor(Entity):

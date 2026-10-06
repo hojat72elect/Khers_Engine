@@ -1,4 +1,7 @@
-from ursina import texture_importer, Ursina, Entity, color, application,Array2D, enumerate_2d, Texture, EditorCamera
+from ursina import texture_importer, Ursina, color, application, Texture
+from ursina.array_tools import Array2D, enumerate_2d
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.entity import Entity
 from pathlib import Path
 
 if __name__ == "__main__":

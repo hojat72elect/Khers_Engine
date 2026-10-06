@@ -1,4 +1,7 @@
-from ursina import Ursina, Animation, Entity, color, Animator
+from ursina import Ursina, color
+from ursina.prefabs.animation import Animation
+from ursina.prefabs.animator import Animator
+from ursina.entity import Entity
 from ursina.text import Text
 
 if __name__ == '__main__':

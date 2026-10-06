@@ -1,4 +1,9 @@
-from ursina import Ursina, color, Entity, camera, Draggable, scene, EditorCamera, Grid, Button, NineSlice, Vec3, Vec2
+from ursina import Ursina, color, camera, scene, EditorCamera, Grid, NineSlice
+from ursina.entity import Entity
+from ursina.vec2 import Vec2
+from ursina.vec3 import Vec3
+from ursina.prefabs.draggable import Draggable
+from ursina.prefabs.button import Button
 
 if __name__ == '__main__':
     app = Ursina()

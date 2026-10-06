@@ -1,4 +1,5 @@
-from ursina import Entity, camera, mouse, Button, color, application
+from ursina import camera, mouse, Button, color, application
+from ursina.entity import Entity
 from ursina.sequence import Func
 
 class MainMenu(Entity):

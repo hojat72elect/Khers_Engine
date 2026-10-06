@@ -1,4 +1,5 @@
-from ursina import Entity, color, camera, Ursina, Quad, after
+from ursina import color, camera, Ursina, Quad, after
+from ursina.entity import Entity
 
 app = Ursina()
 size = 32
