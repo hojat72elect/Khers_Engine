@@ -1,4 +1,6 @@
-from ursina import application, Button, Ursina
+from ursina import application
+from ursina.prefabs.button import Button
+from ursina.main import Ursina
 from ursina.text import Text
 from pathlib import Path
 

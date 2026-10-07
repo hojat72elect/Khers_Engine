@@ -1,4 +1,6 @@
-from ursina import window, Button, color
+from ursina import color
+from ursina.prefabs.button import Button
+from ursina.window import instance as window
 from ursina.text import Text
 
 window.fullscreen = True

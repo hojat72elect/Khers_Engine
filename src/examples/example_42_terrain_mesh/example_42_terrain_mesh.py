@@ -1,4 +1,13 @@
-from ursina import Terrain, Sky, window, mouse, camera, scene, invoke, Ursina, color, EditorCamera
+from ursina import color
+from ursina.main import Ursina
+from ursina.window import instance as window
+from ursina.mouse import instance as mouse
+from ursina.camera import instance as camera
+from ursina.scene import instance as scene
+from ursina.ursinastuff import invoke
+from ursina.models.procedural.terrain import Terrain
+from ursina.prefabs.sky import Sky
+from ursina.prefabs.editor_camera import EditorCamera
 from ursina.text import Text
 from ursina.entity import Entity
 from ursina.shaders import camera_vertical_blur_shader

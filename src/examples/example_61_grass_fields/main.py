@@ -1,27 +1,25 @@
-from ursina import (
-    Ursina,
-    Texture,
-    color,
-    Terrain,
-    Empty,
-    load_texture,
-    load_model,
-    deepcopy,
-    scene,
-    Vec3,
-    Capsule,
-    EditorCamera,
-    Mesh,
-    camera,
-    held_keys,
-    Sky,
-    time
-)
+from ursina import color
+from ursina.models.procedural.terrain import Terrain
+from ursina.mesh import Mesh
+from ursina.texture import Texture
+from ursina.models.procedural.capsule import Capsule
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.input_handler import held_keys
+from ursina.prefabs.sky import Sky
+from ursina.scene import instance as scene
+from ursina.camera import instance as camera
+from ursina.vec3 import Vec3
+from ursina.main import Ursina
 from ursina.entity import Entity
 from ursina.lights import DirectionalLight
 from ursina.terraincast import terraincast
 from ursina.shaders import lit_with_shadows_shader
+from ursina.mesh_importer import load_model
+from ursina.texture_importer import load_texture
+from ursina.ursinastuff import Empty
 import random
+import time
+from copy import deepcopy
 
 random.seed(0)
 app = Ursina()

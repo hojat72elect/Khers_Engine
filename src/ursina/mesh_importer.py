@@ -12,7 +12,6 @@ import panda3d.core as p3d
 import gltf
 import builtins
 from ursina.sequence import Func
-from ursina.entity import Entity # Never remove this import
 
 imported_meshes = dict()
 blender_scenes = dict()
