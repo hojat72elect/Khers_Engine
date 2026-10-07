@@ -1,7 +1,13 @@
 from random import choice
 from examples.example_26_inventory.Inventory import Inventory
-from ursina import Ursina, Button, color, Tooltip, camera, Cursor, mouse
+from ursina import color
+from ursina.camera import instance as camera
+from ursina.mouse import instance as mouse
+from ursina.main import Ursina
 from ursina.entity import Entity
+from ursina.prefabs.button import Button
+from ursina.prefabs.tooltip import Tooltip
+from ursina.prefabs.cursor import Cursor
 
 if __name__ == '__main__':
     app = Ursina()

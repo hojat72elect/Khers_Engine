@@ -2,8 +2,15 @@ from math import sin
 from random import uniform, choice
 from ursina.entity import Entity
 from ursina.vec2 import Vec2
-from ursina import time, load_texture, held_keys, clamp, color, window, Ursina, camera
+from ursina import color
+from ursina.main import Ursina
+from ursina.window import instance as window
+from ursina.camera import instance as camera
 from ursina.text import Text
+from ursina.texture_importer import load_texture
+from ursina.ursinamath import clamp
+from ursina.input_handler import held_keys
+import time
 
 GAME_WIDTH = 800
 GAME_HEIGHT = 600

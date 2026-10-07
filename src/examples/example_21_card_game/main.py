@@ -1,10 +1,18 @@
 from random import uniform, random, shuffle
-from ursina import Ursina, window, color, camera, Texture, invoke, time, lerp, curve, mouse, application
+from ursina import color, curve, application
+from ursina.window import instance as window
+from ursina.camera import instance as camera
+from ursina.mouse import instance as mouse
+from ursina.ursinastuff import invoke
+from ursina.texture import Texture
+from ursina.main import Ursina
 from ursina.sequence import Func
 from ursina.vec3 import Vec3
 from ursina.entity import Entity
 from ursina.audio import Audio
 from ursina.text import Text
+from ursina.ursinamath import lerp
+import time
 
 GAME_WIDTH = 549
 GAME_HEIGHT = 480
