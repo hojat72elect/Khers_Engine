@@ -1,9 +1,15 @@
-from ursina import Vec3, BoxCollider, camera, mouse, time, held_keys, Vec2
+from ursina.collider import BoxCollider
+from ursina.camera import instance as camera
+from ursina.mouse import instance as mouse
+from ursina.vec2 import Vec2
+from ursina.vec3 import Vec3
 from ursina.entity import Entity
 from ursina.raycast import raycast
 from ursina.boxcast import boxcast
+from ursina.input_handler import held_keys
 from ursina.text import Text
 import math
+import time
 
 sign = lambda x: -1 if x < 0 else (1 if x > 0 else 0)
 

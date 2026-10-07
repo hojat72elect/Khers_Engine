@@ -1,4 +1,8 @@
-from ursina import camera, mouse, Button, Func, color, application
+from ursina import color, application
+from ursina.sequence import Func
+from ursina.prefabs.button import Button
+from ursina.mouse import instance as mouse
+from ursina.camera import instance as camera
 from ursina.entity import Entity
 
 class PauseMenu(Entity):

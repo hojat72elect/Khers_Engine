@@ -1,4 +1,7 @@
-from ursina import camera, mouse, Button, color, application
+from ursina import color, application
+from ursina.prefabs.button import Button
+from ursina.mouse import instance as mouse
+from ursina.camera import instance as camera
 from ursina.entity import Entity
 from ursina.sequence import Func
 

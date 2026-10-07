@@ -1,8 +1,11 @@
-from ursina import *
+from ursina.entity import Entity
+from ursina.lights import DirectionalLight
+from ursina.input_handler import held_keys
 from ursina.raycast import raycast
+from ursina.destroy import destroy
 import sys
 sys.path.append('../Parkour/')
-from block import *
+from examples.example_62_parkour_game.block import NormalBlock, SpeedBlock, JumpBlock, EndBlock
 
 normalSpeed = 2
 boostSpeed  = 5
@@ -16,8 +19,8 @@ class Level04(Entity):
         self.is_enabled = False
         self.on = False
 
-        self.level = Entity(model = "lava_level_4.obj", color = "#454545", collider = "mesh", scale = (10, 10, 10))
-        self.lava = Entity(model = "plane", color = "#ff6700", collider = "mesh", scale = (1000, 1, 1000), position = (0, -30, 0))
+        self.level = Entity(model="lava_level_4.obj", color="#454545", collider="mesh", scale=(10, 10, 10))
+        self.lava = Entity(model="plane", color="#ff6700", collider="mesh", scale=(1000, 1, 1000), position=(0, -30, 0))
 
         self.block_4_1 = NormalBlock((5, 2, -128))
         self.block_4_2 = NormalBlock((5, 2, -112))
@@ -171,14 +174,14 @@ class Level04(Entity):
         self.player.SPEED = normalSpeed
 
     def update(self):
-        if self.is_enabled == True:
+        if self.is_enabled:
             self.light = DirectionalLight()
             self.is_enabled = False
         else:
             self.light = None
 
         # Stops the player from falling forever
-        if self.on == True and self.player.position.y <= -50:
+        if self.on and self.player.position.y <= -50:
             self.player.SPEED = normalSpeed
             self.player.jump_height = normalJump
             self.player.position = (5, 10, -150)
@@ -186,7 +189,7 @@ class Level04(Entity):
             self.player.count = 0.0
 
         # Restart the level
-        if self.on == True and held_keys["g"]:
+        if self.on and held_keys["g"]:
             self.player.SPEED = normalSpeed
             self.player.jump_height = normalJump
             self.player.position = (5, 10, -150)
@@ -194,7 +197,7 @@ class Level04(Entity):
             self.player.count = 0.0
 
         # What entity the player hits
-        hit = raycast(self.player.position, self.player.down, distance = 2, ignore = [self.player, ])
+        hit = raycast(self.player.position, self.player.down, distance=2, ignore = [self.player, ])
 
         if hit.entity == self.lava:
             self.player.SPEED = normalSpeed

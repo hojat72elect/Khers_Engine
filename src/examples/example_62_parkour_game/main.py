@@ -1,6 +1,11 @@
-from ursina import Ursina, application, window, mouse, Sky, camera, color
+from ursina import application, color
 from ursina.lights import AmbientLight, PointLight
+from ursina.window import instance as window
+from ursina.mouse import instance as mouse
+from ursina.camera import instance as camera
+from ursina.prefabs.sky import Sky
 from ursina.raycast import raycast
+from ursina.main import Ursina
 from player import Player
 from Levels.level01 import Level01
 from Levels.level02 import Level02

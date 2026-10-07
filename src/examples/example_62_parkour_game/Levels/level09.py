@@ -1,11 +1,12 @@
-from ursina import *
+from ursina.entity import Entity
 from ursina.raycast import raycast
 import sys
+from ursina.input_handler import held_keys
 sys.path.append('../Parkour/')
-from block import *
+from examples.example_62_parkour_game.block import EndBlock, SkyNormalBlock, SkySpeedBlock
 
 normalSpeed = 2
-boostSpeed  = 5
+boostSpeed = 5
 normalJump = 0.3
 
 # Level09
