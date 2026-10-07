@@ -1,7 +1,13 @@
-from ursina import Ursina, Sky, Button, color, scene, application, camera, held_keys, mouse
+from ursina import color, application, camera
+from ursina.input_handler import held_keys
 from ursina.entity import Entity
 from ursina.destroy import destroy
+from ursina.scene import instance as scene
+from ursina.mouse import instance as mouse
 from ursina.prefabs.first_person_controller import FirstPersonController
+from ursina.prefabs.sky import Sky
+from ursina.prefabs.button import Button
+from ursina.main import Ursina
 
 app = Ursina()
 Sky(texture="sky_sunset")
