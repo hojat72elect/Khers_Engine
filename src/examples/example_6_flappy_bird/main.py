@@ -1,5 +1,10 @@
 import random
-from ursina import Ursina, Sky, Animation, camera, time, color, invoke
+import time
+from ursina import camera, color
+from ursina.ursinastuff import invoke
+from ursina.prefabs.animation import Animation
+from ursina.main import Ursina
+from ursina.prefabs.sky import Sky
 from ursina.duplicate import duplicate
 from ursina.entity import Entity
 
