@@ -1,6 +1,6 @@
-from ursina import input_handler
+from ursina.input_handler import bind
 
-input_handler.bind('up arrow', 'w')
-input_handler.bind('left arrow', 'a')
-input_handler.bind('down arrow', 's')
-input_handler.bind('right arrow', 'd')
+bind('up arrow', 'w')
+bind('left arrow', 'a')
+bind('down arrow', 's')
+bind('right arrow', 'd')
