@@ -1,8 +1,13 @@
 from random import uniform
-from ursina import Ursina, camera, application, held_keys, time, color, invoke
+from ursina.camera import instance as camera
+from ursina import application, color
+from ursina.input_handler import held_keys
+from ursina.main import Ursina
 from ursina.entity import Entity
 from ursina.destroy import destroy
 from ursina.duplicate import duplicate
+from ursina.ursinastuff import invoke
+import time
 
 app = Ursina()
 camera.orthographic = True

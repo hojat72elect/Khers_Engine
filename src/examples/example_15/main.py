@@ -1,9 +1,14 @@
-from ursina import Ursina, Animation, camera, application, time, curve, invoke
+from ursina import application, curve
+from ursina.camera import instance as camera
+from ursina.prefabs.animation import Animation
+from ursina.main import Ursina
 from ursina.prefabs.sky import Sky
 from ursina.entity import Entity
 from ursina.input_handler import held_keys
 from ursina.destroy import destroy
 from ursina.duplicate import duplicate
+from ursina.ursinastuff import invoke
+import time
 
 app = Ursina()
 me = Animation("assets/player", collider="box", y=5)

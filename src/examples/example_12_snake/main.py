@@ -1,6 +1,9 @@
 from random import randint
-from ursina import Ursina, camera, time, application
+from ursina.main import Ursina
+from ursina.camera import instance as camera
+from ursina import application
 from ursina.entity import Entity
+import time
 
 app = Ursina()
 camera.orthographic = True

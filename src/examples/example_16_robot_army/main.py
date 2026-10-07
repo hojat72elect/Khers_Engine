@@ -1,4 +1,6 @@
-from ursina import Ursina, application, FrameAnimation3d, color
+from ursina import application, color
+from ursina.prefabs.frame_animation_3d import FrameAnimation3d
+from ursina.main import Ursina
 from ursina.entity import Entity
 from ursina.prefabs.sky import Sky
 from ursina.prefabs.first_person_controller import FirstPersonController
