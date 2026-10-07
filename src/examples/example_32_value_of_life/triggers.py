@@ -1,11 +1,19 @@
-from ursina import Draggable, color, scene, invoke, camera, Sprite, time, window, application, Ursina
+from ursina import color, application
+from ursina.prefabs.sprite import Sprite
 from ursina.sequence import Sequence, Func, Wait
+from ursina.camera import instance as camera
+from ursina.scene import instance as scene
+from ursina.window import instance as window
+from ursina.main import Ursina
+from ursina.ursinastuff import invoke
 from ursina.prefabs.animation import Animation
+from ursina.prefabs.draggable import Draggable
 from ursina.input_handler import held_keys
 from ursina.ursinamath import distance_2d, lerp
 from ursina.entity import Entity
 from ursina.vec3 import Vec3
 from ursina.text import Text
+import time
 
 class UseTrigger(Draggable):
     use_key = 'space'

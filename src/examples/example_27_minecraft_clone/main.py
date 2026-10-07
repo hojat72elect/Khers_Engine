@@ -1,7 +1,12 @@
 from examples.example_27_minecraft_clone.Voxel import Voxel
-from ursina import Ursina, application, camera, mouse, destroy, Sky
+from ursina import application
+from ursina.main import Ursina
 from ursina.prefabs.first_person_controller import FirstPersonController
+from ursina.prefabs.sky import Sky
+from ursina.destroy import destroy
 from ursina.raycast import raycast
+from ursina.mouse import instance as mouse
+from ursina.camera import instance as camera
 
 if __name__ == '__main__':
     app = Ursina()

@@ -1,11 +1,24 @@
 from pathlib import Path
-from ursina import Ursina, window, color, Animation, Sprite, camera, SmoothFollow, application, mouse, floor, clamp, lerp, scene, Draggable, time, invoke
+from ursina import color, application
+from math import floor
 from ursina.entity import Entity
+from ursina.ursinastuff import invoke
+from ursina.main import Ursina
+from ursina.prefabs.animation import Animation
+from ursina.prefabs.sprite import Sprite
+from ursina.prefabs.draggable import Draggable
+from ursina.scripts.smooth_follow import SmoothFollow
+from ursina.mouse import instance as mouse
+from ursina.camera import instance as camera
+from ursina.window import instance as window
+from ursina.scene import instance as scene
 from ursina.input_handler import held_keys, bind
 from ursina.raycast import raycast
 from ursina.duplicate import duplicate
 from ursina.audio import Audio
+from ursina.ursinamath import clamp, lerp
 from triggers import UseTrigger, Teleporter, CableCar, NPC, TalkativeNPC, ObservatoryDoor, Altar, Sacrifice
+import time
 
 app = Ursina()
 window.title = 'Value of Life'

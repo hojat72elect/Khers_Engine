@@ -1,5 +1,7 @@
 from random import uniform
-from ursina import Button, scene, color
+from ursina import color
+from ursina.scene import instance as scene
+from ursina.prefabs.button import Button
 
 class Voxel(Button):
     """
