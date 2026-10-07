@@ -1,10 +1,17 @@
 from random import randint
-from ursina import Ursina, Animation, color, camera, SmoothFollow, application, held_keys, time, curve, invoke
+from ursina import color, application, curve
+from ursina.scripts.smooth_follow import SmoothFollow
+from ursina.input_handler import held_keys
+from ursina.main import Ursina
+from ursina.ursinastuff import invoke
 from ursina.prefabs.sky import Sky
+from ursina.prefabs.animation import Animation
+from ursina.camera import instance as camera
 from ursina.entity import Entity
 from ursina.destroy import destroy
 from ursina.duplicate import duplicate
 from ursina.text import Text
+import time
 
 app = Ursina()
 Sky()

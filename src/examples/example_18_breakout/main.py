@@ -1,5 +1,13 @@
-from ursina import Ursina, camera, window, color, Texture, mouse, time, random, clamp
+from ursina import color
+from ursina.texture import Texture
+from ursina.camera import instance as camera
+from ursina.mouse import instance as mouse
+from ursina.window import instance as window
+from ursina.main import Ursina
 from ursina.entity import Entity
+from ursina.ursinamath import clamp
+import time
+import random
 
 GAME_WIDTH = 800
 GAME_HEIGHT = 600

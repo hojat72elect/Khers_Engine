@@ -1,6 +1,12 @@
 import random
-from ursina import Ursina, camera, window, color, Texture, held_keys, time
+from ursina import color
+from ursina.texture import Texture
+from ursina.main import Ursina
 from ursina.entity import Entity
+from ursina.input_handler import held_keys
+from ursina.camera import instance as camera
+from ursina.window import instance as window
+import time
 
 GAME_WIDTH = 640
 GAME_HEIGHT = 480

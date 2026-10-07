@@ -1,10 +1,17 @@
 import random as py_random
-from ursina import Ursina, camera, window, color, Texture, mouse, time, invoke, curve
+from ursina import color, curve
+from ursina.camera import instance as camera
+from ursina.window import instance as window
+from ursina.mouse import instance as mouse
+from ursina.texture import Texture
+from ursina.main import Ursina
 from ursina.entity import Entity
 from ursina.vec3 import Vec3
 from ursina.destroy import destroy
 from ursina.text import Text
+from ursina.ursinastuff import invoke
 import math
+import time
 
 GAME_WIDTH = 800
 GAME_HEIGHT = 600
