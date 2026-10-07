@@ -1,5 +1,7 @@
 from random import random
-from ursina import camera, Quad, color
+from ursina import color
+from ursina.models.procedural.quad import Quad
+from ursina.camera import instance as camera
 from ursina.prefabs.draggable import Draggable
 from ursina.prefabs.tooltip import Tooltip
 from ursina.entity import Entity
