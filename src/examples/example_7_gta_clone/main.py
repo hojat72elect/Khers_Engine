@@ -1,6 +1,17 @@
 import math
 import random
-from ursina import Ursina, camera, Animator, Animation, held_keys, time, Sprite, SmoothFollow, distance, mouse, color, curve, invoke, Circle
+import time
+from ursina.prefabs.sprite import Sprite
+from ursina.scripts.smooth_follow import SmoothFollow
+from ursina.ursinamath import distance
+from ursina.mouse import instance as mouse
+from ursina.ursinastuff import invoke
+from ursina.models.procedural.circle import Circle
+from ursina import camera, color, curve
+from ursina.prefabs.animator import Animator
+from ursina.prefabs.animation import Animation
+from ursina.input_handler import held_keys
+from ursina.main import Ursina
 from ursina.raycast import raycast
 from ursina.destroy import destroy
 from ursina.entity import Entity
