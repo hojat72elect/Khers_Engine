@@ -1,9 +1,12 @@
 from random import uniform
 from ursina.entity import Entity
 from ursina.destroy import destroy
-from ursina import Ursina, camera, color, time, application
+from ursina.main import Ursina
+from ursina.camera import instance as camera
+from ursina import color, application
 from ursina.text import Text
 from Player import Player
+import time
 
 app = Ursina(title="Endless Runner Game", borderless=False, size=(800, 600))
 camera.orthographic = True
