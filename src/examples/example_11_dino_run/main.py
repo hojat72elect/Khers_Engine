@@ -1,9 +1,14 @@
 from random import randint
-from ursina import Ursina, window, color, Animation, camera, application, time, invoke, curve
+from ursina.main import Ursina
+from ursina.ursinastuff import invoke
+from ursina import color, camera, application, curve
+from ursina.prefabs.animation import Animation
+from ursina.window import instance as window
 from ursina.entity import Entity
 from ursina.duplicate import duplicate
 from ursina.audio import Audio
 from ursina.text import Text
+import time
 
 app = Ursina()
 window.color = color.white
