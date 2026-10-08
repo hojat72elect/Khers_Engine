@@ -4,8 +4,17 @@ from ursina.text import Text
 from ursina.sequence import Func
 from ursina.input_handler import held_keys
 from ursina.vec2 import Vec2
-from ursina import curve, camera, application, Button, color, window, mouse, lerp, InputField, time, Slider, invoke
+from ursina.window import instance as window
+from ursina.camera import instance as camera
+from ursina.mouse import instance as mouse
+from ursina.prefabs.button import Button
+from ursina.ursinamath import lerp
+from ursina.prefabs.input_field import InputField
+from ursina.prefabs.slider import Slider
+from ursina.ursinastuff import invoke
+from ursina import curve, application, color
 from server import Server
+import time
 import os
 import random
 

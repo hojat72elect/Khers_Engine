@@ -4,8 +4,13 @@ from ursina.text import Text
 from ursina.entity import Entity
 from ursina.input_handler import held_keys
 from ursina.vec3 import Vec3
-from ursina import curve, color, camera, lerp, time, scene, invoke
+from ursina.ursinastuff import invoke
+from ursina.ursinamath import lerp
+from ursina.camera import instance as camera
+from ursina.scene import instance as scene
+from ursina import curve, color
 from particles import Particles, TrailRenderer
+import time
 import json
 import sys
 import os

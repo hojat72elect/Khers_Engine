@@ -1,6 +1,6 @@
 from UrsinaAchievements import create_achievement
 
-class RallyAchievements():
+class RallyAchievements:
     def __init__(self, car, main_menu, sand_track, grass_track, snow_track, forest_track, savannah_track, lake_track):
         self.car = car
         self.main_menu = main_menu

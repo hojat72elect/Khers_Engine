@@ -1,7 +1,11 @@
 """
 Init file for UrsinaAchievements, a system allowing users in Ursina engine to receive achievements.
 """
-from ursina import invoke, color, camera, window, Ursina, curve
+from ursina import color, curve
+from ursina.window import instance as window
+from ursina.camera import instance as camera
+from ursina.main import Ursina
+from ursina.ursinastuff import invoke
 from ursina.prefabs.sky import Sky
 from ursina.destroy import destroy
 from ursina.vec2 import Vec2

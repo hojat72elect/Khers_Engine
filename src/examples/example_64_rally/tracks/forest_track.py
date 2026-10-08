@@ -1,5 +1,5 @@
 from ursina.entity import Entity
-from ursina import invoke
+from ursina.ursinastuff import invoke
 
 class ForestTrack(Entity):
     def __init__(self, car):

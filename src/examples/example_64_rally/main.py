@@ -1,15 +1,21 @@
-from ursina import Ursina, window, load_model, load_texture, Sky, invoke, time
+from ursina.ursinastuff import invoke
 from ursina.vec2 import Vec2
 from ursina.vec4 import Vec4
 from ursina.lights import AmbientLight
+from ursina.main import Ursina
 import sys
 from ursina.text import Text
 from direct.stdpy import thread
 from car import Car
 from ai import AICar
+import time
 from multiplayer import Multiplayer
 from main_menu import MainMenu
 from sun import SunLight
+from ursina.window import instance as window
+from ursina.mesh_importer import load_model
+from ursina.texture_importer import load_texture
+from ursina.prefabs.sky import Sky
 from achievements import RallyAchievements
 from tracks.sand_track import SandTrack
 from tracks.grass_track import GrassTrack
@@ -141,15 +147,15 @@ main_menu = MainMenu(car, ai_list, sand_track, grass_track, snow_track, forest_t
 achievements = RallyAchievements(car, main_menu, sand_track, grass_track, snow_track, forest_track, savannah_track, lake_track)
 
 # Lighting + shadows
-sun = SunLight(direction = (-0.7, -0.9, 0.5), resolution = 3072, car = car)
-ambient = AmbientLight(color = Vec4(0.5, 0.55, 0.66, 0) * 0.75)
+sun = SunLight(direction=(-0.7, -0.9, 0.5), resolution=3072, car=car)
+ambient = AmbientLight(color=Vec4(0.5, 0.55, 0.66, 0) * 0.75)
 
 render.setShaderAuto()
 
 main_menu.sun = sun
 
 # Sky
-Sky(texture = "sky")
+Sky(texture="sky")
 
 def update():
     # If multiplayer, Call the Multiplayer class

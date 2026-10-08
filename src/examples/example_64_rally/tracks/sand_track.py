@@ -1,4 +1,4 @@
-from ursina import invoke
+from ursina.ursinastuff import invoke
 from ursina.entity import Entity
 
 class SandTrack(Entity):

@@ -1,9 +1,11 @@
 from ursina.entity import Entity
 from ursina.raycast import raycast
 from ursina.vec3 import Vec3
-from ursina import distance, time, invoke, lerp
+from ursina.ursinastuff import invoke
+from ursina.ursinamath import distance, lerp
 from particles import Particles
 import random
+import time
 from math import sqrt
 
 sign = lambda x: -1 if x < 0 else (1 if x > 0 else 0)
