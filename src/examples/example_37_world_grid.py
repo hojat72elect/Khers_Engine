@@ -1,4 +1,8 @@
-from ursina import Ursina, EditorCamera, color, Grid, lerp
+from ursina import color
+from ursina.ursinamath import lerp
+from ursina.models.procedural.grid import Grid
+from ursina.main import Ursina
+from ursina.prefabs.editor_camera import EditorCamera
 from ursina.duplicate import duplicate
 from ursina.entity import Entity
 

@@ -1,4 +1,10 @@
-from ursina import Sky, Button, Tooltip, Draggable, color, scene, Ursina
+from ursina import color
+from ursina.prefabs.button import Button
+from ursina.prefabs.tooltip import Tooltip
+from ursina.prefabs.sky import Sky
+from ursina.prefabs.draggable import Draggable
+from ursina.scene import instance as scene
+from ursina.main import Ursina
 from ursina.text import Text
 from ursina.entity import Entity
 from ursina.input_handler import held_keys

@@ -1,6 +1,11 @@
-from ursina import Ursina, Quad, color, camera, time, mouse
+from ursina import color
+from ursina.camera import instance as camera
+from ursina.mouse import instance as mouse
+from ursina.models.procedural.quad import Quad
+from ursina.main import Ursina
 from ursina.entity import Entity
 from ursina.input_handler import held_keys
+import time
 
 app = Ursina()
 size = 32

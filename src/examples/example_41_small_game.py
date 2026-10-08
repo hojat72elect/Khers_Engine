@@ -1,4 +1,7 @@
-from ursina import color, Ursina, camera, Sprite
+from ursina import color
+from ursina.camera import instance as camera
+from ursina.prefabs.sprite import Sprite
+from ursina.main import Ursina
 from ursina.entity import Entity
 from ursina.input_handler import held_keys
 

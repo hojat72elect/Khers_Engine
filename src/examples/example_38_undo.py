@@ -1,4 +1,10 @@
-from ursina import Ursina, color, window, Circle, camera, Mesh, clamp
+from ursina import color
+from ursina.models.procedural.circle import Circle
+from ursina.window import instance as window
+from ursina.camera import instance as camera
+from ursina.ursinamath import clamp
+from ursina.mesh import Mesh
+from ursina.main import Ursina
 from ursina.entity import Entity
 from ursina.vec3 import Vec3
 from ursina.text import Text

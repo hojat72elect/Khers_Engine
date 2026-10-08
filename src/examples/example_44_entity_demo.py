@@ -1,6 +1,10 @@
-from ursina import Slider, camera, Ursina, EditorCamera, color
+from ursina import color
+from ursina.camera import instance as camera
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.prefabs.slider import Slider
 from ursina.text import Text
 from ursina.entity import Entity
+from ursina.main import Ursina
 
 app = Ursina()
 title = Text('''position, rotation, scale and parenting demo''', position=(-.85, .475), scale=1.5)
