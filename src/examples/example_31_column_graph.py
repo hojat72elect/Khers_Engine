@@ -1,5 +1,13 @@
 from random import seed, randint
-from ursina import Ursina, color, Button, window, camera, EditorCamera, scene, Tooltip, ThinSlider
+from ursina import color
+from ursina.main import Ursina
+from ursina.prefabs.slider import ThinSlider
+from ursina.prefabs.tooltip import Tooltip
+from ursina.window import instance as window
+from ursina.camera import instance as camera
+from ursina.scene import instance as scene
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.prefabs.button import Button
 
 app = Ursina()
 color.text_color = color.dark_text

@@ -1,6 +1,16 @@
 from random import choice
-from ursina import Ursina, color, Entity, Vec3, copy, mouse, curve, invoke, scene, after, Button, EditorCamera, window
+from copy import copy
+from ursina import color, curve
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.prefabs.button import Button
+from ursina.window import instance as window
+from ursina.mouse import instance as mouse
+from ursina.scene import instance as scene
+from ursina.ursinastuff import invoke, after
 from ursina.text import Text
+from ursina.main import Ursina
+from ursina.entity import Entity
+from ursina.vec3 import Vec3
 
 app = Ursina()
 cube_colors = [color.pink, color.orange, color.white, color.yellow, color.azure, color.green]

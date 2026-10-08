@@ -1,7 +1,15 @@
 import random
-from ursina import Ursina, EditorCamera, BoxCollider, color, mouse, camera, distance_xz, time, application, Sky
+import time
+from ursina import color, application
+from ursina.camera import instance as camera
+from ursina.mouse import instance as mouse
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.prefabs.sky import Sky
+from ursina.collider import BoxCollider
+from ursina.main import Ursina
 from ursina.vec3 import Vec3
 from ursina.ursinastuff import invoke
+from ursina.ursinamath import distance_xz
 from ursina.lights import DirectionalLight
 from ursina.destroy import destroy
 from ursina.input_handler import held_keys

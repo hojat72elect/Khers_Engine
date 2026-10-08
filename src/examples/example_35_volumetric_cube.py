@@ -1,8 +1,12 @@
 import math
 import random
-from ursina import Ursina, color, window, scene, EditorCamera, curve
+from ursina import color, curve
 from ursina.duplicate import duplicate
 from ursina.entity import Entity
+from ursina.main import Ursina
+from ursina.window import instance as window
+from ursina.scene import instance as scene
+from ursina.prefabs.editor_camera import EditorCamera
 
 app = Ursina()
 window.color = color.black

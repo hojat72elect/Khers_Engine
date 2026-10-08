@@ -1,7 +1,14 @@
-from ursina import Ursina, Draggable, scene, Cone, color, Grid, time, EditorCamera
+from ursina import color
 from ursina.entity import Entity
 from ursina.vec3 import Vec3
 from ursina.input_handler import held_keys
+from ursina.main import Ursina
+from ursina.prefabs.draggable import Draggable
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.models.procedural.cone import Cone
+from ursina.scene import instance as scene
+from ursina.models.procedural.grid import Grid
+import time
 
 if __name__ == '__main__':
     app = Ursina()

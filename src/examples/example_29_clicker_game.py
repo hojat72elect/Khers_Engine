@@ -1,5 +1,10 @@
-from ursina import Ursina, color, window, Button, Tooltip, invoke
+from ursina import color
+from ursina.ursinastuff import invoke
 from ursina.text import Text
+from ursina.main import Ursina
+from ursina.window import instance as window
+from ursina.prefabs.button import Button
+from ursina.prefabs.tooltip import Tooltip
 
 app = Ursina()
 window.color = color._20

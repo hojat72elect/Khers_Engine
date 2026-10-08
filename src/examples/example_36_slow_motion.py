@@ -1,4 +1,10 @@
-from ursina import Button, Ursina, scene, Sequence, Func, color, camera, destroy, application, curve
+from ursina import color, application, curve
+from ursina.destroy import destroy
+from ursina.sequence import Sequence, Func
+from ursina.main import Ursina
+from ursina.prefabs.button import Button
+from ursina.scene import instance as scene
+from ursina.camera import instance as camera
 from ursina.text import Text
 from ursina.duplicate import duplicate
 from ursina.entity import Entity
