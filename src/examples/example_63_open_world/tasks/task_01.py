@@ -1,4 +1,4 @@
-from ursina import camera
+from ursina.camera import instance as camera
 from ursina.ursinamath import distance, distance_xz
 from ursina.entity import Entity
 from ursina.text import Text

@@ -1,4 +1,4 @@
-from ursina import *
+from ursina.vec3 import Vec3
 
 ITERATIONS = 8
 

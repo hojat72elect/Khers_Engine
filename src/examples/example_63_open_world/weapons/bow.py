@@ -1,4 +1,8 @@
-from ursina import scene, distance, camera, time, mouse, curve
+from ursina import curve
+from ursina.ursinamath import distance
+from ursina.scene import instance as scene
+from ursina.camera import instance as camera
+from ursina.mouse import instance as mouse
 from ursina.destroy import destroy
 from ursina.raycast import raycast
 from ursina.input_handler import held_keys
@@ -6,6 +10,7 @@ from ursina.entity import Entity
 from ursina.duplicate import duplicate
 from ursina.vec3 import Vec3
 from terraincast import terraincast
+import time
 
 class Bow(Entity):
     def __init__(self, model = "bow.obj", terrain = None):

@@ -1,11 +1,12 @@
-from ursina import color, time, invoke
+from ursina import color
 from ursina.vec3 import Vec3
 from ursina.raycast import raycast
 from ursina.entity import Entity
 from ursina.boxcast import boxcast
 from ursina.terraincast import terraincast
+from ursina.ursinastuff import invoke
 import math
-
+import time
 
 sign = lambda x: -1 if x < 0 else (1 if x > 0 else 0)
 

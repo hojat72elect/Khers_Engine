@@ -1,8 +1,15 @@
 from ursina.entity import Entity
 from ursina.vec3 import Vec3
 from ursina.prefabs.sky import Sky
-from ursina import distance as ursina_distance, color, floor, Mesh, Ursina, EditorCamera, camera, time, Terrain
-from math import inf
+from ursina import color
+from ursina.models.procedural.terrain import Terrain
+from ursina.ursinamath import distance as ursina_distance
+from ursina.camera import instance as camera
+from ursina.main import Ursina
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.mesh import Mesh
+from math import inf, floor
+import time
 from ursina.hit_info import HitInfo
 
 def prepare_terrain(terrain, debug=False, calculate_normals=True):

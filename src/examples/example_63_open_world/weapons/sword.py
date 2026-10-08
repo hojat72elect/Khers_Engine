@@ -1,20 +1,25 @@
-from ursina import *
+from ursina.ursinastuff import invoke
+from ursina.ursinamath import distance
+from ursina.input_handler import held_keys
+from ursina.camera import instance as camera
+from ursina.scene import instance as scene
+from ursina.prefabs.frame_animation_3d import FrameAnimation3d
 from terraincast import terraincast
+import time
 
 class Sword(FrameAnimation3d):
-    def __init__(self, rotation = (0, 0, 0), parent = scene, terrain = None):
+    def __init__(self, rotation = (0, 0, 0), parent=scene, terrain = None):
         super().__init__(
             "sword_",
-            frame_times = 140,
-            fps = 100,
-            parent = parent,
-            position = (-579, 21.35, 213.5),
-            # position = (1.5, -2.2, 1.8),
-            rotation = rotation,
-            scale = (4, 4, 4),
-            tag = "sword",
-            texture = "sword.png",
-            autoplay = False,
+            frame_times=140,
+            fps=100,
+            parent=parent,
+            position=(-579, 21.35, 213.5),
+            rotation=rotation,
+            scale=(4, 4, 4),
+            tag="sword",
+            texture="sword.png",
+            autoplay=False,
         )
 
         self.equipped = False
@@ -41,26 +46,26 @@ class Sword(FrameAnimation3d):
             self.parent = camera
             self.position = (1.5, -2.2, 1.8)
             self.rotation = (0, 90, 0)
-            if self.bow.equipped == True:
+            if self.bow.equipped:
                 self.bow.equipped = False
                 self.bow.parent = scene
         
-        if held_keys["q"] and self.equipped == True:
+        if held_keys["q"] and self.equipped:
             self.equipped = False
             self.gravity = True
             self.parent = scene
             self.position = self.player.position
             self.y = self.player.y + 1
 
-        ray = terraincast(origin = self.position, direction = self.down, terrain = self.terrain, distance = 1)
+        ray = terraincast(origin=self.position, direction=self.down, terrain=self.terrain, distance=1)
 
         if self.equipped == False and self.gravity == True and not ray.hit:
             self.y -= 1 * 9.81 * time.dt 
 
     def input(self, key):
-        if self.enabled == True and self.equipped == True:
+        if self.enabled and self.equipped:
             if key == "left mouse down":
-                if self.ready == True:
+                if self.ready:
                     if self.strokes <= 2:
                         self.resume()
 

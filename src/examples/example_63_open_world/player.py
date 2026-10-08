@@ -1,11 +1,16 @@
-from ursina import BoxCollider, camera, color, EditorCamera, time, mouse
+from ursina import color
 from ursina.raycast import raycast
 from ursina.input_handler import held_keys
 from ursina.entity import Entity
 from ursina.vec3 import Vec3
 from ursina.boxcast import boxcast
 from terraincast import terraincast
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.camera import instance as camera
+from ursina.mouse import instance as mouse
+from ursina.collider import BoxCollider
 import math
+import time
 from weapons.sword import Sword
 from weapons.shield import Shield
 from weapons.bow import Bow

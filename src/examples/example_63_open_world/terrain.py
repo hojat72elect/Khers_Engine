@@ -1,6 +1,14 @@
-from ursina import *
-
-
+from ursina.mesh import Mesh
+from ursina import color
+from ursina.entity import Entity
+from ursina.vec2 import Vec2
+from ursina.vec3 import Vec3
+from ursina.prefabs.sky import Sky
+from ursina.main import Ursina
+from ursina.texture import Texture
+from ursina.texture_importer import load_texture
+from ursina.prefabs.editor_camera import EditorCamera
+import time
 
 class Terrain(Mesh):
     def __init__(self, heightmap, skip=1, **kwargs):
@@ -48,8 +56,7 @@ class Terrain(Mesh):
         i = 0
         for z in range(h+1):
             for x in range(w+1):
-
-                y = self.height_values[x-(x==w)][z-(z==h)] # do -1 if the coordinate is not in range
+                y = self.height_values[x - (x == w)][z - (z == h)]  # do -1 if the coordinate is not in range
 
                 self.vertices.append(Vec3((x/min_dim)+(centering_offset.x), y, (z/min_dim)+centering_offset.y))
                 self.uvs.append((x/w, z/h))
@@ -58,9 +65,9 @@ class Terrain(Mesh):
                     self.triangles.append((i, i-1, i-w-2, i-w-1))
 
                 # normals
-                if x > 0 and z > 0 and x < w-1 and z < h-1:
-                    rl =  self.height_values[x+1][z] - self.height_values[x-1][z]
-                    fb =  self.height_values[x][z+1] - self.height_values[x][z-1]
+                if 0 < x < w - 1 and 0 < z < h - 1:
+                    rl = self.height_values[x + 1][z] - self.height_values[x - 1][z]
+                    fb = self.height_values[x][z + 1] - self.height_values[x][z - 1]
                     self.normals.append(Vec3(rl, 1, fb).normalized())
                 else:
                     self.normals.append(Vec3(0,1,0))
@@ -68,9 +75,6 @@ class Terrain(Mesh):
                 i += 1
 
         super().__init__(vertices=self.vertices, triangles=self.triangles, uvs=self.uvs, normals=self.normals, **kwargs)
-
-
-
 
 if __name__ == '__main__':
     app = Ursina()
@@ -87,65 +91,5 @@ if __name__ == '__main__':
     def input(key):
         if key == '-':
             e.scale *= .9
-
-
-    # e.collider = 'mesh'
-    # terrains = list()
-    # for i in (1,2,4,8):
-    #     e = Entity(model=Terrain('heightmap_1', skip=i), scale=(20,5,20))
-    #     e.texture='heightmap_1'
-    #     e.enabled = False
-    #     terrains.append(e)
-    #
-    # EditorCamera()
-    # # 20, 40, 80, 160
-    # current_terrain = terrains[0]
-    # current_terrain.enabled = True
-    #
-    # lod_level = 0
-    # def set_lod_level(n):
-    #     global lod_level, terrain
-    #
-    #     for e in terrains:
-    #         e.enabled = False
-    #     terrains[n].enabled = True
-    #     current_terrain = terrains[n]
-    #
-    #     lod_level = n
-    #
-    # water = Entity(model='plane', collider='mesh', position=current_terrain.position, scale=current_terrain.scale)
-    # cursor = Entity(model='sphere', color=color.red)
-    #
-    # def update():
-    #     global lod_level
-    #     dist = distance(camera.world_position, terrains[0].world_position)
-    #     # print(dist, lod_level)
-    #     if lod_level != 0 and dist < 20:
-    #         set_lod_level(0)
-    #     if lod_level != 1 and dist > 20 and dist < 40:
-    #         set_lod_level(1)
-    #     if lod_level != 2 and dist > 40 and dist < 80:
-    #         set_lod_level(2)
-    #     if lod_level != 3 and dist > 80 and dist < 160:
-    #         set_lod_level(3)
-    #
-    #
-    #     if water.hovered:
-    #         cursor.position = mouse.world_point
-    #         grid_x = mouse.point[0] + .5
-    #         grid_z = mouse.point[2] + .5
-    #         grid_x *= current_terrain.model.width
-    #         grid_z *= current_terrain.model.depth
-    #
-    #         grid_x = int(grid_x)
-    #         grid_z = int(grid_z)
-    #
-    #         if grid_x < 0 or grid_x > current_terrain.model.width or grid_z < 0 or grid_z > current_terrain.model.depth:
-    #             return  # outside
-    #
-    #         cursor.y = current_terrain.model.height_values[grid_x][grid_z] * current_terrain.scale_y
-
-
-
 
     app.run()

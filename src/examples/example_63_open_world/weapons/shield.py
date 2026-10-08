@@ -1,20 +1,27 @@
-from ursina import *
+from ursina.input_handler import held_keys
+from ursina.ursinastuff import invoke
+from ursina.scene import instance as scene
+from ursina.camera import instance as camera
+from ursina.ursinamath import distance
+from ursina.prefabs.frame_animation_3d import FrameAnimation3d
 from terraincast import terraincast
+import time
+
 
 class Shield(FrameAnimation3d):
-    def __init__(self, rotation = (0, 90, 90), position = (-522, 18.5, 191), terrain = None):
+    def __init__(self, rotation=(0, 90, 90), position=(-522, 18.5, 191), terrain=None):
         super().__init__(
-            name = "shield_",
-            autoplay = False,
-            loop = True,
-            fps = 60,
-            frame_times = 20,
-            texture = "shield",
-            collider = "mesh",
-            parent = scene,
-            tag = "shield",
-            position = position,
-            rotation = rotation
+            name="shield_",
+            autoplay=False,
+            loop=True,
+            fps=60,
+            frame_times=20,
+            texture="shield",
+            collider="mesh",
+            parent=scene,
+            tag="shield",
+            position=position,
+            rotation=rotation,
         )
 
         self.equipped = True
@@ -43,11 +50,11 @@ class Shield(FrameAnimation3d):
             self.gravity = False
             self.bow.equipped = False
             self.bow.parent = scene
-            
+
             if self.bow.equipped == True:
                 self.bow.disable()
                 self.arrow.disable()
-        
+
         if held_keys["q"] and self.equipped == True:
             self.equipped = False
             self.gravity = True
@@ -55,10 +62,10 @@ class Shield(FrameAnimation3d):
             self.position = self.player.position
             self.y = self.player.y + 1
 
-        ray = terraincast(origin = self.position, direction = self.down, terrain = self.terrain, distance = 1.5)
+        ray = terraincast(origin=self.position, direction=self.down, terrain=self.terrain, distance=1.5)
 
         if self.equipped == False and self.gravity == True and not ray.hit:
-            self.y -= 1 * 9.81 * time.dt 
+            self.y -= 1 * 9.81 * time.dt
 
     def input(self, key):
         if self.enabled == True and self.equipped == True:
@@ -69,10 +76,10 @@ class Shield(FrameAnimation3d):
                 self.strokes += 1
 
                 if self.strokes == 2:
-                    invoke(self.reset_shield, delay = 0.33)
+                    invoke(self.reset_shield, delay=0.33)
 
                 if self.strokes < 2:
-                    invoke(self.pause, delay = 0.33) 
+                    invoke(self.pause, delay=0.33)
 
     def reset_shield(self):
         self.finish()
@@ -86,7 +93,7 @@ class Shield(FrameAnimation3d):
         self.position = (-1, -1, 1)
         self.rotation = (0, 90, 0)
         self.gravity = False
-        
+
         if self.bow.equipped == True:
             self.bow.disable()
             self.arrow.disable()

@@ -1,7 +1,13 @@
-from ursina import Ursina, window, mouse, scene, camera, color, EditorCamera, time
+from ursina import color
+from ursina.main import Ursina
 from ursina.prefabs.sky import Sky
 from ursina.vec3 import Vec3
 from ursina.lights import PointLight, AmbientLight
+from ursina.prefabs.editor_camera import EditorCamera
+from ursina.window import instance as window
+from ursina.camera import instance as camera
+from ursina.mouse import instance as mouse
+from ursina.scene import instance as scene
 from ursina.input_handler import held_keys
 from ursina.text import Text
 from ursina.entity import Entity
@@ -11,6 +17,7 @@ from springs import Spring
 from map import Map
 from mainmenu import MainMenu
 from tasks.task_01 import Task1_FindSword
+import time
 
 app = Ursina()
 
