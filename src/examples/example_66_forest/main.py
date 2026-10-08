@@ -1,7 +1,12 @@
 from ursina.entity import Entity
 from direct.stdpy import thread
 from ursina.text import Text
-from ursina import window, Ursina, load_model, load_texture, color, scene, application
+from ursina import color, application
+from ursina.main import Ursina
+from ursina.texture_importer import load_texture
+from ursina.mesh_importer import load_model
+from ursina.scene import instance as scene
+from ursina.window import instance as window
 from ursina.ursinamath import distance
 from ursina.vec2 import Vec2
 from ursina.vec4 import Vec4
@@ -46,7 +51,7 @@ def load_assets():
         load_texture(t)
 
 try:
-    thread.start_new_thread(function = load_assets, args = "")
+    thread.start_new_thread(function=load_assets, args="")
 except Exception as e:
     print("error starting thread", e)
 
@@ -55,27 +60,27 @@ scene.fog_color = color.hex("ffd666")
 
 player = Player((0, 50, 10))
 
-terrain = Entity(model = "ground.obj", texture = "ground.png", collider = "mesh", scale = 5)
+terrain = Entity(model="ground.obj", texture="ground.png", collider="mesh", scale=5)
 player.terrain = terrain
 
 trees = []
 
-tent = Entity(model = "tent.obj", texture = "tent", collider = "mesh", parent = terrain)
-rocks = Entity(model = "rocks.obj", texture = "rocks", scale = 5)
-grass = Entity(model = "grass.obj", texture = "grass", scale = 5)
-boulders = Entity(model = "boulders.obj", texture = "boulder", scale = 5)
+tent = Entity(model="tent.obj", texture="tent", collider="mesh", parent=terrain)
+rocks = Entity(model="rocks.obj", texture="rocks", scale=5)
+grass = Entity(model="grass.obj", texture="grass", scale=5)
+boulders = Entity(model="boulders.obj", texture="boulder", scale=5)
 
 for i in range(0, 400):
     tree = Tree(tent)
     trees.append(tree)
 
 # Lighting + shadows
-sun = SunLight(direction = (-0.7, -0.9, 0.5), resolution = 3072, player = player)
-ambient = AmbientLight(color = Vec4(0.5, 0.55, 0.66, 0) * 1.3)
+sun = SunLight(direction=(-0.7, -0.9, 0.5), resolution=3072, player=player)
+ambient = AmbientLight(color=Vec4(0.5, 0.55, 0.66, 0) * 1.3)
 
 render.setShaderAuto()
 
-sky = Entity(model = "sphere", double_sided = True, scale = 3000, texture = "sky_default")
+sky = Entity(model="sphere", double_sided=True, scale=3000, texture="sky_default")
 
 def update():
     for tree in trees:

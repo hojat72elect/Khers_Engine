@@ -1,7 +1,10 @@
 from ursina.entity import Entity
 from ursina.raycast import raycast
 from ursina.input_handler import held_keys
-from ursina import mouse, camera, lerp, time, clamp
+from ursina.camera import instance as camera
+from ursina.mouse import instance as mouse
+from ursina.ursinamath import lerp, clamp
+import time
 
 sign = lambda x: -1 if x < 0 else (1 if x > 0 else 0)
 y_dir = lambda y: -1 if y < 0 else(1 if y > 0 else -1)
