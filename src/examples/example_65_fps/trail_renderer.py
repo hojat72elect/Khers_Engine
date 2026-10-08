@@ -1,6 +1,12 @@
 from ursina.entity import Entity
 from ursina.destroy import destroy
-from ursina import Mesh, lerp, time, Ursina, window, color, mouse
+from ursina import color
+from ursina.mesh import Mesh
+from ursina.window import instance as window
+from ursina.mouse import instance as mouse
+from ursina.ursinamath import lerp
+from ursina.main import Ursina
+import time
 
 class TrailRenderer(Entity):
     def __init__(self, thickness=10, color=color.white, end_color=color.clear, length=6, **kwargs):

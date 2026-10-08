@@ -1,11 +1,17 @@
-from ursina import *
+from ursina.main import Ursina
+from ursina.window import instance as window
+from ursina.scene import instance as scene
+from ursina.texture_importer import load_texture
+from ursina.mesh_importer import load_model
 from ursina.text import Text
+from ursina.vec3 import Vec3
 from direct.stdpy import thread
 from player import Player
 from enemy import Enemy, BigEnemy
 from mainmenu import MainMenu
 from maps import FloatingIslands, DesertedSands, MountainousValley
 from scene_lighting import SceneLighting
+import random
 
 Text.default_font = "./assets/Roboto.ttf"
 Text.default_resolution = Text.size * 1080

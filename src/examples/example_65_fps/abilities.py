@@ -1,9 +1,14 @@
 from ursina.entity import Entity
 from ursina.audio import Audio
 from ursina.input_handler import held_keys
-from ursina import curve, Mesh, time, lerp, distance, color, camera, invoke, application
+from ursina.camera import instance as camera
+from ursina.ursinastuff import invoke
+from ursina import curve, color, application
+from ursina.ursinamath import lerp, distance
+from ursina.mesh import Mesh
 from ursina.raycast import raycast
 import random
+import time
 
 class Ability(Entity):
     def __init__(self, player, ability_enabled=True):

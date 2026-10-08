@@ -46,7 +46,6 @@ _model_path.append_path(str(internal_fonts_folder.resolve()))
 _model_path.append_path(str(Path('C:/Windows/Fonts').resolve()))
 _model_path.append_path(str(asset_folder.resolve()))
 
-
 base = None             # this will be set once the Ursina() is created
 hot_reloader = None     # will be set my main if development_mode
 

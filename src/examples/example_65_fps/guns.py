@@ -4,10 +4,16 @@ from ursina.audio import Audio
 from ursina.input_handler import held_keys
 from ursina.vec3 import Vec3
 from ursina.destroy import destroy
-from ursina import curve, camera, time, mouse, distance, invoke, color, scene
+from ursina import curve, color
+from ursina.camera import instance as camera
+from ursina.ursinastuff import invoke
+from ursina.ursinamath import distance
+from ursina.mouse import instance as mouse
+from ursina.scene import instance as scene
 from trail_renderer import TrailRenderer
 from panda3d.core import LVector3f
 import random
+import time
 from particles import Particles
 
 class Gun(Entity):

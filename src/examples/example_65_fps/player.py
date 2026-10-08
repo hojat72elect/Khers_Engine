@@ -13,11 +13,11 @@ sign = lambda x: -1 if x < 0 else (1 if x > 0 else 0)
 class Player(Entity):
     def __init__(self, position, speed = 5, jump_height = 14):
         super().__init__(
-            model = "cube", 
-            position = position,
-            scale = (1.3, 1, 1.3), 
-            visible_self = False,
-            rotation_y = -270
+            model="cube",
+            position=position,
+            scale=(1.3, 1, 1.3),
+            visible_self=False,
+            rotation_y=-270,
         )
 
         # Camera
@@ -215,8 +215,8 @@ class Player(Entity):
                     self.back[2] * -self.velocity_z + 
                     self.right[2] * -self.velocity_x) * self.speed * time.dt
         else:
-            air_movementX = 0.5 if self.movementX < 0.5 and self.movementX > -0.5 else 0.2
-            air_movementZ = 0.5 if self.movementZ < 0.5 and self.movementZ > -0.5 else 0.2
+            air_movementX = 0.5 if 0.5 > self.movementX > -0.5 else 0.2
+            air_movementZ = 0.5 if 0.5 > self.movementZ > -0.5 else 0.2
 
             self.movementX += (self.forward[0] * held_keys["w"] * air_movementX + 
                 self.left[0] * held_keys["a"] * air_movementX + 

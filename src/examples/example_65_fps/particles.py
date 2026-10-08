@@ -1,8 +1,9 @@
 from ursina.entity import Entity
 from ursina.vec3 import Vec3
 from ursina.destroy import destroy
-from ursina import curve, time
+from ursina import curve
 import random
+import time
 
 class Particles(Entity):
     def __init__(self, position, direction = Vec3(random.random(), random.random(), random.random()), spray_amount = 30, **kwargs):

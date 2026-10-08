@@ -2,10 +2,11 @@ from ursina.entity import Entity
 from ursina.audio import Audio
 from ursina.vec3 import Vec3
 from ursina.ursinamath import distance, distance_xz
-from ursina import time, color
+from ursina import color
 from particles import Particles
 from guns import Bullet
 import random
+import time
 
 class Enemy(Entity):
     def __init__(self, player, move_speed=20, position=(0, 0, 0), **kwargs):

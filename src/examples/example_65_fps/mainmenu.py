@@ -1,7 +1,11 @@
 from ursina.entity import Entity
 from ursina.text import Text
 from ursina.input_handler import held_keys
-from ursina import curve, camera, color, Button, invoke, application, window
+from ursina.ursinastuff import invoke
+from ursina.window import instance as window
+from ursina.camera import instance as camera
+from ursina.prefabs.button import Button
+from ursina import curve, color, application
 
 colourH = color.rgba(18, 152, 255, 180)
 colourN = color.rgba(0, 0, 0, 0.7)
@@ -9,9 +13,7 @@ highlighted = lambda button: button.color == colourH
 
 class MainMenu(Entity):
     def __init__(self, player, floating_islands, deserted_sands, mountainous_valley):
-        super().__init__(
-            parent = camera.ui
-        )
+        super().__init__(parent=camera.ui)
 
         # Player
         self.player = player
@@ -22,10 +24,10 @@ class MainMenu(Entity):
         self.mountainous_valley = mountainous_valley
 
         # Menus
-        self.mainmenu = Entity(parent = self, enabled = False)
-        self.end_screen = Entity(parent = self, enabled = False)
-        self.pause_menu = Entity(parent = self, enabled = False)
-        self.maps_menu = Entity(parent = self, enabled = False)
+        self.mainmenu = Entity(parent=self, enabled=False)
+        self.end_screen = Entity(parent=self, enabled=False)
+        self.pause_menu = Entity(parent=self, enabled=False)
+        self.maps_menu = Entity(parent=self, enabled=False)
 
         self.menus = [self.mainmenu, self.pause_menu, self.maps_menu]
         self.index = 0
@@ -34,7 +36,8 @@ class MainMenu(Entity):
 
         # Animate the Menus
         for menu in self.menus:
-            def animate_in_menu(menu = menu):
+
+            def animate_in_menu(menu=menu):
                 for i, e in enumerate(menu.children):
                     e.original_scale = e.scale
                     e.scale -= 0.01
@@ -53,9 +56,9 @@ class MainMenu(Entity):
         self.mainmenu.enable()
 
         # Main Menu
-        self.start_button = Button(text = "Start", color = colourH, highlight_color = colourH, scale_y = 0.1, scale_x = 0.3, y = 0.05, parent = self.mainmenu)
-        self.maps_button = Button(text = "Maps", color = colourN, highlight_color = colourN, scale_y = 0.1, scale_x = 0.3, y = -0.07, parent = self.mainmenu)
-        self.quit_button = Button(text = "Quit", color = colourN, highlight_color = colourN, scale_y = 0.1, scale_x = 0.3, y = -0.19, parent = self.mainmenu)
+        self.start_button = Button(text = "Start", color = colourH, highlight_color = colourH, scale_y = 0.1, scale_x = 0.3, y = 0.05, parent=self.mainmenu)
+        self.maps_button = Button(text = "Maps", color = colourN, highlight_color = colourN, scale_y = 0.1, scale_x = 0.3, y = -0.07, parent=self.mainmenu)
+        self.quit_button = Button(text = "Quit", color = colourN, highlight_color = colourN, scale_y = 0.1, scale_x = 0.3, y = -0.19, parent=self.mainmenu)
 
         invoke(setattr, self.start_button, "color", colourH, delay = 0.5)
 
