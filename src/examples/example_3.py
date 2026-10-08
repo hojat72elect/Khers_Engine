@@ -1,4 +1,5 @@
-from ursina import Ursina, application
+from ursina import application
+from ursina.main import Ursina
 
 app = Ursina()
 

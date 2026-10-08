@@ -1,6 +1,8 @@
-from ursina import Ursina, curve, EditorCamera, application, color
+from ursina import curve, application, color
+from ursina.main import Ursina
 from ursina.entity import Entity
 from ursina.lights import DirectionalLight
+from ursina.prefabs.editor_camera import EditorCamera
 
 app = Ursina()
 DirectionalLight(y=2, z=-3)

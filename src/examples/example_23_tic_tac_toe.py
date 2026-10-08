@@ -1,4 +1,11 @@
-from ursina import Ursina, camera, color, Tooltip, scene, mouse, Button, Panel
+from ursina import color
+from ursina.main import Ursina
+from ursina.prefabs.panel import Panel
+from ursina.prefabs.button import Button
+from ursina.prefabs.tooltip import Tooltip
+from ursina.camera import instance as camera
+from ursina.mouse import instance as mouse
+from ursina.scene import instance as scene
 from ursina.entity import Entity
 from ursina.text import Text
 

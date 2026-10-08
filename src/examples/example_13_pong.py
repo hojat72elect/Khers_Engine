@@ -1,6 +1,11 @@
-from ursina import Ursina, window, color, camera, application, time, held_keys
+from ursina import color, application
+from ursina.window import instance as window
+from ursina.camera import instance as camera
+from ursina.main import Ursina
 from ursina.duplicate import duplicate
 from ursina.entity import Entity
+from ursina.input_handler import held_keys
+import time
 
 app = Ursina()
 window.color = color.olive
